@@ -55,6 +55,7 @@ class FirstDdl extends Migration {
         {
             $table->increments('kode_ta');
             $table->string('judul');
+            $table->string('nrp_mahasiswa');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->enum('status', array('pra_diajuakan', 'diajukan', 'siap_sidang_proposal', 'pengerjaan', 'siap_sidang_akhir', 'revisi', 'selesai', 'mengundurkan_diri'));
@@ -181,8 +182,6 @@ class FirstDdl extends Migration {
         Schema::drop('pos');
         Schema::drop('pemberitahuan_dosen');
         Schema::drop('pemberitahuan_mahasiswa');
-
-
 	}
 
 }

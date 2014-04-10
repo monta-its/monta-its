@@ -15,5 +15,10 @@ class Jurusan extends Eloquent {
     {
         return $this->hasMany('Ruangan', 'kode_jurusan', 'kode_jurusan');
     }
+
+    public function dosenBidangMinat()
+    {
+        return $this->belongsToMany('Dosen', 'dosen_bidang_minat', 'nip_dosen', 'nip');
+    }
 }
 ?>

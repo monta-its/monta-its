@@ -74,7 +74,7 @@ class FirstDdl extends Migration {
 
         Schema::create('sidang', function($table)
         {
-            $table->increments('kode_sidang');
+            $table->increments('kode_sidang')->primary();
             $table->integer('kode_ta');
             $table->enum('jenis_sidang', array('proposal', 'akhir'));
             $table->dateTime('waktu_mulai');
@@ -118,6 +118,7 @@ class FirstDdl extends Migration {
             $table->string('kode_bidang_minat')->primary();
             $table->string('nama_bidang_minat');
             $table->string('nip_dosen_koordinator');
+            $table->string('kode_jurusan');
             $table->timestamps();
             $table->softDeletes();
         });

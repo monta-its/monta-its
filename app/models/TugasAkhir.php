@@ -26,5 +26,9 @@ class TugasAkhir extends Eloquent {
         return $this->hasMany('Kemajuan', 'kode_ta', 'kode_ta');
     }
 
+    public function evaluasi()
+    {
+        return $this->hasMany('Evaluasi', 'kode_ta', 'kode_ta');
+    }
 }
 ?>

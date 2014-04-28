@@ -11,7 +11,41 @@
 |
 */
 
+/*
+/berita
+/berita/[id-pos]
+/dasbor/berita
+/dasbor/berita/baru
+/dasbor/berita/sunting/[id-pos]
+/dasbor/berita/hapus/[id-pos]
+/topik
+/dasbor/topik
+/dasbor/topik/baru
+/dasbor/topik/sunting/[id-pos]
+/dasbor/topik/hapus/[id-pos]
+/sidang
+/dasbor/sidang
+/dasbor/sidang/baru
+/dasbor/sidang/sunting/[id-pos]
+/dasbor/sidang/hapus/[id-pos]
+/statistik
+
+*/
+
 Route::get('/', function()
 {
-	return View::make('kosong');
+    return View::make('kosong');
 });
+Route::get('/test', function()
+{
+    $breadcrumbs = array(
+        array('link' => '#1', 'text' => 'Beranda'),
+        array('link' => '', 'text' => 'Berita')
+        );
+
+    return View::make('pages.berita.index')->with('breadcrumbs', $breadcrumbs);
+});
+// Route::get('', function()
+// {
+//  return View::make('');
+// });

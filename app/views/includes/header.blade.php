@@ -1,4 +1,4 @@
-<div class="navbar navbar-default">
+<div class="navbar navbar-inverse">
   <div class="container">
     <div class="navbar-header">
       <a href="#" class="navbar-brand">SIMTA ITS</a>
@@ -10,7 +10,7 @@
     </div>
 
     <!-- nama situs dan menu utama (rata kiri) -->
-    <div class="navbar-collapse collapse" id="navbar-main">
+    <div class="navbar-collapse collapse navbar-inverse-collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li><a href="#">Beranda</a></li>
         <li class="dropdown">

@@ -45,6 +45,10 @@ Route::get('/test', function()
 
     return View::make('pages.berita.index')->with('breadcrumbs', $breadcrumbs);
 });
+Route::get('/test-dasbor', function()
+{
+    return View::make('pages.dasbor.index');
+});
 // Route::get('', function()
 // {
 //  return View::make('');

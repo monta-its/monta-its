@@ -11,4 +11,4 @@
 
 <script type="text/javascript" src="assets/jquery/jquery-1.11.0.min.js"></script>
 <script src="assets/bootstrap/bootstrap.3.1.1.min.js"></script>
-<link rel="stylesheet" href="assets/bootstrap/bootswatch/lumen.bootstrap.min.css" media="screen" />
+<link rel="stylesheet" href="assets/bootstrap/bootswatch/simplex.bootstrap.min.css" media="screen" />

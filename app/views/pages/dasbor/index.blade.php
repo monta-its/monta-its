@@ -1,7 +1,7 @@
 @extends('layouts.dasbor')
 
 @section('content')
-    berita index
+    isi konten dasbor.index di sini: app/views/page/dasbor/index.blade.php
 @stop
 
 @section('scripts')

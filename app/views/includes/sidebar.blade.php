@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<ul id="sidebar" class="nav">
+<ul class="nav">
     <li><a href="#">The Next Web</a></li>
     <li><a href="#">Mashable</a></li>
     <li><a href="#">TechCrunch</a></li>

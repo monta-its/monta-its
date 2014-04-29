@@ -15,11 +15,7 @@
     
       <!-- sidebar left -->
       <div class="col-md-3">
-      <div class="panel panel-default">
-          <div class="panel-body">
-            @include('includes.sidebar')
-          </div>
-      </div>
+        @yield('sidebar')
       </div>
 
       <!-- primary -->

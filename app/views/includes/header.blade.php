@@ -32,10 +32,17 @@
       <!-- menu akun -->
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Michael Schumacher<b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nama User<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li>
-              <a href="#">Pengaturan akun</a>
+              <a href="{{ URL::to('/dasbor') }}">
+                <span class="glyphicon glyphicon-cog"></span> Dasbor
+              </a>
+            </li>
+            <li>
+              <a href="{{ URL::to('/dasbor/akun') }}">
+                <span class="glyphicon glyphicon-user"></span> Profil Pengguna
+              </a>
             </li>
           </ul>
         </li>

@@ -1,11 +1,9 @@
 @extends('layouts.default')
 
 @section('content')
-@foreach($l_item as $item)
-
 <div class="panel panel-default">
   <div class="panel-body">
-    <h3><a href="{{ URL::to('panduan/' . $item['id_panduan']) }}">{{ $item['judul_panduan'] }}</a></h3>
+    <h3><strong>{{ $item['judul_panduan'] }}</strong></h3>
         <p>
             <span class="glyphicon glyphicon-user"></span>
             <span>Penulis: </span>
@@ -22,10 +20,8 @@
             @endif
             
         </p>
-        <div class="item-main">{{ $item['cuplikan_panduan'] }}</div>
-        <a href="{{ URL::to('panduan/'. $item['id_panduan']) }}" class="btn btn-primary pull-right">Selengkapnya...</a>
+        <div class="item-main">{{ $item['isi_panduan'] }}</div>
   </div>
 </div>
 
-@endforeach
 @stop

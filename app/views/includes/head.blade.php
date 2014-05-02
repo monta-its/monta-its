@@ -13,3 +13,4 @@
 <script src="{{ URL::to('assets/bootstrap/bootstrap.3.1.1.min.js') }}"></script>
 <link rel="stylesheet" href="{{ URL::to('assets/bootstrap/bootswatch/simplex.bootstrap.min.css') }}" media="screen" />
 <!--<link rel="stylesheet" href="{{ URL::to('assets/bootstrap/bootstrap.min.css') }}" media="screen" />-->
+

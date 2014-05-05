@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+<!--
 <ul class="nav">
     <li><a href="#">The Next Web</a></li>
     <li><a href="#">Mashable</a></li>
@@ -7,3 +8,4 @@
     <li><a href="#">In1</a></li>
     <li><a href="#">TechMeMe</a></li>
 </ul>
+-->

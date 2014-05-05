@@ -29,7 +29,7 @@
                                 <td>
 
                                 @for ($i = 0; $i < count($dosen['bidang_ahli']); $i++)
-                                    <a href="{{ URL::to('/topik/bidang-ahli/' . $dosen['bidang_ahli'][$i]['id_bidang_ahli']) }}">
+                                    <a href="{{ URL::to('bidang-ahli/' . $dosen['bidang_ahli'][$i]['id_bidang_ahli']) }}">
                                         {{ $dosen['bidang_ahli'][$i]['nama_bidang_ahli'] }}
                                     </a>
                                     @if ($i < count($dosen['bidang_ahli']) - 1)

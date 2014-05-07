@@ -215,6 +215,92 @@ Route::get('/bidang_ahli/{id_bidang_ahli}', function($id_bidang_ahli)
         'penulis' => array(
             'id_dosen' => 'id_dosen',
             'nama_dosen' => 'Nama Dosen'
+        ),
+        'topik_bidang_ahli' => array(
+            array(
+                'judul_topik'=> 'Judul Topik',
+                'id_topik'=> 'id_topik',
+                'mahasiswa_topik'=> array(
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    )
+                )
+            ),
+            array(
+                'judul_topik'=> 'Judul Topik',
+                'id_topik'=> 'id_topik',
+                'mahasiswa_topik'=> array(
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    )
+                )
+            ),
+            array(
+                'judul_topik'=> 'Judul Topik',
+                'id_topik'=> 'id_topik',
+                'mahasiswa_topik'=> array(
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    )
+                )
+            ),
+            array(
+                'judul_topik'=> 'Judul Topik',
+                'id_topik'=> 'id_topik',
+                'mahasiswa_topik'=> array(
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    ),
+                    array(
+                        'nama_mahasiswa' => 'Nama Mahasiswa',
+                        'nrp_mahasiswa' => '1234567890',
+                        'id_mahasiswa' => '0987654321',
+                    )
+                )
+            )
         )
     );
 
@@ -294,6 +380,29 @@ Route::get('/topik/{id_topik}', function($id_topik)
         'penulis' => array(
             'id_dosen' => 'id_dosen',
             'nama_dosen' => 'Nama Dosen'
+        ),
+        'mahasiswa_judul' => array(
+            array(
+                'judul_judul' => 'Judul Judul TA',
+                'id_judul' => 'id_judul',
+                'nama_mahasiswa' => 'Nama Mahasiswa',
+                'nrp_mahasiswa' => '1234567890',
+                'id_mahasiswa' => '0987654321'
+            ),
+            array(
+                'judul_judul' => 'Judul Judul TA',
+                'id_judul' => 'id_judul',
+                'nama_mahasiswa' => 'Nama Mahasiswa',
+                'nrp_mahasiswa' => '1234567890',
+                'id_mahasiswa' => '0987654321'
+            ),
+            array(
+                'judul_judul' => 'Judul Judul TA',
+                'id_judul' => 'id_judul',
+                'nama_mahasiswa' => 'Nama Mahasiswa',
+                'nrp_mahasiswa' => '1234567890',
+                'id_mahasiswa' => '0987654321'
+            )
         )
     );
 
@@ -642,6 +751,34 @@ Route::get('/dosen/{id_dosen}', function($id_dosen)
 
 // /dasbor/dosen/sunting/[id_dosen]
 // /dasbor/dosen/hapus/[id_dosen]
+// /mahasiswa
+// /mahasiswa/nrp/[nrp_mahasiswa]
+Route::get('/mahasiswa/nrp/{nrp_mahasiswa}', function($nrp_mahasiswa)
+{
+    $breadcrumbs = array(
+        array('link' => URL::to('/'), 'text' => 'Beranda'),
+        array('link' => URL::to('/mahasiswa'), 'text' => 'Mahasiswa'),
+        array('link' => '', 'text' => 'Profil')
+    );
+
+    $item = array(
+        'nama_mahasiswa' => 'Nama Mahasiswa',
+        'nrp_mahasiswa' => '1234567890',
+        'id_mahasiswa' => '0987654321',
+        'nama_dosen' => 'Nama Dosen Pembimbing',
+        'id_dosen' => 'id_dosen',
+        'judul_topik' => 'Judul Topik TA',
+        'id_topik' => 'id_topik',
+        'judul_judul' => 'Judul Judul TA',
+        'id_judul' => 'id_judul'
+    );
+    View::share('breadcrumbs', $breadcrumbs);
+    View::share('item', $item);
+    return View::make('pages.mahasiswa.item');
+});
+// /mahasiswa/id/[id_mahasiswa]
+// /dasbor/mahasiswa/sunting/[id_mahasiswa]
+// /dasbor/mahasiswa/hapus/[id_mahasiswa]
 // /kategori/id_kategori
 // /dasbor/kategori
 // /dasbor/kategori/baru

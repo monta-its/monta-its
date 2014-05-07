@@ -42,13 +42,13 @@ Route::get('/berita', function()
 
     $item = array(
         'judul_berita' => 'Judul Berita', 
-        'id_berita' => 'id-berita', 
+        'id_berita' => 'id_berita', 
         'cuplikan_berita' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'waktu' => '11 Januari 2014 13:00AM', 
         'nama_dosen' => 'Nama Penulis',
-        'id_dosen' => 'id-dosen',
+        'id_dosen' => 'id_dosen',
         'nama_kategori' => 'Nama Kategori',
-        'id_kategori' => 'id-kategori'
+        'id_kategori' => 'id_kategori'
     );
 
     $l_item = array();
@@ -61,7 +61,7 @@ Route::get('/berita', function()
     return View::make('pages.berita.index');
 });
 
-// /berita/[id-berita]
+// /berita/[id_berita]
 Route::get('/berita/{id_berita}', function($id_berita)
 {
     $breadcrumbs = array(
@@ -71,13 +71,13 @@ Route::get('/berita/{id_berita}', function($id_berita)
 
     $item = array(
         'judul_berita' => 'Judul Berita', 
-        'id_berita' => 'id-berita', 
+        'id_berita' => 'id_berita', 
         'isi_berita' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'waktu' => '11 Januari 2014 13:00AM', 
         'nama_dosen' => 'Nama Penulis',
-        'id_dosen' => 'id-dosen',
+        'id_dosen' => 'id_dosen',
         'nama_kategori' => 'Nama Kategori',
-        'id_kategori' => 'id-kategori'
+        'id_kategori' => 'id_kategori'
     );
 
     View::share('breadcrumbs', $breadcrumbs);
@@ -85,16 +85,16 @@ Route::get('/berita/{id_berita}', function($id_berita)
     return View::make('pages.berita.item');
 });
 
-// /berita/kategori/[id-kategori]
+// /berita/kategori/[id_kategori]
 Route::get('/berita/kategori/{id_kategori}', function($id_kategori)
 {
-    return "berita/kategori/id-kategori";
+    return "berita/kategori/id_kategori";
 });
 
 // /dasbor/berita
 // /dasbor/berita/baru
-// /dasbor/berita/sunting/[id-berita]
-// /dasbor/berita/hapus/[id-berita]
+// /dasbor/berita/sunting/[id_berita]
+// /dasbor/berita/hapus/[id_berita]
 // /panduan
 Route::get('/panduan', function()
 {
@@ -105,11 +105,11 @@ Route::get('/panduan', function()
 
     $item = array(
         'judul_panduan' => 'Judul Panduan', 
-        'id_panduan' => 'id-panduan', 
+        'id_panduan' => 'id_panduan', 
         'cuplikan_panduan' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'waktu' => '11 Januari 2014 13:00AM', 
         'nama_dosen' => 'Nama Penulis',
-        'id_dosen' => 'id-dosen',
+        'id_dosen' => 'id_dosen',
         'tautan_lampiran' => 'tautan/ke/berkas.ext',
         'nama_lampiran' => 'Nama File.ext'
     );
@@ -125,7 +125,7 @@ Route::get('/panduan', function()
     return View::make('pages.panduan.index');
 });
 
-// /panduan/[id-panduan]
+// /panduan/[id_panduan]
 Route::get('/panduan/{id_panduan}', function($id_panduan)
 {
     $breadcrumbs = array(
@@ -136,11 +136,11 @@ Route::get('/panduan/{id_panduan}', function($id_panduan)
 
     $item = array(
         'judul_panduan' => 'Judul Panduan', 
-        'id_panduan' => 'id-panduan', 
+        'id_panduan' => 'id_panduan', 
         'isi_panduan' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'waktu' => '11 Januari 2014 13:00AM', 
         'nama_dosen' => 'Nama Penulis',
-        'id_dosen' => 'id-dosen',
+        'id_dosen' => 'id_dosen',
         'tautan_lampiran' => 'tautan/ke/berkas.ext',
         'nama_lampiran' => 'Nama File.ext'
     );
@@ -152,8 +152,8 @@ Route::get('/panduan/{id_panduan}', function($id_panduan)
 
 // /dasbor/panduan
 // /dasbor/panduan/baru
-// /dasbor/panduan/sunting/[id-panduan]
-// /dasbor/panduan/hapus/[id-panduan]
+// /dasbor/panduan/sunting/[id_panduan]
+// /dasbor/panduan/hapus/[id_panduan]
 
 // /bidang_ahli
 Route::get('/bidang_ahli', function()
@@ -244,11 +244,11 @@ Route::get('/topik', function()
 
     $item = array(
         'judul_topik' => 'Judul Topik TA', 
-        'id_topik' => 'id-topik', 
+        'id_topik' => 'id_topik', 
         'cuplikan_topik' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'nama_prodi' => 'NCC', 
-        'id_prodi' => 'id-prodi', 
-        'id_bidang_ahli' => 'id-bidang-ahli',
+        'id_prodi' => 'id_prodi', 
+        'id_bidang_ahli' => 'id_bidang_ahli',
         'nama_bidang_ahli' => 'Nama Bidang Ahli',
         'label_prodi' => 'Laboratorium', 
         'status_terambil' => true, 
@@ -271,7 +271,7 @@ Route::get('/topik', function()
     return View::make('pages.topik.index');
 });
 
-// /topik/[id-topik]
+// /topik/[id_topik]
 Route::get('/topik/{id_topik}', function($id_topik)
 {
     $breadcrumbs = array(
@@ -281,12 +281,12 @@ Route::get('/topik/{id_topik}', function($id_topik)
     );
     $item = array(
         'judul_topik' => 'Judul Topik TA', 
-        'id_topik' => 'id-topik', 
+        'id_topik' => 'id_topik', 
         'isi_topik' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'nama_prodi' => 'NCC', 
-        'id_prodi' => 'id-prodi', 
+        'id_prodi' => 'id_prodi', 
         'label_prodi' => 'Laboratorium', 
-        'id_bidang_ahli' => 'id-bidang-ahli',
+        'id_bidang_ahli' => 'id_bidang_ahli',
         'nama_bidang_ahli' => 'Nama Bidang Ahli',
         'status_terambil' => false, 
         'waktu_mulai' => '10 Januari 2013', 
@@ -302,34 +302,34 @@ Route::get('/topik/{id_topik}', function($id_topik)
     return View::make('pages.topik.item');
 });
 
-// /topik/[id-topik]/ambil
+// /topik/[id_topik]/ambil
 Route::get('/topik/{id_topik}/ambil', function($id_topik)
 {
     return 'Semacam topik TA sudah terambil dan Redirect ke profil mahasiswa';
 });
 
-// /topik/[id-topik]/lepas
+// /topik/[id_topik]/lepas
 Route::get('/topik/{id_topik}/lepas', function($id_topik)
 {
     return 'Semacam topik TA yang sudah terambil sekarang dilepaskan dan Redirect ke profil mahasiswa';
 });
 
-// /topik/prodi/[id-prodi]
+// /topik/prodi/[id_prodi]
 Route::get('/topik/prodi/{id_prodi}', function($id_prodi)
 {
     return 'Halaman memuat topik-topik yang dengan filter prodi tertentu';
 });
 
-// /topik/bidang_ahli/[id-bidang-ahli]
-Route::get('/topik/bidang-ahli/{id_bidang_ahli}', function($id_bidang_ahli)
+// /topik/bidang_ahli/[id_bidang_ahli]
+Route::get('/topik/bidang_ahli/{id_bidang_ahli}', function($id_bidang_ahli)
 {
     return 'Halaman memuat topik-topik yang dengan filter bidang ahli tertentu';
 });
 
 // /dasbor/topik
 // /dasbor/topik/baru
-// /dasbor/topik/sunting/[id-topik]
-// /dasbor/topik/hapus/[id-topik]
+// /dasbor/topik/sunting/[id_topik]
+// /dasbor/topik/hapus/[id_topik]
 
 // /judul
 Route::get('/judul', function()
@@ -341,11 +341,11 @@ Route::get('/judul', function()
 
     $item = array(
         'judul_judul' => 'Judul Judul TA', 
-        'id_judul' => 'id-judul', 
+        'id_judul' => 'id_judul', 
         'cuplikan_judul' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'nama_prodi' => 'NCC', 
-        'id_prodi' => 'id-prodi', 
-        'id_topik' => 'id-topik',
+        'id_prodi' => 'id_prodi', 
+        'id_topik' => 'id_topik',
         'nama_topik' => 'Nama Topik',
         'label_prodi' => 'Laboratorium', 
         'status_terambil' => true, 
@@ -353,11 +353,11 @@ Route::get('/judul', function()
         'waktu_akhir' => '30 Desember 2014', 
         'pembimbing' => array(
             array(
-                'id_dosen' => 'id-dosen',
+                'id_dosen' => 'id_dosen',
                 'nama_dosen' => 'Nama Dosen'
             ),
             array(
-                'id_dosen' => 'id-dosen',
+                'id_dosen' => 'id_dosen',
                 'nama_dosen' => 'Nama Dosen'
             )
         )
@@ -374,7 +374,7 @@ Route::get('/judul', function()
     return View::make('pages.judul.index');
 });
 
-// /judul/[id-judul]
+// /judul/[id_judul]
 Route::get('/judul/{id_judul}', function($id_judul)
 {
     $breadcrumbs = array(
@@ -384,23 +384,23 @@ Route::get('/judul/{id_judul}', function($id_judul)
     );
     $item = array(
         'judul_judul' => 'Judul Judul TA', 
-        'id_judul' => 'id-judul', 
+        'id_judul' => 'id_judul', 
         'isi_judul' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'nama_prodi' => 'NCC', 
-        'id_prodi' => 'id-prodi', 
+        'id_prodi' => 'id_prodi', 
         'label_prodi' => 'Laboratorium', 
-        'id_topik' => 'id-topik',
+        'id_topik' => 'id_topik',
         'nama_topik' => 'Nama Topik',
         'status_terambil' => false, 
         'waktu_mulai' => '10 Januari 2013', 
         'waktu_akhir' => '30 Desember 2014', 
         'pembimbing' => array(
             array(
-                'id_dosen' => 'id-dosen',
+                'id_dosen' => 'id_dosen',
                 'nama_dosen' => 'Nama Dosen'
             ),
             array(
-                'id_dosen' => 'id-dosen',
+                'id_dosen' => 'id_dosen',
                 'nama_dosen' => 'Nama Dosen'
             )
         )
@@ -411,31 +411,31 @@ Route::get('/judul/{id_judul}', function($id_judul)
     return View::make('pages.judul.item');
 });
 
-// /judul/[id-judul]/ambil
+// /judul/[id_judul]/ambil
 Route::get('/judul/{id_judul}/ambil', function($id_judul)
 {
     return 'Semacam Judul TA sudah terambil dan Redirect ke profil mahasiswa';
 });
 
-// /judul/[id-judul]/lepas
+// /judul/[id_judul]/lepas
 Route::get('/judul/{id_judul}/lepas', function($id_judul)
 {
     return 'Semacam Judul TA yang sudah terambil sekarang dilepaskan dan Redirect ke profil mahasiswa';
 });
 
-// /judul/prodi/[id-prodi]
+// /judul/prodi/[id_prodi]
 Route::get('/judul/prodi/{id_prodi}', function($id_prodi)
 {
     return 'Halaman memuat judul-judul yang dengan filter prodi tertentu';
 });
 
-// /judul/bidang-ahli/[id-bidang-ahli]
-Route::get('/judul/bidang-ahli/{id_bidang_ahli}', function($id_bidang_ahli)
+// /judul/bidang_ahli/[id_bidang_ahli]
+Route::get('/judul/bidang_ahli/{id_bidang_ahli}', function($id_bidang_ahli)
 {
     return 'Halaman memuat judul-judul yang dengan filter bidang ahli tertentu';
 });
 
-// /judul/topik/[id-topik]
+// /judul/topik/[id_topik]
 Route::get('/judul/topik/{id_topik}', function($id_topik)
 {
     return 'Halaman memuat judul-judul yang dengan filter topik tertentu';
@@ -443,8 +443,8 @@ Route::get('/judul/topik/{id_topik}', function($id_topik)
 
 // /dasbor/judul
 // /dasbor/judul/baru
-// /dasbor/judul/sunting/[id-judul]
-// /dasbor/judul/hapus/[id-judul]
+// /dasbor/judul/sunting/[id_judul]
+// /dasbor/judul/hapus/[id_judul]
 
 // /sidang
 // /sidang/proposal
@@ -525,8 +525,8 @@ Route::get('/sidang/ta', function()
 
 // /dasbor/sidang
 // /dasbor/sidang/baru
-// /dasbor/sidang/sunting/[id-sidang]
-// /dasbor/sidang/hapus/[id-sidang]
+// /dasbor/sidang/sunting/[id_sidang]
+// /dasbor/sidang/hapus/[id_sidang]
 // /statistik
 
 // /prodi
@@ -539,7 +539,7 @@ Route::get('/prodi', function()
 
     $item = array(
         'nama_prodi' => 'Nama Program Studi', 
-        'id_prodi' => 'id-prodi', 
+        'id_prodi' => 'id_prodi', 
         'cuplikan_prodi' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'singkatan_prodi' => 'NPS', 
         'label_prodi' => 'KBK'
@@ -555,7 +555,7 @@ Route::get('/prodi', function()
     return View::make('pages.prodi.index');
 });
 
-// /prodi/id-prodi
+// /prodi/id_prodi
 Route::get('/prodi/{id_prodi}', function($id_prodi)
 {
     $breadcrumbs = array(
@@ -566,35 +566,35 @@ Route::get('/prodi/{id_prodi}', function($id_prodi)
 
     $item = array(
         'nama_prodi' => 'Nama Program Studi', 
-        'id_prodi' => 'id-prodi', 
+        'id_prodi' => 'id_prodi', 
         'deskripsi_prodi' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.', 
         'singkatan_prodi' => 'NPS', 
         'label_prodi' => 'KBK', 
         'dosen_prodi' => array(
             array(
-                'id_dosen' => 'id-dosen',
+                'id_dosen' => 'id_dosen',
                 'nama_dosen' => 'Nama Dosen',
                 'bidang_ahli' => array(
                     array(
-                        'id_bidang_ahli' => 'id-bidang-ahli',
+                        'id_bidang_ahli' => 'id_bidang_ahli',
                         'nama_bidang_ahli' => 'Nama Bidang Ahli'    
                     ),
                     array(
-                        'id_bidang_ahli' => 'id-bidang-ahli',
+                        'id_bidang_ahli' => 'id_bidang_ahli',
                         'nama_bidang_ahli' => 'Nama Bidang Ahli'    
                     )
                 )
             ),
             array(
-                'id_dosen' => 'id-dosen',
+                'id_dosen' => 'id_dosen',
                 'nama_dosen' => 'Nama Dosen',
                 'bidang_ahli' => array(
                     array(
-                        'id_bidang_ahli' => 'id-bidang-ahli',
+                        'id_bidang_ahli' => 'id_bidang_ahli',
                         'nama_bidang_ahli' => 'Nama Bidang Ahli'    
                     ),
                     array(
-                        'id_bidang_ahli' => 'id-bidang-ahli',
+                        'id_bidang_ahli' => 'id_bidang_ahli',
                         'nama_bidang_ahli' => 'Nama Bidang Ahli'    
                     )
                 )
@@ -609,8 +609,8 @@ Route::get('/prodi/{id_prodi}', function($id_prodi)
 });
 
 // /dasbor/prodi/baru
-// /dasbor/prodi/sunting/[id-prodi]
-// /dasbor/prodi/hapus/[id-prodi]
+// /dasbor/prodi/sunting/[id_prodi]
+// /dasbor/prodi/hapus/[id_prodi]
 // /dosen
 Route::get('/dosen', function()
 {
@@ -628,7 +628,7 @@ Route::get('/dosen', function()
     return View::make('pages.dosen.index');
 });
 
-// /dosen/id-dosen
+// /dosen/id_dosen
 Route::get('/dosen/{id_dosen}', function($id_dosen)
 {
     $breadcrumbs = array(
@@ -640,10 +640,10 @@ Route::get('/dosen/{id_dosen}', function($id_dosen)
     return View::make('pages.dosen.item');
 });
 
-// /dasbor/dosen/sunting/[id-dosen]
-// /dasbor/dosen/hapus/[id-dosen]
-// /kategori/id-kategori
+// /dasbor/dosen/sunting/[id_dosen]
+// /dasbor/dosen/hapus/[id_dosen]
+// /kategori/id_kategori
 // /dasbor/kategori
 // /dasbor/kategori/baru
-// /dasbor/kategori/sunting/[id-kategori]
-// /dasbor/kategori/hapus/[id-kategori]
+// /dasbor/kategori/sunting/[id_kategori]
+// /dasbor/kategori/hapus/[id_kategori]

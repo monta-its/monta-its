@@ -37,7 +37,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <a href="{{ URL::to('topik/id-topik') }}">Judul topik TA 1 menggunakan kakas kerja berbasis pengolah teks dengan abjad lokal yang terintegrasi dengan kalimat lengkap</a>
+                                            <a href="{{ URL::to('topik/id_topik') }}">Judul topik TA 1 menggunakan kakas kerja berbasis pengolah teks dengan abjad lokal yang terintegrasi dengan kalimat lengkap</a>
                                         </td>
                                         <td>
                                             <span class="label label-success">Tersedia</span>
@@ -45,7 +45,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <a href="{{ URL::to('topik/id-topik') }}">Judul topik TA 2</a>
+                                            <a href="{{ URL::to('topik/id_topik') }}">Judul topik TA 2</a>
                                         </td>
                                         <td>
                                             <span class="label label-success">Tersedia</span>
@@ -53,7 +53,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <a href="{{ URL::to('topik/id-topik') }}">Judul topik TA 3</a>
+                                            <a href="{{ URL::to('topik/id_topik') }}">Judul topik TA 3</a>
                                         </td>
                                         <td>
                                             <span class="label label-default">Sudah Diambil</span>

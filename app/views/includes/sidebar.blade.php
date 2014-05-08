@@ -9,3 +9,9 @@
     <li><a href="#">TechMeMe</a></li>
 </ul>
 -->
+<ul class="nav">
+    <li><a href="{{ URL::to('dosen') }}">Dosen</a></li>
+    <li><a href="{{ URL::to('bidang_ahli') }}">Bidang Ahli</a></li>
+    <li><a href="{{ URL::to('judul') }}">Judul TA</a></li>
+    <li><a href="{{ URL::to('kontak') }}">Hubungi Kami</a></li>
+</ul>

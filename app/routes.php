@@ -12,7 +12,26 @@
 */
 
 
+/* Rute fix ke controller */
 
+// BeritaController
+Route::get('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
+Route::get('/berita/{id_berita}', 'Simta\Controllers\BeritaController@lihatIsiBerita');
+Route::get('/berita/kategori/{id_kategori}', 'Simta\Controllers\BeritaController@lihatBeritaDariKategori');
+Route::get('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborLihatDaftarBerita');
+Route::get('/dasbor/berita/baru', 'Simta\Controllers\BeritaController@dasborTambahkanBerita');
+Route::get('/dasbor/berita/sunting/{id_berita}', 'Simta\Controllers\BeritaController@dasborSuntingBerita');
+Route::get('/dasbor/berita/hapus/{id_berita}', 'Simta\Controllers\BeritaController@dasborHapusBerita');
+
+// DasborMainController
+// DasborPembimbingController
+// DasborPengujiController
+// BidangMinatController
+// PanduanController
+// TopikController
+//
+
+/* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
 
 // /
@@ -106,23 +125,6 @@ Route::get('/dasbor/prodi', function()
     return View::make('pages.dasbor.pembimbing');
 });
 
-// /berita
-Route::get('/berita', 'Simta\Controllers\BeritaController@beritaHome');
-
-// /berita/[id_berita]
-Route::get('/berita/{id_berita}', 'Simta\Controllers\BeritaController@isiBerita');
-
-// /berita/kategori/[id_kategori]
-Route::get('/berita/kategori/{id_kategori}', function($id_kategori)
-{
-    return "berita/kategori/id_kategori";
-});
-
-// /dasbor/berita
-// /dasbor/berita/baru
-// /dasbor/berita/sunting/[id_berita]
-// /dasbor/berita/hapus/[id_berita]
-// /panduan
 Route::get('/panduan', function()
 {
     $breadcrumbs = array(

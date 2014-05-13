@@ -21,7 +21,7 @@ class BeritaController extends BaseController {
      *
      * @return View
      */
-	public function beritaHome()
+	public function lihatSemuaBerita()
 	{
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -53,10 +53,10 @@ class BeritaController extends BaseController {
     /**
      * Tampilkan Isi Berita
      *
-     * @var $id_berita
+     * @var string $id_berita
      * @return View
      */
-    function isiBerita($id_berita)
+    function lihatIsiBerita($id_berita)
     {
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -77,5 +77,60 @@ class BeritaController extends BaseController {
         View::share('breadcrumbs', $breadcrumbs);
         View::share('item', $item);
         return View::make('pages.berita.item');
+    }
+
+
+    /**
+     * Tampilkan daftar berita berdasarkan kategori
+     *
+     * @var string id_kategori
+     * @return View
+     */
+    function lihatBeritaDariKategori($id_kategori)
+    {
+        return "berita/kategori/id_kategori";
+    }
+
+    /* Kelompok dasbor */
+
+    /**
+     * Tampilan daftar berita yang dibuat pada dasbor
+     * @return View
+     */
+    function dasborLihatDaftarBerita()
+    {
+        return null;
+    }
+
+    /**
+     * Tambahkan berita baru
+     *
+     * @return View
+     */
+    function dasborTambahkanBerita()
+    {
+        return null;
+    }
+
+    /**
+     * Sunting berita
+     *
+     * @var string $id_berita
+     * @return View
+     */
+    function dasborSuntingBerita($id_berita)
+    {
+        return null;
+    }
+
+    /**
+     * Hapus berita
+     *
+     * @var string $id_berita
+     * @return View
+     */
+    function dasborHapusBerita($id_berita)
+    {
+        return null;
     }
 }

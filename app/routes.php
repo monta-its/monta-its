@@ -858,3 +858,99 @@ Route::get('/mahasiswa/nrp/{nrp_mahasiswa}', function($nrp_mahasiswa)
 // /dasbor/kategori/baru
 // /dasbor/kategori/sunting/[id_kategori]
 // /dasbor/kategori/hapus/[id_kategori]
+
+// /dasbor/pengguna/mahasiswa
+// /dasbor/pengguna/mahasiswa/tambah
+Route::get('/dasbor/pengguna/mahasiswa/tambah', function()
+{
+    return View::make('pages.dasbor.pengguna.mahasiswa.tambah');
+});
+// /dasbor/pengguna/mahasiswa/tambah/[nrp]
+Route::post('/dasbor/pengguna/mahasiswa/tambah', function()
+{
+    $nrp_mahasiswa = Input::get('nrp_mahasiswa');
+    $nama_mahasiswa = '';
+    if (!is_array($nrp_mahasiswa)) 
+    {
+        $nama_mahasiswa = Input::get('nama_mahasiswa');
+        View::share('pesan', $nama_mahasiswa . ' (' . $nrp_mahasiswa . ')');
+    }
+    else 
+    {
+        View::share('pesan', count($nrp_mahasiswa) . ' mahasiswa');
+    }
+    
+    
+    return View::make('pages.dasbor.pengguna.mahasiswa.tambah_sukses');
+});
+// /dasbor/pengguna/mahasiswa/calon
+Route::get('/dasbor/pengguna/mahasiswa/calon', function()
+{
+    $l_item = array(
+        array(
+            'nrp_mahasiswa' => '1234567890',
+            'nama_mahasiswa' => 'Nama Calon Mahasiswa',
+            'sks_lulus' => 'xx',
+            'sks_tempuh' => 'yy'
+        ),
+        array(
+            'nrp_mahasiswa' => '1234567890',
+            'nama_mahasiswa' => 'Nama Calon Mahasiswa',
+            'sks_lulus' => 'xx',
+            'sks_tempuh' => 'yy'
+        ),
+        array(
+            'nrp_mahasiswa' => '1234567890',
+            'nama_mahasiswa' => 'Nama Calon Mahasiswa',
+            'sks_lulus' => 'xx',
+            'sks_tempuh' => 'yy'
+        )
+    );
+    View::share('l_item', $l_item);
+    return View::make('pages.dasbor.pengguna.mahasiswa.calon');
+});
+// /dasbor/pengguna/mahasiswa/cari
+Route::post('/dasbor/pengguna/mahasiswa/cari', function()
+{
+    $item = array(
+        'nama_mahasiswa' => 'Nama Mahasiswa',
+        'nrp_mahasiswa' => '1234567890',
+        'id_mahasiswa' => '0987654321',
+        'nama_dosen_wali' => 'Nama Dosen Wali',
+        'id_dosen_wali' => 'id_dosen',
+        'sks_lulus' => '82',
+        'sks_tempuh' => '100'
+    );
+    View::share('item', $item);
+    return View::make('pages.dasbor.pengguna.mahasiswa.cari');
+});
+// /dasbor/pengguna/mahasiswa/aktifkan/{id_mahasiswa}
+// /dasbor/pengguna/mahasiswa/nonaktifkan/{id_mahasiswa}
+// /dasbor/pengguna/mahasiswa/hapus/{id_mahasiswa}
+// /dasbor/pengguna/mahasiswa/sunting/{id_mahasiswa}
+// /dasbor/pengguna/mahasiswa/aktifkan/nrp/{nrp_mahasiswa}
+// /dasbor/pengguna/mahasiswa/nonaktifkan/nrp/{nrp_mahasiswa}
+// /dasbor/pengguna/mahasiswa/hapus/nrp/{nrp_mahasiswa}
+// /dasbor/pengguna/mahasiswa/sunting/nrp/{nrp_mahasiswa}
+// /dasbor/pengguna/dosen/tambah
+// /dasbor/pengguna/dosen/aktifkan/{id_dosen}
+// /dasbor/pengguna/dosen/nonaktifkan/{id_dosen}
+// /dasbor/pengguna/dosen/hapus/{id_dosen}
+// /dasbor/pengguna/dosen/sunting/{id_dosen}
+// /dasbor/pengguna/dosen/aktifkan/nip/{nip_dosen}
+// /dasbor/pengguna/dosen/nonaktifkan/nip/{nip_dosen}
+// /dasbor/pengguna/dosen/hapus/nip/{nip_dosen}
+// /dasbor/pengguna/dosen/sunting/nip/{nip_dosen}
+// /dasbor/pengguna/petugas/aktifkan/{id_petugas}
+// /dasbor/pengguna/petugas/nonaktifkan/{id_petugas}
+// /dasbor/pengguna/petugas/hapus/{id_petugas}
+// /dasbor/pengguna/petugas/sunting/{id_petugas}
+// /dasbor/pengguna/petugas/nip/{nip_petugas}
+// /dasbor/pengguna/petugas/nip/{nip_petugas}
+// /dasbor/pengguna/petugas/nip/{nip_petugas}
+// /dasbor/pengguna/petugas/nip/{nip_petugas}
+// /dasbor/pengguna/admin/tambah
+// /dasbor/pengguna/admin/hapus/{id_admin}
+// /dasbor/pengguna/admin/sunting/{id_admin}
+// /dasbor/pengguna/admin/aktifkan/{id_admin}
+// /dasbor/pengguna/admin/nonaktifkan/{id_admin}

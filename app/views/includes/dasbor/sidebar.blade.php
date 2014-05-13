@@ -32,7 +32,10 @@
                 <a href="{{ URL::to('dasbor/proposal') }}"><span class="glyphicon glyphicon-upload"></span>
  Unggah Proposal</a>
             </li>
-            
+            <li>
+                <a href="{{ URL::to('dasbor/pengguna/mahasiswa/tambah') }}"><span class="glyphicon glyphicon-add"></span>
+ Tambah Mahasiswa</a>
+            </li>
         </ul>
         <!-- /#side-menu -->
     </div>

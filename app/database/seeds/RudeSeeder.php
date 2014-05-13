@@ -9,6 +9,8 @@ use Simta\Models\PemberitahuanDosen;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Sidang;
 use Simta\Models\Evaluasi;
+use Simta\Models\Ruangan;
+use Simta\Models\BidangMinat;
 
 class RudeSeeder extends Seeder {
 
@@ -20,6 +22,15 @@ class RudeSeeder extends Seeder {
 	public function run()
 	{
         $faker = Faker\Factory::create();
+
+        $ruangan = new Ruangan;
+        $ruangan->kode_ruangan = $faker->unique->word;
+        $ruangan->save();
+
+        $bidang_minat = new BidangMinat;
+        $bidang_minat->kode_bidang_minat = $faker->unique->word;
+        $bidang_minat->save();
+
 
         for($i = 0; $i < 10; $i++)
         {
@@ -79,7 +90,7 @@ class RudeSeeder extends Seeder {
                 $ta->tanggal_mulai = "2014-01-01";
                 $ta->tanggal_selesai = "2014-05-05";
                 $ta->status = "pra_diajukan";
-                $ta->kode_bidang_minat = "NCC";
+                $ta->bidangMinat()->associate($bidang_minat);
                 $ta->save();
                 $ta->dosenPembimbing()->save($dosen);
                 $ta->save();
@@ -88,6 +99,7 @@ class RudeSeeder extends Seeder {
                 $sidang->jenis_sidang = "proposal";
                 $sidang->waktu_mulai = "2014-01-01 00:00:00";
                 $sidang->waktu_selesai = "2014-02-02 10:10:10";
+                $sidang->ruangan()->associate($ruangan);
                 $sidang->tugasAkhir()->associate($ta);
                 $sidang->save();
 

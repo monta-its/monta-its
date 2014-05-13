@@ -63,6 +63,7 @@ class FirstDdl extends Migration {
 
         Schema::create('dosen_pembimbing', function($table)
         {
+            $table->increments('id');
             $table->integer('kode_ta');
             $table->string('nip_dosen');
             $table->timestamps();
@@ -76,12 +77,14 @@ class FirstDdl extends Migration {
             $table->enum('jenis_sidang', array('proposal', 'akhir'));
             $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_selesai');
+            $table->string('kode_ruangan');
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('penguji_sidang', function($table)
         {
+            $table->increments('id');
             $table->integer('kode_sidang');
             $table->string('nip_dosen');
             $table->timestamps();
@@ -90,6 +93,7 @@ class FirstDdl extends Migration {
 
         Schema::create('evaluasi', function($table)
         {
+            $table->increments('id');
             $table->integer('kode_ta');
             $table->string('jenis_penilaian');
             $table->string('nip_dosen');
@@ -110,6 +114,7 @@ class FirstDdl extends Migration {
 
         Schema::create('dosen_bidang_minat', function($table)
         {
+            $table->increments('id');
             $table->string('kode_bidang_minat');
             $table->string('nip_dosen');
             $table->timestamps();
@@ -132,6 +137,7 @@ class FirstDdl extends Migration {
 
         Schema::create('pemberitahuan_dosen', function($table)
         {
+            $table->increments('id');
             $table->string('nip_dosen');
             $table->string('isi');
             $table->timestamps();
@@ -140,6 +146,7 @@ class FirstDdl extends Migration {
 
         Schema::create('pemberitahuan_mahasiswa', function($table)
         {
+            $table->increments('id');
             $table->string('nrp_mahasiswa');
             $table->string('isi');
             $table->timestamps();
@@ -167,6 +174,7 @@ class FirstDdl extends Migration {
         Schema::drop('pemberitahuan_dosen');
         Schema::drop('evaluasi');
         Schema::drop('pemberitahuan_mahasiswa');
+        Schema::drop('pegawai');
 	}
 
 }

@@ -56,5 +56,16 @@ class TugasAkhir extends Eloquent {
     {
         return $this->hasMany('Simta\Models\Evaluasi', 'kode_ta', 'kode_ta');
     }
+
+
+    /**
+     * Relasi many-to-one dengan BidangMinat
+     *
+     * @return Simta\Models\BidangMinat
+     */
+    public function bidangMinat()
+    {
+        return $this->belongsTo('Simta\Models\BidangMinat', 'kode_bidang_minat', 'kode_bidang_minat');
+    }
 }
 ?>

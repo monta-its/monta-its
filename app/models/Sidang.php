@@ -28,6 +28,16 @@ class Sidang extends Eloquent {
     }
 
     /**
+     * Relasi many-to-one dengan tabel Ruangan
+     *
+     * @return Simta\Models\Ruangan
+     */
+    public function ruangan()
+    {
+        return $this->belongsTo('Simta\Models\Ruangan', 'kode_ruangan', 'kode_ruangan');
+    }
+
+    /**
      * Relasi many-to-many dengan tabel Dosen
      * Tabel junction bernama "penguji_sidang"
      *

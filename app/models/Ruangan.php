@@ -1,18 +1,21 @@
-
 <?php
+/**
+ * Model untuk Ruangan
+ *
+ * @author Putu Wiramaswara Widya <wiramaswara11@mhs.if.its.ac.id>
+ * @package Simta\Models\Ruangan
+ *
+ */
+namespace Simta\Models;
+use Eloquent;
 
 class Ruangan extends Eloquent {
     protected $table = 'ruangan';
     public $timestamps = true;
     protected $softDelete = true;
-
-
-    public function jurusan()
-    {
-        return $this->belongsTo('Jurusan', 'kode_jurusan');
-    }
-
-
+    protected $primaryKey = "kode_ruangan";
+    public $increments = false;
+    protected $fillable = ["kode_ruangan"];
 
 }
 ?>

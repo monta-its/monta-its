@@ -1,23 +1,40 @@
 <?php
+/**
+ * Model untuk Mahasiswa
+ *
+ * @author Putu Wiramaswara Widya <wiramaswara11@mhs.if.its.ac.id>
+ * @package Simta\Models\Mahasiswa
+ *
+ */
+
+namespace Simta\Models;
+use Eloquent;
 
 class Mahasiswa extends Eloquent {
     protected $table = 'mahasiswa';
     public $timestamps = true;
     protected $softDelete = true;
+    protected $fillable = ['nrp_mahasiswa', 'nama_lengkap', 'kata_sandi', 'angkatan'];
 
-    public function jurusan()
-    {
-        return $this->belongsTo('Jurusan', 'kode_jurusan');
-    }
 
+    /**
+     * Relasi one-to-many dengan tabel TugasAkhir
+     *
+     * @return Simta\Models\TugasAkhir
+     */
     public function tugasAkhir()
     {
-        return $this->hasMany('TugasAkhir', 'nrp', 'nrp');
+        return $this->hasMany('TugasAkhir', 'nrp_mahasiswa', 'nrp_mahasiswa');
     }
 
-    public function notifikasi()
+    /**
+     * Relasi one-to-many dengan tabel PemberitahuanMahasiswa
+     *
+     * @return Simta\Models\PemberitahuanMahasiswa
+     */
+    public function pemberitahuan()
     {
-        return $this->hasMany('NotifikasiMahasiswa', 'nrp_mahasiswa', 'nrp');
+        return $this->hasMany('Simta\Models\PemberitahuanMahasiswa', 'nrp_mahasiswa', 'nrp_mahasiswa');
     }
 
 }

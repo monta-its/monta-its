@@ -3,6 +3,7 @@
 
 <head>
     @include('includes.dasbor.head')
+    @yield('custom_head')
 </head>
 
 <body>

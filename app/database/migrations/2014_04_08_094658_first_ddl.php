@@ -198,6 +198,13 @@ class FirstDdl extends Migration {
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('sessions', function($table)
+        {
+            $table->string('id')->unique();
+            $table->text('payload');
+            $table->integer('last_activity');
+        });
 	}
 
 	/**
@@ -226,6 +233,7 @@ class FirstDdl extends Migration {
         Schema::drop('topik');
         Schema::drop('bidang_keahlian');
         Schema::drop('bidang_keahlian_dosen');
+        Schema::drop('sessions');
 	}
 
 }

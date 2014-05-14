@@ -12,7 +12,8 @@ namespace Simta\Controllers;
 use BaseController;
 use URL;
 use View;
-
+use Input;
+use Redirect;
 class BeritaController extends BaseController {
 
 
@@ -99,17 +100,28 @@ class BeritaController extends BaseController {
      */
     function dasborLihatDaftarBerita()
     {
-        return null;
+        return View::make('pages.dasbor.berita.index');
     }
 
     /**
-     * Tambahkan berita baru
+     * Tambahkan berita baru. Menampilkan laman penambahan berita.
      *
      * @return View
      */
     function dasborTambahkanBerita()
     {
-        return null;
+        return View::make('pages.dasbor.berita.baru');
+    }
+
+    /**
+     * Simpan berita baru.
+     *
+     * @return View
+     */
+    function dasborSimpanBeritaBaru()
+    {
+        //return var_dump(Input::all());
+        return Redirect::to('dasbor/berita');
     }
 
     /**
@@ -120,7 +132,18 @@ class BeritaController extends BaseController {
      */
     function dasborSuntingBerita($id_berita)
     {
-        return null;
+        return View::make('pages.dasbor.berita.sunting');
+    }
+
+    /**
+     * Simpan berita yang telah disunting.
+     *
+     * @return View
+     */
+    function dasborSimpanPerubahanBerita()
+    {
+        //return var_dump(Input::all());
+        return Redirect::to('dasbor/berita');
     }
 
     /**
@@ -131,6 +154,6 @@ class BeritaController extends BaseController {
      */
     function dasborHapusBerita($id_berita)
     {
-        return null;
+        return Redirect::to('dasbor/berita');
     }
 }

@@ -17,10 +17,11 @@
 // BeritaController
 Route::get('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
 Route::get('/berita/{id_berita}', 'Simta\Controllers\BeritaController@lihatIsiBerita');
-Route::get('/berita/kategori/{id_kategori}', 'Simta\Controllers\BeritaController@lihatBeritaDariKategori');
 Route::get('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborLihatDaftarBerita');
 Route::get('/dasbor/berita/baru', 'Simta\Controllers\BeritaController@dasborTambahkanBerita');
+Route::post('/dasbor/berita/baru', 'Simta\Controllers\BeritaController@dasborSimpanBeritaBaru');
 Route::get('/dasbor/berita/sunting/{id_berita}', 'Simta\Controllers\BeritaController@dasborSuntingBerita');
+Route::post('/dasbor/berita/sunting/{id_berita}', 'Simta\Controllers\BeritaController@dasborSimpanPerubahanBerita');
 Route::get('/dasbor/berita/hapus/{id_berita}', 'Simta\Controllers\BeritaController@dasborHapusBerita');
 
 // DasborMainController

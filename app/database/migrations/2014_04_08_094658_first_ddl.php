@@ -35,7 +35,6 @@ class FirstDdl extends Migration {
         {
             $table->string('nip_dosen')->primary();
             $table->string('nidn')->unique();
-            $table->string('nama_dosen')->index();
             $table->string('gelar');
             $table->timestamps();
             $table->softDeletes();

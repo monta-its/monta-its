@@ -15,6 +15,8 @@ class Pegawai extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $fillable = ['nip_pegawai', 'nama_lengkap', 'kata_sandi'];
+    protected $primaryKey = "nip_pegawai";
+    public $incrementing = false;
 
     /**
      * Relasi one-to-one ke Dosen
@@ -25,6 +27,24 @@ class Pegawai extends Eloquent {
     public function dosen()
     {
         return $this->hasOne('Simta\Models\Dosen', 'nip_dosen', 'nip_pegawai');
+    }
+
+    /**
+     * Mengetahui apakah seorang Pegawai merupakan Seorang Dosen
+     * Dilakukan dengan pengecekan adanya Dosen dengan NIP dari Pegawai tersebut
+     *
+     * @return boolean
+     */
+    public function apakahDosen()
+    {
+        if($this->dosen()->count() == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
 ?>

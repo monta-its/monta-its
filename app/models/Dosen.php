@@ -82,5 +82,16 @@ class Dosen extends Eloquent {
         return $this->hasOne('Simta\Models\Pegawai', 'nip_dosen', 'nip_pegawai');
     }
 
+    /**
+     * Mengetahui beban bimbingan TugasAkhir yang dilakukan oleh Dosen sebagai Pembimbing saat ini
+     * Dilakukan dengan perhitungan pembimbingTugasAkhir pada tugasAkhir dengan status tidak sama dengan 'selesai' dan 'mengundurkan diri'
+     *
+     * @return int
+    */
+    public function bebanBimbinganSaatIni()
+    {
+        return $this->pembimbingTugasAkhir()->where('status', '!=', 'selesai')->where('status', '!=', 'mengundurkan_diri')->count();
+    }
+
 }
 ?>

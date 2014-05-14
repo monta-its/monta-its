@@ -14,6 +14,11 @@
 
 /* Rute fix ke controller */
 
+Route::get('/', function()
+{
+    return Redirect::to('/berita');
+});
+
 // BeritaController
 Route::get('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
 Route::get('/berita/{id_berita}', 'Simta\Controllers\BeritaController@lihatIsiBerita');
@@ -24,107 +29,32 @@ Route::get('/dasbor/berita/sunting/{id_berita}', 'Simta\Controllers\BeritaContro
 Route::post('/dasbor/berita/sunting/{id_berita}', 'Simta\Controllers\BeritaController@dasborSimpanPerubahanBerita');
 Route::get('/dasbor/berita/hapus/{id_berita}', 'Simta\Controllers\BeritaController@dasborHapusBerita');
 
+// MahasiswaController
+Route::get('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasbor');
+Route::get('/dasbor/mahasiswa/akun', 'Simta\Controllers\MahasiswaController@kelolaAkun');
+Route::get('/dasbor/mahasiswa/pembimbing', 'Simta\Controllers\MahasiswaController@kelolaPembimbing');
+Route::get('/dasbor/mahasiswa/penguji', 'Simta\Controllers\MahasiswaController@kelolaPenguji');
+Route::get('/dasbor/mahasiswa/proposal', 'Simta\Controllers\MahasiswaController@kelolaProposal');
+
+// BidangMinatController
+Route::get ('/prodi', 'Simta\Controllers\BidangMinatController@lihatSemuaBidangMinat');
+Route::get ('/prodi/{id_prodi}', 'Simta\Controllers\BidangMinatController@lihatRincianBidangMinat');
+Route::get ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
+Route::get ('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
+Route::post('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
+Route::get ('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
+Route::post('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
+Route::get ('/dasbor/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
+
 // DasborMainController
 // DasborPembimbingController
 // DasborPengujiController
 // BidangMinatController
 // PanduanController
 // TopikController
-//
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
-
-// /
-Route::get('/', function()
-{
-    return Redirect::to('/berita');
-});
-
-// /dasbor
-Route::get('/dasbor', function()
-{
-    $status = array(
-        'TA' => 'MAJU SIDANG',
-        'Prodi' => 'REKAYASA PERANGKAT LUNAK',
-    );
-
-    $profil = array(
-        'Nama' => 'Michael Schumacher',
-        'NRP' => '5111100000',
-        'TopikTA' => 'Simulasi',
-        'JudulTA' => 'Aplikasi Simulasi Pembalap F1',
-        'DeskripsiTA' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in',
-        'Pembimbing' => 'Kimi Räikkönen',
-        'Penguji' => 'Fernando Alonso',
-        'Mulai' => '1 Januari 2013',
-        'Selesai' => '2 Januari 2013',
-
-    );
-
-    View::share('status', $status);
-    View::share('profil', $profil);
-    return View::make('pages.dasbor.index');
-});
-// /dasbor/akun
-Route::get('/dasbor/akun', function()
-{
-    return View::make('pages.dasbor.akun');
-});
-// /dasbor/pembimbing
-Route::get('/dasbor/pembimbing', function()
-{
-    $statusPembimbing = 'Michael Schumacher';
-    View::share('statusPembimbing', $statusPembimbing);
-    $daftarProdi = array(
-        array('kode' => '0928019824', 'nama' => 'RPL'),
-        array('kode' => '0928019824', 'nama' => 'KCV'),
-        array('kode' => '0928019824', 'nama' => 'NCC')
-    );
-    View::share('daftarProdi', $daftarProdi);
-    $daftarPembimbing = array(
-        array('NIP' => '0928019824', 'nama' => 'Michael Schumacher'),
-        array('NIP' => '0928019824', 'nama' => 'Kimi Schumacher'),
-        array('NIP' => '0928019824', 'nama' => 'Raphael Schumacher')
-    );
-    View::share('daftarPembimbing', $daftarPembimbing);
-    return View::make('pages.dasbor.pembimbing');
-});
-// /dasbor/penguji
-Route::get('/dasbor/penguji', function()
-{
-    $statusPenguji = 'Michael Schumacher';
-    View::share('statusPenguji', $statusPenguji);
-    $daftarProdi = array(
-        array('kode' => '0928019824', 'nama' => 'RPL'),
-        array('kode' => '0928019824', 'nama' => 'KCV'),
-        array('kode' => '0928019824', 'nama' => 'NCC')
-    );
-    View::share('daftarProdi', $daftarProdi);
-    $daftarPenguji = array(
-        array('NIP' => '0928019824', 'nama' => 'Michael Raikkonen'),
-        array('NIP' => '0928019824', 'nama' => 'Kimi Raikkonen'),
-        array('NIP' => '0928019824', 'nama' => 'Raphael Raikkonen')
-    );
-    View::share('daftarPenguji', $daftarPenguji);
-    return View::make('pages.dasbor.penguji');
-});
-// /dasbor/proposal
-Route::get('/dasbor/proposal', function()
-{
-    $proposal = array(
-        'nama' => 'Proposal_TA_511110000000.pdf',
-        'format' => 'PDF',
-        'ukuran' => 45.5
-    );
-    View::share('proposal', $proposal);
-    return View::make('pages.dasbor.proposal');
-});
-// /dasbor/prodi
-Route::get('/dasbor/prodi', function()
-{
-    return View::make('pages.dasbor.pembimbing');
-});
 
 Route::get('/panduan', function()
 {
@@ -668,88 +598,6 @@ Route::get('/sidang/ta', function()
 // /dasbor/sidang/hapus/[id_sidang]
 // /statistik
 
-// /prodi
-Route::get('/prodi', function()
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Prodi')
-    );
-
-    $item = array(
-        'nama_prodi' => 'Nama Program Studi',
-        'id_prodi' => 'id_prodi',
-        'cuplikan_prodi' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'singkatan_prodi' => 'NPS',
-        'label_prodi' => 'KBK'
-    );
-
-    $l_item = array();
-    array_push($l_item, $item);
-    array_push($l_item, $item);
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-
-    return View::make('pages.prodi.index');
-});
-
-// /prodi/id_prodi
-Route::get('/prodi/{id_prodi}', function($id_prodi)
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => URL::to('/prodi'), 'text' => 'Prodi'),
-        array('link' => '', 'text' => 'Nama Program Studi (NPS)'),
-    );
-
-    $item = array(
-        'nama_prodi' => 'Nama Program Studi',
-        'id_prodi' => 'id_prodi',
-        'deskripsi_prodi' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'singkatan_prodi' => 'NPS',
-        'label_prodi' => 'KBK',
-        'dosen_prodi' => array(
-            array(
-                'id_dosen' => 'id_dosen',
-                'nama_dosen' => 'Nama Dosen',
-                'bidang_ahli' => array(
-                    array(
-                        'id_bidang_ahli' => 'id_bidang_ahli',
-                        'nama_bidang_ahli' => 'Nama Bidang Ahli'
-                    ),
-                    array(
-                        'id_bidang_ahli' => 'id_bidang_ahli',
-                        'nama_bidang_ahli' => 'Nama Bidang Ahli'
-                    )
-                )
-            ),
-            array(
-                'id_dosen' => 'id_dosen',
-                'nama_dosen' => 'Nama Dosen',
-                'bidang_ahli' => array(
-                    array(
-                        'id_bidang_ahli' => 'id_bidang_ahli',
-                        'nama_bidang_ahli' => 'Nama Bidang Ahli'
-                    ),
-                    array(
-                        'id_bidang_ahli' => 'id_bidang_ahli',
-                        'nama_bidang_ahli' => 'Nama Bidang Ahli'
-                    )
-                )
-            )
-        )
-    );
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('item', $item);
-
-    return View::make('pages.prodi.item');
-});
-
-// /dasbor/prodi/baru
-// /dasbor/prodi/sunting/[id_prodi]
-// /dasbor/prodi/hapus/[id_prodi]
 // /dosen
 Route::get('/dosen', function()
 {

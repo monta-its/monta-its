@@ -909,3 +909,13 @@ Route::post('/dasbor/pengguna/mahasiswa/cari', function()
 // /dasbor/pengguna/admin/sunting/{id_admin}
 // /dasbor/pengguna/admin/aktifkan/{id_admin}
 // /dasbor/pengguna/admin/nonaktifkan/{id_admin}
+
+// /dasbor/sit_in
+Route::get('/dasbor/sit_in', function()
+{
+    $item = array(
+        
+    );
+    View::share('item', $item);
+    return View::make('pages.dasbor.sit_in.index');
+});

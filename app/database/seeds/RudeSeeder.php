@@ -36,7 +36,7 @@ class RudeSeeder extends Seeder {
         {
             $mahasiswa = Mahasiswa::create(
                 array(
-                    'nrp_mahasiswa' => $faker->unique->randomNumber(11),
+                    'nrp_mahasiswa' => $faker->unique->randomNumber(7),
                     'nama_lengkap' => $faker->name,
                     'kata_sandi' => Hash::make('password'),
                     'angkatan' => 2011
@@ -52,7 +52,7 @@ class RudeSeeder extends Seeder {
             }
 
             $pegawai = new Pegawai;
-            $pegawai->nip_pegawai = $faker->unique->randomNumber(12);
+            $pegawai->nip_pegawai = $faker->unique->randomNumber(7);
             $pegawai->nama_lengkap = $faker->name;
             $pegawai->kata_sandi = Hash::make('password');
             $pegawai->save();
@@ -60,7 +60,7 @@ class RudeSeeder extends Seeder {
 
             if(rand(0,1) == 1) {
                 $dosen = new Dosen;
-                $dosen->nidn = $faker->unique->randomNumber(20);
+                $dosen->nidn = $faker->unique->randomNumber(7);
                 $dosen->gelar = "Lektor";
                 $pegawai->dosen()->save($dosen);
                 $dosen->save();

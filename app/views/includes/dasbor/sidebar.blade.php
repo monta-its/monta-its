@@ -13,8 +13,7 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a href="{{ URL::to('dasbor') }}"><span class="glyphicon glyphicon-dashboard"></span>
- Dasbor</a>
+                <a href="{{ URL::to('dasbor') }}"><span class="glyphicon glyphicon-dashboard"></span> Dasbor</a>
             </li>
             <li>
                 <a href="#"><span class="glyphicon glyphicon-user"></span> Pembimbing & Penguji<span class="fa arrow"></span></a>
@@ -29,12 +28,13 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="{{ URL::to('dasbor/proposal') }}"><span class="glyphicon glyphicon-upload"></span>
- Unggah Proposal</a>
+                <a href="{{ URL::to('dasbor/proposal') }}"><span class="glyphicon glyphicon-upload"></span> Unggah Proposal</a>
             </li>
             <li>
-                <a href="{{ URL::to('dasbor/pengguna/mahasiswa/tambah') }}"><span class="glyphicon glyphicon-add"></span>
- Tambah Mahasiswa</a>
+                <a href="{{ URL::to('dasbor/pengguna/mahasiswa/tambah') }}"><span class="glyphicon glyphicon-add"></span> Tambah Mahasiswa</a>
+            </li>
+            <li>
+                <a href="{{ URL::to('dasbor/sit_in') }}"><span class="glyphicon glyphicon-add"></span> Sit In</a>
             </li>
         </ul>
         <!-- /#side-menu -->

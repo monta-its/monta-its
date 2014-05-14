@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Simta\Models\Dosen | </title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../traits.html">Traits</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title"></div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../Simta/Models.html">Simta\Models</a>\Dosen</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>Dosen</strong>        extends <abbr title="Eloquent">Eloquent</abbr></p>
+
+    
+    
+            <h2>Properties</h2>
+
+            <table>
+                    <tr>
+                <td class="type" id="property_timestamps">
+                                                            
+                </td>
+                <td>$timestamps</td>
+                <td class="last">
+</td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_incrementing">
+                                                            
+                </td>
+                <td>$incrementing</td>
+                <td class="last">
+</td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\TugasAkhir">TugasAkhir</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_pembimbingTugasAkhir">pembimbingTugasAkhir</a>()
+                    <p>Relasi many-to-many ke TugasAkhir Dengan tabel junction bernama "dosen_pembimbing"</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\Sidang">Sidang</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_pengujiSidang">pengujiSidang</a>()
+                    <p>Relasi many-to-many ke Sidang Dengan tabel junction bernama "penguji_sidang"</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\Pos">Pos</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_pos">pos</a>()
+                    <p>Relasi one-to-many ke Pos</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\Panduan">Panduan</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_panduan">panduan</a>()
+                    <p>Relasi one-to-many ke Panduan</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\PemberitahuanDosen">PemberitahuanDosen</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_pemberitahuan">pemberitahuan</a>()
+                    <p>Relasi one-to-many ke PemberitahuanDosen</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\BidangMinat">BidangMinat</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_bidangMinat">bidangMinat</a>()
+                    <p>Relasi many-to-many ke BidangMinat</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\Pegawai">Pegawai</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_pegawai">pegawai</a>()
+                    <p>Relasi one-to-one ke Pegawai</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Simta\Models\Simta\Models\BidangKeahlian">BidangKeahlian</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_bidangKeahlian">bidangKeahlian</a>()
+                    <p>Relasi many-to-many dengan tabel BidangKeahlian</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    int
+                </td>
+                <td class="last">
+                    <a href="#method_bebanBimbinganSaatIni">bebanBimbinganSaatIni</a>()
+                    <p>Mengetahui beban bimbingan TugasAkhir yang dilakukan oleh Dosen sebagai Pembimbing saat ini Dilakukan dengan perhitungan pembimbingTugasAkhir pada tugasAkhir dengan status tidak sama dengan 'selesai' dan 'mengundurkan diri'</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_pembimbingTugasAkhir">
+        <div class="location">at line 27</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\TugasAkhir">TugasAkhir</abbr>
+    <strong>pembimbingTugasAkhir</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi many-to-many ke TugasAkhir Dengan tabel junction bernama "dosen_pembimbing"</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\TugasAkhir">TugasAkhir</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_pengujiSidang">
+        <div class="location">at line 38</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\Sidang">Sidang</abbr>
+    <strong>pengujiSidang</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi many-to-many ke Sidang Dengan tabel junction bernama "penguji_sidang"</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\Sidang">Sidang</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_pos">
+        <div class="location">at line 48</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\Pos">Pos</abbr>
+    <strong>pos</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi one-to-many ke Pos</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\Pos">Pos</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_panduan">
+        <div class="location">at line 58</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\Panduan">Panduan</abbr>
+    <strong>panduan</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi one-to-many ke Panduan</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\Panduan">Panduan</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_pemberitahuan">
+        <div class="location">at line 68</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\PemberitahuanDosen">PemberitahuanDosen</abbr>
+    <strong>pemberitahuan</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi one-to-many ke PemberitahuanDosen</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\PemberitahuanDosen">PemberitahuanDosen</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_bidangMinat">
+        <div class="location">at line 78</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\BidangMinat">BidangMinat</abbr>
+    <strong>bidangMinat</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi many-to-many ke BidangMinat</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\BidangMinat">BidangMinat</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_pegawai">
+        <div class="location">at line 90</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\Pegawai">Pegawai</abbr>
+    <strong>pegawai</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi one-to-one ke Pegawai</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\Pegawai">Pegawai</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_bidangKeahlian">
+        <div class="location">at line 100</div>
+        <code>            public            <abbr title="Simta\Models\Simta\Models\BidangKeahlian">BidangKeahlian</abbr>
+    <strong>bidangKeahlian</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Relasi many-to-many dengan tabel BidangKeahlian</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Simta\Models\Simta\Models\BidangKeahlian">BidangKeahlian</abbr></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_bebanBimbinganSaatIni">
+        <div class="location">at line 111</div>
+        <code>            public            int
+    <strong>bebanBimbinganSaatIni</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Mengetahui beban bimbingan TugasAkhir yang dilakukan oleh Dosen sebagai Pembimbing saat ini Dilakukan dengan perhitungan pembimbingTugasAkhir pada tugasAkhir dengan status tidak sama dengan 'selesai' dan 'mengundurkan diri'</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>int</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

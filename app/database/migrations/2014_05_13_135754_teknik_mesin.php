@@ -17,6 +17,7 @@ class TeknikMesin extends Migration {
             $table->increments('kode_sitin');
             $table->string('nrp_mahasiswa');
             $table->string('nip_dosen');
+            $table->string('id_topik');
             $table->boolean('disetujui');
             $table->timestamps();
             $table->softDeletes();

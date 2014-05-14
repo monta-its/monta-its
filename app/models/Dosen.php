@@ -51,6 +51,16 @@ class Dosen extends Eloquent {
     }
 
     /**
+     * Relasi one-to-many ke Panduan
+     *
+     * @return Simta\Models\Panduan
+     */
+    public function panduan()
+    {
+        return $this->hasMany('Simta\Models\Panduan', 'nip_dosen', 'nip_dosen');
+    }
+
+    /**
      * Relasi one-to-many ke PemberitahuanDosen
      *
      * @return Simta\Models\PemberitahuanDosen
@@ -80,6 +90,16 @@ class Dosen extends Eloquent {
     public function pegawai()
     {
         return $this->hasOne('Simta\Models\Pegawai', 'nip_pegawai', 'nip_dosen');
+    }
+
+    /**
+     * Relasi many-to-many dengan tabel BidangKeahlian
+     *
+     * @return Simta\Models\BidangKeahlian
+     */
+    public function bidangKeahlian()
+    {
+        return $this->belongsToMany('Simta\Models\BidangKeahlian', 'bidang_keahlian_dosen', 'nip_dosen', 'id_bidang_keahlian');
     }
 
     /**

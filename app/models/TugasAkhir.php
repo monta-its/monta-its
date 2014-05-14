@@ -59,13 +59,13 @@ class TugasAkhir extends Eloquent {
 
 
     /**
-     * Relasi many-to-one dengan BidangMinat
+     * Relasi many-to-one dengan Topik
      *
-     * @return Simta\Models\BidangMinat
+     * @return Simta\Models\Topik
      */
-    public function bidangMinat()
+    public function topik()
     {
-        return $this->belongsTo('Simta\Models\BidangMinat', 'kode_bidang_minat', 'kode_bidang_minat');
+        return $this->belongsTo('Simta\Models\Topik', 'id_topik', 'id_topik');
     }
 }
 ?>

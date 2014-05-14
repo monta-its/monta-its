@@ -39,5 +39,14 @@ class SitIn extends Eloquent {
     }
 
 
+    /**
+     * Relasi many-to-one dengan tabel Topik
+     *
+     * @return Simta\Models\Topik
+     */
+    public function topik()
+    {
+        return $this->belongsTo('Simta\Models\Topik', 'id_topik', 'id_topik');
+    }
 }
 ?>

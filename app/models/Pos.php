@@ -28,6 +28,5 @@ class Pos extends Eloquent {
         return $this->hasOne('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
     }
 
-
 }
 ?>

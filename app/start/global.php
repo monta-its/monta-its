@@ -78,4 +78,8 @@ App::down(function()
 |
 */
 
+Auth::extend('simta_auth', function($app) {
+    $provider = new Simta\Systems\UserProvider();
+    return $provider;
+});
 require app_path().'/filters.php';

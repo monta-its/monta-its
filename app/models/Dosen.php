@@ -79,7 +79,7 @@ class Dosen extends Eloquent {
 
     public function pegawai()
     {
-        return $this->hasOne('Simta\Models\Pegawai', 'nip_dosen', 'nip_pegawai');
+        return $this->hasOne('Simta\Models\Pegawai', 'nip_pegawai', 'nip_dosen');
     }
 
     /**

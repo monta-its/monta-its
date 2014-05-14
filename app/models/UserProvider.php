@@ -30,7 +30,7 @@ class UserProvider implements UserProviderInterface {
 
         // Cari tahu apakah dia mahasiswa atau pegawai
         $mahasiswa = Mahasiswa::find($identifier);
-        if($mahasiswa != NULl)
+        if($mahasiswa != NULL)
         {
             $user->nomor_induk = $mahasiswa->nrp_mahasiswa;
             $user->kata_sandi = $mahasiswa->kata_sandi;
@@ -44,7 +44,7 @@ class UserProvider implements UserProviderInterface {
        {
            $user->nomor_induk = $pegawai->nip_pegawai;
            $user->kata_sandi = $pegawai->kata_sandi;
-           if($user->apakahDosen())
+           if($pegawai->apakahDosen())
            {
                $user->peran = 2;
            }

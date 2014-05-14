@@ -38,6 +38,87 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::guest('login');
 });
 
+/*
+ * Simta own implementation of auth filter
+ */
+
+Route::filter('mahasiswaAuth', function()
+{
+    if(Auth::check())
+    {
+        $mahasiswa = Simta\Models\Mahasiswa::find(Auth::getUser()->getAuthIdentifier());
+        if($mahasiswa == NULL)
+        {
+            Redirect::guest('login');
+        }
+    }
+    else
+    {
+        Redirect::guest('login');
+    }
+});
+
+Route::filter('pegawaiAuth', function()
+{
+    if(Auth::check())
+    {
+        $pegawai = Simta\Models\Pegawai::find(Auth::getUser()->getAuthIdentifier());
+        if($pegawai == NULL)
+        {
+            Redirect::guest('login');
+        }
+    }
+    else
+    {
+        Redirect::guest('login');
+    }
+});
+
+Route::filter('pegawaiNonDosenAuth', function()
+{
+    if(Auth::check())
+    {
+        $pegawai = Simta\Models\Pegawai::find(Auth::getUser()->getAuthIdentifier());
+        if($pegawai != NULL)
+        {
+            if($pegawai->apakahDosen() == true)
+            {
+                Redirect::guest('login');
+            }
+        }
+        else
+        {
+            Redirect::guest('login');
+        }
+    }
+    else
+    {
+        Redirect::guest('login');
+    }
+});
+
+Route::filter('dosenAuth', function()
+{
+    if(Auth::check())
+    {
+        $pegawai = Simta\Models\Pegawai::find(Auth::getUser()->getAuthIdentifier());
+        if($pegawai != NULL)
+        {
+            if($pegawai->apakahDosen() != true)
+            {
+                Redirect::guest('login');
+            }
+        }
+        else
+        {
+            Redirect::guest('login');
+        }
+    }
+    else
+    {
+        Redirect::guest('login');
+    }
+});
 
 Route::filter('auth.basic', function()
 {

@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Model untuk Pos
+ * Model untuk Panduan
  *
  * @author Putu Wiramaswara Widya <wiramaswara11@mhs.if.its.ac.id>
- * @package Simta\Models\Pos
+ * @package Simta\Models\Panduan
  *
  */
 
 namespace Simta\Models;
 use Eloquent;
 
-class Pos extends Eloquent {
-    protected $table = 'pos';
+class Panduan extends Eloquent {
+    protected $table = 'panduan';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $primaryKey = "id_post";
+    protected $primaryKey = "id_panduan";
     protected $fillable = ["judul", "isi"];
 
     /**

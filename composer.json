@@ -33,7 +33,8 @@
 		"preferred-install": "dist"
 	},
     "require-dev": {
-      "fzaninotto/faker": "1.3.*@dev"
+      "fzaninotto/faker": "1.3.*@dev",
+      "sami/sami": "*"
     },
 	"minimum-stability": "stable"
 }

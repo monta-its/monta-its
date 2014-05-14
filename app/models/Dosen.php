@@ -26,7 +26,7 @@ class Dosen extends Eloquent {
      */
     public function pembimbingTugasAkhir()
     {
-        return $this->belongsToMany('TugasAkhir', 'dosen_pembimbing', 'nip_dosen', 'kode_ta');
+        return $this->belongsToMany('Simta\Models\TugasAkhir', 'dosen_pembimbing', 'nip_dosen', 'kode_ta');
     }
 
     /**
@@ -37,7 +37,7 @@ class Dosen extends Eloquent {
      */
     public function pengujiSidang()
     {
-        return $this->belongsToMany('Penguji', 'penguji_sidang', 'nip_dosen', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Penguji', 'penguji_sidang', 'nip_dosen', 'nip_dosen');
     }
 
     /**
@@ -67,7 +67,7 @@ class Dosen extends Eloquent {
      */
     public function bidangMinat()
     {
-        return $this->belongsToMany('BidangMinat', 'dosen_bidang_minat', 'nip_dosen', 'kode_bidang_minat');
+        return $this->belongsToMany('Simta\Models\BidangMinat', 'dosen_bidang_minat', 'nip_dosen', 'kode_bidang_minat');
     }
 
 
@@ -79,7 +79,7 @@ class Dosen extends Eloquent {
 
     public function pegawai()
     {
-        return $this->hasOne('Pegawai', 'nip_dosen', 'nip_pegawai');
+        return $this->hasOne('Simta\Models\Pegawai', 'nip_dosen', 'nip_pegawai');
     }
 
 }

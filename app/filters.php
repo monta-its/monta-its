@@ -82,6 +82,7 @@ Route::filter('dosenAuth', function()
     }
 });
 
+/*
 Route::when('dasbor', 'auth');
 Route::when('dasbor/*', 'auth');
 Route::when('dasbor/mahasiswa', 'mahasiswaAuth');
@@ -90,6 +91,7 @@ Route::when('dasbor/pegawai', 'pegawaiAuth');
 Route::when('dasbor/pegawai/*', 'pegawaiAuth');
 Route::when('dasbor/dosen', 'dosenAuth');
 Route::when('dasbor/dosen/*', 'dosenAuth');
+*/
 
 Route::filter('auth.basic', function()
 {

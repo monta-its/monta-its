@@ -11,7 +11,7 @@
 
     <!-- nama situs dan menu utama (rata kiri) -->
     <div class="navbar-collapse collapse navbar-inverse-collapse" id="navbar-main">
-    <?php 
+    <?php
       $l_menu = array(
         array(
           'type' => 'local',
@@ -77,25 +77,29 @@
         @endif
       @endforeach
       </ul>
-      
+
       <!-- menu akun -->
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nama User<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="{{ URL::to('/dasbor') }}">
-                <span class="glyphicon glyphicon-cog"></span> Dasbor
-              </a>
-            </li>
-            <li>
-              <a href="{{ URL::to('/dasbor/akun') }}">
-                <span class="glyphicon glyphicon-user"></span> Profil Pengguna
-              </a>
-            </li>
-          </ul>
+          @if (Auth::check())
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->nomor_induk  }}<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="{{ URL::to('/dasbor') }}">
+                    <span class="glyphicon glyphicon-cog"></span> Dasbor
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ URL::to('/dasbor/akun') }}">
+                    <span class="glyphicon glyphicon-user"></span> Profil Pengguna
+                  </a>
+                </li>
+              </ul>
+          @else
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
+          @endif
         </li>
       </ul>
     </div>
-  </div> 
-</div> 
+  </div>
+</div>

@@ -11,7 +11,7 @@
             <span>{{ $item['label_prodi'] }}: </span><a href="{{ URL::to('prodi/'. $item['id_prodi']) }}">{{ $item['nama_prodi'] }}</a>
             <span> · </span>
             <span class="glyphicon glyphicon-tags"></span>
-            <span>Bidang Ahli: </span><a href="{{ URL::to('prodi/'. $item['id_bidang_ahli']) }}">{{ $item['nama_bidang_ahli'] }}</a>
+            <span>Bidang Ahli: </span><a href="{{ URL::to('prodi/'. $item['id_bidang_keahlian']) }}">{{ $item['nama_bidang_keahlian'] }}</a>
             <br />
             <span class="glyphicon glyphicon-user"></span>
             <span>Penulis: </span>

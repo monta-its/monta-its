@@ -3,7 +3,7 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <h3><strong>{{ $item['judul_bidang_ahli'] }}</strong></h3>
+    <h3><strong>{{ $item['judul_bidang_keahlian'] }}</strong></h3>
         <p>
             <span class="glyphicon glyphicon-tag"></span>
             <span>{{ $item['label_prodi'] }}: </span><a href="{{ URL::to('prodi/'. $item['id_prodi']) }}">{{ $item['nama_prodi'] }}</a>
@@ -15,7 +15,7 @@
         <div class="item-main">
             <div class="row">
                 <div class="col-md-12">
-                    {{ $item['isi_bidang_ahli'] }}
+                    {{ $item['isi_bidang_keahlian'] }}
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach ($item['topik_bidang_ahli'] as $topik)
+                    @foreach ($item['topik_bidang_keahlian'] as $topik)
 
                         <tr>
                             <td>

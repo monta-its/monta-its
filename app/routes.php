@@ -56,6 +56,21 @@ Route::get('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanCon
 Route::post('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSimpanPerubahanPanduan');
 Route::get('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
 
+// BidangKeahlianController
+Route::get('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@lihatSemuaBidangKeahlian');
+Route::get('/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@lihatIsiBidangKeahlian');
+Route::get('/dasbor/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborLihatDaftarBidangKeahlian');
+Route::get('/dasbor/bidang_keahlian/baru', 'Simta\Controllers\BidangKeahlianController@dasborTambahkanBidangKeahlian');
+Route::post('/dasbor/bidang_keahlian/baru', 'Simta\Controllers\BidangKeahlianController@dasborSimpanBidangKeahlianBaru');
+Route::get('/dasbor/bidang_keahlian/sunting/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborSuntingBidangKeahlian');
+Route::post('/dasbor/bidang_keahlian/sunting/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborSimpanPerubahanBidangKeahlian');
+Route::get('/dasbor/bidang_keahlian/hapus/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborHapusBidangKeahlian');
+// prioritas rendah
+Route::get('/bidang_keahlian/prodi/{id_prodi}', function($id_prodi)
+{
+    return 'Halaman memuat berbagai bidang ahli dengan filter prodi tertentu';
+});
+
 // DasborMainController
 // DasborPembimbingController
 // DasborPengujiController
@@ -66,170 +81,7 @@ Route::get('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanContr
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
 
-// /bidang_ahli
-Route::get('/bidang_ahli', function()
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Bidang Ahli')
-    );
 
-    $item = array(
-        'judul_bidang_ahli' => 'Judul Bidang Ahli',
-        'id_bidang_ahli' => 'id_bidang_ahli',
-        'cuplikan_bidang_ahli' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'nama_prodi' => 'NCC',
-        'id_prodi' => 'id_prodi',
-        'id_bidang_ahli' => 'id_bidang_ahli',
-        'nama_bidang_ahli' => 'Nama Bidang Ahli',
-        'label_prodi' => 'Laboratorium',
-        'status_terambil' => true,
-        'waktu_mulai' => '10 Januari 2013',
-        'waktu_akhir' => '30 Desember 2014',
-        'penulis' => array(
-            'id_dosen' => 'id_dosen',
-            'nama_dosen' => 'Nama Dosen'
-        )
-    );
-
-    $l_item = array();
-    array_push($l_item, $item);
-    $item['status_terambil'] = false;
-    $item['nama_prodi'] = 'RPL';
-    array_push($l_item, $item);
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-    return View::make('pages.bidang_ahli.index');
-});
-
-// /bidang_ahli/[id_bidang_ahli]
-Route::get('/bidang_ahli/{id_bidang_ahli}', function($id_bidang_ahli)
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => URL::to('/bidang_ahli'), 'text' => 'Bidang Ahli'),
-        array('link' => '', 'text' => 'Judul Bidang Ahli')
-    );
-    $item = array(
-        'judul_bidang_ahli' => 'Judul Bidang Ahli',
-        'id_bidang_ahli' => 'id_bidang_ahli',
-        'isi_bidang_ahli' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'nama_prodi' => 'NCC',
-        'id_prodi' => 'id_prodi',
-        'label_prodi' => 'Laboratorium',
-        'id_bidang_ahli' => 'id_bidang_ahli',
-        'nama_bidang_ahli' => 'Nama Bidang Ahli',
-        'status_terambil' => false,
-        'waktu_mulai' => '10 Januari 2013',
-        'waktu_akhir' => '30 Desember 2014',
-        'penulis' => array(
-            'id_dosen' => 'id_dosen',
-            'nama_dosen' => 'Nama Dosen'
-        ),
-        'topik_bidang_ahli' => array(
-            array(
-                'judul_topik'=> 'Judul Topik',
-                'id_topik'=> 'id_topik',
-                'mahasiswa_topik'=> array(
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    )
-                )
-            ),
-            array(
-                'judul_topik'=> 'Judul Topik',
-                'id_topik'=> 'id_topik',
-                'mahasiswa_topik'=> array(
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    )
-                )
-            ),
-            array(
-                'judul_topik'=> 'Judul Topik',
-                'id_topik'=> 'id_topik',
-                'mahasiswa_topik'=> array(
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    )
-                )
-            ),
-            array(
-                'judul_topik'=> 'Judul Topik',
-                'id_topik'=> 'id_topik',
-                'mahasiswa_topik'=> array(
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    ),
-                    array(
-                        'nama_mahasiswa' => 'Nama Mahasiswa',
-                        'nrp_mahasiswa' => '1234567890',
-                        'id_mahasiswa' => '0987654321',
-                    )
-                )
-            )
-        )
-    );
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('item', $item);
-    return View::make('pages.bidang_ahli.item');
-});
-
-// /bidang_ahli/prodi/[id_prodi]
-Route::get('/bidang_ahli/prodi/{id_prodi}', function($id_prodi)
-{
-    return 'Halaman memuat berbagai bidang ahli dengan filter prodi tertentu';
-});
-
-// /dasbor/bidang_ahli
-// /dasbor/bidang_ahli/baru
-// /dasbor/bidang_ahli/sunting/[id_bidang_ahli]
-// /dasbor/bidang_ahli/hapus/[id_bidang_ahli]
 
 // /topik
 Route::get('/topik', function()
@@ -245,8 +97,8 @@ Route::get('/topik', function()
         'cuplikan_topik' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
         'nama_prodi' => 'NCC',
         'id_prodi' => 'id_prodi',
-        'id_bidang_ahli' => 'id_bidang_ahli',
-        'nama_bidang_ahli' => 'Nama Bidang Ahli',
+        'id_bidang_keahlian' => 'id_bidang_keahlian',
+        'nama_bidang_keahlian' => 'Nama Bidang Ahli',
         'label_prodi' => 'Laboratorium',
         'status_terambil' => true,
         'waktu_mulai' => '10 Januari 2013',
@@ -283,8 +135,8 @@ Route::get('/topik/{id_topik}', function($id_topik)
         'nama_prodi' => 'NCC',
         'id_prodi' => 'id_prodi',
         'label_prodi' => 'Laboratorium',
-        'id_bidang_ahli' => 'id_bidang_ahli',
-        'nama_bidang_ahli' => 'Nama Bidang Ahli',
+        'id_bidang_keahlian' => 'id_bidang_keahlian',
+        'nama_bidang_keahlian' => 'Nama Bidang Ahli',
         'status_terambil' => false,
         'waktu_mulai' => '10 Januari 2013',
         'waktu_akhir' => '30 Desember 2014',
@@ -340,8 +192,8 @@ Route::get('/topik/prodi/{id_prodi}', function($id_prodi)
     return 'Halaman memuat topik-topik yang dengan filter prodi tertentu';
 });
 
-// /topik/bidang_ahli/[id_bidang_ahli]
-Route::get('/topik/bidang_ahli/{id_bidang_ahli}', function($id_bidang_ahli)
+// /topik/bidang_keahlian/[id_bidang_keahlian]
+Route::get('/topik/bidang_keahlian/{id_bidang_keahlian}', function($id_bidang_keahlian)
 {
     return 'Halaman memuat topik-topik yang dengan filter bidang ahli tertentu';
 });
@@ -449,8 +301,8 @@ Route::get('/judul/prodi/{id_prodi}', function($id_prodi)
     return 'Halaman memuat judul-judul yang dengan filter prodi tertentu';
 });
 
-// /judul/bidang_ahli/[id_bidang_ahli]
-Route::get('/judul/bidang_ahli/{id_bidang_ahli}', function($id_bidang_ahli)
+// /judul/bidang_keahlian/[id_bidang_keahlian]
+Route::get('/judul/bidang_keahlian/{id_bidang_keahlian}', function($id_bidang_keahlian)
 {
     return 'Halaman memuat judul-judul yang dengan filter bidang ahli tertentu';
 });

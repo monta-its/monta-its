@@ -28,11 +28,11 @@
                                 </td>
                                 <td>
 
-                                @for ($i = 0; $i < count($dosen['bidang_ahli']); $i++)
-                                    <a href="{{ URL::to('bidang_ahli/' . $dosen['bidang_ahli'][$i]['id_bidang_ahli']) }}">
-                                        {{ $dosen['bidang_ahli'][$i]['nama_bidang_ahli'] }}
+                                @for ($i = 0; $i < count($dosen['bidang_keahlian']); $i++)
+                                    <a href="{{ URL::to('bidang_keahlian/' . $dosen['bidang_keahlian'][$i]['id_bidang_keahlian']) }}">
+                                        {{ $dosen['bidang_keahlian'][$i]['nama_bidang_keahlian'] }}
                                     </a>
-                                    @if ($i < count($dosen['bidang_ahli']) - 1)
+                                    @if ($i < count($dosen['bidang_keahlian']) - 1)
                                     <span> · </span>
                                     @endif
                                 @endfor

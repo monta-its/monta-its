@@ -5,7 +5,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">SIMTA ITS</a>
+    <a class="navbar-brand" href="{{ URL::to('/') }}">SIMTA ITS</a>
 </div>
 <!-- /.navbar-header -->
 

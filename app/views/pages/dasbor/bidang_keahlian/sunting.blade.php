@@ -1,7 +1,7 @@
-@extends('pages.dasbor.panduan.form')
+@extends('pages.dasbor.bidang_keahlian.form')
 
 @section('title')
-Sunting Panduan
+Sunting Bidang Keahlian
 @stop
 
 @section('side_menu')

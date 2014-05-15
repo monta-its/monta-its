@@ -84,12 +84,12 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nama User<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li>
-              <a href="{{ URL::to('/dasbor') }}">
+              <a href="{{ URL::to('/dasbor/mahasiswa') }}">
                 <span class="glyphicon glyphicon-cog"></span> Dasbor
               </a>
             </li>
             <li>
-              <a href="{{ URL::to('/dasbor/akun') }}">
+              <a href="{{ URL::to('/dasbor/mahasiswa/akun') }}">
                 <span class="glyphicon glyphicon-user"></span> Profil Pengguna
               </a>
             </li>

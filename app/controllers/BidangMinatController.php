@@ -70,28 +70,28 @@ class BidangMinatController extends BaseController {
                 array(
                     'id_dosen' => 'id_dosen',
                     'nama_dosen' => 'Nama Dosen',
-                    'bidang_ahli' => array(
+                    'bidang_keahlian' => array(
                         array(
-                            'id_bidang_ahli' => 'id_bidang_ahli',
-                            'nama_bidang_ahli' => 'Nama Bidang Ahli'
+                            'id_bidang_keahlian' => 'id_bidang_keahlian',
+                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
                         ),
                         array(
-                            'id_bidang_ahli' => 'id_bidang_ahli',
-                            'nama_bidang_ahli' => 'Nama Bidang Ahli'
+                            'id_bidang_keahlian' => 'id_bidang_keahlian',
+                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
                         )
                     )
                 ),
                 array(
                     'id_dosen' => 'id_dosen',
                     'nama_dosen' => 'Nama Dosen',
-                    'bidang_ahli' => array(
+                    'bidang_keahlian' => array(
                         array(
-                            'id_bidang_ahli' => 'id_bidang_ahli',
-                            'nama_bidang_ahli' => 'Nama Bidang Ahli'
+                            'id_bidang_keahlian' => 'id_bidang_keahlian',
+                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
                         ),
                         array(
-                            'id_bidang_ahli' => 'id_bidang_ahli',
-                            'nama_bidang_ahli' => 'Nama Bidang Ahli'
+                            'id_bidang_keahlian' => 'id_bidang_keahlian',
+                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
                         )
                     )
                 )

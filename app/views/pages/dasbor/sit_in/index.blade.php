@@ -56,8 +56,8 @@
                             <td>Nama Dosen 1</td>
                             <td>1234567890</td>
                             <td>
-                                <a href="{{ URL::to('bidang_ahli/' . 'id_bidang_ahli') }}">Bidang Ahli 1</a>, 
-                                <a href="{{ URL::to('bidang_ahli/' . 'id_bidang_ahli') }}">Bidang Ahli 2</a>
+                                <a href="{{ URL::to('bidang_keahlian/' . 'id_bidang_keahlian') }}">Bidang Ahli 1</a>, 
+                                <a href="{{ URL::to('bidang_keahlian/' . 'id_bidang_keahlian') }}">Bidang Ahli 2</a>
                             </td>
                             <td>
                                 <a href="{{ URL::to('dasbor/sit_in/pilih/' . 'id_dosen') }}" class="btn btn-default">Pilih</a>
@@ -67,8 +67,8 @@
                             <td>Nama Dosen 2</td>
                             <td>1234567890</td>
                             <td>
-                                <a href="{{ URL::to('bidang_ahli/' . 'id_bidang_ahli') }}">Bidang Ahli 1</a>, 
-                                <a href="{{ URL::to('bidang_ahli/' . 'id_bidang_ahli') }}">Bidang Ahli 2</a>
+                                <a href="{{ URL::to('bidang_keahlian/' . 'id_bidang_keahlian') }}">Bidang Ahli 1</a>, 
+                                <a href="{{ URL::to('bidang_keahlian/' . 'id_bidang_keahlian') }}">Bidang Ahli 2</a>
                             </td>
                             <td>
                                 <a href="{{ URL::to('dasbor/sit_in/pilih/' . 'id_dosen') }}" class="btn btn-default">Pilih</a>
@@ -78,8 +78,8 @@
                             <td>Nama Dosen 3</td>
                             <td>1234567890</td>
                             <td>
-                                <a href="{{ URL::to('bidang_ahli/' . 'id_bidang_ahli') }}">Bidang Ahli 1</a>, 
-                                <a href="{{ URL::to('bidang_ahli/' . 'id_bidang_ahli') }}">Bidang Ahli 2</a>
+                                <a href="{{ URL::to('bidang_keahlian/' . 'id_bidang_keahlian') }}">Bidang Ahli 1</a>, 
+                                <a href="{{ URL::to('bidang_keahlian/' . 'id_bidang_keahlian') }}">Bidang Ahli 2</a>
                             </td>
                             <td>
                                 <a href="{{ URL::to('dasbor/sit_in/pilih/' . 'id_dosen') }}" class="btn btn-default">Pilih</a>

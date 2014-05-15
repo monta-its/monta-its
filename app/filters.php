@@ -120,7 +120,13 @@ Route::filter('dosenAuth', function()
     }
 });
 
+Route::when('dasbor/*', 'auth');
+Route::when('dasbor/mahasiswa/*', 'mahasiswaAuth');
+Route::when('dasbor/pegawai/*', 'pegawaiNonDosenAuth');
+Route::when('dasbor/dosen/*', 'dosenAuth');
+
 Route::filter('auth.basic', function()
+
 {
 	return Auth::basic();
 });

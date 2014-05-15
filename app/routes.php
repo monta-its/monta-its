@@ -19,6 +19,12 @@ Route::get('/', function()
     return Redirect::to('/berita');
 });
 
+// LoginController
+
+Route::get('/login', 'Simta\Controllers\LoginController@lihatLamanLogin');
+Route::post('/login', 'Simta\Controllers\LoginController@lakukanProsesLogin');
+Route::post('/logout', 'Simta\Controllers\LoginController@lakukanProsesLogout');
+
 // BeritaController
 Route::get('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
 Route::get('/berita/{id_berita}', 'Simta\Controllers\BeritaController@lihatIsiBerita');
@@ -714,7 +720,7 @@ Route::post('/dasbor/pengguna/mahasiswa/cari', function()
 Route::get('/dasbor/sit_in', function()
 {
     $item = array(
-        
+
     );
     View::share('item', $item);
     return View::make('pages.dasbor.sit_in.index');

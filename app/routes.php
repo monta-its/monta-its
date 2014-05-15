@@ -46,6 +46,16 @@ Route::get ('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatCo
 Route::post('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
 Route::get ('/dasbor/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
 
+// PanduanController
+Route::get('/panduan', 'Simta\Controllers\PanduanController@lihatSemuaPanduan');
+Route::get('/panduan/{id_panduan}', 'Simta\Controllers\PanduanController@lihatIsiPanduan');
+Route::get('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborLihatDaftarPanduan');
+Route::get('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborTambahkanPanduan');
+Route::post('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborSimpanPanduanBaru');
+Route::get('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSuntingPanduan');
+Route::post('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSimpanPerubahanPanduan');
+Route::get('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
+
 // DasborMainController
 // DasborPembimbingController
 // DasborPengujiController
@@ -55,65 +65,6 @@ Route::get ('/dasbor/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatCont
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
-
-Route::get('/panduan', function()
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Panduan')
-    );
-
-    $item = array(
-        'judul_panduan' => 'Judul Panduan',
-        'id_panduan' => 'id_panduan',
-        'cuplikan_panduan' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'waktu' => '11 Januari 2014 13:00AM',
-        'nama_dosen' => 'Nama Penulis',
-        'id_dosen' => 'id_dosen',
-        'tautan_lampiran' => 'tautan/ke/berkas.ext',
-        'nama_lampiran' => 'Nama File.ext'
-    );
-
-    $l_item = array();
-    array_push($l_item, $item);
-    $item['tautan_lampiran'] = '';
-    $item['nama_lampiran'] = '';
-    array_push($l_item, $item);
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-    return View::make('pages.panduan.index');
-});
-
-// /panduan/[id_panduan]
-Route::get('/panduan/{id_panduan}', function($id_panduan)
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => URL::to('panduan'), 'text' => 'Panduan'),
-        array('link' => '', 'text' => 'Judul Panduan'),
-    );
-
-    $item = array(
-        'judul_panduan' => 'Judul Panduan',
-        'id_panduan' => 'id_panduan',
-        'isi_panduan' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'waktu' => '11 Januari 2014 13:00AM',
-        'nama_dosen' => 'Nama Penulis',
-        'id_dosen' => 'id_dosen',
-        'tautan_lampiran' => 'tautan/ke/berkas.ext',
-        'nama_lampiran' => 'Nama File.ext'
-    );
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('item', $item);
-    return View::make('pages.panduan.item');
-});
-
-// /dasbor/panduan
-// /dasbor/panduan/baru
-// /dasbor/panduan/sunting/[id_panduan]
-// /dasbor/panduan/hapus/[id_panduan]
 
 // /bidang_ahli
 Route::get('/bidang_ahli', function()

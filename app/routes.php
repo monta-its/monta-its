@@ -19,6 +19,9 @@ Route::get('/', function()
     return Redirect::to('/berita');
 });
 
+// DasborMainController
+Route::get('/dasbor','Simta\Controllers\DasborMainController@tentukanDasborMana');
+
 // LoginController
 
 Route::get('/login', 'Simta\Controllers\LoginController@lihatLamanLogin');
@@ -77,133 +80,37 @@ Route::get('/bidang_keahlian/prodi/{id_prodi}', function($id_prodi)
     return 'Halaman memuat berbagai bidang ahli dengan filter prodi tertentu';
 });
 
-// DasborMainController
-Route::get('/dasbor','Simta\Controllers\DasborMainController@tentukanDasborMana');
+// TopikController
+Route::get('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');
+Route::get('/topik/{id_topik}', 'Simta\Controllers\TopikController@lihatIsiTopik');
+Route::get('/dasbor/topik', 'Simta\Controllers\TopikController@dasborLihatDaftarTopik');
+Route::get('/dasbor/topik/baru', 'Simta\Controllers\TopikController@dasborTambahkanTopik');
+Route::post('/dasbor/topik/baru', 'Simta\Controllers\TopikController@dasborSimpanTopikBaru');
+Route::get('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSuntingTopik');
+Route::post('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSimpanPerubahanTopik');
+Route::get('/dasbor/topik/hapus/{id_topik}', 'Simta\Controllers\TopikController@dasborHapusTopik');
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
 
-
-
-// /topik
-Route::get('/topik', function()
+Route::get('/topik/prodi/{id_prodi}', function($id_prodi)
 {
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Topik TA')
-    );
-
-    $item = array(
-        'judul_topik' => 'Judul Topik TA',
-        'id_topik' => 'id_topik',
-        'cuplikan_topik' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'nama_prodi' => 'NCC',
-        'id_prodi' => 'id_prodi',
-        'id_bidang_keahlian' => 'id_bidang_keahlian',
-        'nama_bidang_keahlian' => 'Nama Bidang Ahli',
-        'label_prodi' => 'Laboratorium',
-        'status_terambil' => true,
-        'waktu_mulai' => '10 Januari 2013',
-        'waktu_akhir' => '30 Desember 2014',
-        'penulis' => array(
-            'id_dosen' => 'id_dosen',
-            'nama_dosen' => 'Nama Dosen'
-        )
-    );
-
-    $l_item = array();
-    array_push($l_item, $item);
-    $item['status_terambil'] = false;
-    $item['nama_prodi'] = 'RPL';
-    array_push($l_item, $item);
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-    return View::make('pages.topik.index');
+    return 'Halaman memuat topik-topik yang dengan filter prodi tertentu';
 });
-
-// /topik/[id_topik]
-Route::get('/topik/{id_topik}', function($id_topik)
+Route::get('/topik/bidang_keahlian/{id_bidang_keahlian}', function($id_bidang_keahlian)
 {
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => URL::to('/topik'), 'text' => 'Topik TA'),
-        array('link' => '', 'text' => 'Judul Topik TA')
-    );
-    $item = array(
-        'judul_topik' => 'Judul Topik TA',
-        'id_topik' => 'id_topik',
-        'isi_topik' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'nama_prodi' => 'NCC',
-        'id_prodi' => 'id_prodi',
-        'label_prodi' => 'Laboratorium',
-        'id_bidang_keahlian' => 'id_bidang_keahlian',
-        'nama_bidang_keahlian' => 'Nama Bidang Ahli',
-        'status_terambil' => false,
-        'waktu_mulai' => '10 Januari 2013',
-        'waktu_akhir' => '30 Desember 2014',
-        'penulis' => array(
-            'id_dosen' => 'id_dosen',
-            'nama_dosen' => 'Nama Dosen'
-        ),
-        'mahasiswa_judul' => array(
-            array(
-                'judul_judul' => 'Judul Judul TA',
-                'id_judul' => 'id_judul',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'nrp_mahasiswa' => '1234567890',
-                'id_mahasiswa' => '0987654321'
-            ),
-            array(
-                'judul_judul' => 'Judul Judul TA',
-                'id_judul' => 'id_judul',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'nrp_mahasiswa' => '1234567890',
-                'id_mahasiswa' => '0987654321'
-            ),
-            array(
-                'judul_judul' => 'Judul Judul TA',
-                'id_judul' => 'id_judul',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'nrp_mahasiswa' => '1234567890',
-                'id_mahasiswa' => '0987654321'
-            )
-        )
-    );
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('item', $item);
-    return View::make('pages.topik.item');
+    return 'Halaman memuat topik-topik yang dengan filter bidang ahli tertentu';
 });
-
-// /topik/[id_topik]/ambil
-Route::get('/topik/{id_topik}/ambil', function($id_topik)
+Route::get('/topik/ambil/{id_topik}', function($id_topik)
 {
     return 'Semacam topik TA sudah terambil dan Redirect ke profil mahasiswa';
 });
 
 // /topik/[id_topik]/lepas
-Route::get('/topik/{id_topik}/lepas', function($id_topik)
+Route::get('/topik/lepas/{id_topik}', function($id_topik)
 {
     return 'Semacam topik TA yang sudah terambil sekarang dilepaskan dan Redirect ke profil mahasiswa';
 });
-
-// /topik/prodi/[id_prodi]
-Route::get('/topik/prodi/{id_prodi}', function($id_prodi)
-{
-    return 'Halaman memuat topik-topik yang dengan filter prodi tertentu';
-});
-
-// /topik/bidang_keahlian/[id_bidang_keahlian]
-Route::get('/topik/bidang_keahlian/{id_bidang_keahlian}', function($id_bidang_keahlian)
-{
-    return 'Halaman memuat topik-topik yang dengan filter bidang ahli tertentu';
-});
-
-// /dasbor/topik
-// /dasbor/topik/baru
-// /dasbor/topik/sunting/[id_topik]
-// /dasbor/topik/hapus/[id_topik]
 
 // /judul
 Route::get('/judul', function()

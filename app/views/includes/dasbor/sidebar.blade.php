@@ -25,6 +25,9 @@
                 <a href="{{ URL::to('dasbor/bidang_keahlian') }}"><span class=""></span> Bidang Keahlian</a>
             </li>
             <li>
+                <a href="{{ URL::to('dasbor/topik') }}"><span class=""></span> Topik</a>
+            </li>
+            <li>
                 <a href="{{ URL::to('dasbor/prodi') }}"><span class=""></span> Laboratorium</a>
             </li>
             <li>

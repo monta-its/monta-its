@@ -42,91 +42,56 @@ Route::filter('auth', function()
  * Simta own implementation of auth filter
  */
 
+
+
 Route::filter('mahasiswaAuth', function()
 {
     if(Auth::check())
     {
-        $mahasiswa = Simta\Models\Mahasiswa::find(Auth::getUser()->getAuthIdentifier());
-        if($mahasiswa == NULL)
+        $user = Auth::user();
+        if($user->peran != 0)
         {
-            Redirect::guest('login');
+            return Redirect::to('dasbor');
         }
     }
-    else
-    {
-        Redirect::guest('login');
-    }
 });
+
 
 Route::filter('pegawaiAuth', function()
 {
     if(Auth::check())
     {
-        $pegawai = Simta\Models\Pegawai::find(Auth::getUser()->getAuthIdentifier());
-        if($pegawai == NULL)
+        $user = Auth::user();
+        if($user->peran != 1)
         {
-            Redirect::guest('login');
+            return Redirect::to('dasbor');
         }
-    }
-    else
-    {
-        Redirect::guest('login');
     }
 });
 
-Route::filter('pegawaiNonDosenAuth', function()
-{
-    if(Auth::check())
-    {
-        $pegawai = Simta\Models\Pegawai::find(Auth::getUser()->getAuthIdentifier());
-        if($pegawai != NULL)
-        {
-            if($pegawai->apakahDosen() == true)
-            {
-                Redirect::guest('login');
-            }
-        }
-        else
-        {
-            Redirect::guest('login');
-        }
-    }
-    else
-    {
-        Redirect::guest('login');
-    }
-});
 
 Route::filter('dosenAuth', function()
 {
     if(Auth::check())
     {
-        $pegawai = Simta\Models\Pegawai::find(Auth::getUser()->getAuthIdentifier());
-        if($pegawai != NULL)
+        $user = Auth::user();
+        if($user->peran != 2)
         {
-            if($pegawai->apakahDosen() != true)
-            {
-                Redirect::guest('login');
-            }
+            return Redirect::to('dasbor');
         }
-        else
-        {
-            Redirect::guest('login');
-        }
-    }
-    else
-    {
-        Redirect::guest('login');
     }
 });
 
+Route::when('dasbor', 'auth');
 Route::when('dasbor/*', 'auth');
+Route::when('dasbor/mahasiswa', 'mahasiswaAuth');
 Route::when('dasbor/mahasiswa/*', 'mahasiswaAuth');
-Route::when('dasbor/pegawai/*', 'pegawaiNonDosenAuth');
+Route::when('dasbor/pegawai', 'pegawaiAuth');
+Route::when('dasbor/pegawai/*', 'pegawaiAuth');
+Route::when('dasbor/dosen', 'dosenAuth');
 Route::when('dasbor/dosen/*', 'dosenAuth');
 
 Route::filter('auth.basic', function()
-
 {
 	return Auth::basic();
 });

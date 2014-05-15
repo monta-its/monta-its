@@ -23,7 +23,7 @@ Route::get('/', function()
 
 Route::get('/login', 'Simta\Controllers\LoginController@lihatLamanLogin');
 Route::post('/login', 'Simta\Controllers\LoginController@lakukanProsesLogin');
-Route::post('/logout', 'Simta\Controllers\LoginController@lakukanProsesLogout');
+Route::get('/logout', 'Simta\Controllers\LoginController@lakukanProsesLogout');
 
 // BeritaController
 Route::get('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
@@ -63,11 +63,7 @@ Route::post('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanCo
 Route::get('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
 
 // DasborMainController
-// DasborPembimbingController
-// DasborPengujiController
-// BidangMinatController
-// PanduanController
-// TopikController
+Route::get('/dasbor','Simta\Controllers\DasborMainController@tentukanDasborMana');
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:

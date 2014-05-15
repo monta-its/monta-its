@@ -40,6 +40,7 @@ class FirstDdl extends Migration {
             $table->string('nip_dosen')->primary();
             $table->string('nidn')->unique();
             $table->string('gelar');
+            $table->boolean('hak_akses_pegawai');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -46,7 +46,14 @@ class UserProvider implements UserProviderInterface {
            $user->kata_sandi = $pegawai->kata_sandi;
            if($pegawai->apakahDosen())
            {
-               $user->peran = 2;
+               if($pegawai->hak_akses_dosen == 1)
+               {
+                   $user->peran = 3;
+               }
+               else
+               {
+                   $user->peran = 2;
+               }
            }
            else
            {

@@ -77,6 +77,7 @@ class RudeSeeder extends Seeder {
                 $dosen = new Dosen;
                 $dosen->nidn = $faker->unique->randomNumber(7);
                 $dosen->gelar = "Lektor";
+                $dosen->hak_akses_pegawai = rand(0,1);
                 $pegawai->dosen()->save($dosen);
                 $dosen->bidangKeahlian()->save($bidang_keahlian);
                 $dosen->save();

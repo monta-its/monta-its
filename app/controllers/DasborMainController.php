@@ -29,7 +29,7 @@ class DasborMainController extends BaseController {
         {
             return Redirect::to('dasbor/pegawai');
         }
-        else if($user->peran == 2)
+        else if($user->peran == 2 || $user->peran == 3)
         {
             return Redirect::to('dasbor/dosen');
         }

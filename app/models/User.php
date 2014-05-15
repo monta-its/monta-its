@@ -32,7 +32,8 @@ class User implements UserInterface {
       * Memastikan peran dari pengguna ybs
       * 0 = Mahasiswa
       * 1 = Pegawai Non Dosen
-      * 2 = Pegawai dan Dosen
+      * 2 = Dosen
+      * 3 = Dosen yang memiliki hak akses pegawai
       *
       * @var int $peran
       */

@@ -13,6 +13,7 @@ use URL;
 use View;
 use Input;
 use Redirect;
+use Auth;
 use Simta\Models\Mahasiswa;
 
 class MahasiswaController extends BaseController {
@@ -122,5 +123,5 @@ class MahasiswaController extends BaseController {
         return View::make('pages.dasbor.proposal');
     }
 
-    
+
 }

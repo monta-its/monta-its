@@ -14,7 +14,7 @@ class Dosen extends Eloquent {
     protected $table = 'dosen';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $fillable = ["nidn", "gelar"];
+    protected $fillable = ["nidn", "gelar", "hak_akses_pegawai"];
     protected $primaryKey = "nip_dosen";
     public $incrementing = false;
 

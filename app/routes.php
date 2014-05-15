@@ -19,6 +19,12 @@ Route::get('/', function()
     return Redirect::to('/berita');
 });
 
+// LoginController
+
+Route::get('/login', 'Simta\Controllers\LoginController@lihatLamanLogin');
+Route::post('/login', 'Simta\Controllers\LoginController@lakukanProsesLogin');
+Route::get('/logout', 'Simta\Controllers\LoginController@lakukanProsesLogout');
+
 // BeritaController
 Route::get('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
 Route::get('/berita/{id_berita}', 'Simta\Controllers\BeritaController@lihatIsiBerita');
@@ -39,22 +45,22 @@ Route::get('/dasbor/mahasiswa/proposal', 'Simta\Controllers\MahasiswaController@
 // BidangMinatController
 Route::get ('/prodi', 'Simta\Controllers\BidangMinatController@lihatSemuaBidangMinat');
 Route::get ('/prodi/{id_prodi}', 'Simta\Controllers\BidangMinatController@lihatRincianBidangMinat');
-Route::get ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
-Route::get ('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
-Route::post('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
-Route::get ('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
-Route::post('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
-Route::get ('/dasbor/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
+Route::get ('/dasbor/pegawai/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
+Route::get ('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
+Route::post('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
+Route::get ('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
+Route::post('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
+Route::get ('/dasbor/pegawai/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
 
 // PanduanController
 Route::get('/panduan', 'Simta\Controllers\PanduanController@lihatSemuaPanduan');
 Route::get('/panduan/{id_panduan}', 'Simta\Controllers\PanduanController@lihatIsiPanduan');
-Route::get('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborLihatDaftarPanduan');
-Route::get('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborTambahkanPanduan');
-Route::post('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborSimpanPanduanBaru');
-Route::get('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSuntingPanduan');
-Route::post('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSimpanPerubahanPanduan');
-Route::get('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
+Route::get('/dasbor/pegawai/panduan', 'Simta\Controllers\PanduanController@dasborLihatDaftarPanduan');
+Route::get('/dasbor/pegawai/panduan/baru', 'Simta\Controllers\PanduanController@dasborTambahkanPanduan');
+Route::post('/dasbor/pegawai/panduan/baru', 'Simta\Controllers\PanduanController@dasborSimpanPanduanBaru');
+Route::get('/dasbor/pegawai/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSuntingPanduan');
+Route::post('/dasbor/pegawai/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSimpanPerubahanPanduan');
+Route::get('/dasbor/pegawai/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
 
 // BidangKeahlianController
 Route::get('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@lihatSemuaBidangKeahlian');
@@ -72,11 +78,7 @@ Route::get('/bidang_keahlian/prodi/{id_prodi}', function($id_prodi)
 });
 
 // DasborMainController
-// DasborPembimbingController
-// DasborPengujiController
-// BidangMinatController
-// PanduanController
-// TopikController
+Route::get('/dasbor','Simta\Controllers\DasborMainController@tentukanDasborMana');
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
@@ -566,7 +568,7 @@ Route::post('/dasbor/pengguna/mahasiswa/cari', function()
 Route::get('/dasbor/sit_in', function()
 {
     $item = array(
-        
+
     );
     View::share('item', $item);
     return View::make('pages.dasbor.sit_in.index');

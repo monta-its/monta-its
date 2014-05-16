@@ -3,20 +3,16 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <h3><strong>{{ $item['judul_berita'] }}</strong></h3>
+    <h3><strong>{{ $item->judul }}</strong></h3>
         <p>
             <span class="glyphicon glyphicon-user"></span>
             <span>Penulis: </span>
-            <a class="author" href="{{ URL::to('dosen/' . $item['id_dosen']) }}">{{ $item['nama_dosen'] }}</a>
+            <a class="author" href="{{ URL::to('dosen/' . $item->dosen()->first()->pegawai()->first()->nip_pegawai) }}">{{ $item->dosen()->first()->pegawai()->first()->nama_lengkap }}</a>
             <span> · </span>
             <span class="glyphicon glyphicon-time"></span>
-            <span>Waktu: </span><strong>{{ $item['waktu'] }}</strong>
-            <span> · </span>
-            <span class="glyphicon glyphicon-tag"></span>
-            <span>Kategori: </span>
-            <a href="{{ URL::to('kategori/' . $item['id_kategori']) }}">{{ $item['nama_kategori'] }}</a>
+            <span>Waktu: </span><strong>{{ $item->updated_at }}</strong>
         </p>
-        <div class="item-main">{{ $item['isi_berita'] }}</div>
+        <div class="item-main">{{ $item->isi }}</div>
   </div>
 </div>
 

@@ -30,25 +30,10 @@ class PanduanController extends BaseController {
             array('link' => '', 'text' => 'Panduan')
         );
 
-        $item = array(
-            'judul_panduan' => 'Judul Panduan',
-            'id_panduan' => 'id_panduan',
-            'cuplikan_panduan' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-            'waktu' => '11 Januari 2014 13:00AM',
-            'nama_dosen' => 'Nama Penulis',
-            'id_dosen' => 'id_dosen',
-            'tautan_lampiran' => 'tautan/ke/berkas.ext',
-            'nama_lampiran' => 'Nama File.ext'
-        );
-
-        $l_item = array();
-        array_push($l_item, $item);
-        $item['tautan_lampiran'] = '';
-        $item['nama_lampiran'] = '';
-        array_push($l_item, $item);
+        $items = Panduan::get();
 
         View::share('breadcrumbs', $breadcrumbs);
-        View::share('l_item', $l_item);
+        View::share('items', $items);
         return View::make('pages.panduan.index');
     }
 
@@ -61,22 +46,14 @@ class PanduanController extends BaseController {
      */
     function lihatIsiPanduan($id_panduan)
     {
+        $item = Panduan::find($id_panduan);
+
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
             array('link' => URL::to('panduan'), 'text' => 'Panduan'),
-            array('link' => '', 'text' => 'Judul Panduan'),
+            array('link' => '', 'text' => $item->judul),
         );
 
-        $item = array(
-            'judul_panduan' => 'Judul Panduan',
-            'id_panduan' => 'id_panduan',
-            'isi_panduan' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-            'waktu' => '11 Januari 2014 13:00AM',
-            'nama_dosen' => 'Nama Penulis',
-            'id_dosen' => 'id_dosen',
-            'tautan_lampiran' => 'tautan/ke/berkas.ext',
-            'nama_lampiran' => 'Nama File.ext'
-        );
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('item', $item);
@@ -84,16 +61,6 @@ class PanduanController extends BaseController {
     }
 
 
-    /**
-     * Tampilkan daftar panduan berdasarkan kategori
-     *
-     * @var string id_kategori
-     * @return View
-     */
-    function lihatPanduanDariKategori($id_kategori)
-    {
-        return "panduan/kategori/id_kategori";
-    }
 
     /* Kelompok dasbor */
 
@@ -124,7 +91,7 @@ class PanduanController extends BaseController {
     function dasborSimpanPanduanBaru()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/panduan');
+        return Redirect::to('dasbor/pegawai/panduan');
     }
 
     /**
@@ -146,7 +113,7 @@ class PanduanController extends BaseController {
     function dasborSimpanPerubahanPanduan()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/panduan');
+        return Redirect::to('dasbor/pegawai/panduan');
     }
 
     /**
@@ -157,6 +124,6 @@ class PanduanController extends BaseController {
      */
     function dasborHapusPanduan($id_panduan)
     {
-        return Redirect::to('dasbor/panduan');
+        return Redirect::to('dasbor/pegawai/panduan');
     }
 }

@@ -23,7 +23,6 @@ Route::get ('/', function()
 Route::get ('/dasbor','Simta\Controllers\DasborMainController@tentukanDasborMana');
 
 // LoginController
-
 Route::get ('/login', 'Simta\Controllers\LoginController@lihatLamanLogin');
 Route::post('/login', 'Simta\Controllers\LoginController@lakukanProsesLogin');
 Route::get ('/logout', 'Simta\Controllers\LoginController@lakukanProsesLogout');
@@ -52,16 +51,17 @@ Route::post('/dasbor/mahasiswa/baru', 'Simta\Controllers\MahasiswaController@das
 Route::get ('/dasbor/mahasiswa/sunting/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborSuntingMahasiswa');
 Route::post('/dasbor/mahasiswa/sunting/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborSimpanPerubahanMahasiswa');
 Route::get ('/dasbor/mahasiswa/hapus/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborHapusMahasiswa');
+*/
 
 // BidangMinatController
 Route::get ('/prodi', 'Simta\Controllers\BidangMinatController@lihatSemuaBidangMinat');
 Route::get ('/prodi/{id_prodi}', 'Simta\Controllers\BidangMinatController@lihatRincianBidangMinat');
-Route::get ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
-Route::get ('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
-Route::post('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
-Route::get ('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
-Route::post('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
-Route::get ('/dasbor/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
+Route::get ('/dasbor/pegawai/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
+Route::get ('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
+Route::post('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
+Route::get ('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
+Route::post('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
+Route::get ('/dasbor/pegawai/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
 
 // PanduanController
 Route::get ('/panduan', 'Simta\Controllers\PanduanController@lihatSemuaPanduan');
@@ -102,6 +102,7 @@ Route::get ('/topik/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\To
 Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik');
 Route::get ('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik');
 
+// TOLONG DIREVIEW CONTROLLER BERIKUT, APAKAH INTERAKSINYA DENGAN CRUD SEPLAIN INI?
 // JudulController
 Route::get ('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
 Route::get ('/judul/{id_judul}', 'Simta\Controllers\JudulController@lihatIsiJudul');
@@ -127,15 +128,18 @@ Route::get ('/dasbor/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangContr
 Route::post('/dasbor/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangController@dasborSimpanPerubahanSidang');
 Route::get ('/dasbor/sidang/hapus/{id_sidang}', 'Simta\Controllers\SidangController@dasborHapusSidang');
 
+// BATAS CONCERN CRUD PLAIN
 // DosenController
-Route::get ('/dosen', 'Simta\Controllers\DosenController@lihatSemuaDosen');
-Route::get ('/dosen/{id_dosen}', 'Simta\Controllers\DosenController@lihatProfilDosen');
-Route::get ('/dasbor/dosen', 'Simta\Controllers\DosenController@dasborDosen');
-Route::get ('/dasbor/dosen/baru', 'Simta\Controllers\DosenController@dasborTambahkanDosen');
+/* You don't need this
+Route::get('/dosen', 'Simta\Controllers\DosenController@lihatSemuaDosen');
+Route::get('/dosen/{id_dosen}', 'Simta\Controllers\DosenController@lihatProfilDosen');
+Route::get('/dasbor/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+Route::get('/dasbor/dosen/baru', 'Simta\Controllers\DosenController@dasborTambahkanDosen');
 Route::post('/dasbor/dosen/baru', 'Simta\Controllers\DosenController@dasborSimpanDosenBaru');
-Route::get ('/dasbor/dosen/sunting/{id_dosen}', 'Simta\Controllers\DosenController@dasborSuntingDosen');
+Route::get('/dasbor/dosen/sunting/{id_dosen}', 'Simta\Controllers\DosenController@dasborSuntingDosen');
 Route::post('/dasbor/dosen/sunting/{id_dosen}', 'Simta\Controllers\DosenController@dasborSimpanPerubahanDosen');
-Route::get ('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@dasborHapusDosen');
+Route::get('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@dasborHapusDosen');
+ */
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
@@ -214,36 +218,6 @@ Route::post('/dasbor/pengguna/mahasiswa/cari', function()
     View::share('item', $item);
     return View::make('pages.dasbor.pengguna.mahasiswa.cari');
 });
-// /dasbor/pengguna/mahasiswa/aktifkan/{id_mahasiswa}
-// /dasbor/pengguna/mahasiswa/nonaktifkan/{id_mahasiswa}
-// /dasbor/pengguna/mahasiswa/hapus/{id_mahasiswa}
-// /dasbor/pengguna/mahasiswa/sunting/{id_mahasiswa}
-// /dasbor/pengguna/mahasiswa/aktifkan/nrp/{nrp_mahasiswa}
-// /dasbor/pengguna/mahasiswa/nonaktifkan/nrp/{nrp_mahasiswa}
-// /dasbor/pengguna/mahasiswa/hapus/nrp/{nrp_mahasiswa}
-// /dasbor/pengguna/mahasiswa/sunting/nrp/{nrp_mahasiswa}
-// /dasbor/pengguna/dosen/tambah
-// /dasbor/pengguna/dosen/aktifkan/{id_dosen}
-// /dasbor/pengguna/dosen/nonaktifkan/{id_dosen}
-// /dasbor/pengguna/dosen/hapus/{id_dosen}
-// /dasbor/pengguna/dosen/sunting/{id_dosen}
-// /dasbor/pengguna/dosen/aktifkan/nip/{nip_dosen}
-// /dasbor/pengguna/dosen/nonaktifkan/nip/{nip_dosen}
-// /dasbor/pengguna/dosen/hapus/nip/{nip_dosen}
-// /dasbor/pengguna/dosen/sunting/nip/{nip_dosen}
-// /dasbor/pengguna/petugas/aktifkan/{id_petugas}
-// /dasbor/pengguna/petugas/nonaktifkan/{id_petugas}
-// /dasbor/pengguna/petugas/hapus/{id_petugas}
-// /dasbor/pengguna/petugas/sunting/{id_petugas}
-// /dasbor/pengguna/petugas/nip/{nip_petugas}
-// /dasbor/pengguna/petugas/nip/{nip_petugas}
-// /dasbor/pengguna/petugas/nip/{nip_petugas}
-// /dasbor/pengguna/petugas/nip/{nip_petugas}
-// /dasbor/pengguna/admin/tambah
-// /dasbor/pengguna/admin/hapus/{id_admin}
-// /dasbor/pengguna/admin/sunting/{id_admin}
-// /dasbor/pengguna/admin/aktifkan/{id_admin}
-// /dasbor/pengguna/admin/nonaktifkan/{id_admin}
 
 // /dasbor/sit_in
 Route::get ('/dasbor/sit_in', function()

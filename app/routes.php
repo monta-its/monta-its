@@ -40,30 +40,38 @@ Route::get('/dasbor/berita/hapus/{id_berita}', 'Simta\Controllers\BeritaControll
 
 // MahasiswaController
 Route::get('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasbor');
-Route::get('/dasbor/mahasiswa/akun', 'Simta\Controllers\MahasiswaController@kelolaAkun');
-Route::get('/dasbor/mahasiswa/pembimbing', 'Simta\Controllers\MahasiswaController@kelolaPembimbing');
-Route::get('/dasbor/mahasiswa/penguji', 'Simta\Controllers\MahasiswaController@kelolaPenguji');
-Route::get('/dasbor/mahasiswa/proposal', 'Simta\Controllers\MahasiswaController@kelolaProposal');
+Route::get('/dasbor/akun', 'Simta\Controllers\MahasiswaController@kelolaAkun');
+Route::get('/dasbor/pembimbing', 'Simta\Controllers\MahasiswaController@kelolaPembimbing');
+Route::get('/dasbor/penguji', 'Simta\Controllers\MahasiswaController@kelolaPenguji');
+Route::get('/dasbor/proposal', 'Simta\Controllers\MahasiswaController@kelolaProposal');
+// MahasiswaController
+Route::get('/mahasiswa/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@lihatProfilMahasiswa');
+Route::get('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
+Route::get('/dasbor/mahasiswa/baru', 'Simta\Controllers\MahasiswaController@dasborTambahkanMahasiswa');
+Route::post('/dasbor/mahasiswa/baru', 'Simta\Controllers\MahasiswaController@dasborSimpanMahasiswaBaru');
+Route::get('/dasbor/mahasiswa/sunting/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborSuntingMahasiswa');
+Route::post('/dasbor/mahasiswa/sunting/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborSimpanPerubahanMahasiswa');
+Route::get('/dasbor/mahasiswa/hapus/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborHapusMahasiswa');
 
 // BidangMinatController
 Route::get ('/prodi', 'Simta\Controllers\BidangMinatController@lihatSemuaBidangMinat');
 Route::get ('/prodi/{id_prodi}', 'Simta\Controllers\BidangMinatController@lihatRincianBidangMinat');
-Route::get ('/dasbor/pegawai/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
-Route::get ('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
-Route::post('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
-Route::get ('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
-Route::post('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
-Route::get ('/dasbor/pegawai/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
+Route::get ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
+Route::get ('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
+Route::post('/dasbor/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
+Route::get ('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
+Route::post('/dasbor/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
+Route::get ('/dasbor/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
 
 // PanduanController
 Route::get('/panduan', 'Simta\Controllers\PanduanController@lihatSemuaPanduan');
 Route::get('/panduan/{id_panduan}', 'Simta\Controllers\PanduanController@lihatIsiPanduan');
-Route::get('/dasbor/pegawai/panduan', 'Simta\Controllers\PanduanController@dasborLihatDaftarPanduan');
-Route::get('/dasbor/pegawai/panduan/baru', 'Simta\Controllers\PanduanController@dasborTambahkanPanduan');
-Route::post('/dasbor/pegawai/panduan/baru', 'Simta\Controllers\PanduanController@dasborSimpanPanduanBaru');
-Route::get('/dasbor/pegawai/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSuntingPanduan');
-Route::post('/dasbor/pegawai/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSimpanPerubahanPanduan');
-Route::get('/dasbor/pegawai/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
+Route::get('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborLihatDaftarPanduan');
+Route::get('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborTambahkanPanduan');
+Route::post('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborSimpanPanduanBaru');
+Route::get('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSuntingPanduan');
+Route::post('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSimpanPerubahanPanduan');
+Route::get('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
 
 // BidangKeahlianController
 Route::get('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@lihatSemuaBidangKeahlian');
@@ -90,6 +98,36 @@ Route::get('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikControlle
 Route::post('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSimpanPerubahanTopik');
 Route::get('/dasbor/topik/hapus/{id_topik}', 'Simta\Controllers\TopikController@dasborHapusTopik');
 
+// JudulController
+Route::get('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
+Route::get('/judul/{id_judul}', 'Simta\Controllers\JudulController@lihatIsiJudul');
+Route::get('/dasbor/judul', 'Simta\Controllers\JudulController@dasborLihatDaftarJudul');
+Route::get('/dasbor/judul/baru', 'Simta\Controllers\JudulController@dasborTambahkanJudul');
+Route::post('/dasbor/judul/baru', 'Simta\Controllers\JudulController@dasborSimpanJudulBaru');
+Route::get('/dasbor/judul/sunting/{id_judul}', 'Simta\Controllers\JudulController@dasborSuntingJudul');
+Route::post('/dasbor/judul/sunting/{id_judul}', 'Simta\Controllers\JudulController@dasborSimpanPerubahanJudul');
+Route::get('/dasbor/judul/hapus/{id_judul}', 'Simta\Controllers\JudulController@dasborHapusJudul');
+
+// SidangController
+Route::get('/sidang/proposal', 'Simta\Controllers\SidangController@lihatSidangProposal');
+Route::get('/sidang/ta', 'Simta\Controllers\SidangController@lihatSidangTA');
+Route::get('/dasbor/sidang', 'Simta\Controllers\SidangController@dasborKelolaSidang');
+Route::get('/dasbor/sidang/baru', 'Simta\Controllers\SidangController@dasborTambahkanSidang');
+Route::post('/dasbor/sidang/baru', 'Simta\Controllers\SidangController@dasborSimpanSidangBaru');
+Route::get('/dasbor/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangController@dasborSuntingSidang');
+Route::post('/dasbor/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangController@dasborSimpanPerubahanSidang');
+Route::get('/dasbor/sidang/hapus/{id_sidang}', 'Simta\Controllers\SidangController@dasborHapusSidang');
+
+// DosenController
+Route::get('/dosen', 'Simta\Controllers\DosenController@lihatSemuaDosen');
+Route::get('/dosen/{id_dosen}', 'Simta\Controllers\DosenController@lihatProfilDosen');
+Route::get('/dasbor/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+Route::get('/dasbor/dosen/baru', 'Simta\Controllers\DosenController@dasborTambahkanDosen');
+Route::post('/dasbor/dosen/baru', 'Simta\Controllers\DosenController@dasborSimpanDosenBaru');
+Route::get('/dasbor/dosen/sunting/{id_dosen}', 'Simta\Controllers\DosenController@dasborSuntingDosen');
+Route::post('/dasbor/dosen/sunting/{id_dosen}', 'Simta\Controllers\DosenController@dasborSimpanPerubahanDosen');
+Route::get('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@dasborHapusDosen');
+
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
 
@@ -112,94 +150,14 @@ Route::get('/topik/lepas/{id_topik}', function($id_topik)
     return 'Semacam topik TA yang sudah terambil sekarang dilepaskan dan Redirect ke profil mahasiswa';
 });
 
-// /judul
-Route::get('/judul', function()
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Judul TA')
-    );
-
-    $item = array(
-        'judul_judul' => 'Judul Judul TA',
-        'id_judul' => 'id_judul',
-        'cuplikan_judul' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'nama_prodi' => 'NCC',
-        'id_prodi' => 'id_prodi',
-        'id_topik' => 'id_topik',
-        'nama_topik' => 'Nama Topik',
-        'label_prodi' => 'Laboratorium',
-        'status_terambil' => true,
-        'waktu_mulai' => '10 Januari 2013',
-        'waktu_akhir' => '30 Desember 2014',
-        'pembimbing' => array(
-            array(
-                'id_dosen' => 'id_dosen',
-                'nama_dosen' => 'Nama Dosen'
-            ),
-            array(
-                'id_dosen' => 'id_dosen',
-                'nama_dosen' => 'Nama Dosen'
-            )
-        )
-    );
-
-    $l_item = array();
-    array_push($l_item, $item);
-    $item['status_terambil'] = false;
-    $item['nama_prodi'] = 'RPL';
-    array_push($l_item, $item);
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-    return View::make('pages.judul.index');
-});
-
-// /judul/[id_judul]
-Route::get('/judul/{id_judul}', function($id_judul)
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => URL::to('/judul'), 'text' => 'Judul TA'),
-        array('link' => '', 'text' => 'Judul Judul TA')
-    );
-    $item = array(
-        'judul_judul' => 'Judul Judul TA',
-        'id_judul' => 'id_judul',
-        'isi_judul' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-        'nama_prodi' => 'NCC',
-        'id_prodi' => 'id_prodi',
-        'label_prodi' => 'Laboratorium',
-        'id_topik' => 'id_topik',
-        'nama_topik' => 'Nama Topik',
-        'status_terambil' => false,
-        'waktu_mulai' => '10 Januari 2013',
-        'waktu_akhir' => '30 Desember 2014',
-        'pembimbing' => array(
-            array(
-                'id_dosen' => 'id_dosen',
-                'nama_dosen' => 'Nama Dosen'
-            ),
-            array(
-                'id_dosen' => 'id_dosen',
-                'nama_dosen' => 'Nama Dosen'
-            )
-        )
-    );
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('item', $item);
-    return View::make('pages.judul.item');
-});
-
 // /judul/[id_judul]/ambil
-Route::get('/judul/{id_judul}/ambil', function($id_judul)
+Route::get('/judul/ambil/{id_judul}', function($id_judul)
 {
     return 'Semacam Judul TA sudah terambil dan Redirect ke profil mahasiswa';
 });
 
 // /judul/[id_judul]/lepas
-Route::get('/judul/{id_judul}/lepas', function($id_judul)
+Route::get('/judul/lepas/{id_judul}', function($id_judul)
 {
     return 'Semacam Judul TA yang sudah terambil sekarang dilepaskan dan Redirect ke profil mahasiswa';
 });
@@ -222,153 +180,9 @@ Route::get('/judul/topik/{id_topik}', function($id_topik)
     return 'Halaman memuat judul-judul yang dengan filter topik tertentu';
 });
 
-// /dasbor/judul
-// /dasbor/judul/baru
-// /dasbor/judul/sunting/[id_judul]
-// /dasbor/judul/hapus/[id_judul]
-
-// /sidang
-// /sidang/proposal
-Route::get('/sidang/proposal', function()
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Sidang Proposal')
-    );
-    $l_item = array(
-        array(
-            'tanggal_sidang' => '15-10-2014 10:00AM',
-            'nama_mahasiswa' => 'Nama Mahasiswa',
-            'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-            'ruang_sidang' => 'IF-201',
-            'label_prodi' => 'Prodi',
-            'nama_prodi' => 'Nama Prodi'
-        ),
-        array(
-            'tanggal_sidang' => '15-10-2014 10:00AM',
-            'nama_mahasiswa' => 'Nama Mahasiswa',
-            'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-            'ruang_sidang' => 'IF-201',
-            'label_prodi' => 'Prodi',
-            'nama_prodi' => 'Nama Prodi'
-        ),
-        array(
-            'tanggal_sidang' => '15-10-2014 10:00AM',
-            'nama_mahasiswa' => 'Nama Mahasiswa',
-            'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-            'ruang_sidang' => 'IF-201',
-            'label_prodi' => 'Prodi',
-            'nama_prodi' => 'Nama Prodi'
-        )
-    );
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-    return View::make('pages.sidang.index');
-});
-
-// /sidang/ta
-Route::get('/sidang/ta', function()
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Sidang TA')
-    );
-    $l_item = array(
-        array(
-            'tanggal_sidang' => '15-10-2014 10:00AM',
-            'nama_mahasiswa' => 'Nama Mahasiswa',
-            'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-            'ruang_sidang' => 'IF-201',
-            'label_prodi' => 'Prodi',
-            'nama_prodi' => 'Nama Prodi'
-        ),
-        array(
-            'tanggal_sidang' => '15-10-2014 10:00AM',
-            'nama_mahasiswa' => 'Nama Mahasiswa',
-            'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-            'ruang_sidang' => 'IF-201',
-            'label_prodi' => 'Prodi',
-            'nama_prodi' => 'Nama Prodi'
-        ),
-        array(
-            'tanggal_sidang' => '15-10-2014 10:00AM',
-            'nama_mahasiswa' => 'Nama Mahasiswa',
-            'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-            'ruang_sidang' => 'IF-201',
-            'label_prodi' => 'Prodi',
-            'nama_prodi' => 'Nama Prodi'
-        )
-    );
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-    return View::make('pages.sidang.index');
-});
-
-// /dasbor/sidang
-// /dasbor/sidang/baru
-// /dasbor/sidang/sunting/[id_sidang]
-// /dasbor/sidang/hapus/[id_sidang]
 // /statistik
 
-// /dosen
-Route::get('/dosen', function()
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => '', 'text' => 'Dosen')
-    );
 
-    $l_item = array();
-    // array_push($l_item, $item);
-    // array_push($l_item, $item);
-
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('l_item', $l_item);
-    return View::make('pages.dosen.index');
-});
-
-// /dosen/id_dosen
-Route::get('/dosen/{id_dosen}', function($id_dosen)
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => URL::to('/dosen'), 'text' => 'Dosen'),
-        array('link' => '', 'text' => 'Profil')
-    );
-    View::share('breadcrumbs', $breadcrumbs);
-    return View::make('pages.dosen.item');
-});
-
-// /dasbor/dosen/sunting/[id_dosen]
-// /dasbor/dosen/hapus/[id_dosen]
-// /mahasiswa
-// /mahasiswa/nrp/[nrp_mahasiswa]
-Route::get('/mahasiswa/nrp/{nrp_mahasiswa}', function($nrp_mahasiswa)
-{
-    $breadcrumbs = array(
-        array('link' => URL::to('/'), 'text' => 'Beranda'),
-        array('link' => URL::to('/mahasiswa'), 'text' => 'Mahasiswa'),
-        array('link' => '', 'text' => 'Profil')
-    );
-
-    $item = array(
-        'nama_mahasiswa' => 'Nama Mahasiswa',
-        'nrp_mahasiswa' => '1234567890',
-        'id_mahasiswa' => '0987654321',
-        'nama_dosen' => 'Nama Dosen Pembimbing',
-        'id_dosen' => 'id_dosen',
-        'judul_topik' => 'Judul Topik TA',
-        'id_topik' => 'id_topik',
-        'judul_judul' => 'Judul Judul TA',
-        'id_judul' => 'id_judul'
-    );
-    View::share('breadcrumbs', $breadcrumbs);
-    View::share('item', $item);
-    return View::make('pages.mahasiswa.item');
-});
-// /mahasiswa/id/[id_mahasiswa]
-// /dasbor/mahasiswa/sunting/[id_mahasiswa]
-// /dasbor/mahasiswa/hapus/[id_mahasiswa]
 // /kategori/id_kategori
 // /dasbor/kategori
 // /dasbor/kategori/baru

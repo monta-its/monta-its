@@ -28,6 +28,12 @@
                 <a href="{{ URL::to('dasbor/topik') }}"><span class=""></span> Topik</a>
             </li>
             <li>
+                <a href="{{ URL::to('dasbor/judul') }}"><span class=""></span> Judul</a>
+            </li>
+            <li>
+                <a href="{{ URL::to('dasbor/sidang') }}"><span class=""></span> Sidang</a>
+            </li>
+            <li>
                 <a href="{{ URL::to('dasbor/prodi') }}"><span class=""></span> Laboratorium</a>
             </li>
             <li>

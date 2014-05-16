@@ -1,7 +1,7 @@
 <?php
 /**
  * MahasiswaController
- * Menangani semua proses dengan akar rute "/dasbor/mahasiswa"
+ * Mengelola proses dalam rute /mahasiswa dan /dasbor/mahasiswa
  *
  * @author Ifan Iqbal <ifaniqbal.com@gmail.com>
  * @package Simta\Controllers\MahasiswaController
@@ -13,18 +13,47 @@ use URL;
 use View;
 use Input;
 use Redirect;
-use Auth;
 use Simta\Models\Mahasiswa;
 
 class MahasiswaController extends BaseController {
 
-
     /**
-     * Tampilkan laman dasbor awal untuk mahasiswa.
+     * Tampilkan Profil Mahasiswa
      *
+     * @var string $id_mahasiswa
      * @return View
      */
-    public function dasbor()
+    function lihatProfilMahasiswa($id_mahasiswa)
+    {
+        $breadcrumbs = array(
+            array('link' => URL::to('/'), 'text' => 'Beranda'),
+            array('link' => URL::to('/mahasiswa'), 'text' => 'Mahasiswa'),
+            array('link' => '', 'text' => 'Profil')
+        );
+
+        $item = array(
+            'nama_mahasiswa' => 'Nama Mahasiswa',
+            'nrp_mahasiswa' => '1234567890',
+            'id_mahasiswa' => '0987654321',
+            'nama_dosen' => 'Nama Dosen Pembimbing',
+            'id_dosen' => 'id_dosen',
+            'judul_topik' => 'Judul Topik TA',
+            'id_topik' => 'id_topik',
+            'judul_judul' => 'Judul Judul TA',
+            'id_judul' => 'id_judul'
+        );
+        View::share('breadcrumbs', $breadcrumbs);
+        View::share('item', $item);
+        return View::make('pages.mahasiswa.item');
+    }
+
+    /* Kelompok dasbor */
+
+    /**
+     * Tampilan laman dasbor awal untuk mahasiswa.
+     * @return View
+     */
+    function dasborMahasiswa()
     {
         $status = array(
             'TA' => 'MAJU SIDANG',
@@ -50,21 +79,65 @@ class MahasiswaController extends BaseController {
     }
 
     /**
-     * Tampilkan laman akun untuk mahasiswa.
+     * Tambahkan mahasiswa baru. Menampilkan laman penambahan mahasiswa.
      *
      * @return View
      */
-    public function kelolaAkun()
+    function dasborTambahkanMahasiswa()
     {
-        return View::make('pages.dasbor.akun');
+        return View::make('pages.dasbor.mahasiswa.baru');
     }
 
     /**
-     * Tampilkan laman pembimbing untuk mahasiswa.
+     * Simpan mahasiswa baru.
      *
      * @return View
      */
-    public function kelolaPembimbing()
+    function dasborSimpanMahasiswaBaru()
+    {
+        //return var_dump(Input::all());
+        return Redirect::to('dasbor/mahasiswa');
+    }
+
+    /**
+     * Sunting mahasiswa
+     *
+     * @var string $id_mahasiswa
+     * @return View
+     */
+    function dasborSuntingMahasiswa($id_mahasiswa)
+    {
+        return View::make('pages.dasbor.mahasiswa.sunting');
+    }
+
+    /**
+     * Simpan mahasiswa yang telah disunting.
+     *
+     * @return View
+     */
+    function dasborSimpanPerubahanMahasiswa()
+    {
+        //return var_dump(Input::all());
+        return Redirect::to('dasbor/mahasiswa');
+    }
+
+    /**
+     * Hapus mahasiswa
+     *
+     * @var string $id_mahasiswa
+     * @return View
+     */
+    function dasborHapusMahasiswa($id_mahasiswa)
+    {
+        return Redirect::to('dasbor/mahasiswa');
+    }
+
+    /**
+     * Kelola Pembimbing
+     *
+     * @return View
+     */
+    function kelolaPembimbing()
     {
         $statusPembimbing = 'Michael Schumacher';
         View::share('statusPembimbing', $statusPembimbing);
@@ -84,11 +157,11 @@ class MahasiswaController extends BaseController {
     }
 
     /**
-     * Tampilkan laman penguji untuk mahasiswa.
+     * Kelola Penguji
      *
      * @return View
      */
-    public function kelolaPenguji()
+    function kelolaPenguji()
     {
         $statusPenguji = 'Michael Schumacher';
         View::share('statusPenguji', $statusPenguji);
@@ -108,20 +181,19 @@ class MahasiswaController extends BaseController {
     }
 
     /**
-     * Tampilkan laman proposal untuk mahasiswa.
+     * Kelola Proposal
      *
      * @return View
      */
-    public function kelolaProposal()
+    function kelolaProposal()
     {
         $proposal = array(
-            'nama' => 'Proposal_TA_511110000000.pdf',
+            'nama' => 'Proposal_TA_511110000000.pdf', 
             'format' => 'PDF',
             'ukuran' => 45.5
         );
         View::share('proposal', $proposal);
         return View::make('pages.dasbor.proposal');
     }
-
 
 }

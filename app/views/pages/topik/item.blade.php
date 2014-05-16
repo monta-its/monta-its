@@ -5,7 +5,7 @@
   <div class="panel-body">
     <h3><strong>{{ $item['judul_topik'] }}</strong></h3>
         <p>
-            <span class="glyphicon glyphicon-tag"></span>
+            <span class="glyphicon glyphicon-tag"></span>z
             <span>{{ $item['label_prodi'] }}: </span><a href="{{ URL::to('prodi/'. $item['id_prodi']) }}">{{ $item['nama_prodi'] }}</a>
             <span> · </span>
             <span class="glyphicon glyphicon-tags"></span>
@@ -34,7 +34,7 @@
                         @foreach ($item['mahasiswa_judul'] as $mahasiswa)
                             <tr>
                                 <td>
-                                    <a href="{{ URL::to('mahasiswa/nrp/' . $mahasiswa['nrp_mahasiswa']) }}">{{ $mahasiswa['nama_mahasiswa'] }}</a>
+                                    <a href="{{ URL::to('mahasiswa/' . $mahasiswa['nrp_mahasiswa']) }}">{{ $mahasiswa['nama_mahasiswa'] }}</a>
                                 </td>
                                 <td>
                                     <a href="{{ URL::to('judul/' . $mahasiswa['id_judul']) }}">

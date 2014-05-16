@@ -106,18 +106,60 @@ class JudulController extends BaseController {
         return View::make('pages.judul.item');
     }
 
-
     /**
-     * Tampilkan daftar judul berdasarkan kategori
+     * Tampilkan daftar judul berdasarkan bidang minat
      *
-     * @var string id_kategori
+     * @var string id_prodi
      * @return View
      */
-    function lihatJudulDariKategori($id_kategori)
+    function lihatJudulDariBidangMinat($id_prodi)
     {
-        return "judul/kategori/id_kategori";
+        return 'Halaman memuat judul-judul yang dengan filter bidang minat tertentu';
     }
 
+    /**
+     * Tampilkan daftar judul berdasarkan bidang keahlian
+     *
+     * @var string id_bidang_keahlian
+     * @return View
+     */
+    function lihatJudulDariBidangKeahlian($id_bidang_keahlian)
+    {
+        return 'Halaman memuat judul-judul yang dengan filter bidang keahlian tertentu';
+    }
+
+    /**
+     * Tampilkan daftar judul berdasarkan topik
+     *
+     * @var string id_topik
+     * @return View
+     */
+    function lihatJudulDariTopik($id_topik)
+    {
+        return 'Halaman memuat judul-judul yang dengan filter topik tertentu';
+    }
+
+    /**
+     * Ambil judul tertentu
+     *
+     * @var string id_judul
+     * @return View
+     */
+    function ambilJudul($id_judul)
+    {
+        return 'Ambil judul kemudian redirect ke laman profil TA yang memuat informasi pengambilan';
+    }
+
+    /**
+     * Batalkan judul yang sedang diambil
+     *
+     * @return View
+     */
+    function batalkanJudul()
+    {
+        return 'Batalkan judul yang sedang diambil';
+    }
+    
     /* Kelompok dasbor */
 
     /**

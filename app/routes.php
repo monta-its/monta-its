@@ -105,6 +105,11 @@ Route::get('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik');
 // JudulController
 Route::get('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
 Route::get('/judul/{id_judul}', 'Simta\Controllers\JudulController@lihatIsiJudul');
+Route::get('/judul/ambil/{id_judul}', 'Simta\Controllers\JudulController@ambilJudul');
+Route::get('/judul/batal', 'Simta\Controllers\JudulController@batalkanJudul');
+Route::get('/judul/prodi/{id_prodi}', 'Simta\Controllers\JudulController@lihatJudulDariBidangMinat');
+Route::get('/judul/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\JudulController@lihatJudulDariBidangKeahlian');
+Route::get('/judul/topik/{id_topik}', 'Simta\Controllers\JudulController@lihatJudulDariTopik');
 Route::get('/dasbor/judul', 'Simta\Controllers\JudulController@dasborLihatDaftarJudul');
 Route::get('/dasbor/judul/baru', 'Simta\Controllers\JudulController@dasborTambahkanJudul');
 Route::post('/dasbor/judul/baru', 'Simta\Controllers\JudulController@dasborSimpanJudulBaru');
@@ -134,36 +139,6 @@ Route::get('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
-
-// /judul/[id_judul]/ambil
-Route::get('/judul/ambil/{id_judul}', function($id_judul)
-{
-    return 'Semacam Judul TA sudah terambil dan Redirect ke profil mahasiswa';
-});
-
-// /judul/[id_judul]/lepas
-Route::get('/judul/lepas/{id_judul}', function($id_judul)
-{
-    return 'Semacam Judul TA yang sudah terambil sekarang dilepaskan dan Redirect ke profil mahasiswa';
-});
-
-// /judul/prodi/[id_prodi]
-Route::get('/judul/prodi/{id_prodi}', function($id_prodi)
-{
-    return 'Halaman memuat judul-judul yang dengan filter prodi tertentu';
-});
-
-// /judul/bidang_keahlian/[id_bidang_keahlian]
-Route::get('/judul/bidang_keahlian/{id_bidang_keahlian}', function($id_bidang_keahlian)
-{
-    return 'Halaman memuat judul-judul yang dengan filter bidang ahli tertentu';
-});
-
-// /judul/topik/[id_topik]
-Route::get('/judul/topik/{id_topik}', function($id_topik)
-{
-    return 'Halaman memuat judul-judul yang dengan filter topik tertentu';
-});
 
 // /statistik
 

@@ -124,7 +124,7 @@ class PanduanController extends BaseController {
     function dasborSimpanPanduanBaru()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/panduan');
+        return Redirect::to('dasbor/pegawai/panduan');
     }
 
     /**
@@ -146,7 +146,7 @@ class PanduanController extends BaseController {
     function dasborSimpanPerubahanPanduan()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/panduan');
+        return Redirect::to('dasbor/pegawai/panduan');
     }
 
     /**
@@ -157,6 +157,6 @@ class PanduanController extends BaseController {
      */
     function dasborHapusPanduan($id_panduan)
     {
-        return Redirect::to('dasbor/panduan');
+        return Redirect::to('dasbor/pegawai/panduan');
     }
 }

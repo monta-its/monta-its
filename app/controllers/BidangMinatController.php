@@ -134,7 +134,7 @@ class BidangMinatController extends BaseController {
     function dasborSimpanBidangMinatBaru()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/prodi');
+        return Redirect::to('dasbor/pegawai/prodi');
     }
 
     /**
@@ -156,7 +156,7 @@ class BidangMinatController extends BaseController {
     function dasborSimpanPerubahanBidangMinat()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/prodi');
+        return Redirect::to('dasbor/pegawai/prodi');
     }
 
     /**
@@ -167,6 +167,6 @@ class BidangMinatController extends BaseController {
      */
     function dasborHapusBidangMinat($id_prodi)
     {
-        return Redirect::to('dasbor/prodi');
+        return Redirect::to('dasbor/pegawai/prodi');
     }
 }

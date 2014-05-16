@@ -1,7 +1,7 @@
 <?php
 /**
  * TopikController
- * Handle everything under "/topik" and "/dasbor/topik" routes
+ * Handle everything under "/topik" and "/dasbor/pegawai/topik" routes
  *
  * @author Ifan Iqbal <ifaniqbal.com@gmail.com>
  * @package Simta\Controllers\TopikController
@@ -160,7 +160,7 @@ class TopikController extends BaseController {
     function dasborSimpanTopikBaru()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/topik');
+        return Redirect::to('dasbor/pegawai/topik');
     }
 
     /**
@@ -182,7 +182,7 @@ class TopikController extends BaseController {
     function dasborSimpanPerubahanTopik()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/topik');
+        return Redirect::to('dasbor/pegawai/topik');
     }
 
     /**
@@ -193,6 +193,6 @@ class TopikController extends BaseController {
      */
     function dasborHapusTopik($id_topik)
     {
-        return Redirect::to('dasbor/topik');
+        return Redirect::to('dasbor/pegawai/topik');
     }
 }

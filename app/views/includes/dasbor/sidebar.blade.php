@@ -16,10 +16,10 @@
                 <a href="#"><span class=""></span>Menu Mahasiswa<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{{ URL::to('dasbor/sit_in') }}"><span class=""></span> Sit In</a>
+                        <a href="{{ URL::to('dasbor/mahasiswa/sit_in') }}"><span class=""></span> Sit In</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/proposal') }}"><span class=""></span> Unggah Proposal</a>
+                        <a href="{{ URL::to('dasbor/mahasiswa/proposal') }}"><span class=""></span> Unggah Proposal</a>
                     </li>
                 </ul>
             </li>
@@ -27,10 +27,10 @@
                 <a href="#"><span class=""></span>Menu Dosen<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{{ URL::to('dasbor/pembimbing') }}">Dosen Pembimbing</a>
+                        <a href="{{ URL::to('dasbor/dosen/pembimbing') }}">Dosen Pembimbing</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/penguji') }}">Dosen Penguji</a>
+                        <a href="{{ URL::to('dasbor/dosen/penguji') }}">Dosen Penguji</a>
                     </li>
                 </ul>
             </li>
@@ -38,25 +38,25 @@
                 <a href="#"><span class=""></span>Menu Pegawai<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{{ URL::to('dasbor/berita') }}"><span class=""></span> Berita</a>
+                        <a href="{{ URL::to('dasbor/pegawai/berita') }}"><span class=""></span> Berita</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/panduan') }}"><span class=""></span> Panduan</a>
+                        <a href="{{ URL::to('dasbor/pegawai/panduan') }}"><span class=""></span> Panduan</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/bidang_keahlian') }}"><span class=""></span> Bidang Keahlian</a>
+                        <a href="{{ URL::to('dasbor/pegawai/bidang_keahlian') }}"><span class=""></span> Bidang Keahlian</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/topik') }}"><span class=""></span> Topik</a>
+                        <a href="{{ URL::to('dasbor/pegawai/topik') }}"><span class=""></span> Topik</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/judul') }}"><span class=""></span> Judul</a>
+                        <a href="{{ URL::to('dasbor/pegawai/judul') }}"><span class=""></span> Judul</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/sidang') }}"><span class=""></span> Sidang</a>
+                        <a href="{{ URL::to('dasbor/pegawai/sidang') }}"><span class=""></span> Sidang</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/prodi') }}"><span class=""></span> Laboratorium</a>
+                        <a href="{{ URL::to('dasbor/pegawai/prodi') }}"><span class=""></span> Laboratorium</a>
                     </li>
                     <li>
                         <a href="{{ URL::to('dasbor/pengguna/mahasiswa/tambah') }}"><span class=""></span> Tambah Mahasiswa</a>

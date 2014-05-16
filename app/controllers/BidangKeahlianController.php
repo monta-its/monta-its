@@ -223,7 +223,7 @@ class BidangKeahlianController extends BaseController {
     function dasborSimpanBidangKeahlianBaru()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/bidang_keahlian');
+        return Redirect::to('dasbor/pegawai/bidang_keahlian');
     }
 
     /**
@@ -245,7 +245,7 @@ class BidangKeahlianController extends BaseController {
     function dasborSimpanPerubahanBidangKeahlian()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/bidang_keahlian');
+        return Redirect::to('dasbor/pegawai/bidang_keahlian');
     }
 
     /**
@@ -256,6 +256,6 @@ class BidangKeahlianController extends BaseController {
      */
     function dasborHapusBidangKeahlian($id_bidang_keahlian)
     {
-        return Redirect::to('dasbor/bidang_keahlian');
+        return Redirect::to('dasbor/pegawai/bidang_keahlian');
     }
 }

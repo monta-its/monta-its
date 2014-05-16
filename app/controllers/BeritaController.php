@@ -108,7 +108,7 @@ class BeritaController extends BaseController {
     function dasborSimpanBeritaBaru()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/berita');
+        return Redirect::to('dasbor/pegawai/berita');
     }
 
     /**

@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <a href="{{ URL::to('dasbor/panduan/baru' )}}" class="btn btn-default">Buat Baru</a>
+        <a href="{{ URL::to('dasbor/pegawai/panduan/baru' )}}" class="btn btn-default">Buat Baru</a>
     </div>
 </div>
 <div class="row">
@@ -31,8 +31,8 @@
                     <td>Nama Penulis</td>
                     <td><a href="{{ URL::to('files/panduan/' . 'path_panduan') }}">Nama File atau Link</a></td>
                     <td>
-                        <a href="{{ URL::to('dasbor/panduan/sunting/' . 'id_panduan') }}">Sunting</a>
-                        <a href="{{ URL::to('dasbor/panduan/hapus/' . 'id_panduan') }}">Hapus</a>
+                        <a href="{{ URL::to('dasbor/pegawai/panduan/sunting/' . 'id_panduan') }}">Sunting</a>
+                        <a href="{{ URL::to('dasbor/pegawai/panduan/hapus/' . 'id_panduan') }}">Hapus</a>
                     </td>
                 </tr>
             </tbody>

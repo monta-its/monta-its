@@ -78,59 +78,6 @@ class MahasiswaController extends BaseController {
         return View::make('pages.dasbor.index');
     }
 
-    /**
-     * Tambahkan mahasiswa baru. Menampilkan laman penambahan mahasiswa.
-     *
-     * @return View
-     */
-    function dasborTambahkanMahasiswa()
-    {
-        return View::make('pages.dasbor.mahasiswa.baru');
-    }
-
-    /**
-     * Simpan mahasiswa baru.
-     *
-     * @return View
-     */
-    function dasborSimpanMahasiswaBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/mahasiswa');
-    }
-
-    /**
-     * Sunting mahasiswa
-     *
-     * @var string $id_mahasiswa
-     * @return View
-     */
-    function dasborSuntingMahasiswa($id_mahasiswa)
-    {
-        return View::make('pages.dasbor.mahasiswa.sunting');
-    }
-
-    /**
-     * Simpan mahasiswa yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanMahasiswa()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/mahasiswa');
-    }
-
-    /**
-     * Hapus mahasiswa
-     *
-     * @var string $id_mahasiswa
-     * @return View
-     */
-    function dasborHapusMahasiswa($id_mahasiswa)
-    {
-        return Redirect::to('dasbor/mahasiswa');
-    }
 
     /**
      * Kelola Pembimbing
@@ -188,7 +135,7 @@ class MahasiswaController extends BaseController {
     function kelolaProposal()
     {
         $proposal = array(
-            'nama' => 'Proposal_TA_511110000000.pdf', 
+            'nama' => 'Proposal_TA_511110000000.pdf',
             'format' => 'PDF',
             'ukuran' => 45.5
         );

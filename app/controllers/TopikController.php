@@ -121,14 +121,46 @@ class TopikController extends BaseController {
 
 
     /**
-     * Tampilkan daftar topik berdasarkan kategori
+     * Tampilkan daftar topik berdasarkan bidang minat
      *
-     * @var string id_kategori
+     * @var string id_prodi
      * @return View
      */
-    function lihatTopikDariKategori($id_kategori)
+    function lihatTopikDariBidangMinat($id_prodi)
     {
-        return "topik/kategori/id_kategori";
+        return 'Halaman memuat topik-topik yang dengan filter bidang minat tertentu';
+    }
+
+    /**
+     * Tampilkan daftar topik berdasarkan bidang keahlian
+     *
+     * @var string id_bidang_keahlian
+     * @return View
+     */
+    function lihatTopikDariBidangKeahlian($id_bidang_keahlian)
+    {
+        return 'Halaman memuat topik-topik yang dengan filter bidang keahlian tertentu';
+    }
+
+    /**
+     * Ambil topik tertentu
+     *
+     * @var string id_topik
+     * @return View
+     */
+    function ambilTopik($id_topik)
+    {
+        return 'Ambil topik kemudian redirect ke laman profil TA yang memuat informasi pengambilan';
+    }
+
+    /**
+     * Batalkan topik yang sedang diambil
+     *
+     * @return View
+     */
+    function batalTopik()
+    {
+        return 'Batalkan topik yang sedang diambil';
     }
 
     /* Kelompok dasbor */

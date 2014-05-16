@@ -97,6 +97,10 @@ Route::post('/dasbor/topik/baru', 'Simta\Controllers\TopikController@dasborSimpa
 Route::get('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSuntingTopik');
 Route::post('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSimpanPerubahanTopik');
 Route::get('/dasbor/topik/hapus/{id_topik}', 'Simta\Controllers\TopikController@dasborHapusTopik');
+Route::get('/topik/prodi/{id_prodi}', 'Simta\Controllers\TopikController@lihatTopikDariBidangMinat');
+Route::get('/topik/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\TopikController@lihatTopikDariBidangKeahlian');
+Route::get('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik');
+Route::get('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik');
 
 // JudulController
 Route::get('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
@@ -130,25 +134,6 @@ Route::get('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@
 
 /* Rute masih ngonsep/ngemokup */
 // Kemungkinan rute yang akan dibuat:
-
-Route::get('/topik/prodi/{id_prodi}', function($id_prodi)
-{
-    return 'Halaman memuat topik-topik yang dengan filter prodi tertentu';
-});
-Route::get('/topik/bidang_keahlian/{id_bidang_keahlian}', function($id_bidang_keahlian)
-{
-    return 'Halaman memuat topik-topik yang dengan filter bidang ahli tertentu';
-});
-Route::get('/topik/ambil/{id_topik}', function($id_topik)
-{
-    return 'Semacam topik TA sudah terambil dan Redirect ke profil mahasiswa';
-});
-
-// /topik/[id_topik]/lepas
-Route::get('/topik/lepas/{id_topik}', function($id_topik)
-{
-    return 'Semacam topik TA yang sudah terambil sekarang dilepaskan dan Redirect ke profil mahasiswa';
-});
 
 // /judul/[id_judul]/ambil
 Route::get('/judul/ambil/{id_judul}', function($id_judul)

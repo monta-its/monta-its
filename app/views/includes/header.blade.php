@@ -94,9 +94,16 @@
                     <span class="glyphicon glyphicon-user"></span> Profil Pengguna
                   </a>
                 </li>
+                <li>
+                  <a href="{{ URL::to('/logout') }}">
+                    <span class="glyphicon glyphicon-log-out"></span> Logout
+                  </a>
+                </li>
               </ul>
           @else
-              <a href="{{ URL::to('login') }}">Login</a>
+              <a href="{{ URL::to('login') }}">
+                <span class="glyphicon glyphicon-log-in"></span> Login
+              </a>
           @endif
         </li>
       </ul>

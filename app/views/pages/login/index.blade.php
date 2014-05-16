@@ -1,13 +1,18 @@
 @extends('layouts.default')
 @section('content')
-
 <div class="panel panel-default">
-<div class="panel-body">
-<form action="" method="post">
-<input placeholder="username" name="username" />
-<input placeholder="password" name="password" type="password" />
-<input value="Login" type="submit" />
-</form>
-</div>
+    <div class="panel-body">
+        <form role="form" action="" method="post" class="col-md-4">
+            <div class="form-group">
+                <label for="username">NRP / NIP</label>
+                <input placeholder="username" name="username" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input placeholder="password" name="password" type="password" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Login</button>
+        </form>
+    </div>
 </div>
 @stop

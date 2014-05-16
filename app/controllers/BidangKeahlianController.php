@@ -184,14 +184,14 @@ class BidangKeahlianController extends BaseController {
 
 
     /**
-     * Tampilkan daftar bidang_keahlian berdasarkan kategori
+     * Tampilkan daftar bidang keahlian berdasarkan bidang minat
      *
-     * @var string id_kategori
+     * @var string id_prodi
      * @return View
      */
-    function lihatBidangKeahlianDariKategori($id_kategori)
+    function lihatBidangKeahlianDariBidangMinat($id_prodi)
     {
-        return "bidang_keahlian/kategori/id_kategori";
+        return 'Halaman memuat bidang keahlian yang dengan filter bidang minat tertentu';
     }
 
     /* Kelompok dasbor */

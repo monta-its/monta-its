@@ -46,21 +46,15 @@ class BeritaController extends BaseController {
      */
     function lihatIsiBerita($id_berita)
     {
+        $item = Pos::find($id_berita);
+
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
-            array('link' => '', 'text' => 'Berita')
+            array('link' => URL::to('/berita'), 'text' => 'Berita'),
+            array('link' => '', 'text' => $item->judul)
         );
 
-        $item = array(
-            'judul_berita' => 'Judul Berita',
-            'id_berita' => 'id_berita',
-            'isi_berita' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-            'waktu' => '11 Januari 2014 13:00AM',
-            'nama_dosen' => 'Nama Penulis',
-            'id_dosen' => 'id_dosen',
-            'nama_kategori' => 'Nama Kategori',
-            'id_kategori' => 'id_kategori'
-        );
+
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('item', $item);
@@ -130,7 +124,7 @@ class BeritaController extends BaseController {
     function dasborSimpanPerubahanBerita()
     {
         //return var_dump(Input::all());
-        return Redirect::to('dasbor/berita');
+        return Redirect::to('dasbor/pegawai/berita');
     }
 
     /**
@@ -141,6 +135,6 @@ class BeritaController extends BaseController {
      */
     function dasborHapusBerita($id_berita)
     {
-        return Redirect::to('dasbor/berita');
+        return Redirect::to('dasbor/pegawai/berita');
     }
 }

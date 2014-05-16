@@ -43,7 +43,6 @@ Route::get ('/dasbor/akun', 'Simta\Controllers\MahasiswaController@kelolaAkun');
 Route::get ('/dasbor/pembimbing', 'Simta\Controllers\MahasiswaController@kelolaPembimbing');
 Route::get ('/dasbor/penguji', 'Simta\Controllers\MahasiswaController@kelolaPenguji');
 Route::get ('/dasbor/proposal', 'Simta\Controllers\MahasiswaController@kelolaProposal');
-// MahasiswaController
 Route::get ('/mahasiswa/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@lihatProfilMahasiswa');
 Route::get ('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
 Route::get ('/dasbor/mahasiswa/baru', 'Simta\Controllers\MahasiswaController@dasborTambahkanMahasiswa');
@@ -51,7 +50,6 @@ Route::post('/dasbor/mahasiswa/baru', 'Simta\Controllers\MahasiswaController@das
 Route::get ('/dasbor/mahasiswa/sunting/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborSuntingMahasiswa');
 Route::post('/dasbor/mahasiswa/sunting/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborSimpanPerubahanMahasiswa');
 Route::get ('/dasbor/mahasiswa/hapus/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@dasborHapusMahasiswa');
-*/
 
 // BidangMinatController
 Route::get ('/prodi', 'Simta\Controllers\BidangMinatController@lihatSemuaBidangMinat');
@@ -76,17 +74,13 @@ Route::get ('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanCont
 // BidangKeahlianController
 Route::get ('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@lihatSemuaBidangKeahlian');
 Route::get ('/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@lihatIsiBidangKeahlian');
+Route::get ('/bidang_keahlian/prodi/{id_prodi}', 'Simta\Controllers\BidangKeahlianController@lihatBidangKeahlianDariBidangMinat');
 Route::get ('/dasbor/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborLihatDaftarBidangKeahlian');
 Route::get ('/dasbor/bidang_keahlian/baru', 'Simta\Controllers\BidangKeahlianController@dasborTambahkanBidangKeahlian');
 Route::post('/dasbor/bidang_keahlian/baru', 'Simta\Controllers\BidangKeahlianController@dasborSimpanBidangKeahlianBaru');
 Route::get ('/dasbor/bidang_keahlian/sunting/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborSuntingBidangKeahlian');
 Route::post('/dasbor/bidang_keahlian/sunting/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborSimpanPerubahanBidangKeahlian');
 Route::get ('/dasbor/bidang_keahlian/hapus/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborHapusBidangKeahlian');
-// prioritas rendah
-Route::get ('/bidang_keahlian/prodi/{id_prodi}', function($id_prodi)
-{
-    return 'Halaman memuat berbagai bidang ahli dengan filter prodi tertentu';
-});
 
 // TopikController
 Route::get ('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');
@@ -102,7 +96,8 @@ Route::get ('/topik/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\To
 Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik');
 Route::get ('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik');
 
-// TOLONG DIREVIEW CONTROLLER BERIKUT, APAKAH INTERAKSINYA DENGAN CRUD SEPLAIN INI?
+// TOLONG DIREVIEW CONTROLLER BERIKUT, APAKAH INTERAKSINYA DENGAN CRUD SELAIN INI?
+// ifan: gak ngerti aku maksud instruksimu apa.
 // JudulController
 Route::get ('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
 Route::get ('/judul/{id_judul}', 'Simta\Controllers\JudulController@lihatIsiJudul');
@@ -128,6 +123,17 @@ Route::get ('/dasbor/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangContr
 Route::post('/dasbor/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangController@dasborSimpanPerubahanSidang');
 Route::get ('/dasbor/sidang/hapus/{id_sidang}', 'Simta\Controllers\SidangController@dasborHapusSidang');
 
+// SitInController
+Route::get ('/dasbor/sit_in', 'Simta\Controllers\SitInController@lihatLamanSitIn');
+
+// PenggunaController
+// /dasbor/pengguna/mahasiswa
+// /dasbor/pengguna/mahasiswa/tambah
+Route::get ('/dasbor/pengguna/mahasiswa/tambah', 'Simta\Controllers\PenggunaController@borangTambahPenggunaMahasiswa');
+Route::post('/dasbor/pengguna/mahasiswa/tambah', 'Simta\Controllers\PenggunaController@tambahPenggunaMahasiswa');
+Route::get ('/dasbor/pengguna/mahasiswa/calon', 'Simta\Controllers\PenggunaController@lihatSemuaCalonPenggunaMahasiswa');
+Route::post('/dasbor/pengguna/mahasiswa/cari', 'Simta\Controllers\PenggunaController@lihatHasilPencarianCalonPenggunaMahasiswa');
+
 // BATAS CONCERN CRUD PLAIN
 // DosenController
 /* You don't need this
@@ -145,86 +151,3 @@ Route::get('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@
 // Kemungkinan rute yang akan dibuat:
 
 // /statistik
-
-
-// /kategori/id_kategori
-// /dasbor/kategori
-// /dasbor/kategori/baru
-// /dasbor/kategori/sunting/[id_kategori]
-// /dasbor/kategori/hapus/[id_kategori]
-
-// /dasbor/pengguna/mahasiswa
-// /dasbor/pengguna/mahasiswa/tambah
-Route::get ('/dasbor/pengguna/mahasiswa/tambah', function()
-{
-    return View::make('pages.dasbor.pengguna.mahasiswa.tambah');
-});
-// /dasbor/pengguna/mahasiswa/tambah/[nrp]
-Route::post('/dasbor/pengguna/mahasiswa/tambah', function()
-{
-    $nrp_mahasiswa = Input::get ('nrp_mahasiswa');
-    $nama_mahasiswa = '';
-    if (!is_array($nrp_mahasiswa))
-    {
-        $nama_mahasiswa = Input::get ('nama_mahasiswa');
-        View::share('pesan', $nama_mahasiswa . ' (' . $nrp_mahasiswa . ')');
-    }
-    else
-    {
-        View::share('pesan', count($nrp_mahasiswa) . ' mahasiswa');
-    }
-
-
-    return View::make('pages.dasbor.pengguna.mahasiswa.tambah_sukses');
-});
-// /dasbor/pengguna/mahasiswa/calon
-Route::get ('/dasbor/pengguna/mahasiswa/calon', function()
-{
-    $l_item = array(
-        array(
-            'nrp_mahasiswa' => '1234567890',
-            'nama_mahasiswa' => 'Nama Calon Mahasiswa',
-            'sks_lulus' => 'xx',
-            'sks_tempuh' => 'yy'
-        ),
-        array(
-            'nrp_mahasiswa' => '1234567890',
-            'nama_mahasiswa' => 'Nama Calon Mahasiswa',
-            'sks_lulus' => 'xx',
-            'sks_tempuh' => 'yy'
-        ),
-        array(
-            'nrp_mahasiswa' => '1234567890',
-            'nama_mahasiswa' => 'Nama Calon Mahasiswa',
-            'sks_lulus' => 'xx',
-            'sks_tempuh' => 'yy'
-        )
-    );
-    View::share('l_item', $l_item);
-    return View::make('pages.dasbor.pengguna.mahasiswa.calon');
-});
-// /dasbor/pengguna/mahasiswa/cari
-Route::post('/dasbor/pengguna/mahasiswa/cari', function()
-{
-    $item = array(
-        'nama_mahasiswa' => 'Nama Mahasiswa',
-        'nrp_mahasiswa' => '1234567890',
-        'id_mahasiswa' => '0987654321',
-        'nama_dosen_wali' => 'Nama Dosen Wali',
-        'id_dosen_wali' => 'id_dosen',
-        'sks_lulus' => '82',
-        'sks_tempuh' => '100'
-    );
-    View::share('item', $item);
-    return View::make('pages.dasbor.pengguna.mahasiswa.cari');
-});
-
-// /dasbor/sit_in
-Route::get ('/dasbor/sit_in', function()
-{
-    $item = array(
-
-    );
-    View::share('item', $item);
-    return View::make('pages.dasbor.sit_in.index');
-});

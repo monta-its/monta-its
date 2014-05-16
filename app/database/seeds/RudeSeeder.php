@@ -115,6 +115,8 @@ class RudeSeeder extends Seeder {
                     $panduan->isi = $faker->text();
                     $panduan->save();
                     $dosen->panduan()->save($pos);
+                    $dosen->save();
+
                 }
 
                 $ta = new TugasAkhir;

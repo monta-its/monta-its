@@ -55,6 +55,22 @@ class PenggunaController extends BaseController {
      */
     public function lihatSemuaCalonPenggunaMahasiswa()
     {
+        /**
+         * $l_item
+         * Daftar mahasiswa yang memenuhi syarat:
+         *
+         * Mahasiswa Reguler
+         * - lulus > 95 SKS
+         * - IPK >= 2
+         * - Lulus / Sedang Mengambil PEM
+         * - Sedang menempuh PBS ke-2 atau lebih
+         *
+         * Mahasiswa Lintas Jalur
+         * - Lulus matrikulasi
+         * - Sedang menempuh PBS ke-1 
+         * 
+         * @var array
+         */
         $l_item = array(
             array(
                 'nrp_mahasiswa' => '1234567890',

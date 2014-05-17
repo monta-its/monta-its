@@ -1,11 +1,6 @@
 @extends('layouts.dasbor')
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Kelola Berita</h1>
-    </div>
-</div>
 <script type="text/javascript" src="{{URL::to('assets/angular/angular.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/angular/angular-route.min.js')}}"></script>
 <script>
@@ -81,6 +76,11 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">Kelola Berita</h1>
+    </div>
+</div>
 <div ng-app="dasborBerita">
     <ng-view>
     </ng-view>

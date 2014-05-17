@@ -113,6 +113,7 @@ class BeritaController extends BaseController {
         }
         else if(Request::isMethod('post'))
         {
+            // TODO: Perbaiki implementasi agar bisa berjalan
             echo Input::get('id_post');
             Pos::delete(Input::get('id_post'));
         }

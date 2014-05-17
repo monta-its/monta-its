@@ -83,7 +83,8 @@ class RudeSeeder extends Seeder {
                 $dosen->pegawai()->associate($pegawai);
                 $dosen->save();
 
-                $dosen->bidangKeahlian()->save($bidang_keahlian);
+                $bidang_minat->dosen()->save($dosen);
+                $bidang_keahlian->dosen()->save($dosen);
 
 
                 if($counter == 0)
@@ -126,10 +127,8 @@ class RudeSeeder extends Seeder {
                     $panduan = new Panduan;
                     $panduan->judul = $faker->sentence();
                     $panduan->isi = $faker->text();
+                    $panduan->dosen()->associate($dosen);
                     $panduan->save();
-                    $dosen->panduan()->save($pos);
-                    $dosen->save();
-
                 }
 
                 $ta = new TugasAkhir;

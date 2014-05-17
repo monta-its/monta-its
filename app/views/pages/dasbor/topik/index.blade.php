@@ -13,7 +13,7 @@ var app = angular.module('dasborTopik', ['ngRoute'], function($interpolateProvid
 });
 
 var updateTopik = function($rootScope, $http) {
-    $http.get('{{URL::to('/dasbor/topik')}}').success(function(data) {
+    $http.get('{{URL::to('/dasbor/dosen/topik')}}').success(function(data) {
         $rootScope.items = data;
     });
 };
@@ -21,7 +21,7 @@ var updateTopik = function($rootScope, $http) {
 
 app.controller('daftarTopikController', function($scope, $http, $rootScope) {
     $scope.hapusTopik = function(id_topik) {
-        $http.delete('{{URL::to('/dasbor/topik')}}', {'id_topik': id_topik}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/topik')}}', {'id_topik': id_topik}).success(function(data) {
             updateTopik($rootScope, $http);
             alert('Topik dihapus');
         });
@@ -37,7 +37,7 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
         $scope.topik.deskripsi = "";
         $scope.topik.kode_bidang_minat = "";
         $scope.tambahTopik = function() {
-            $http.post('{{{URL::to('/dasbor/topik')}}}', $scope.topik).success(function(data) {
+            $http.post('{{{URL::to('/dasbor/dosen/topik')}}}', $scope.topik).success(function(data) {
                 updateTopik($rootScope, $http)
                 $location.path('/');
             })
@@ -47,7 +47,7 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
             $scope.topik = {};
             $scope.topik.id_topik = $routeParams.id;
             $scope.suntingTopik = function() {
-                $http.put('{{URL::to('/dasbor/topik')}}', $scope.topik).success(function (data) {
+                $http.put('{{URL::to('/dasbor/dosen/topik')}}', $scope.topik).success(function (data) {
                     updateTopik($rootScope, $http);
                     $location.path('/');
                 });

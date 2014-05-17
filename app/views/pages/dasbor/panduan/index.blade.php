@@ -13,7 +13,7 @@ var app = angular.module('dasborPanduan', ['ngRoute'], function($interpolateProv
 });
 
 var updatePanduan = function($rootScope, $http) {
-    $http.get('{{URL::to('/dasbor/panduan')}}').success(function(data) {
+    $http.get('{{URL::to('/dasbor/dosen/panduan')}}').success(function(data) {
         $rootScope.items = data;
     });
 };
@@ -21,7 +21,7 @@ var updatePanduan = function($rootScope, $http) {
 
 app.controller('daftarPanduanController', function($scope, $http, $rootScope) {
     $scope.hapusPanduan = function(id_panduan) {
-        $http.delete('{{URL::to('/dasbor/panduan')}}', {'id_panduan': id_panduan}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/panduan')}}', {'id_panduan': id_panduan}).success(function(data) {
             updatePanduan($rootScope, $http);
             alert('Panduan dihapus');
         });
@@ -37,7 +37,7 @@ app.controller('panduanSuntingController', function($rootScope, $scope, $http, $
         $scope.panduan.isi = "";
         $scope.panduan.lampiran = "";
         $scope.terbitkanPanduan = function() {
-            $http.post('{{{URL::to('/dasbor/panduan')}}}', $scope.panduan).success(function(data) {
+            $http.post('{{{URL::to('/dasbor/dosen/panduan')}}}', $scope.panduan).success(function(data) {
                 updatePanduan($rootScope, $http)
                 $location.path('/');
             })
@@ -47,7 +47,7 @@ app.controller('panduanSuntingController', function($rootScope, $scope, $http, $
             $scope.panduan = {};
             $scope.panduan.id_panduan = $routeParams.id;
             $scope.suntingPanduan = function() {
-                $http.put('{{URL::to('/dasbor/panduan')}}', $scope.panduan).success(function (data) {
+                $http.put('{{URL::to('/dasbor/dosen/panduan')}}', $scope.panduan).success(function (data) {
                     updatePanduan($rootScope, $http);
                     $location.path('/');
                 });

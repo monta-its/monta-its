@@ -13,7 +13,7 @@ var app = angular.module('dasborBidangMinat', ['ngRoute'], function($interpolate
 });
 
 var updateBidangMinat = function($rootScope, $http) {
-    $http.get('{{URL::to('/dasbor/prodi')}}').success(function(data) {
+    $http.get('{{URL::to('/dasbor/dosen/prodi')}}').success(function(data) {
         $rootScope.items = data;
     });
 };
@@ -21,7 +21,7 @@ var updateBidangMinat = function($rootScope, $http) {
 
 app.controller('daftarBidangMinatController', function($scope, $http, $rootScope) {
     $scope.hapusBidangMinat = function(kode_bidang_minat) {
-        $http.delete('{{URL::to('/dasbor/prodi')}}', {'kode_bidang_minat': kode_bidang_minat}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/prodi')}}', {'kode_bidang_minat': kode_bidang_minat}).success(function(data) {
             updateBidangMinat($rootScope, $http);
             alert('Prodi dihapus');
         });
@@ -38,7 +38,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
         $scope.bidangMinat.nip_dosen_koordinator = "";
         $scope.bidangMinat.deskripsi_bidang_minat = "";
         $scope.tambahBidangMinat = function() {
-            $http.post('{{{URL::to('/dasbor/prodi')}}}', $scope.bidangMinat).success(function(data) {
+            $http.post('{{{URL::to('/dasbor/dosen/prodi')}}}', $scope.bidangMinat).success(function(data) {
                 updateBidangMinat($rootScope, $http)
                 $location.path('/');
             })
@@ -48,7 +48,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
             $scope.bidangMinat = {};
             $scope.bidangMinat.id_bidang_minat = $routeParams.id;
             $scope.suntingBidangMinat = function() {
-                $http.put('{{URL::to('/dasbor/prodi')}}', $scope.bidangMinat).success(function (data) {
+                $http.put('{{URL::to('/dasbor/dosen/prodi')}}', $scope.bidangMinat).success(function (data) {
                     updateBidangMinat($rootScope, $http);
                     $location.path('/');
                 });

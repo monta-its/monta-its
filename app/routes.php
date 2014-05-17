@@ -30,10 +30,10 @@ Route::get ('/logout', 'Simta\Controllers\LoginController@lakukanProsesLogout');
 // BeritaController
 Route::get ('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
 Route::get ('/berita/{id_berita}', 'Simta\Controllers\BeritaController@lihatIsiBerita');
-Route::get ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
-Route::post ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
-Route::put ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
-Route::delete ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
+Route::get ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasborBerita');
+Route::post ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasborBerita');
+Route::put ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasborBerita');
+Route::delete ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasborBerita');
 
 // MahasiswaController
 Route::get ('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
@@ -55,18 +55,18 @@ Route::get ('/dasbor/mahasiswa/hapus/{id_mahasiswa}', 'Simta\Controllers\Mahasis
 // BidangMinatController
 Route::get ('/prodi', 'Simta\Controllers\BidangMinatController@lihatSemuaBidangMinat');
 Route::get ('/prodi/{id_prodi}', 'Simta\Controllers\BidangMinatController@lihatRincianBidangMinat');
-Route::get ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
-Route::post ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
-Route::put ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
-Route::delete ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+Route::get ('/dasbor/dosen/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+Route::post ('/dasbor/dosen/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+Route::put ('/dasbor/dosen/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+Route::delete ('/dasbor/dosen/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
 
 // PanduanController
 Route::get ('/panduan', 'Simta\Controllers\PanduanController@lihatSemuaPanduan');
 Route::get ('/panduan/{id_panduan}', 'Simta\Controllers\PanduanController@lihatIsiPanduan');
-Route::get ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
-Route::post ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
-Route::put ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
-Route::delete ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
+Route::get ('/dasbor/dosen/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
+Route::post ('/dasbor/dosen/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
+Route::put ('/dasbor/dosen/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
+Route::delete ('/dasbor/dosen/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
 
 // BidangKeahlianController
 // TODO: Bro, BidangKeahlian unrelated sama BidangMinat dan TugasAkhir apapun,
@@ -85,10 +85,10 @@ Route::get ('/dasbor/dosen/bidang_keahlian/hapus/{id_bidang_keahlian}', 'Simta\C
 // TopikController
 Route::get ('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');
 Route::get ('/topik/{id_topik}', 'Simta\Controllers\TopikController@lihatIsiTopik');
-Route::get ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
-Route::post ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
-Route::put ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
-Route::delete ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
+Route::get ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
+Route::post ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
+Route::put ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
+Route::delete ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
 
 // TODO: Bro, tolong kasih tahu fungsi dari dua controller ini
 Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik');

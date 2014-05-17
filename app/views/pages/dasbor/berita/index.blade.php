@@ -12,7 +12,7 @@ var app = angular.module('dasborBerita', ['ngRoute'], function($interpolateProvi
 });
 
 var updateBerita = function($rootScope, $http) {
-    $http.get('{{URL::to('/dasbor/berita')}}').success(function(data) {
+    $http.get('{{URL::to('/dasbor/dosen/berita')}}').success(function(data) {
         $rootScope.items = data;
     });
 };
@@ -20,7 +20,7 @@ var updateBerita = function($rootScope, $http) {
 
 app.controller('daftarBeritaController', function($scope, $http, $rootScope) {
     $scope.hapusBerita = function(id_post) {
-        $http.delete('{{URL::to('/dasbor/berita')}}', {'id_post': id_post}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/berita')}}', {'id_post': id_post}).success(function(data) {
             updateBerita($rootScope, $http);
             alert('Berita dihapus');
         });
@@ -35,7 +35,7 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
         $scope.berita.judul = "";
         $scope.berita.isi = "";
         $scope.terbitkanBerita = function() {
-            $http.post('{{{URL::to('/dasbor/berita')}}}', $scope.berita).success(function(data) {
+            $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
                 updateBerita($rootScope, $http)
                 $location.path('/');
             })
@@ -45,7 +45,7 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
             $scope.berita = {};
             $scope.berita.id_post = $routeParams.id;
             $scope.suntingBerita = function() {
-                $http.put('{{URL::to('/dasbor/berita')}}', $scope.berita).success(function (data) {
+                $http.put('{{URL::to('/dasbor/dosen/berita')}}', $scope.berita).success(function (data) {
                     updateBerita($rootScope, $http);
                     $location.path('/');
                 });

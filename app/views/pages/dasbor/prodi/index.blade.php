@@ -2,38 +2,146 @@
 
 @section('content')
 
+<script type="text/javascript" src="{{URL::to('assets/angular/angular.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('assets/angular/angular-route.min.js')}}"></script>
+<script>
+var app = angular.module('dasborBidangMinat', ['ngRoute'], function($interpolateProvider) {
+    $interpolateProvider.startSymbol('[[');
+    $interpolateProvider.endSymbol(']]');
+}).run(function($rootScope, $http) {
+    updateBidangMinat($rootScope, $http);
+});
+
+var updateBidangMinat = function($rootScope, $http) {
+    $http.get('{{URL::to('/dasbor/prodi')}}').success(function(data) {
+        $rootScope.items = data;
+    });
+};
+
+
+app.controller('daftarBidangMinatController', function($scope, $http, $rootScope) {
+    $scope.hapusBidangMinat = function(id_bidangMinat) {
+        $http.delete('{{URL::to('/dasbor/prodi')}}', {'id_bidang_minat': id_bidang_minat}).success(function(data) {
+            updateBidangMinat($rootScope, $http);
+            alert('Prodi dihapus');
+        });
+    };
+});
+
+app.controller('bidangMinatSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
+    var method = $routeParams.method;
+    $scope.method = method;
+    if(method == "baru") {
+        $scope.bidangMinat = {};
+        $scope.bidangMinat.kode_bidang_minat = "";
+        $scope.bidangMinat.nama_bidang_minat = "";
+        $scope.bidangMinat.nip_dosen_koordinator = "";
+        $scope.tambahBidangMinat = function() {
+            $http.post('{{{URL::to('/dasbor/prodi')}}}', $scope.bidangMinat).success(function(data) {
+                updateBidangMinat($rootScope, $http)
+                $location.path('/');
+            })
+        };
+    } else if (method == "sunting") {
+        if($routeParams.id) {
+            $scope.bidangMinat = {};
+            $scope.bidangMinat.id_bidang_minat = $routeParams.id;
+            $scope.suntingBidangMinat = function() {
+                $http.put('{{URL::to('/dasbor/prodi')}}', $scope.bidangMinat).success(function (data) {
+                    updateBidangMinat($rootScope, $http);
+                    $location.path('/');
+                });
+            };
+            console.log($rootScope.items);
+            $.each($rootScope.items, function(i, val) {
+                if(val.id_bidang_minat === $scope.bidangMinat.id_bidang_minat) {
+                    $scope.bidangMinat.kode_bidang_minat = val.kode_bidang_minat;
+                    $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
+                    $scope.bidangMinat.nip_dosen_koordinator = val.nip_dosen_koordinator;
+                }
+            });
+        } else {
+            location.path('/');
+        }
+    } else {
+        $location.path('/');
+    }
+
+});
+
+app.config(function($routeProvider) {
+    $routeProvider
+    .when('/', { templateUrl: 'daftarBidangMinat.html'})
+    .when('/:method', { templateUrl: 'bidangMinatSunting.html'})
+    .when('/:method/:id', { templateUrl: 'bidangMinatSunting.html'})
+});
+
+app.config(function($httpProvider) {
+    $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+});
+</script>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="page-header">Kelola Laboratorium</h1>
+        <h1 class="page-header">Kelola Program Studi</h1>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <a href="{{ URL::to('dasbor/pegawai/prodi/baru' )}}" class="btn btn-default">Buat Baru</a>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Nama Laboratorium</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Nama Laboratorium 1 Yang Panjang</td>
-                    <td>
-                        <a href="{{ URL::to('dasbor/pegawai/prodi/sunting/' . 'id_prodi') }}">Sunting</a>
-                        <a href="{{ URL::to('dasbor/pegawai/prodi/hapus/' . 'id_prodi') }}">Hapus</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div ng-app="dasborBidangMinat">
+    <ng-view>
+    </ng-view>
+
+    <script type="text/ng-template" id="bidangMinatSunting.html">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">Prodi Baru</h1>
+            </div>
+        </div>
+        <form role="form" action="" method="post" accept-charset="utf-8" ng-controller="bidangMinatSuntingController">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <input ng-model="bidangMinat.kode_bidang_minat" type="text" class="form-control input-lg" placeholder="Kode Prodi (Nomor / Singkatan)">
+                        <input ng-model="bidangMinat.nama_bidang_minat" type="text" class="form-control input-lg" placeholder="Nama Prodi">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button ng-show="method=='baru'" type="submit" name="aksi" value="Tambah" class="btn btn-success" ng-click="tambahBidangMinat()">Tambah</button>
+                    <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingBidangMinat()">Sunting</button>
+                </div>
+            </div>
+        </form>
+    </script>
+    <script type="text/ng-template" id="daftarBidangMinat.html">
+        <div class="row" >
+            <div class="col-md-12">
+                <a href="#/baru" class="btn btn-default">Buat Baru</a>
+            </div>
+        </div>
+        <div class="row" ng-controller="daftarBidangMinatController">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Nama Prodi</th>
+                            <th>Dosen Koordinator</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in items">
+                            <td>[[item.kode_bidang_minat]]</td>
+                            <td>[[item.nama_bidang_minat]]</td>
+                            <td>[[item.dosenKoordinator.pegawai.nama_lengkap]]</td>
+                            <td>
+                                <a href="#/sunting/[[item.kode_bidang_minat]]">Sunting</a>
+                                <a href="#" ng-click="hapusBidangMinat([[item.kode_bidang_minat]])">Hapus</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
 </div>
 @stop
 

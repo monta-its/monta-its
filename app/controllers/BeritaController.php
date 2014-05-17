@@ -14,7 +14,11 @@ use URL;
 use View;
 use Input;
 use Redirect;
+use Request;
+use Response;
 use Simta\Models\Pos;
+use Simta\Models\Dosen;
+use Auth;
 
 class BeritaController extends BaseController {
 
@@ -62,79 +66,59 @@ class BeritaController extends BaseController {
     }
 
 
-    /**
-     * Tampilkan daftar berita berdasarkan kategori
-     *
-     * @var string id_kategori
-     * @return View
-     */
-    function lihatBeritaDariKategori($id_kategori)
-    {
-        return "berita/kategori/id_kategori";
-    }
-
     /* Kelompok dasbor */
 
     /**
-     * Tampilan daftar berita yang dibuat pada dasbor
+     * Controller untuk Dasbor Berita, berbasiskan mekanisme REST
      * @return View
      */
-    function dasborLihatDaftarBerita()
+    function dasborBerita()
     {
-        return View::make('pages.dasbor.berita.index');
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.berita.index');
+            }
+            else
+            {
+                return Response::json(Pos::with('dosen', 'dosen.pegawai')->get());
+            }
+        }
+        else if(Request::isMethod('post'))
+        {
+            $berita = new Pos;
+            $dosen = Dosen::find(Auth::User()->nomor_induk);
+            if($dosen != null)
+            {
+                $berita->judul = Input::get('judul');
+                $berita->isi = Input::get('isi');
+                $berita->dosen()->associate($dosen);
+                $berita->save();
+            }
+
+        }
+        else if(Request::isMethod('put'))
+        {
+            $berita = Pos::find(Input::get('id_post'));
+            $dosen = Dosen::find(Auth::User()->nomor_induk);
+            if($dosen != null)
+            {
+                $berita->judul = Input::get('judul');
+                $berita->isi = Input::get('isi');
+                $berita->dosen()->associate($dosen);
+                $berita->save();
+            }
+
+        }
+        else if(Request::isMethod('post'))
+        {
+            echo Input::get('id_post');
+            Pos::delete(Input::get('id_post'));
+        }
     }
 
-    /**
-     * Tambahkan berita baru. Menampilkan laman penambahan berita.
-     *
-     * @return View
-     */
-    function dasborTambahkanBerita()
-    {
-        return View::make('pages.dasbor.berita.baru');
-    }
 
-    /**
-     * Simpan berita baru.
-     *
-     * @return View
-     */
-    function dasborSimpanBeritaBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/berita');
-    }
 
-    /**
-     * Sunting berita
-     *
-     * @var string $id_berita
-     * @return View
-     */
-    function dasborSuntingBerita($id_berita)
-    {
-        return View::make('pages.dasbor.berita.sunting');
-    }
 
-    /**
-     * Simpan berita yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanBerita()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/berita');
-    }
-
-    /**
-     * Hapus berita
-     *
-     * @var string $id_berita
-     * @return View
-     */
-    function dasborHapusBerita($id_berita)
-    {
-        return Redirect::to('dasbor/pegawai/berita');
-    }
 }

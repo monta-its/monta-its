@@ -25,7 +25,7 @@ class Pos extends Eloquent {
      */
     public function dosen()
     {
-        return $this->hasOne('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
     }
 
 }

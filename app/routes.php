@@ -30,12 +30,10 @@ Route::get ('/logout', 'Simta\Controllers\LoginController@lakukanProsesLogout');
 // BeritaController
 Route::get ('/berita', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
 Route::get ('/berita/{id_berita}', 'Simta\Controllers\BeritaController@lihatIsiBerita');
-Route::get ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborLihatDaftarBerita');
-Route::get ('/dasbor/berita/baru', 'Simta\Controllers\BeritaController@dasborTambahkanBerita');
-Route::post('/dasbor/berita/baru', 'Simta\Controllers\BeritaController@dasborSimpanBeritaBaru');
-Route::get ('/dasbor/berita/sunting/{id_berita}', 'Simta\Controllers\BeritaController@dasborSuntingBerita');
-Route::post('/dasbor/berita/sunting/{id_berita}', 'Simta\Controllers\BeritaController@dasborSimpanPerubahanBerita');
-Route::get ('/dasbor/berita/hapus/{id_berita}', 'Simta\Controllers\BeritaController@dasborHapusBerita');
+Route::get ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
+Route::post ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
+Route::put ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
+Route::delete ('/dasbor/berita', 'Simta\Controllers\BeritaController@dasborBerita');
 
 // MahasiswaController
 Route::get ('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasbor');
@@ -54,22 +52,18 @@ Route::get ('/dasbor/mahasiswa/hapus/{id_mahasiswa}', 'Simta\Controllers\Mahasis
 // BidangMinatController
 Route::get ('/prodi', 'Simta\Controllers\BidangMinatController@lihatSemuaBidangMinat');
 Route::get ('/prodi/{id_prodi}', 'Simta\Controllers\BidangMinatController@lihatRincianBidangMinat');
-Route::get ('/dasbor/pegawai/prodi', 'Simta\Controllers\BidangMinatController@dasborKelolaBidangMinat');
-Route::get ('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborTambahkanBidangMinat');
-Route::post('/dasbor/pegawai/prodi/baru', 'Simta\Controllers\BidangMinatController@dasborSimpanBidangMinatBaru');
-Route::get ('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSuntingBidangMinat');
-Route::post('/dasbor/pegawai/prodi/sunting/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborSimpanPerubahanBidangMinat');
-Route::get ('/dasbor/pegawai/prodi/hapus/{id_prodi}', 'Simta\Controllers\BidangMinatController@dasborHapusBidangMinat');
+Route::get ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+Route::post ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+Route::put ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+Route::delete ('/dasbor/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
 
 // PanduanController
 Route::get ('/panduan', 'Simta\Controllers\PanduanController@lihatSemuaPanduan');
 Route::get ('/panduan/{id_panduan}', 'Simta\Controllers\PanduanController@lihatIsiPanduan');
-Route::get ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborLihatDaftarPanduan');
-Route::get ('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborTambahkanPanduan');
-Route::post('/dasbor/panduan/baru', 'Simta\Controllers\PanduanController@dasborSimpanPanduanBaru');
-Route::get ('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSuntingPanduan');
-Route::post('/dasbor/panduan/sunting/{id_panduan}', 'Simta\Controllers\PanduanController@dasborSimpanPerubahanPanduan');
-Route::get ('/dasbor/panduan/hapus/{id_panduan}', 'Simta\Controllers\PanduanController@dasborHapusPanduan');
+Route::get ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
+Route::post ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
+Route::put ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
+Route::delete ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
 
 // BidangKeahlianController
 Route::get ('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@lihatSemuaBidangKeahlian');

@@ -14,6 +14,10 @@ use View;
 use Input;
 use Redirect;
 use Simta\Models\Panduan;
+use Simta\Models\Dosen;
+use Request;
+use Response;
+use Auth;
 
 class PanduanController extends BaseController {
 
@@ -65,65 +69,54 @@ class PanduanController extends BaseController {
     /* Kelompok dasbor */
 
     /**
-     * Tampilan daftar panduan yang dibuat pada dasbor
+     * Controller untuk Dasbor Panduan, berbasiskan mekanisme REST
      * @return View
      */
-    function dasborLihatDaftarPanduan()
+    function dasborPanduan()
     {
-        return View::make('pages.dasbor.panduan.index');
-    }
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.panduan.index');
+            }
+            else
+            {
+                return Response::json(Panduan::with('dosen', 'dosen.pegawai')->get());
+            }
+        }
+        else if(Request::isMethod('post'))
+        {
+            $panduan = new Panduan;
+            $dosen = Dosen::find(Auth::User()->nomor_induk);
+            if($dosen != null)
+            {
+                $panduan->judul = Input::get('judul');
+                $panduan->isi = Input::get('isi');
+                $panduan->lampiran = Input::get('lampiran');
+                $panduan->dosen()->associate($dosen);
+                $panduan->save();
+            }
 
-    /**
-     * Tambahkan panduan baru. Menampilkan laman penambahan panduan.
-     *
-     * @return View
-     */
-    function dasborTambahkanPanduan()
-    {
-        return View::make('pages.dasbor.panduan.baru');
-    }
+        }
+        else if(Request::isMethod('put'))
+        {
+            $panduan = Panduan::find(Input::get('id_panduan'));
+            $dosen = Dosen::find(Auth::User()->nomor_induk);
+            if($dosen != null)
+            {
+                $panduan->judul = Input::get('judul');
+                $panduan->isi = Input::get('isi');
+                $panduan->lampiran = Input::get('lampiran');
+                $panduan->dosen()->associate($dosen);
+                $panduan->save();
+            }
 
-    /**
-     * Simpan panduan baru.
-     *
-     * @return View
-     */
-    function dasborSimpanPanduanBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/panduan');
-    }
-
-    /**
-     * Sunting panduan
-     *
-     * @var string $id_panduan
-     * @return View
-     */
-    function dasborSuntingPanduan($id_panduan)
-    {
-        return View::make('pages.dasbor.panduan.sunting');
-    }
-
-    /**
-     * Simpan panduan yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanPanduan()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/panduan');
-    }
-
-    /**
-     * Hapus panduan
-     *
-     * @var string $id_panduan
-     * @return View
-     */
-    function dasborHapusPanduan($id_panduan)
-    {
-        return Redirect::to('dasbor/pegawai/panduan');
+        }
+        else if(Request::isMethod('post'))
+        {
+            echo Input::get('id_panduan');
+            Panduan::delete(Input::get('id_panduan'));
+        }
     }
 }

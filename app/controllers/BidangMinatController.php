@@ -107,66 +107,51 @@ class BidangMinatController extends BaseController {
     /* Kelompok dasbor */
 
     /**
-     * Tampilkan laman dasbor kelola bidang minat yang hanya bisa diakses oleh dosen.
-     *
+     * Controller untuk Dasbor BidangMinat, berbasiskan mekanisme REST
      * @return View
      */
-    public function dasborKelolaBidangMinat()
+    function dasborBidangMinat()
     {
-        return View::make('pages.dasbor.prodi.index');
-    }
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.prodi.index');
+            }
+            else
+            {
+                return Response::json(BidangMinat::with('dosenKoordinator', 'dosenKoordinator.pegawai')->get());
+            }
+        }
+        else if(Request::isMethod('post'))
+        {
+            $bidangMinat = new BidangMinat;
+            $dosenKoordinator = Dosen::find(Dosen::find(Input::get('nip_dosen')));
+            if($dosenKoordinator != null)
+            {
+                $bidanMinat->kode_bidang_minat = Input::get('kode_bidang_minat');
+                $bidanMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
+                $bidanMinat->dosenKoordinator()->save($dosen);
+                $bidanMinat->save();
+            }
 
-    /**
-     * Tambahkan bidang minat baru. Menampilkan laman penambahan bidang minat.
-     *
-     * @return View
-     */
-    function dasborTambahkanBidangMinat()
-    {
-        return View::make('pages.dasbor.prodi.baru');
-    }
+        }
+        else if(Request::isMethod('put'))
+        {
+            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            $dosenKoordinator = Dosen::find(Dosen::find(Input::get('nip_dosen')));
+            if($dosenKoordinator != null)
+            {
+                $bidangMinat->kode_bidang_minat = Input::get('kode_bidang_minat');
+                $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
+                $bidangMinat->dosenKoordinator()->save($dosen);
+                $bidangMinat->save();
+            }
 
-    /**
-     * Simpan bidang minat baru.
-     *
-     * @return View
-     */
-    function dasborSimpanBidangMinatBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/prodi');
-    }
-
-    /**
-     * Sunting bidang minat
-     *
-     * @var string $id_prodi
-     * @return View
-     */
-    function dasborSuntingBidangMinat($id_prodi)
-    {
-        return View::make('pages.dasbor.prodi.sunting');
-    }
-
-    /**
-     * Simpan bidang minat yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanBidangMinat()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/prodi');
-    }
-
-    /**
-     * Hapus bidang minat
-     *
-     * @var string $id_prodi
-     * @return View
-     */
-    function dasborHapusBidangMinat($id_prodi)
-    {
-        return Redirect::to('dasbor/pegawai/prodi');
+        }
+        else if(Request::isMethod('post'))
+        {
+            BidangMinat::delete(Input::get('kode_bidang_minat'));
+        }
     }
 }

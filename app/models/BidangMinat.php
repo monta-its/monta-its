@@ -37,7 +37,7 @@ class BidangMinat extends Eloquent {
      */
     public function dosenKoordinator()
     {
-        return $this->hasOne('Simta\Models\Dosen', 'nip_dosen_koordinator', 'nip_dosen');
+        return $this->hasOne('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen_koordinator');
     }
     /**
      * Relasi one-to-many dengan topik

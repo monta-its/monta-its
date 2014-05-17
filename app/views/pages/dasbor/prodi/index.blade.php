@@ -20,8 +20,8 @@ var updateBidangMinat = function($rootScope, $http) {
 
 
 app.controller('daftarBidangMinatController', function($scope, $http, $rootScope) {
-    $scope.hapusBidangMinat = function(id_bidangMinat) {
-        $http.delete('{{URL::to('/dasbor/prodi')}}', {'id_bidang_minat': id_bidang_minat}).success(function(data) {
+    $scope.hapusBidangMinat = function(kode_bidang_minat) {
+        $http.delete('{{URL::to('/dasbor/prodi')}}', {'kode_bidang_minat': kode_bidang_minat}).success(function(data) {
             updateBidangMinat($rootScope, $http);
             alert('Prodi dihapus');
         });
@@ -33,7 +33,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
     $scope.method = method;
     if(method == "baru") {
         $scope.bidangMinat = {};
-        $scope.bidangMinat.kode_bidang_minat = "";
+        $scope.kode_bidang_minat = "";
         $scope.bidangMinat.nama_bidang_minat = "";
         $scope.bidangMinat.nip_dosen_koordinator = "";
         $scope.tambahBidangMinat = function() {
@@ -52,10 +52,8 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
                     $location.path('/');
                 });
             };
-            console.log($rootScope.items);
             $.each($rootScope.items, function(i, val) {
-                if(val.id_bidang_minat === $scope.bidangMinat.id_bidang_minat) {
-                    $scope.bidangMinat.kode_bidang_minat = val.kode_bidang_minat;
+                if(val.kode_bidang_minat === $scope.bidangMinat.kode_bidang_minat) {
                     $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
                     $scope.bidangMinat.nip_dosen_koordinator = val.nip_dosen_koordinator;
                 }
@@ -100,8 +98,9 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="bidangMinat.kode_bidang_minat" type="text" class="form-control input-lg" placeholder="Kode Prodi (Nomor / Singkatan)">
+                        <input ng-show="method=='baru'" ng-model="bidangMinat.kode_bidang_minat" type="text" class="form-control input-lg" placeholder="Kode Prodi (Nomor / Singkatan)">
                         <input ng-model="bidangMinat.nama_bidang_minat" type="text" class="form-control input-lg" placeholder="Nama Prodi">
+                        <!-- TODO: Membuat selektor dosen koordinator disini -->
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -125,6 +124,7 @@ app.config(function($httpProvider) {
                             <th>Kode</th>
                             <th>Nama Prodi</th>
                             <th>Dosen Koordinator</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

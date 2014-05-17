@@ -13,7 +13,10 @@ use URL;
 use View;
 use Input;
 use Redirect;
+use Response;
+use Request;
 use Simta\Models\BidangMinat;
+use Simta\Models\Dosen;
 
 class BidangMinatController extends BaseController {
 
@@ -129,19 +132,6 @@ class BidangMinatController extends BaseController {
             $dosenKoordinator = Dosen::find(Dosen::find(Input::get('nip_dosen')));
             if($dosenKoordinator != null)
             {
-                $bidanMinat->kode_bidang_minat = Input::get('kode_bidang_minat');
-                $bidanMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
-                $bidanMinat->dosenKoordinator()->save($dosen);
-                $bidanMinat->save();
-            }
-
-        }
-        else if(Request::isMethod('put'))
-        {
-            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
-            $dosenKoordinator = Dosen::find(Dosen::find(Input::get('nip_dosen')));
-            if($dosenKoordinator != null)
-            {
                 $bidangMinat->kode_bidang_minat = Input::get('kode_bidang_minat');
                 $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
                 $bidangMinat->dosenKoordinator()->save($dosen);
@@ -149,7 +139,19 @@ class BidangMinatController extends BaseController {
             }
 
         }
-        else if(Request::isMethod('post'))
+        else if(Request::isMethod('put'))
+        {
+            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            $dosenKoordinator = Dosen::find(Dosen::find(Input::get('nip_dosen')));
+            if($dosenKoordinator != null && $bidangMinat != null)
+            {
+                $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
+                $bidangMinat->dosenKoordinator()->save($dosen);
+                $bidangMinat->save();
+            }
+
+        }
+        else if(Request::isMethod('delete'))
         {
             BidangMinat::delete(Input::get('kode_bidang_minat'));
         }

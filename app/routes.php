@@ -79,16 +79,13 @@ Route::get ('/dasbor/bidang_keahlian/hapus/{id_bidang_keahlian}', 'Simta\Control
 // TopikController
 Route::get ('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');
 Route::get ('/topik/{id_topik}', 'Simta\Controllers\TopikController@lihatIsiTopik');
-Route::get ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborLihatDaftarTopik');
-Route::get ('/dasbor/topik/baru', 'Simta\Controllers\TopikController@dasborTambahkanTopik');
-Route::post('/dasbor/topik/baru', 'Simta\Controllers\TopikController@dasborSimpanTopikBaru');
-Route::get ('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSuntingTopik');
-Route::post('/dasbor/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSimpanPerubahanTopik');
-Route::get ('/dasbor/topik/hapus/{id_topik}', 'Simta\Controllers\TopikController@dasborHapusTopik');
+Route::get ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
+Route::post ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
+Route::put ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
+Route::delete ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
 Route::get ('/topik/prodi/{id_prodi}', 'Simta\Controllers\TopikController@lihatTopikDariBidangMinat');
-Route::get ('/topik/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\TopikController@lihatTopikDariBidangKeahlian');
-Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik');
-Route::get ('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik');
+Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik'); // WTF is this?
+Route::get ('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik'); // WTF is this?
 
 // TOLONG DIREVIEW CONTROLLER BERIKUT, APAKAH INTERAKSINYA DENGAN CRUD SELAIN INI?
 // ifan: gak ngerti aku maksud instruksimu apa.

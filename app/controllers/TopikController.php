@@ -13,7 +13,10 @@ use URL;
 use View;
 use Input;
 use Redirect;
+use Response;
+use Request;
 use Simta\Models\Topik;
+use Simta\Models\BidangMinat;
 
 class TopikController extends BaseController {
 
@@ -166,65 +169,52 @@ class TopikController extends BaseController {
     /* Kelompok dasbor */
 
     /**
-     * Tampilan daftar topik yang dibuat pada dasbor
+     * Controller untuk Dasbor Topik, berbasiskan mekanisme REST
      * @return View
      */
-    function dasborLihatDaftarTopik()
+    function dasborTopik()
     {
-        return View::make('pages.dasbor.topik.index');
-    }
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.topik.index');
+            }
+            else
+            {
+                return Response::json(Topik::with('bidangMinat')->get());
+            }
+        }
+        else if(Request::isMethod('post'))
+        {
+            $topik = new Topik;
+            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            if($bidangMinat != null)
+            {
+                $topik->topik = Input::get('topik');
+                $topik->deskripsi = Input::get('deskripsi');
+                $topik->bidangMinat()->associate($bidangMinat);
+                $topik->save();
+            }
 
-    /**
-     * Tambahkan topik baru. Menampilkan laman penambahan topik.
-     *
-     * @return View
-     */
-    function dasborTambahkanTopik()
-    {
-        return View::make('pages.dasbor.topik.baru');
-    }
+        }
+        else if(Request::isMethod('put'))
+        {
+            $topik = Topik::find(Input::get('id_topik'));
+            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            if($bidangMinat != null && $topik != null)
+            {
+                $topik->topik = Input::get('topik');
+                $topik->deskripsi = Input::get('deskripsi');
+                $topik->bidangMinat()->associate($bidangMinat);
+                $topik->save();
+            }
 
-    /**
-     * Simpan topik baru.
-     *
-     * @return View
-     */
-    function dasborSimpanTopikBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/topik');
-    }
-
-    /**
-     * Sunting topik
-     *
-     * @var string $id_topik
-     * @return View
-     */
-    function dasborSuntingTopik($id_topik)
-    {
-        return View::make('pages.dasbor.topik.sunting');
-    }
-
-    /**
-     * Simpan topik yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanTopik()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/topik');
-    }
-
-    /**
-     * Hapus topik
-     *
-     * @var string $id_topik
-     * @return View
-     */
-    function dasborHapusTopik($id_topik)
-    {
-        return Redirect::to('dasbor/pegawai/topik');
+        }
+        else if(Request::isMethod('delete'))
+        {
+            // TODO: Perbaiki implementasi agar bisa berjalan
+            Topik::delete(Input::get('id_topik'));
+        }
     }
 }

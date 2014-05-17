@@ -115,7 +115,7 @@ class PanduanController extends BaseController {
         }
         else if(Request::isMethod('post'))
         {
-            echo Input::get('id_panduan');
+            // TODO: Perbaiki implementasi agar bisa berjalan
             Panduan::delete(Input::get('id_panduan'));
         }
     }

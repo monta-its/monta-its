@@ -36,6 +36,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
         $scope.kode_bidang_minat = "";
         $scope.bidangMinat.nama_bidang_minat = "";
         $scope.bidangMinat.nip_dosen_koordinator = "";
+        $scope.bidangMinat.deskripsi_bidang_minat = "";
         $scope.tambahBidangMinat = function() {
             $http.post('{{{URL::to('/dasbor/prodi')}}}', $scope.bidangMinat).success(function(data) {
                 updateBidangMinat($rootScope, $http)
@@ -56,6 +57,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
                 if(val.kode_bidang_minat === $scope.bidangMinat.kode_bidang_minat) {
                     $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
                     $scope.bidangMinat.nip_dosen_koordinator = val.nip_dosen_koordinator;
+                    $scope.bidangMinat.deskripsi_bidang_minat = val.deskripsi_bidang_minat;
                 }
             });
         } else {
@@ -100,6 +102,7 @@ app.config(function($httpProvider) {
                     <div class="form-group">
                         <input ng-show="method=='baru'" ng-model="bidangMinat.kode_bidang_minat" type="text" class="form-control input-lg" placeholder="Kode Prodi (Nomor / Singkatan)">
                         <input ng-model="bidangMinat.nama_bidang_minat" type="text" class="form-control input-lg" placeholder="Nama Prodi">
+                        <textarea ng-model="bidangMinat.deskripsi_bidang_minat" type="text" class="form-control input-lg" placeholder="Deskripsi Prodi" rows="10"></textarea>
                         <!-- TODO: Membuat selektor dosen koordinator disini -->
                     </div>
                 </div>

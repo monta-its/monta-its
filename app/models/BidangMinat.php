@@ -14,9 +14,9 @@ class BidangMinat extends Eloquent {
     protected $table = 'bidang_minat';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $fillable = ['kode_bidang_minat', "nama_bidang_minat"];
+    protected $fillable = ['kode_bidang_minat', "nama_bidang_minat", "deskripsi_bidang_minat", "nip_dosen_koordinator"];
     protected $primaryKey = "kode_bidang_minat";
-    public $increments = false;
+    public $incrementing = false;
 
     /**
      * Relasi many-to-many dengan tabel Dosen
@@ -26,7 +26,7 @@ class BidangMinat extends Eloquent {
      */
     public function dosen()
     {
-        return $this->belongsToMany('Simta\Models\Dosen', 'dosen_bidang_minat', 'kode_bidang_minat', 'kode_bidang_minat');
+        return $this->belongsToMany('Simta\Models\Dosen', 'dosen_bidang_minat', 'kode_bidang_minat', 'nip_dosen');
     }
 
     /**
@@ -37,7 +37,7 @@ class BidangMinat extends Eloquent {
      */
     public function dosenKoordinator()
     {
-        return $this->hasOne('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen_koordinator');
+        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen_koordinator', 'nip_dosen');
     }
     /**
      * Relasi one-to-many dengan topik

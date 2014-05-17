@@ -111,6 +111,7 @@ class FirstDdl extends Migration {
         {
             $table->string('kode_bidang_minat')->primary();
             $table->string('nama_bidang_minat');
+            $table->text('deskripsi_bidang_minat');
             $table->string('nip_dosen_koordinator');
             $table->timestamps();
             $table->softDeletes();

@@ -1,14 +1,15 @@
 @extends('layouts.default')
 @section('content')
 
+<!-- // TODO: Bro, istilah Bidang Ahli disini diubah ke Bidang Keahlian setiap dosen, baca segala TODO yang ada di routes.php lagi :( -->
 <div class="panel panel-default">
   <div class="panel-body">
-    <h3><a href="{{ URL::to('prodi/'. $item['id_prodi']) }}">{{ $item['nama_prodi'] }} ({{ $item['singkatan_prodi'] }})</a></h3>
+    <h3><a href="{{ URL::to('prodi/'. $item->kode_bidang_minat) }}">{{ $item->nama_bidang_minat }} ({{ $item->kode_bidang_minat }})</a></h3>
         <p></p>
         <div class="item-main">
             <div class="row">
                 <div class="col-md-12">
-                    {{ $item['deskripsi_prodi'] }}
+                    {{ $item->deskripsi_bidang_minat }}
                 </div>
             </div>
             <div class="row">
@@ -17,18 +18,18 @@
                         <thead>
                             <tr>
                                 <th class="text-center col-md-4 col-sm-5 col-xs-5">Nama Dosen</th>
-                                <th class="text-center">Bidang Ahli</th>
+                                <th class="text-center">Bidang Keahlian</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($item['dosen_prodi'] as $dosen)
+                        @foreach ($item->dosen as $dosen)
                             <tr>
                                 <td>
-                                    <a href="{{ URL::to('dosen/' . $dosen['id_dosen']) }}">{{ $dosen['nama_dosen'] }}</a>
+                                    <a href="{{ URL::to('dosen/' . $dosen->nip_dosen) }}">{{ $dosen->pegawai->nama_lengkap }}</a>
                                 </td>
                                 <td>
 
-                                @for ($i = 0; $i < count($dosen['bidang_keahlian']); $i++)
+                                @for ($i = 0; $i < count($dosen); $i++)
                                     <a href="{{ URL::to('bidang_keahlian/' . $dosen['bidang_keahlian'][$i]['id_bidang_keahlian']) }}">
                                         {{ $dosen['bidang_keahlian'][$i]['nama_bidang_keahlian'] }}
                                     </a>

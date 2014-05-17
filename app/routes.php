@@ -66,6 +66,9 @@ Route::put ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPandua
 Route::delete ('/dasbor/panduan', 'Simta\Controllers\PanduanController@dasborPanduan');
 
 // BidangKeahlianController
+// TODO: Bro, BidangKeahlian unrelated sama BidangMinat dan TugasAkhir apapun,
+// ini related sama dosen aja. Baca model lagi.
+// Perukah yang ini dibuat view di halaman tamu? I don't think so
 Route::get ('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@lihatSemuaBidangKeahlian');
 Route::get ('/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@lihatIsiBidangKeahlian');
 Route::get ('/bidang_keahlian/prodi/{id_prodi}', 'Simta\Controllers\BidangKeahlianController@lihatBidangKeahlianDariBidangMinat');
@@ -79,16 +82,19 @@ Route::get ('/dasbor/bidang_keahlian/hapus/{id_bidang_keahlian}', 'Simta\Control
 // TopikController
 Route::get ('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');
 Route::get ('/topik/{id_topik}', 'Simta\Controllers\TopikController@lihatIsiTopik');
+
 Route::get ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
 Route::post ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
 Route::put ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
 Route::delete ('/dasbor/topik', 'Simta\Controllers\TopikController@dasborTopik');
 Route::get ('/topik/prodi/{id_prodi}', 'Simta\Controllers\TopikController@lihatTopikDariBidangMinat');
-Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik'); // WTF is this?
-Route::get ('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik'); // WTF is this?
 
-// TOLONG DIREVIEW CONTROLLER BERIKUT, APAKAH INTERAKSINYA DENGAN CRUD SELAIN INI?
-// ifan: gak ngerti aku maksud instruksimu apa.
+// TODO: Bro, tolong kasih tahu fungsi dari dua controller ini
+Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik');
+Route::get ('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik');
+
+// TODO: Ini maksudmu JUDUL itu TugasAkhir ya?
+// PLIS BRO, BACA MODELNYA LAGI, KALAU BUTUH DIAGRAM, TANYA AKU :(
 // JudulController
 Route::get ('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
 Route::get ('/judul/{id_judul}', 'Simta\Controllers\JudulController@lihatIsiJudul');

@@ -34,6 +34,7 @@ class RudeSeeder extends Seeder {
 
         $bidang_minat = new BidangMinat;
         $bidang_minat->kode_bidang_minat = $faker->unique->word;
+        $bidang_minat->deskripsi_bidang_minat = $faker->sentence();
         $bidang_minat->save();
 
         $bidang_keahlian = new BidangKeahlian;
@@ -46,6 +47,7 @@ class RudeSeeder extends Seeder {
         $topik->bidangMinat()->associate($bidang_minat);
         $topik->save();
 
+        $counter = 0;
 
         for($i = 0; $i < 10; $i++)
         {
@@ -78,9 +80,20 @@ class RudeSeeder extends Seeder {
                 $dosen->nidn = $faker->unique->randomNumber(7);
                 $dosen->gelar = "Lektor";
                 $dosen->hak_akses_pegawai = rand(0,1);
-                $pegawai->dosen()->save($dosen);
-                $dosen->bidangKeahlian()->save($bidang_keahlian);
+                $dosen->pegawai()->associate($pegawai);
                 $dosen->save();
+
+                $dosen->bidangKeahlian()->save($bidang_keahlian);
+
+
+                if($counter == 0)
+                {
+
+                    $bidang_minat->dosenKoordinator()->associate($dosen);
+                    $dosen->save();
+                    $bidang_minat->save();
+                    $counter = 1;
+                }
 
                 $penawaran_judul = new PenawaranJudul;
                 $penawaran_judul->judul = $faker->sentence();

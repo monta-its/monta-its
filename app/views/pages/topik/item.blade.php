@@ -3,22 +3,16 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <h3><strong>{{ $item['judul_topik'] }}</strong></h3>
+    <h3><strong>{{ $item->topik }}</strong></h3>
         <p>
-            <span class="glyphicon glyphicon-tag"></span>z
-            <span>{{ $item['label_prodi'] }}: </span><a href="{{ URL::to('prodi/'. $item['id_prodi']) }}">{{ $item['nama_prodi'] }}</a>
+            <span class="glyphicon glyphicon-tag"></span>
+            <span>Prodi: </span><a href="{{ URL::to('prodi/'. $item->kode_bidang_minat) }}">{{ $item->bidangMinat->kode_bidang_minat }}</a>
             <span> · </span>
-            <span class="glyphicon glyphicon-tags"></span>
-            <span>Bidang Ahli: </span><a href="{{ URL::to('bidang_keahlian/'. $item['id_bidang_keahlian']) }}">{{ $item['nama_bidang_keahlian'] }}</a>
-            <br />
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Penulis: </span>
-            <a class="author" href="{{ URL::to('dosen/'. $item['penulis']['id_dosen']) }}">{{ $item['penulis']['nama_dosen'] }}</a>
         </p>
         <div class="item-main">
             <div class="row">
                 <div class="col-md-12">
-                    {{ $item['isi_topik'] }}
+                    {{ $item->deskripsi }}
                 </div>
             </div>
             <div class="row">
@@ -31,14 +25,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($item['mahasiswa_judul'] as $mahasiswa)
+                        @foreach ($item->tugasAkhir as $tugasAkhir)
                             <tr>
                                 <td>
-                                    <a href="{{ URL::to('mahasiswa/' . $mahasiswa['nrp_mahasiswa']) }}">{{ $mahasiswa['nama_mahasiswa'] }}</a>
+                                    <a href="{{ URL::to('mahasiswa/' . $tugasAkhir->nrp_mahasiswa) }}">{{ $tugasAkhir->mahasiswa->nama_lengkap }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{ URL::to('judul/' . $mahasiswa['id_judul']) }}">
-                                        {{ $mahasiswa['judul_judul'] }}
+                                    <a href="{{ URL::to('judul/' . $tugasAkhir->kode_ta) }}">
+                                        {{ $tugasAkhir->judul }}
                                     </a>
                                 </td>
                             </tr>

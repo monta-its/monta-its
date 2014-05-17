@@ -70,6 +70,18 @@ class Dosen extends Eloquent {
         return $this->hasMany('Simta\Models\PemberitahuanDosen', 'nip_dosen', 'nip_dosen');
     }
 
+
+    /**
+     * Relasi one-to-one ke BidangMinat
+     * Sebagai Dosen Koordinator dari BidangMinat bersangkutan
+     *
+     * @return Simta\Models\BidangMinat
+     */
+    public function koordinatorBidangMinat()
+    {
+        return $this->hasOne('Simta\Models\Dosen', 'nip_dosen_koordinator', 'nip_dosen');
+    }
+
     /**
      * Relasi many-to-many ke BidangMinat
      *
@@ -89,7 +101,7 @@ class Dosen extends Eloquent {
 
     public function pegawai()
     {
-        return $this->hasOne('Simta\Models\Pegawai', 'nip_pegawai', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Pegawai', 'nip_dosen', 'nip_pegawai');
     }
 
     /**

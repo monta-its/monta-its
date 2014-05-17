@@ -32,20 +32,10 @@ class BidangMinatController extends BaseController {
             array('link' => '', 'text' => 'Prodi')
         );
 
-        $item = array(
-            'nama_prodi' => 'Nama Program Studi',
-            'id_prodi' => 'id_prodi',
-            'cuplikan_prodi' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-            'singkatan_prodi' => 'NPS',
-            'label_prodi' => 'KBK'
-        );
-
-        $l_item = array();
-        array_push($l_item, $item);
-        array_push($l_item, $item);
+        $items = BidangMinat::get();
 
         View::share('breadcrumbs', $breadcrumbs);
-        View::share('l_item', $l_item);
+        View::share('items', $items);
 
         return View::make('pages.prodi.index');
     }
@@ -57,54 +47,23 @@ class BidangMinatController extends BaseController {
      */
     public function lihatRincianBidangMinat($id_prodi)
     {
-        $breadcrumbs = array(
-            array('link' => URL::to('/'), 'text' => 'Beranda'),
-            array('link' => URL::to('/prodi'), 'text' => 'Prodi'),
-            array('link' => '', 'text' => 'Nama Program Studi (NPS)'),
-        );
+        $item = BidangMinat::with('dosen', 'dosen.bidangKeahlian', 'dosen.pegawai')->find($id_prodi);
+        if($item != null)
+        {
+            $breadcrumbs = array(
+                array('link' => URL::to('/'), 'text' => 'Beranda'),
+                array('link' => URL::to('/prodi'), 'text' => 'Prodi'),
+                array('link' => '', 'text' => $item->nama_bidang_minat . '('. $item->kode_bidang_minat .')'),
+            );
 
-        $item = array(
-            'nama_prodi' => 'Nama Program Studi',
-            'id_prodi' => 'id_prodi',
-            'deskripsi_prodi' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-            'singkatan_prodi' => 'NPS',
-            'label_prodi' => 'KBK',
-            'dosen_prodi' => array(
-                array(
-                    'id_dosen' => 'id_dosen',
-                    'nama_dosen' => 'Nama Dosen',
-                    'bidang_keahlian' => array(
-                        array(
-                            'id_bidang_keahlian' => 'id_bidang_keahlian',
-                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
-                        ),
-                        array(
-                            'id_bidang_keahlian' => 'id_bidang_keahlian',
-                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
-                        )
-                    )
-                ),
-                array(
-                    'id_dosen' => 'id_dosen',
-                    'nama_dosen' => 'Nama Dosen',
-                    'bidang_keahlian' => array(
-                        array(
-                            'id_bidang_keahlian' => 'id_bidang_keahlian',
-                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
-                        ),
-                        array(
-                            'id_bidang_keahlian' => 'id_bidang_keahlian',
-                            'nama_bidang_keahlian' => 'Nama Bidang Ahli'
-                        )
-                    )
-                )
-            )
-        );
 
-        View::share('breadcrumbs', $breadcrumbs);
-        View::share('item', $item);
+            View::share('breadcrumbs', $breadcrumbs);
+            View::share('item', $item);
 
-        return View::make('pages.prodi.item');
+            return View::make('pages.prodi.item');
+        }
+
+        return Redirect::to('/');
     }
 
     /* Kelompok dasbor */
@@ -153,6 +112,7 @@ class BidangMinatController extends BaseController {
         }
         else if(Request::isMethod('delete'))
         {
+            // TODO: Perbaiki implementasi agar bisa berjalan
             BidangMinat::delete(Input::get('kode_bidang_minat'));
         }
     }

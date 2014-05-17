@@ -38,6 +38,11 @@ class LoginController extends BaseController {
      */
     function lakukanProsesLogin()
     {
+        if(Auth::guest())
+        {
+            return Redirect::to('login');
+        }
+
         $username = Input::get('username');
         $password = Input::get('password');
         if(Auth::attempt(array('username' => $username, 'password' => $password)))
@@ -57,6 +62,11 @@ class LoginController extends BaseController {
      */
     function lakukanProsesLogout()
     {
+        if(Auth::guest())
+        {
+            return Redirect::to('login');
+        }
+        
         Auth::logout();
         return Redirect::to('login');
     }

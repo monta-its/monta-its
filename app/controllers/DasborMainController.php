@@ -20,6 +20,11 @@ class DasborMainController extends BaseController {
      */
     function tentukanDasborMana()
     {
+        if(Auth::guest())
+        {
+            return Redirect::to('login');
+        }
+        
         $user = Auth::user();
         if($user->peran == 0)
         {

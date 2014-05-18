@@ -93,12 +93,6 @@ Route::delete ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborT
 // TODO: Bro, tolong kasih tahu fungsi dari dua controller ini
 Route::get ('/topik/ambil/{id_topik}', 'Simta\Controllers\TopikController@ambilTopik');
 Route::get ('/topik/batal', 'Simta\Controllers\TopikController@batalkanTopik');
-Route::get ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborLihatDaftarTopik');
-Route::get ('/dasbor/dosen/topik/baru', 'Simta\Controllers\TopikController@dasborTambahkanTopik');
-Route::post('/dasbor/dosen/topik/baru', 'Simta\Controllers\TopikController@dasborSimpanTopikBaru');
-Route::get ('/dasbor/dosen/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSuntingTopik');
-Route::post('/dasbor/dosen/topik/sunting/{id_topik}', 'Simta\Controllers\TopikController@dasborSimpanPerubahanTopik');
-Route::get ('/dasbor/dosen/topik/hapus/{id_topik}', 'Simta\Controllers\TopikController@dasborHapusTopik');
 
 // TODO: Ini maksudmu JUDUL itu TugasAkhir ya?
 // PLIS BRO, BACA MODELNYA LAGI, KALAU BUTUH DIAGRAM, TANYA AKU :(
@@ -150,6 +144,10 @@ Route::post('/dasbor/pengguna/mahasiswa/cari', 'Simta\Controllers\PenggunaContro
 
 
 Route::get('/dosen/{id_dosen}', 'Simta\Controllers\DosenController@lihatProfilDosen');
+Route::get('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+Route::post('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+Route::put('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+Route::delete('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
 
 // BATAS CONCERN CRUD PLAIN
 // DosenController

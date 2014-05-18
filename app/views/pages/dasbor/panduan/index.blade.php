@@ -21,7 +21,7 @@ var updatePanduan = function($rootScope, $http) {
 
 app.controller('daftarPanduanController', function($scope, $http, $rootScope) {
     $scope.hapusPanduan = function(id_panduan) {
-        $http.delete('{{URL::to('/dasbor/dosen/panduan')}}', {'id_panduan': id_panduan}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/panduan')}}', {'params': {'id_panduan': String(id_panduan)}}).success(function(data) {
             updatePanduan($rootScope, $http);
             alert('Panduan dihapus');
         });
@@ -92,9 +92,6 @@ app.config(function($httpProvider) {
     <script type="text/ng-template" id="panduanSunting.html">
 
         <div class="row">
-            <div class="col-md-12">
-                <h1 class="page-header">Panduan Baru </h1>
-            </div>
         </div>
         <form role="form" action="" method="post" accept-charset="utf-8" ng-controller="panduanSuntingController">
             <div class="row">
@@ -118,10 +115,14 @@ app.config(function($httpProvider) {
     </script>
     <script type="text/ng-template" id="daftarPanduan.html">
         <div class="row" >
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <a href="#/baru" class="btn btn-default">Buat Baru</a>
             </div>
-        </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input ng-model="searchText" type="text" class="form-control input-xs"  placeholder="Pencarian">
+                </div>
+            </div>
         <div class="row" ng-controller="daftarPanduanController">
             <div class="col-md-12">
                 <table class="table">
@@ -135,14 +136,14 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items">
+                        <tr ng-repeat="item in items | filter: searchText">
                             <td>[[item.id_panduan]]</td>
                             <td>[[item.judul]]</td>
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
                                 <a href="#/sunting/[[item.id_panduan]]">Sunting</a>
-                                <a href="#" ng-click="hapusPanduan([[item.id_post]])">Hapus</a>
+                                <a href="#" ng-click="hapusPanduan([[item.id_panduan]])">Hapus</a>
                             </td>
                         </tr>
                     </tbody>

@@ -88,12 +88,12 @@ class BidangMinatController extends BaseController {
         else if(Request::isMethod('post'))
         {
             $bidangMinat = new BidangMinat;
-            $dosenKoordinator = Dosen::find(Dosen::find(Input::get('nip_dosen')));
+            $dosenKoordinator = Dosen::find(Input::get('dosenKoordinator.nip_dosen'));
             if($dosenKoordinator != null)
             {
                 $bidangMinat->kode_bidang_minat = Input::get('kode_bidang_minat');
                 $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
-                $bidangMinat->dosenKoordinator()->save($dosen);
+                $bidangMinat->dosenKoordinator()->associate($dosenKoordinator);
                 $bidangMinat->save();
             }
 
@@ -101,19 +101,19 @@ class BidangMinatController extends BaseController {
         else if(Request::isMethod('put'))
         {
             $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
-            $dosenKoordinator = Dosen::find(Dosen::find(Input::get('nip_dosen')));
+            $dosenKoordinator = Dosen::find(Input::get('dosenKoordinator.nip_dosen'));
             if($dosenKoordinator != null && $bidangMinat != null)
             {
                 $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
-                $bidangMinat->dosenKoordinator()->save($dosen);
+                $bidangMinat->dosenKoordinator()->associate($dosenKoordinator);
                 $bidangMinat->save();
             }
 
         }
         else if(Request::isMethod('delete'))
         {
-            // TODO: Perbaiki implementasi agar bisa berjalan
-            BidangMinat::delete(Input::get('kode_bidang_minat'));
+            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            $bidangMinat->delete();
         }
     }
 }

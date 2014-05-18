@@ -13,6 +13,8 @@ use URL;
 use View;
 use Input;
 use Redirect;
+use Request;
+use Response;
 use Simta\Models\Dosen;
 
 class DosenController extends BaseController {
@@ -58,65 +60,24 @@ class DosenController extends BaseController {
     /* Kelompok dasbor */
 
     /**
-     * Tampilan laman dasbor awal untuk dosen.
+     * Dasbor Dosen berbasis REST
      * @return View
      */
     function dasborDosen()
     {
-        return View::make('pages.dasbor.dosen.index');
+
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.dosen.index');
+            }
+            else
+            {
+                return Response::json(Dosen::with('pegawai')->get());
+            }
+
+        }
     }
 
-    /**
-     * Tambahkan dosen baru. Menampilkan laman penambahan dosen.
-     *
-     * @return View
-     */
-    function dasborTambahkanDosen()
-    {
-        return View::make('pages.dasbor.dosen.baru');
-    }
-
-    /**
-     * Simpan dosen baru.
-     *
-     * @return View
-     */
-    function dasborSimpanDosenBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/dosen');
-    }
-
-    /**
-     * Sunting dosen
-     *
-     * @var string $id_dosen
-     * @return View
-     */
-    function dasborSuntingDosen($id_dosen)
-    {
-        return View::make('pages.dasbor.dosen.sunting');
-    }
-
-    /**
-     * Simpan dosen yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanDosen()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/dosen');
-    }
-
-    /**
-     * Hapus dosen
-     *
-     * @var string $id_dosen
-     * @return View
-     */
-    function dasborHapusDosen($id_dosen)
-    {
-        return Redirect::to('dasbor/dosen');
-    }
 }

@@ -113,10 +113,10 @@ class PanduanController extends BaseController {
             }
 
         }
-        else if(Request::isMethod('post'))
+        else if(Request::isMethod('delete'))
         {
-            // TODO: Perbaiki implementasi agar bisa berjalan
-            Panduan::delete(Input::get('id_panduan'));
+            $panduan = Panduan::find(Input::get('id_panduan'));
+            $panduan->delete();
         }
     }
 }

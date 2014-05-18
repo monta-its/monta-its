@@ -111,11 +111,10 @@ class BeritaController extends BaseController {
             }
 
         }
-        else if(Request::isMethod('post'))
+        else if(Request::isMethod('delete'))
         {
-            // TODO: Perbaiki implementasi agar bisa berjalan
-            echo Input::get('id_post');
-            Pos::delete(Input::get('id_post'));
+            $berita = Pos::find(Input::get('id_post'));
+            $berita->delete();
         }
     }
 

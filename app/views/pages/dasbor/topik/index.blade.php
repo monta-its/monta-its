@@ -16,12 +16,20 @@ var updateTopik = function($rootScope, $http) {
     $http.get('{{URL::to('/dasbor/dosen/topik')}}').success(function(data) {
         $rootScope.items = data;
     });
+
+    // Ambil data bidang minat tersedia
+    $http.get('{{URL::to('/dasbor/dosen/prodi')}}').success(function(data) {
+        $rootScope.prodis = data;
+    });
 };
 
 
-app.controller('daftarTopikController', function($scope, $http, $rootScope) {
+app.controller('daftarTopikController', function($scope, $http, $rootScope, $routeParams) {
+    if($routeParams) {
+        $scope.searchText = $routeParams.searchText;
+    }
     $scope.hapusTopik = function(id_topik) {
-        $http.delete('{{URL::to('/dasbor/dosen/topik')}}', {'id_topik': id_topik}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/topik')}}', {'params': {'id_topik': String(id_topik)}}).success(function(data) {
             updateTopik($rootScope, $http);
             alert('Topik dihapus');
         });
@@ -35,7 +43,6 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
         $scope.topik = {};
         $scope.topik.topik = "";
         $scope.topik.deskripsi = "";
-        $scope.topik.kode_bidang_minat = "";
         $scope.tambahTopik = function() {
             $http.post('{{{URL::to('/dasbor/dosen/topik')}}}', $scope.topik).success(function(data) {
                 updateTopik($rootScope, $http)
@@ -52,12 +59,15 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
                     $location.path('/');
                 });
             };
-            console.log($rootScope.items);
             $.each($rootScope.items, function(i, val) {
                 if(val.id_topik === $scope.topik.id_topik) {
                     $scope.topik.topik = val.topik;
                     $scope.topik.deskripsi = val.deskripsi;
-                    $scope.topik.kode_bidang_minat = val.kode_bidang_minat;
+                    $.each($rootScope.prodis, function(j, val2) {
+                        if(val2.kode_bidang_minat == val.kode_bidang_minat) {
+                            $scope.topik.bidangMinat = val2;
+                        }
+                    });
                 }
             });
         } else {
@@ -72,6 +82,7 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
 app.config(function($routeProvider) {
     $routeProvider
     .when('/', { templateUrl: 'daftarTopik.html'})
+    .when('/prodi/:searchText', { templateUrl: 'daftarTopik.html'})
     .when('/:method', { templateUrl: 'topikSunting.html'})
     .when('/:method/:id', { templateUrl: 'topikSunting.html'})
 });
@@ -100,7 +111,7 @@ app.config(function($httpProvider) {
                     <div class="form-group">
                         <textarea ng-model="topik.deskripsi" class="form-control" rows="10" placeholder="Deskripsi Topik"></textarea>
                     </div>
-                    <!-- TODO: Tambahkan dropdown box pemilih BidangMinat -->
+                    <select ng-model="topik.bidangMinat" ng-options="prodi.nama_bidang_minat for prodi in prodis"></select>
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi"  class="btn btn-success" ng-click="tambahTopik()">Tambahkan</button>
@@ -111,8 +122,13 @@ app.config(function($httpProvider) {
     </script>
     <script type="text/ng-template" id="daftarTopik.html">
         <div class="row" >
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <a href="#/baru" class="btn btn-default">Buat Baru</a>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input ng-model="searchText" type="text" class="form-control input-xs"  placeholder="Pencarian">
+                </div>
             </div>
         </div>
         <div class="row" ng-controller="daftarTopikController">
@@ -127,10 +143,10 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items">
+                        <tr ng-repeat="item in items | filter: searchText">
                             <td>[[item.topik]]</td>
                             <td>[[item.deskripsi]]</td>
-                            <td>[[item.bidangMinat.nama_bidang_minat]]</td>
+                            <td>[[item.bidang_minat.nama_bidang_minat]]</td>
                             <td>
                                 <a href="#/sunting/[[item.id_topik]]">Sunting</a>
                                 <a href="#" ng-click="hapusTopik([[item.id_topik]])">Hapus</a>

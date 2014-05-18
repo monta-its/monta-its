@@ -15,6 +15,7 @@ class Mahasiswa extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $fillable = ['nrp_mahasiswa', 'nama_lengkap', 'kata_sandi', 'angkatan'];
+    protected $hidden = ['kata_sandi'];
     protected $primaryKey = "nrp_mahasiswa";
     public $incrementing = false;
 

@@ -20,7 +20,7 @@ var updateBerita = function($rootScope, $http) {
 
 app.controller('daftarBeritaController', function($scope, $http, $rootScope) {
     $scope.hapusBerita = function(id_post) {
-        $http.delete('{{URL::to('/dasbor/dosen/berita')}}', {'id_post': id_post}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/berita')}}', {'params': {'id_post': String(id_post)}}).success(function(data) {
             updateBerita($rootScope, $http);
             alert('Berita dihapus');
         });
@@ -86,11 +86,6 @@ app.config(function($httpProvider) {
     </ng-view>
     <script type="text/ng-template" id="beritaSunting.html">
 
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="page-header">Berita Baru </h1>
-            </div>
-        </div>
         <form role="form" action="" method="post" accept-charset="utf-8" ng-controller="beritaSuntingController">
             <div class="row">
                 <div class="col-md-8">
@@ -110,8 +105,13 @@ app.config(function($httpProvider) {
     </script>
     <script type="text/ng-template" id="daftarBerita.html">
         <div class="row" >
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <a href="#/baru" class="btn btn-default">Buat Baru</a>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input ng-model="searchText" type="text" class="form-control input-xs"  placeholder="Pencarian">
+                </div>
             </div>
         </div>
         <div class="row" ng-controller="daftarBeritaController">
@@ -127,7 +127,7 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items">
+                        <tr ng-repeat="item in items | filter: searchText">
                             <td>[[item.id_post]]</td>
                             <td>[[item.judul]]</td>
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>

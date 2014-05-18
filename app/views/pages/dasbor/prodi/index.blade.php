@@ -16,12 +16,17 @@ var updateBidangMinat = function($rootScope, $http) {
     $http.get('{{URL::to('/dasbor/dosen/prodi')}}').success(function(data) {
         $rootScope.items = data;
     });
+
+    // Ambil data dosen untuk milih koordinator
+    $http.get('{{URL::to('/dasbor/dosen/dosen')}}').success(function(data) {
+        $rootScope.dosens = data;
+    });
 };
 
 
 app.controller('daftarBidangMinatController', function($scope, $http, $rootScope) {
     $scope.hapusBidangMinat = function(kode_bidang_minat) {
-        $http.delete('{{URL::to('/dasbor/dosen/prodi')}}', {'kode_bidang_minat': kode_bidang_minat}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/prodi')}}', {'params': {'kode_bidang_minat': String(kode_bidang_minat)}}).success(function(data) {
             updateBidangMinat($rootScope, $http);
             alert('Prodi dihapus');
         });
@@ -35,7 +40,6 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
         $scope.bidangMinat = {};
         $scope.kode_bidang_minat = "";
         $scope.bidangMinat.nama_bidang_minat = "";
-        $scope.bidangMinat.nip_dosen_koordinator = "";
         $scope.bidangMinat.deskripsi_bidang_minat = "";
         $scope.tambahBidangMinat = function() {
             $http.post('{{{URL::to('/dasbor/dosen/prodi')}}}', $scope.bidangMinat).success(function(data) {
@@ -46,7 +50,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
     } else if (method == "sunting") {
         if($routeParams.id) {
             $scope.bidangMinat = {};
-            $scope.bidangMinat.id_bidang_minat = $routeParams.id;
+            $scope.bidangMinat.kode_bidang_minat = $routeParams.id;
             $scope.suntingBidangMinat = function() {
                 $http.put('{{URL::to('/dasbor/dosen/prodi')}}', $scope.bidangMinat).success(function (data) {
                     updateBidangMinat($rootScope, $http);
@@ -56,8 +60,12 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
             $.each($rootScope.items, function(i, val) {
                 if(val.kode_bidang_minat === $scope.bidangMinat.kode_bidang_minat) {
                     $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
-                    $scope.bidangMinat.nip_dosen_koordinator = val.nip_dosen_koordinator;
                     $scope.bidangMinat.deskripsi_bidang_minat = val.deskripsi_bidang_minat;
+                    $.each($rootScope.dosens, function(j, val2) {
+                        if(val2.nip_dosen == val.nip_dosen_koordinator) {
+                            $scope.bidangMinat.dosenKoordinator = val2;
+                        }
+                    });
                 }
             });
         } else {
@@ -91,11 +99,6 @@ app.config(function($httpProvider) {
 
     <script type="text/ng-template" id="bidangMinatSunting.html">
 
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="page-header">Prodi Baru</h1>
-            </div>
-        </div>
         <form role="form" action="" method="post" accept-charset="utf-8" ng-controller="bidangMinatSuntingController">
             <div class="row">
                 <div class="col-md-8">
@@ -103,7 +106,7 @@ app.config(function($httpProvider) {
                         <input ng-show="method=='baru'" ng-model="bidangMinat.kode_bidang_minat" type="text" class="form-control input-lg" placeholder="Kode Prodi (Nomor / Singkatan)">
                         <input ng-model="bidangMinat.nama_bidang_minat" type="text" class="form-control input-lg" placeholder="Nama Prodi">
                         <textarea ng-model="bidangMinat.deskripsi_bidang_minat" type="text" class="form-control input-lg" placeholder="Deskripsi Prodi" rows="10"></textarea>
-                        <!-- TODO: Membuat selektor dosen koordinator disini -->
+                        <select ng-model="bidangMinat.dosenKoordinator" ng-options="dosen.pegawai.nama_lengkap for dosen in dosens"></select>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -115,8 +118,13 @@ app.config(function($httpProvider) {
     </script>
     <script type="text/ng-template" id="daftarBidangMinat.html">
         <div class="row" >
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <a href="#/baru" class="btn btn-default">Buat Baru</a>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input ng-model="searchText" type="text" class="form-control input-xs"  placeholder="Pencarian">
+                </div>
             </div>
         </div>
         <div class="row" ng-controller="daftarBidangMinatController">
@@ -131,10 +139,10 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items">
+                        <tr ng-repeat="item in items | filter: searchText">
                             <td>[[item.kode_bidang_minat]]</td>
                             <td>[[item.nama_bidang_minat]]</td>
-                            <td>[[item.dosenKoordinator.pegawai.nama_lengkap]]</td>
+                            <td>[[item.dosen_koordinator.pegawai.nama_lengkap]]</td>
                             <td>
                                 <a href="#/sunting/[[item.kode_bidang_minat]]">Sunting</a>
                                 <a href="#" ng-click="hapusBidangMinat([[item.kode_bidang_minat]])">Hapus</a>

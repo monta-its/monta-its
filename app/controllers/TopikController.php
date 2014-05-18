@@ -133,7 +133,7 @@ class TopikController extends BaseController {
         else if(Request::isMethod('post'))
         {
             $topik = new Topik;
-            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            $bidangMinat = BidangMinat::find(Input::get('bidangMinat.kode_bidang_minat'));
             if($bidangMinat != null)
             {
                 $topik->topik = Input::get('topik');
@@ -146,7 +146,7 @@ class TopikController extends BaseController {
         else if(Request::isMethod('put'))
         {
             $topik = Topik::find(Input::get('id_topik'));
-            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            $bidangMinat = BidangMinat::find(Input::get('bidangMinat.kode_bidang_minat'));
             if($bidangMinat != null && $topik != null)
             {
                 $topik->topik = Input::get('topik');
@@ -158,8 +158,9 @@ class TopikController extends BaseController {
         }
         else if(Request::isMethod('delete'))
         {
-            // TODO: Perbaiki implementasi agar bisa berjalan
-            Topik::delete(Input::get('id_topik'));
+            var_dump(Input::get('id_topik'));
+            $topik = Topik::find(Input::get('id_topik'));
+            $topik->delete();
         }
     }
 }

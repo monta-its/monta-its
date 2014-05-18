@@ -62,7 +62,7 @@ Route::filter('pegawaiAuth', function()
     if(Auth::check())
     {
         $user = Auth::user();
-        if($user->peran != 1 || $user->peran != 3)
+        if($user->peran != 1 && $user->peran != 3)
         {
             return Redirect::to('dasbor');
         }
@@ -75,7 +75,7 @@ Route::filter('dosenAuth', function()
     if(Auth::check())
     {
         $user = Auth::user();
-        if($user->peran != 2 || $user->peran != 3)
+        if($user->peran != 2 && $user->peran != 3)
         {
             return Redirect::to('dasbor');
         }

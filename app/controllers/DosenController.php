@@ -53,6 +53,16 @@ class DosenController extends BaseController {
             array('link' => URL::to('/dosen'), 'text' => 'Dosen'),
             array('link' => '', 'text' => 'Profil')
         );
+
+        $item = Dosen::find($id_dosen);
+        $item->bidangKeahlian = $item->bidangKeahlian()->get();
+        
+        if ($item == null) 
+        {
+            return Redirect::to('/');
+        }
+
+        View::share('item', $item);
         View::share('breadcrumbs', $breadcrumbs);
         return View::make('pages.dosen.item');
     }

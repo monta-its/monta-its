@@ -11,17 +11,24 @@
                     <tr>
                         <td class="col-md-2 col-sm-2 col-xs-2"><strong>Nama</strong></td>
                         <td>: </td>
-                        <td>Nama Dosen</td>
+                        <td>{{ $item->pegawai()->first()->nama_lengkap }}</td>
                     </tr>
                     <tr>
                         <td><strong>NIP</strong></td>
                         <td>: </td>
-                        <td>12345678909876543</td>
+                        <td>{{ $item->pegawai()->first()->nip_pegawai }}</td>
                     </tr>
                     <tr>
                         <td><strong>Bidang Ahli</strong></td>
                         <td>: </td>
-                        <td>Bidang Ahli 1, Bidang Ahli 2</td>
+                        <td>
+                        @for ($i = 0; $i < count($item->bidangKeahlian); $i++)
+                            <a href="{{ URL::to('bidang_keahlian/' . $item->bidangKeahlian[$i]->id_bidang_keahlian) }}">{{ $item->bidangKeahlian[$i]->nama_bidang_keahlian }}</a> 
+                            @if ($i != count($item->bidangKeahlian) - 1)
+                                ,
+                            @endif
+                        @endfor
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>Topik TA</strong></td>

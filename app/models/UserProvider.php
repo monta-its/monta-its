@@ -34,6 +34,7 @@ class UserProvider implements UserProviderInterface {
         {
             $user->nomor_induk = $mahasiswa->nrp_mahasiswa;
             $user->kata_sandi = $mahasiswa->kata_sandi;
+            $user->nama_lengkap = $mahasiswa->nama_lengkap;
             $user->peran = 0;
 
             return $user;
@@ -44,6 +45,7 @@ class UserProvider implements UserProviderInterface {
        {
            $user->nomor_induk = $pegawai->nip_pegawai;
            $user->kata_sandi = $pegawai->kata_sandi;
+           $user->nama_lengkap = $pegawai->nama_lengkap;
            if($pegawai->apakahDosen())
            {
                if($pegawai->hak_akses_dosen == 1)

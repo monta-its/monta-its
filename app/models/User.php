@@ -22,7 +22,14 @@ class User implements UserInterface {
     public $nomor_induk;
 
     /**
-      * Kata sandi yang sudah dihash
+      * Nama lengkap dari pengguna
+      * @var string $kata_sandi
+      */
+
+    public $nama_lengkap;
+
+    /**
+      * kata sandi yang sudah dihash
       * @var string $kata_sandi
       */
 

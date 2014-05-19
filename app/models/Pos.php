@@ -16,7 +16,7 @@ class Pos extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_post";
-    protected $fillable = ["judul", "isi"];
+    protected $fillable = ["judul", "isi", "is_published"];
 
     /**
      * Relasi many-to-one dengan tabel Dosen

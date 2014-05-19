@@ -93,6 +93,7 @@ class BeritaController extends BaseController {
             {
                 $berita->judul = Input::get('judul');
                 $berita->isi = Input::get('isi');
+                $berita->is_published = Input::get('is_published');
                 $berita->dosen()->associate($dosen);
                 $berita->save();
             }
@@ -106,6 +107,7 @@ class BeritaController extends BaseController {
             {
                 $berita->judul = Input::get('judul');
                 $berita->isi = Input::get('isi');
+                $berita->is_published = Input::get('is_published');
                 $berita->dosen()->associate($dosen);
                 $berita->save();
             }

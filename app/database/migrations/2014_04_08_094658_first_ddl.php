@@ -29,6 +29,8 @@ class FirstDdl extends Migration {
         Schema::create('pegawai', function($table) {
             $table->string('nip_pegawai')->primary();
             $table->string('nama_lengkap')->index();
+            $table->string('gelar_depan');
+            $table->string('gelar_belakang');
             $table->string('kata_sandi');
             $table->boolean('aktif');
             $table->timestamps();
@@ -134,6 +136,7 @@ class FirstDdl extends Migration {
             $table->string('nip_dosen');
             $table->string('judul');
             $table->text('isi');
+            $table->boolean('is_published');
             $table->timestamps();
             $table->softDeletes();
         });

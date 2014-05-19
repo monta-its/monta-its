@@ -76,6 +76,9 @@ class RudeSeeder extends Seeder {
 
 
             if(rand(0,1) == 1) {
+                $pegawai->gelar_depan = "Ir.";
+                $pegawai->gelar_belakang = "S.Kom.";
+                $pegawai->save();
                 $dosen = new Dosen;
                 $dosen->nidn = $faker->unique->randomNumber(7);
                 $dosen->gelar = "Lektor";
@@ -118,6 +121,7 @@ class RudeSeeder extends Seeder {
                     $pos = new Pos;
                     $pos->judul = $faker->sentence();
                     $pos->isi = $faker->text();
+                    $pos->is_published = true;
                     $pos->save();
                     $dosen->pos()->save($pos);
                 }

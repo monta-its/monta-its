@@ -14,7 +14,7 @@ class Pegawai extends Eloquent {
     protected $table = 'pegawai';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $fillable = ['nip_pegawai', 'nama_lengkap', 'kata_sandi'];
+    protected $fillable = ['nip_pegawai', 'nama_lengkap', 'kata_sandi', 'gelar_depan', 'gelar_belakang'];
     protected $hidden = ['kata_sandi'];
     protected $primaryKey = "nip_pegawai";
     public $incrementing = false;

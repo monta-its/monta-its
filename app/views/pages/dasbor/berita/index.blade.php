@@ -25,6 +25,22 @@ app.controller('daftarBeritaController', function($scope, $http, $rootScope) {
             alert('Berita dihapus');
         });
     };
+    $scope.publish = function(id_post, action) {
+        var berita = {};
+
+        $.each($rootScope.items, function(i, val) {
+            if(val.id_post == id_post) {
+                berita = val;
+            }
+        });
+
+        berita.is_published = action;
+
+        $http.put('{{{URL::to('/dasbor/dosen/berita')}}}', berita).success(function(data) {
+            updateBerita($rootScope, $http)
+            $location.path('/');
+        })
+    };
 });
 
 app.controller('beritaSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
@@ -34,7 +50,15 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
         $scope.berita = {};
         $scope.berita.judul = "";
         $scope.berita.isi = "";
+        $scope.berita.is_published = true;
         $scope.terbitkanBerita = function() {
+            $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
+                updateBerita($rootScope, $http)
+                $location.path('/');
+            })
+        };
+        $scope.simpanBerita = function() {
+            $scope.berita.is_published = false;
             $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
                 updateBerita($rootScope, $http)
                 $location.path('/');
@@ -54,6 +78,7 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
                 if(val.id_post === $scope.berita.id_post) {
                     $scope.berita.judul = val.judul;
                     $scope.berita.isi = val.isi;
+                    $scope.berita.is_published = val.is_published;
                 }
             });
         } else {
@@ -98,6 +123,7 @@ app.config(function($httpProvider) {
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi" value="Terbitkan" class="btn btn-success" ng-click="terbitkanBerita()">Terbitkan</button>
+                    <button ng-show="method=='baru'" type="submit" name="aksi" value="Simpan" class="btn btn-success" ng-click="simpanBerita()">Simpan</button>
                     <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingBerita()">Sunting</button>
                 </div>
             </div>
@@ -133,6 +159,8 @@ app.config(function($httpProvider) {
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
+                                <a href="#" ng-show="item.is_published" ng-click="publish([[item.id_post]], false)">Non publikasi</a>
+                                <a href="#" ng-hide="item.is_published" ng-click="publish([[item.id_post]], true)">Publikasi</a>
                                 <a href="#/sunting/[[item.id_post]]">Sunting</a>
                                 <a href="#" ng-click="hapusBerita([[item.id_post]])">Hapus</a>
                             </td>

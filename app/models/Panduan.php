@@ -19,13 +19,13 @@ class Panduan extends Eloquent {
     protected $fillable = ["judul", "isi"];
 
     /**
-     * Relasi many-to-one dengan tabel Dosen
+     * Relasi many-to-one dengan tabel Pegawai
      *
-     * @return Simta\Models\Dosen
+     * @return Simta\Models\Pegawai
      */
-    public function dosen()
+    public function pegawai()
     {
-        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Pegawai', 'nip_pegawai', 'nip_pegawai');
     }
 
     /**

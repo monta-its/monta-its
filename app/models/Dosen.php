@@ -47,7 +47,7 @@ class Dosen extends Eloquent {
      */
     public function pos()
     {
-        return $this->hasMany('Simta\Models\Pos', 'nip_dosen', 'nip_dosen');
+        return $this->hasMany('Simta\Models\Pos', 'nip_pegawai', 'nip_dosen');
     }
 
     /**
@@ -57,7 +57,7 @@ class Dosen extends Eloquent {
      */
     public function panduan()
     {
-        return $this->hasMany('Simta\Models\Panduan', 'nip_dosen', 'nip_dosen');
+        return $this->hasMany('Simta\Models\Panduan', 'nip_pegawai', 'nip_dosen');
     }
 
     /**

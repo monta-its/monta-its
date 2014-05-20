@@ -31,6 +31,26 @@ class Pegawai extends Eloquent {
     }
 
     /**
+     * Relasi one-to-many ke Pos
+     *
+     * @return Simta\Models\Pos
+     */
+    public function pos()
+    {
+        return $this->hasMany('Simta\Models\Pos', 'nip_pegawai', 'nip_pegawai');
+    }
+
+    /**
+     * Relasi one-to-many ke Panduan
+     *
+     * @return Simta\Models\Panduan
+     */
+    public function panduan()
+    {
+        return $this->hasMany('Simta\Models\Panduan', 'nip_pegawai', 'nip_pegawai');
+    }
+
+    /**
      * Relasi one-to-many ke PemberitahuanPegawai
      *
      * @return Simta\Models\PemberitahuanPegawai

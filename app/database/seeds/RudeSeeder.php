@@ -17,6 +17,7 @@ use Simta\Models\Topik;
 use Simta\Models\TeknikMesin\SitIn;
 use Simta\Models\PenawaranJudul;
 use Simta\Models\Lampiran;
+use Simta\Models\JenjangPendidikan;
 
 class RudeSeeder extends Seeder {
 
@@ -28,6 +29,15 @@ class RudeSeeder extends Seeder {
     public function run()
     {
         $faker = Faker\Factory::create();
+
+
+        $jenjang_pendidikan = JenjangPendidikan::find('S1');
+        if ($jenjang_pendidikan == null)
+        {
+            $jenjang_pendidikan = new JenjangPendidikan;
+            $jenjang_pendidikan->kode_jenjang_pendidikan = 'S1';
+            $jenjang_pendidikan->save();
+        }
 
         $ruangan = new Ruangan;
         $ruangan->kode_ruangan = $faker->unique->word;
@@ -43,6 +53,7 @@ class RudeSeeder extends Seeder {
         $bidang_keahlian = new BidangKeahlian;
         $bidang_keahlian->nama_bidang_keahlian = $faker->unique->word;
         $bidang_keahlian->save();
+        $bidang_keahlian->bidangMinat()->save($bidang_minat);
 
         $topik = new Topik;
         $topik->topik = $faker->unique->word;
@@ -65,6 +76,9 @@ class RudeSeeder extends Seeder {
                     'aktif' => 1
                 )
             );
+
+            $mahasiswa->jenjangPendidikan()->associate($jenjang_pendidikan);
+            $mahasiswa->save();
 
             for($j = 0; $j < 3; $j++)
             {

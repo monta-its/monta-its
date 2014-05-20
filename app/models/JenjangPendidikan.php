@@ -25,7 +25,7 @@ class JenjangPendidikan extends Eloquent {
      */
     public function mahasiswa()
     {
-        return $this->belongsToMany('Simta\Models\Mahasiswa', 'kode_jenjang_pendidikan', 'kode_jenjang_pendidikan');
+        return $this->hasMany('Simta\Models\Mahasiswa', 'kode_jenjang_pendidikan', 'kode_jenjang_pendidikan');
     }
 
 }

@@ -39,5 +39,16 @@ class BidangMinat extends Eloquent {
     {
         return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen_koordinator', 'nip_dosen');
     }
+
+    /**
+     * Relasi many-to-many dengan BidangKeahlian
+     *
+     * @return Simta\Models\BidangKeahlian
+     */
+    public function bidangKeahlian()
+    {
+        return $this->belongsToMany('Simta\Models\BidangKeahlian', 'bidang_keahlian_bidang_minat', 'id_bidang_minat', 'id_bidang_keahlian');
+    }
+
 }
 ?>

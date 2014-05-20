@@ -14,7 +14,7 @@ class Ruangan extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_ruangan";
-    public $incrementing = false;
+    public $incrementing = true;
     protected $fillable = ["kode_ruangan", "nama_ruangan"];
 
 }

@@ -45,9 +45,9 @@ class Mahasiswa extends Eloquent {
      *
      * @return Simta\Models\JenjangPendidikan
      */
-    public function pemberitahuan()
+    public function jenjangPendidikan()
     {
-        return $this->hasOne('Simta\Models\JenjangPendidikan');
+        return $this->hasOne('Simta\Models\JenjangPendidikan', 'kode_jenjang_pendidikan', 'kode_jenjang_pendidikan');
     }
 
 }

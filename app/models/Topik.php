@@ -19,13 +19,13 @@ class Topik extends Eloquent {
     protected $fillable = ["topik", "deskripsi"];
 
     /**
-     * Relasi many-to-one dengan tabel BidangMinat
+     * Relasi many-to-one dengan tabel BidangKeahlian
      *
-     * @return Simta\Models\BidangMinat
+     * @return Simta\Models\BidangKeahlian
      */
-    public function bidangMinat()
+    public function bidangKeahlian()
     {
-        return $this->belongsTo('Simta\Models\BidangMinat', 'id_bidang_minat', 'id_bidang_minat');
+        return $this->belongsTo('Simta\Models\BidangKeahlian', 'id_bidang_keahlian', 'id_bidang_keahlian');
     }
 
     /**

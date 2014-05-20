@@ -15,7 +15,8 @@ class PemberitahuanPegawai extends Eloquent {
     protected $table = 'pemberitahuan_pegawai';
     public $timestamps = true;
     protected $softDelete = true;
-
+    protected $fillable = ["isi"];
+    protected $primaryKey = 'id_pemberitahuan_pegawai';
 
     /**
      * Relasi many-to-one dengan tabel Pegawai

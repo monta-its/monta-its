@@ -17,7 +17,6 @@ class SitIn extends Eloquent {
     protected $softDelete = true;
     protected $primaryKey = "id_sit_in";
 
-
     /**
      * Relasi many-to-one dengan tabel Dosen
      *

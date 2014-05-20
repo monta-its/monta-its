@@ -16,7 +16,6 @@ class TugasAkhir extends Eloquent {
     protected $softDelete = true;
     protected $primaryKey = "id_tugas_akhir";
 
-
     /**
      * Relasi many-to-one dengan tabel Dosen
      *

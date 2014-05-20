@@ -12,6 +12,7 @@ use Eloquent;
 
 class Evaluasi extends Eloquent {
     protected $table = 'evaluasi';
+    protected $primaryKey = 'id_evaluasi';
     public $timestamps = true;
     protected $softDelete = true;
 

@@ -15,6 +15,7 @@ class PemberitahuanMahasiswa extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $fillable = ["isi"];
+    protected $primaryKey = 'id_pemberitahuan_mahasiswa';
 
     /**
      * Relasi many-to-one dengan tabel Mahasiswa

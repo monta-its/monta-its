@@ -68,12 +68,12 @@ class FirstDdl extends Migration {
         Schema::create('tugas_akhir', function($table)
         {
             $table->increments('id_tugas_akhir');
-            $table->string('id_penawaran_judul');   
+            $table->integer('id_penawaran_judul');   
             $table->string('nrp_mahasiswa');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->enum('status', array('pra_diajuakan', 'diajukan', 'siap_sidang_proposal', 'pengerjaan', 'siap_sidang_akhir', 'revisi', 'selesai', 'mengundurkan_diri'));
-            $table->string('id_topik');
+            $table->integer('id_topik');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -94,7 +94,7 @@ class FirstDdl extends Migration {
             $table->enum('jenis_sidang', array('proposal', 'akhir'));
             $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_selesai');
-            $table->string('kode_ruangan');
+            $table->integer('id_ruangan');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -134,7 +134,7 @@ class FirstDdl extends Migration {
         Schema::create('dosen_bidang_minat', function($table)
         {
             $table->increments('id_dosen_bidang_minat');
-            $table->string('id_bidang_minat');
+            $table->integer('id_bidang_minat');
             $table->string('nip_dosen');
             $table->timestamps();
             $table->softDeletes();
@@ -157,7 +157,7 @@ class FirstDdl extends Migration {
             $table->string('nip_pegawai');
             $table->string('judul_panduan');
             $table->text('isi_panduan');
-            $table->text('id_lampiran');
+            $table->integer('id_lampiran');
             $table->timestamps();
             $table->softdeletes();
         });
@@ -174,7 +174,7 @@ class FirstDdl extends Migration {
 
         Schema::create('penawaran_judul', function($table) {
             $table->increments('id_penawaran_judul');
-            $table->string('id_topik');
+            $table->integer('id_topik');
             $table->string('nip_dosen');
             $table->string('judul_tugas_akhir');
             $table->text('deskripsi');
@@ -184,7 +184,7 @@ class FirstDdl extends Migration {
 
         Schema::create('topik', function($table) {
             $table->increments('id_topik');
-            $table->string('id_bidang_minat');
+            $table->integer('id_bidang_keahlian');
             $table->string('topik');
             $table->text('deskripsi');
             $table->timestamps();
@@ -238,8 +238,6 @@ class FirstDdl extends Migration {
             $table->text('payload');
             $table->integer('last_activity');
         });
-
-
 	}
 
 	/**

@@ -6,8 +6,15 @@
     <h3><strong>{{ $item->topik }}</strong></h3>
         <p>
             <span class="glyphicon glyphicon-tag"></span>
-            <span>Prodi: </span><a href="{{ URL::to('prodi/'. $item->kode_bidang_minat) }}">{{ $item->bidangMinat->kode_bidang_minat }}</a>
-            <span> · </span>
+            <span>Prodi: </span>
+            @foreach ($item->bidangKeahlian->bidangMinat as $i => $bidangMinat) 
+                <a href="{{ URL::to('prodi/'. $bidangMinat->kode_bidang_minat) }}">
+                    {{ $bidangMinat->kode_bidang_minat }}
+                </a>
+                @if ($i != $item->bidangKeahlian->bidangMinat->count() - 1)
+                    ,
+                @endif
+            @endforeach
         </p>
         <div class="item-main">
             <div class="row">
@@ -25,14 +32,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($item->tugasAkhir as $tugasAkhir)
+                        @foreach ($item->penawaranJudul as $penawaranJudul)
                             <tr>
+                            @if ($penawaranJudul->tugasAkhir != null)
                                 <td>
-                                    <a href="{{ URL::to('mahasiswa/' . $tugasAkhir->nrp_mahasiswa) }}">{{ $tugasAkhir->mahasiswa->nama_lengkap }}</a>
+                                    <a href="{{ URL::to('mahasiswa/' . $penawaranJudul->tugasAkhir->nrp_mahasiswa) }}">{{ $penawaranJudul->tugasAkhir->mahasiswa->nama_lengkap }}</a>
                                 </td>
+                            @else
                                 <td>
-                                    <a href="{{ URL::to('judul/' . $tugasAkhir->kode_ta) }}">
-                                        {{ $tugasAkhir->judul }}
+                                    <span class="text-muted">Belum diambil</span>
+                                </td>
+                            @endif
+                                
+                                <td>
+                                    <a href="{{ URL::to('judul/' . $penawaranJudul->id_penawaran_judul) }}">
+                                        {{ $penawaranJudul->judul_tugas_akhir }}
                                     </a>
                                 </td>
                             </tr>

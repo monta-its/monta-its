@@ -34,7 +34,7 @@ class TopikController extends BaseController {
             array('link' => '', 'text' => 'Topik TA')
         );
 
-        $items = Topik::with('bidangMinat')->get();
+        $items = Topik::with('bidangKeahlian.bidangMinat')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -50,7 +50,7 @@ class TopikController extends BaseController {
      */
     function lihatIsiTopik($id_topik)
     {
-        $item = Topik::with('bidangMinat', 'tugasAkhir', 'tugasAkhir.mahasiswa')->find($id_topik);
+        $item = Topik::with('bidangKeahlian.bidangMinat', 'penawaranJudul.tugasAkhir.mahasiswa')->find($id_topik);
         if($item != null)
         {
             $breadcrumbs = array(

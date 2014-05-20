@@ -29,6 +29,16 @@ class PenawaranJudul extends Eloquent {
     }
 
     /**
+     * Relasi one-to-one dengan tabel TugasAkhir
+     *
+     * @return Simta\Models\TugasAkhir
+     */
+    public function tugasAkhir()
+    {
+        return $this->belongsTo('Simta\Models\TugasAkhir', 'id_penawaran_judul', 'id_penawaran_judul');
+    }
+
+    /**
      * Relasi many-to-one dengan tabel Dosen
      *
      * @return Simta\Models\Dosen

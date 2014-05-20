@@ -14,7 +14,7 @@ class Sidang extends Eloquent {
     protected $table = 'sidang';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $primaryKey = "kode_sidang";
+    protected $primaryKey = "id_sidang";
     protected $fillable = ["jenis_sidang", "waktu_mulai", "waktu_selesai"];
 
     /**
@@ -24,7 +24,7 @@ class Sidang extends Eloquent {
      */
     public function tugasAkhir()
     {
-        return $this->belongsTo('Simta\Models\TugasAkhir', 'kode_ta', 'kode_ta');
+        return $this->belongsTo('Simta\Models\TugasAkhir', 'id_tugas_akhir', 'id_tugas_akhir');
     }
 
     /**
@@ -45,7 +45,7 @@ class Sidang extends Eloquent {
      */
     public function pengujiSidang()
     {
-        return $this->belongsToMany('Simta\Models\Dosen', 'penguji_sidang', 'kode_sidang', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Dosen', 'penguji_sidang', 'id_sidang', 'nip_dosen');
     }
 
 }

@@ -14,7 +14,7 @@ class TugasAkhir extends Eloquent {
     protected $table = 'tugas_akhir';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $primaryKey = "kode_ta";
+    protected $primaryKey = "id_tugas_akhir";
 
 
     /**
@@ -66,6 +66,16 @@ class TugasAkhir extends Eloquent {
     public function topik()
     {
         return $this->belongsTo('Simta\Models\Topik', 'id_topik', 'id_topik');
+    }
+
+    /**
+     * Relasi one-to-one dengan PenawaranJudul
+     *
+     * @return Simta\Models\PenawaranJudul
+     */
+    public function penawaranJudul()
+    {
+        return $this->hasOne('Simta\Models\PenawaranJudul', 'id_penawaran_judul', 'id_penawaran_judul');
     }
 }
 ?>

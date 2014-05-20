@@ -27,7 +27,7 @@ class Mahasiswa extends Eloquent {
      */
     public function tugasAkhir()
     {
-        return $this->hasMany('TugasAkhir', 'nrp_mahasiswa', 'nrp_mahasiswa');
+        return $this->hasMany('Simta\Models\TugasAkhir', 'nrp_mahasiswa', 'nrp_mahasiswa');
     }
 
     /**
@@ -38,6 +38,16 @@ class Mahasiswa extends Eloquent {
     public function pemberitahuan()
     {
         return $this->hasMany('Simta\Models\PemberitahuanMahasiswa', 'nrp_mahasiswa', 'nrp_mahasiswa');
+    }
+
+    /**
+     * Relasi one-to-one dengan tabel JenjangPendidikan
+     *
+     * @return Simta\Models\JenjangPendidikan
+     */
+    public function pemberitahuan()
+    {
+        return $this->hasOne('Simta\Models\JenjangPendidikan');
     }
 
 }

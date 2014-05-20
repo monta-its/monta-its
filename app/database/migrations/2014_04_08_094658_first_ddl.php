@@ -21,6 +21,16 @@ class FirstDdl extends Migration {
             $table->integer('sks_tempuh');
             $table->integer('sks_lulus');
             $table->boolean('aktif');
+            $table->string('kode_jenjang_pendidikan');
+            $table->timestamps();
+            $table->softDeletes();
+
+        });
+
+        Schema::create('jenjang_pendidikan', function($table)
+        {
+            $table->string('kode_jenjang_pendidikan')->primary();
+            $table->string('nama_jenjang_pendidikan');
             $table->timestamps();
             $table->softDeletes();
 
@@ -29,8 +39,6 @@ class FirstDdl extends Migration {
         Schema::create('pegawai', function($table) {
             $table->string('nip_pegawai')->primary();
             $table->string('nama_lengkap')->index();
-            $table->string('gelar_depan');
-            $table->string('gelar_belakang');
             $table->string('kata_sandi');
             $table->boolean('aktif');
             $table->timestamps();
@@ -38,10 +46,11 @@ class FirstDdl extends Migration {
         });
 
         Schema::create('dosen', function($table)
-        {
+        {   
             $table->string('nip_dosen')->primary();
             $table->string('nidn')->unique();
-            $table->string('gelar');
+            $table->string('gelar_depan');
+            $table->string('gelar_belakang');
             $table->boolean('hak_akses_pegawai');
             $table->timestamps();
             $table->softDeletes();
@@ -49,15 +58,17 @@ class FirstDdl extends Migration {
 
         Schema::create('ruangan', function($table)
         {
-            $table->string('kode_ruangan')->primary();
+            $table->increments('id_ruangan');
+            $table->string('kode_ruangan');
+            $table->string('nama_ruangan');
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('tugas_akhir', function($table)
         {
-            $table->increments('kode_ta');
-            $table->string('judul');
+            $table->increments('id_tugas_akhir');
+            $table->string('id_penawaran_judul');   
             $table->string('nrp_mahasiswa');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
@@ -69,8 +80,8 @@ class FirstDdl extends Migration {
 
         Schema::create('dosen_pembimbing', function($table)
         {
-            $table->increments('id');
-            $table->integer('kode_ta');
+            $table->increments('id_dosen_pembimbing');
+            $table->integer('id_tugas_akhir');
             $table->string('nip_dosen');
             $table->timestamps();
             $table->softDeletes();
@@ -78,8 +89,8 @@ class FirstDdl extends Migration {
 
         Schema::create('sidang', function($table)
         {
-            $table->increments('kode_sidang');
-            $table->integer('kode_ta');
+            $table->increments('id_sidang');
+            $table->integer('id_tugas_akhir');
             $table->enum('jenis_sidang', array('proposal', 'akhir'));
             $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_selesai');
@@ -90,8 +101,8 @@ class FirstDdl extends Migration {
 
         Schema::create('penguji_sidang', function($table)
         {
-            $table->increments('id');
-            $table->integer('kode_sidang');
+            $table->increments('id_penguji_sidang');
+            $table->integer('id_sidang');
             $table->string('nip_dosen');
             $table->timestamps();
             $table->softDeletes();
@@ -99,8 +110,8 @@ class FirstDdl extends Migration {
 
         Schema::create('evaluasi', function($table)
         {
-            $table->increments('id');
-            $table->integer('kode_ta');
+            $table->increments('id_evaluasi');
+            $table->integer('id_tugas_akhir');
             $table->string('jenis_penilaian');
             $table->string('nip_dosen');
             $table->integer('nilai');
@@ -111,7 +122,8 @@ class FirstDdl extends Migration {
 
         Schema::create('bidang_minat', function($table)
         {
-            $table->string('kode_bidang_minat')->primary();
+            $table->increments('id_bidang_minat');
+            $table->string('kode_bidang_minat');
             $table->string('nama_bidang_minat');
             $table->text('deskripsi_bidang_minat');
             $table->string('nip_dosen_koordinator');
@@ -121,22 +133,20 @@ class FirstDdl extends Migration {
 
         Schema::create('dosen_bidang_minat', function($table)
         {
-            $table->increments('id');
-            $table->string('kode_bidang_minat');
+            $table->increments('id_dosen_bidang_minat');
+            $table->string('id_bidang_minat');
             $table->string('nip_dosen');
             $table->timestamps();
             $table->softDeletes();
         });
 
-
-
         Schema::create('pos', function($table)
         {
-            $table->increments('id_post');
-            $table->string('nip_dosen');
+            $table->increments('id_pos');
+            $table->string('nip_pegawai');
             $table->string('judul');
             $table->text('isi');
-            $table->boolean('is_published');
+            $table->boolean('apakah_terbit');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -144,10 +154,20 @@ class FirstDdl extends Migration {
         Schema::create('panduan', function($table)
         {
             $table->increments('id_panduan');
-            $table->string('nip_dosen');
-            $table->string('judul');
-            $table->text('isi');
-            $table->text('lampiran');
+            $table->string('nip_pegawai');
+            $table->string('judul_panduan');
+            $table->text('isi_panduan');
+            $table->text('id_lampiran');
+            $table->timestamps();
+            $table->softdeletes();
+        });
+
+        Schema::create('lampiran', function($table)
+        {
+            $table->increments('id_lampiran');
+            $table->string('nama_lampiran');
+            $table->enum('tipe_lampiran', array('file', 'url'));
+            $table->string('path_lampiran');
             $table->timestamps();
             $table->softdeletes();
         });
@@ -156,7 +176,7 @@ class FirstDdl extends Migration {
             $table->increments('id_penawaran_judul');
             $table->string('id_topik');
             $table->string('nip_dosen');
-            $table->string('judul');
+            $table->string('judul_tugas_akhir');
             $table->text('deskripsi');
             $table->timestamps();
             $table->softdeletes();
@@ -164,7 +184,7 @@ class FirstDdl extends Migration {
 
         Schema::create('topik', function($table) {
             $table->increments('id_topik');
-            $table->string('kode_bidang_minat');
+            $table->string('id_bidang_minat');
             $table->string('topik');
             $table->text('deskripsi');
             $table->timestamps();
@@ -179,17 +199,25 @@ class FirstDdl extends Migration {
         });
 
         Schema::create('bidang_keahlian_dosen', function($table) {
-            $table->increments('id');
+            $table->increments('id_bidang_keahlian_dosen');
             $table->integer('id_bidang_keahlian');
             $table->string('nip_dosen');
             $table->timestamps();
             $table->softdeletes();
         });
 
-        Schema::create('pemberitahuan_dosen', function($table)
+        Schema::create('bidang_keahlian_bidang_minat', function($table) {
+            $table->increments('id_bidang_keahlian_bidang_minat');
+            $table->integer('id_bidang_keahlian');
+            $table->integer('id_bidang_minat');
+            $table->timestamps();
+            $table->softdeletes();
+        });
+
+        Schema::create('pemberitahuan_pegawai', function($table)
         {
-            $table->increments('id');
-            $table->string('nip_dosen');
+            $table->increments('id_pemberitahuan_pegawai');
+            $table->string('nip_pegawai');
             $table->string('isi');
             $table->timestamps();
             $table->softDeletes();
@@ -197,7 +225,7 @@ class FirstDdl extends Migration {
 
         Schema::create('pemberitahuan_mahasiswa', function($table)
         {
-            $table->increments('id');
+            $table->increments('id_pemberitahuan_mahasiswa');
             $table->string('nrp_mahasiswa');
             $table->string('isi');
             $table->timestamps();
@@ -210,6 +238,8 @@ class FirstDdl extends Migration {
             $table->text('payload');
             $table->integer('last_activity');
         });
+
+
 	}
 
 	/**
@@ -220,6 +250,7 @@ class FirstDdl extends Migration {
 	public function down()
 	{
         Schema::drop('mahasiswa');
+        Schema::drop('jenjang_pendidikan');
         Schema::drop('dosen');
         Schema::drop('ruangan');
         Schema::drop('tugas_akhir');
@@ -229,15 +260,17 @@ class FirstDdl extends Migration {
         Schema::drop('bidang_minat');
         Schema::drop('dosen_bidang_minat');
         Schema::drop('pos');
-        Schema::drop('pemberitahuan_dosen');
+        Schema::drop('pemberitahuan_pegawai');
         Schema::drop('evaluasi');
         Schema::drop('pemberitahuan_mahasiswa');
         Schema::drop('pegawai');
         Schema::drop('panduan');
+        Schema::drop('lampiran');
         Schema::drop('penawaran_judul');
         Schema::drop('topik');
         Schema::drop('bidang_keahlian');
         Schema::drop('bidang_keahlian_dosen');
+        Schema::drop('bidang_keahlian_bidang_minat');
         Schema::drop('sessions');
 	}
 

@@ -22,7 +22,7 @@ class Evaluasi extends Eloquent {
      */
     public function tugasAkhir()
     {
-        return $this->belongsTo('Simta\Models\TugasAkhir', 'kode_ta', 'kode_ta');
+        return $this->belongsTo('Simta\Models\TugasAkhir', 'id_tugas_akhir', 'id_tugas_akhir');
     }
 
     /**

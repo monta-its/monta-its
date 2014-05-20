@@ -15,7 +15,7 @@ class BidangMinat extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $fillable = ['kode_bidang_minat', "nama_bidang_minat", "deskripsi_bidang_minat", "nip_dosen_koordinator"];
-    protected $primaryKey = "kode_bidang_minat";
+    protected $primaryKey = "id_bidang_minat";
     public $incrementing = false;
 
     /**

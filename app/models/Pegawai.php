@@ -14,7 +14,7 @@ class Pegawai extends Eloquent {
     protected $table = 'pegawai';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $fillable = ['nip_pegawai', 'nama_lengkap', 'kata_sandi', 'gelar_depan', 'gelar_belakang'];
+    protected $fillable = ['nip_pegawai', 'nama_lengkap', 'kata_sandi'];
     protected $hidden = ['kata_sandi'];
     protected $primaryKey = "nip_pegawai";
     public $incrementing = false;
@@ -28,6 +28,16 @@ class Pegawai extends Eloquent {
     public function dosen()
     {
         return $this->hasOne('Simta\Models\Dosen', 'nip_dosen', 'nip_pegawai');
+    }
+
+    /**
+     * Relasi one-to-many ke PemberitahuanPegawai
+     *
+     * @return Simta\Models\PemberitahuanPegawai
+     */
+    public function pemberitahuan()
+    {
+        return $this->hasMany('Simta\Models\PemberitahuanPegawai', 'nip_pegawai', 'nip_pegawai');
     }
 
     /**

@@ -28,5 +28,15 @@ class Panduan extends Eloquent {
         return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
     }
 
+    /**
+     * Relasi one-to-one dengan tabel Lampiran
+     *
+     * @return Simta\Models\Lampiran
+     */
+    public function lampiran()
+    {
+        return $this->hasOne('Simta\Models\Lampiran');
+    }
+
 }
 ?>

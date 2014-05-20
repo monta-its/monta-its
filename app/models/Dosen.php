@@ -14,7 +14,7 @@ class Dosen extends Eloquent {
     protected $table = 'dosen';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $fillable = ["nidn", "gelar", "hak_akses_pegawai"];
+    protected $fillable = ["nidn", "gelar_depan", "gelar_belakang", "hak_akses_pegawai"];
     protected $primaryKey = "nip_dosen";
     public $incrementing = false;
 
@@ -59,17 +59,6 @@ class Dosen extends Eloquent {
     {
         return $this->hasMany('Simta\Models\Panduan', 'nip_dosen', 'nip_dosen');
     }
-
-    /**
-     * Relasi one-to-many ke PemberitahuanDosen
-     *
-     * @return Simta\Models\PemberitahuanDosen
-     */
-    public function pemberitahuan()
-    {
-        return $this->hasMany('Simta\Models\PemberitahuanDosen', 'nip_dosen', 'nip_dosen');
-    }
-
 
     /**
      * Relasi one-to-one ke BidangMinat

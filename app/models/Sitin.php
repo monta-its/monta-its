@@ -12,10 +12,10 @@ namespace Simta\Models\TeknikMesin;
 use Eloquent;
 
 class SitIn extends Eloquent {
-    protected $table = 'sitin';
+    protected $table = 'sit_in';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $primaryKey = "kode_sitin";
+    protected $primaryKey = "id_sit_in";
 
 
     /**

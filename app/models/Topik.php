@@ -25,7 +25,7 @@ class Topik extends Eloquent {
      */
     public function bidangMinat()
     {
-        return $this->belongsTo('Simta\Models\BidangMinat', 'kode_bidang_minat', 'kode_bidang_minat');
+        return $this->belongsTo('Simta\Models\BidangMinat', 'id_bidang_minat', 'id_bidang_minat');
     }
 
     /**

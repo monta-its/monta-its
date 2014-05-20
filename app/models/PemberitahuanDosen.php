@@ -1,29 +1,30 @@
 <?php
 
 /**
- * Model untuk PemberitahuanDosen
+ * Model untuk PemberitahuanPegawai
  *
  * @author Putu Wiramaswara Widya <wiramaswara11@mhs.if.its.ac.id>
- * @package Simta\Models\PemberitahuanDosen
+ * @author Ifan Iqbal <ifaniqbal.com@gmail.com>
+ * @package Simta\Models\PemberitahuanPegawai
  *
  */
 namespace Simta\Models;
 use Eloquent;
 
-class PemberitahuanDosen extends Eloquent {
-    protected $table = 'pemberitahuan_dosen';
+class PemberitahuanPegawai extends Eloquent {
+    protected $table = 'pemberitahuan_pegawai';
     public $timestamps = true;
     protected $softDelete = true;
 
 
     /**
-     * Relasi many-to-one dengan tabel Dosen
+     * Relasi many-to-one dengan tabel Pegawai
      *
-     * @return Simta\Models\Dosen
+     * @return Simta\Models\Pegawai
      */
-    public function dosen()
+    public function pegawai()
     {
-        return $this->belongsTo('Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Pegawai', 'nip_pegawai', 'nip_pegawai');
     }
 
 

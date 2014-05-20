@@ -12,9 +12,9 @@ class TeknikMesin extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('sitin', function($table)
+        Schema::create('sit_in', function($table)
         {
-            $table->increments('kode_sitin');
+            $table->increments('id_sit_in');
             $table->string('nrp_mahasiswa');
             $table->string('nip_dosen');
             $table->string('id_topik');

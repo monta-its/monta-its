@@ -15,17 +15,17 @@ class Pos extends Eloquent {
     protected $table = 'pos';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $primaryKey = "id_post";
-    protected $fillable = ["judul", "isi", "is_published"];
+    protected $primaryKey = "id_pos";
+    protected $fillable = ["judul", "isi", "apakah_terbit"];
 
     /**
-     * Relasi many-to-one dengan tabel Dosen
+     * Relasi many-to-one dengan tabel Pegawai
      *
-     * @return Simta\Models\Dosen
+     * @return Simta\Models\Pegawai
      */
-    public function dosen()
+    public function pegawai()
     {
-        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Pegawai', 'nip_pegawai', 'nip_pegawai');
     }
 
 }

@@ -24,7 +24,7 @@ class TugasAkhir extends Eloquent {
      */
     public function dosenPembimbing()
     {
-        return $this->belongsToMany('Simta\Models\Dosen', 'dosen_pembimbing', 'kode_ta', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Dosen', 'dosen_pembimbing', 'id_tugas_akhir', 'nip_dosen');
     }
 
     /**
@@ -44,7 +44,7 @@ class TugasAkhir extends Eloquent {
      */
     public function sidang()
     {
-        return $this->hasMany('Simta\Models\Sidang', 'kode_ta', 'kode_ta');
+        return $this->hasMany('Simta\Models\Sidang', 'id_tugas_akhir', 'id_tugas_akhir');
     }
 
     /**
@@ -54,7 +54,7 @@ class TugasAkhir extends Eloquent {
      */
     public function evaluasi()
     {
-        return $this->hasMany('Simta\Models\Evaluasi', 'kode_ta', 'kode_ta');
+        return $this->hasMany('Simta\Models\Evaluasi', 'id_tugas_akhir', 'id_tugas_akhir');
     }
 
 

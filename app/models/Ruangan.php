@@ -13,7 +13,7 @@ class Ruangan extends Eloquent {
     protected $table = 'ruangan';
     public $timestamps = true;
     protected $softDelete = true;
-    protected $primaryKey = "kode_ruangan";
+    protected $primaryKey = "id_ruangan";
     public $incrementing = false;
     protected $fillable = ["kode_ruangan", "nama_ruangan"];
 

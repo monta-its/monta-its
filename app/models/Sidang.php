@@ -34,7 +34,7 @@ class Sidang extends Eloquent {
      */
     public function ruangan()
     {
-        return $this->belongsTo('Simta\Models\Ruangan', 'kode_ruangan', 'kode_ruangan');
+        return $this->belongsTo('Simta\Models\Ruangan', 'id_ruangan', 'id_ruangan');
     }
 
     /**

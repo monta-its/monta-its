@@ -26,7 +26,7 @@ class Dosen extends Eloquent {
      */
     public function pembimbingTugasAkhir()
     {
-        return $this->belongsToMany('Simta\Models\TugasAkhir', 'dosen_pembimbing', 'nip_dosen', 'kode_ta');
+        return $this->belongsToMany('Simta\Models\TugasAkhir', 'dosen_pembimbing', 'nip_dosen', 'id_tugas_akhir');
     }
 
     /**
@@ -78,7 +78,7 @@ class Dosen extends Eloquent {
      */
     public function bidangMinat()
     {
-        return $this->belongsToMany('Simta\Models\BidangMinat', 'dosen_bidang_minat', 'nip_dosen', 'kode_bidang_minat');
+        return $this->belongsToMany('Simta\Models\BidangMinat', 'dosen_bidang_minat', 'nip_dosen', 'id_bidang_minat');
     }
 
 

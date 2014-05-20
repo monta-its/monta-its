@@ -35,7 +35,7 @@ class PenawaranJudul extends Eloquent {
      */
     public function tugasAkhir()
     {
-        return $this->belongsTo('Simta\Models\TugasAkhir', 'id_penawaran_judul', 'id_penawaran_judul');
+        return $this->hasOne('Simta\Models\TugasAkhir', 'id_penawaran_judul', 'id_penawaran_judul');
     }
 
     /**

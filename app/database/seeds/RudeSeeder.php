@@ -191,7 +191,8 @@ class RudeSeeder extends Seeder {
                     $ta->save();
                     $ta->dosenPembimbing()->save($dosen);
                     $ta->save();
-                    $penawaran_judul->tugasAkhir()->associate($ta);
+                    $ta->penawaranJudul()->associate($penawaran_judul);
+                    $ta->save();
 
                     if(rand(0,1) == 1) 
                     {

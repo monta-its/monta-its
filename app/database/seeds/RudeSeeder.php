@@ -19,13 +19,13 @@ use Simta\Models\PenawaranJudul;
 
 class RudeSeeder extends Seeder {
 
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
         $faker = Faker\Factory::create();
 
         $ruangan = new Ruangan;
@@ -181,6 +181,6 @@ class RudeSeeder extends Seeder {
 
             }
         }
-	}
+    }
 
 }

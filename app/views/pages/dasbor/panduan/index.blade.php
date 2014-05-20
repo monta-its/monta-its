@@ -136,14 +136,14 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter: searchText">
+                        <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td>[[item.id_panduan]]</td>
                             <td>[[item.judul]]</td>
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
                                 <a href="#/sunting/[[item.id_panduan]]">Sunting</a>
-                                <a href="#" ng-click="hapusPanduan([[item.id_panduan]])">Hapus</a>
+                                <a href="#/" ng-click="hapusPanduan([[item.id_panduan]])">Hapus</a>
                             </td>
                         </tr>
                     </tbody>

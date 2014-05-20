@@ -139,13 +139,13 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter: searchText">
+                        <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td>[[item.kode_bidang_minat]]</td>
                             <td>[[item.nama_bidang_minat]]</td>
                             <td>[[item.dosen_koordinator.pegawai.nama_lengkap]]</td>
                             <td>
                                 <a href="#/sunting/[[item.kode_bidang_minat]]">Sunting</a>
-                                <a href="#" ng-click="hapusBidangMinat([[item.kode_bidang_minat]])">Hapus</a>
+                                <a href="#/" ng-click="hapusBidangMinat([[item.kode_bidang_minat]])">Hapus</a>
                             </td>
                         </tr>
                     </tbody>

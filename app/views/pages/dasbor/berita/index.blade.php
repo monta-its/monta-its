@@ -153,16 +153,16 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter: searchText">
+                        <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td>[[item.id_post]]</td>
                             <td>[[item.judul]]</td>
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
-                                <a href="#" ng-show="item.is_published" ng-click="publish([[item.id_post]], false)">Non publikasi</a>
-                                <a href="#" ng-hide="item.is_published" ng-click="publish([[item.id_post]], true)">Publikasi</a>
+                                <a href="#/" ng-show="item.is_published" ng-click="publish([[item.id_post]], false)">Non publikasi</a>
+                                <a href="#/" ng-hide="item.is_published" ng-click="publish([[item.id_post]], true)">Publikasi</a>
                                 <a href="#/sunting/[[item.id_post]]">Sunting</a>
-                                <a href="#" ng-click="hapusBerita([[item.id_post]])">Hapus</a>
+                                <a href="#/" ng-click="hapusBerita([[item.id_post]])">Hapus</a>
                             </td>
                         </tr>
                     </tbody>

@@ -55,7 +55,7 @@ class PanduanController extends BaseController {
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
             array('link' => URL::to('panduan'), 'text' => 'Panduan'),
-            array('link' => '', 'text' => $item->judul),
+            array('link' => '', 'text' => $item->judul_panduan),
         );
 
 

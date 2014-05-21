@@ -47,17 +47,18 @@ class RudeSeeder extends Seeder {
         $bidang_minat = new BidangMinat;
         $bidang_minat->kode_bidang_minat = $faker->unique->word;
         $bidang_minat->nama_bidang_minat = $faker->sentence();
-        $bidang_minat->deskripsi_bidang_minat = $faker->sentence();
+        $bidang_minat->deskripsi_bidang_minat = $faker->text();
         $bidang_minat->save();
 
         $bidang_keahlian = new BidangKeahlian;
         $bidang_keahlian->nama_bidang_keahlian = $faker->unique->word;
+        $bidang_keahlian->deskripsi_bidang_keahlian = $faker->text();
         $bidang_keahlian->save();
         $bidang_keahlian->bidangMinat()->save($bidang_minat);
 
         $topik = new Topik;
         $topik->topik = $faker->unique->word;
-        $topik->deskripsi = $faker->sentence();
+        $topik->deskripsi = $faker->text();
         $topik->bidangKeahlian()->associate($bidang_keahlian);
         $topik->save();
 
@@ -168,7 +169,8 @@ class RudeSeeder extends Seeder {
                         $lampiran->nama_lampiran = $faker->word();
                         $lampiran->tipe_lampiran = 'url';
                         $lampiran->path_lampiran = 'http://www.google.com/';
-                        $panduan->lampiran()->save($lampiran);
+                        $panduan->lampiran()->associate($lampiran);
+                        $panduan->save();
                     }
                     else 
                     {
@@ -176,7 +178,8 @@ class RudeSeeder extends Seeder {
                         $lampiran->nama_lampiran = $faker->word();
                         $lampiran->tipe_lampiran = 'file';
                         $lampiran->path_lampiran = 'files/' . $panduan->pegawai->nip_pegawai . '/' . $lampiran->nama_lampiran;
-                        $panduan->lampiran()->save($lampiran);
+                        $panduan->lampiran()->associate($lampiran);
+                        $panduan->save();
                     }
                 }
 

@@ -101,7 +101,7 @@ class BeritaController extends BaseController {
         }
         else if(Request::isMethod('put'))
         {
-            $berita = Pos::find(Input::get('id_post'));
+            $berita = Pos::find(Input::get('id_pos'));
             $dosen = Dosen::find(Auth::User()->nomor_induk);
             if($dosen != null)
             {
@@ -115,7 +115,7 @@ class BeritaController extends BaseController {
         }
         else if(Request::isMethod('delete'))
         {
-            $berita = Pos::find(Input::get('id_post'));
+            $berita = Pos::find(Input::get('id_pos'));
             $berita->delete();
         }
     }

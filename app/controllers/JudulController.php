@@ -13,7 +13,7 @@ use URL;
 use View;
 use Input;
 use Redirect;
-use Simta\Models\Judul;
+use Simta\Models\PenawaranJudul;
 
 class JudulController extends BaseController {
     /**
@@ -28,38 +28,10 @@ class JudulController extends BaseController {
             array('link' => '', 'text' => 'Penawaran Judul')
         );
 
-        $item = array(
-            'judul_judul' => 'Judul Judul TA',
-            'id_judul' => 'id_judul',
-            'cuplikan_judul' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-            'nama_prodi' => 'NCC',
-            'id_prodi' => 'id_prodi',
-            'id_topik' => 'id_topik',
-            'nama_topik' => 'Nama Topik',
-            'label_prodi' => 'Laboratorium',
-            'status_terambil' => true,
-            'waktu_mulai' => '10 Januari 2013',
-            'waktu_akhir' => '30 Desember 2014',
-            'pembimbing' => array(
-                array(
-                    'id_dosen' => 'id_dosen',
-                    'nama_dosen' => 'Nama Dosen'
-                ),
-                array(
-                    'id_dosen' => 'id_dosen',
-                    'nama_dosen' => 'Nama Dosen'
-                )
-            )
-        );
-
-        $l_item = array();
-        array_push($l_item, $item);
-        $item['status_terambil'] = false;
-        $item['nama_prodi'] = 'RPL';
-        array_push($l_item, $item);
+        $items = PenawaranJudul::with('topik.bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
-        View::share('l_item', $l_item);
+        View::share('items', $items);
         return View::make('pages.judul.index');
     }
 
@@ -72,35 +44,14 @@ class JudulController extends BaseController {
      */
     function lihatIsiJudul($id_judul)
     {
+        $item = PenawaranJudul::with('topik.bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->find($id_judul);
+
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
             array('link' => URL::to('/judul'), 'text' => 'Judul TA'),
-            array('link' => '', 'text' => 'Judul Judul TA')
+            array('link' => '', 'text' => $item->judul_tugas_akhir)
         );
-        $item = array(
-            'judul_judul' => 'Judul Judul TA',
-            'id_judul' => 'id_judul',
-            'isi_judul' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in. Ini Deskripsi TA.',
-            'nama_prodi' => 'NCC',
-            'id_prodi' => 'id_prodi',
-            'label_prodi' => 'Laboratorium',
-            'id_topik' => 'id_topik',
-            'nama_topik' => 'Nama Topik',
-            'status_terambil' => false,
-            'waktu_mulai' => '10 Januari 2013',
-            'waktu_akhir' => '30 Desember 2014',
-            'pembimbing' => array(
-                array(
-                    'id_dosen' => 'id_dosen',
-                    'nama_dosen' => 'Nama Dosen'
-                ),
-                array(
-                    'id_dosen' => 'id_dosen',
-                    'nama_dosen' => 'Nama Dosen'
-                )
-            )
-        );
-
+        
         View::share('breadcrumbs', $breadcrumbs);
         View::share('item', $item);
         return View::make('pages.judul.item');

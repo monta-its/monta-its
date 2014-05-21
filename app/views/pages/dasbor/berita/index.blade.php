@@ -34,7 +34,7 @@ app.controller('daftarBeritaController', function($scope, $http, $rootScope) {
             }
         });
 
-        berita.is_published = action;
+        berita.apakah_terbit = action;
 
         $http.put('{{{URL::to('/dasbor/dosen/berita')}}}', berita).success(function(data) {
             updateBerita($rootScope, $http)
@@ -50,7 +50,7 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
         $scope.berita = {};
         $scope.berita.judul = "";
         $scope.berita.isi = "";
-        $scope.berita.is_published = true;
+        $scope.berita.apakah_terbit = true;
         $scope.terbitkanBerita = function() {
             $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
                 updateBerita($rootScope, $http)
@@ -58,7 +58,7 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
             })
         };
         $scope.simpanBerita = function() {
-            $scope.berita.is_published = false;
+            $scope.berita.apakah_terbit = false;
             $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
                 updateBerita($rootScope, $http)
                 $location.path('/');
@@ -78,7 +78,7 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
                 if(val.id_pos === $scope.berita.id_pos) {
                     $scope.berita.judul = val.judul;
                     $scope.berita.isi = val.isi;
-                    $scope.berita.is_published = val.is_published;
+                    $scope.berita.apakah_terbit = val.apakah_terbit;
                 }
             });
         } else {
@@ -159,8 +159,8 @@ app.config(function($httpProvider) {
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
-                                <a href="#/" ng-show="item.is_published" ng-click="publish([[item.id_pos]], false)">Non publikasi</a>
-                                <a href="#/" ng-hide="item.is_published" ng-click="publish([[item.id_pos]], true)">Publikasi</a>
+                                <a href="#/" ng-show="item.apakah_terbit" ng-click="publish([[item.id_pos]], false)">Non publikasi</a>
+                                <a href="#/" ng-hide="item.apakah_terbit" ng-click="publish([[item.id_pos]], true)">Publikasi</a>
                                 <a href="#/sunting/[[item.id_pos]]">Sunting</a>
                                 <a href="#/" ng-click="hapusBerita([[item.id_pos]])">Hapus</a>
                             </td>

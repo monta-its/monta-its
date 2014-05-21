@@ -8,10 +8,10 @@
     <h3><a href="{{ URL::to('topik/'. $item->id_topik) }}">{{ $item->topik }}</a></h3>
         <p>
             <span class="glyphicon glyphicon-tag"></span>
-            <span>Prodi: </span>
+            <span>Laboratorium: </span>
             @foreach ($item->bidangKeahlian->bidangMinat as $i => $bidangMinat) 
-                <a href="{{ URL::to('prodi/'. $bidangMinat->kode_bidang_minat) }}">
-                    {{ $bidangMinat->kode_bidang_minat }}
+                <a href="{{ URL::to('prodi/'. $bidangMinat->id_bidang_minat) }}">
+                    {{ $bidangMinat->nama_bidang_minat }}
                 </a>
                 @if ($i != $item->bidangKeahlian->bidangMinat->count() - 1)
                     ,

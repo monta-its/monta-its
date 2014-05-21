@@ -21,8 +21,6 @@ use Simta\Models\Dosen;
 use Auth;
 
 class BeritaController extends BaseController {
-
-
     /**
      * Tampilkan Berita Secara Umum
      *
@@ -57,8 +55,6 @@ class BeritaController extends BaseController {
             array('link' => URL::to('/berita'), 'text' => 'Berita'),
             array('link' => '', 'text' => $item->judul)
         );
-
-
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('item', $item);

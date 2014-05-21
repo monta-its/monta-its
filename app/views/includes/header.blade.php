@@ -15,14 +15,14 @@
       $l_menu = array(
         array(
           'type' => 'local',
-          'url' => 'prodi',
-          'text' => 'Laboratorium',
+          'url' => 'berita',
+          'text' => 'Berita TA',
           'isParent' => false
         ),
         array(
           'type' => 'local',
-          'url' => 'topik',
-          'text' => 'Topik TA',
+          'url' => 'panduan',
+          'text' => 'Panduan TA',
           'isParent' => false
         ),
         array(
@@ -44,18 +44,6 @@
               'isParent' => false
             )
           )
-        ),
-        array(
-          'type' => 'local',
-          'url' => 'berita',
-          'text' => 'Berita TA',
-          'isParent' => false
-        ),
-        array(
-          'type' => 'local',
-          'url' => 'panduan',
-          'text' => 'Panduan TA',
-          'isParent' => false
         )
       );
     ?>

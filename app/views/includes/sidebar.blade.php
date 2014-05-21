@@ -11,7 +11,9 @@
 -->
 <ul class="nav">
     <!--<li><a href="{{ URL::to('dosen') }}">Dosen</a></li>-->
+    <li><a href="{{ URL::to('prodi') }}">Laboratorium</a></li>
     <li><a href="{{ URL::to('bidang_keahlian') }}">Bidang Keahlian</a></li>
-    <li><a href="{{ URL::to('judul') }}">Judul TA</a></li>
+    <li><a href="{{ URL::to('topik') }}">Topik</a></li>
+    <li><a href="{{ URL::to('judul') }}">Penawaran Judul</a></li>
     <!--<li><a href="{{ URL::to('kontak') }}">Hubungi Kami</a></li>-->
 </ul>

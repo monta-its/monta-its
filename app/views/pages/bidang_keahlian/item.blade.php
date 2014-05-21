@@ -3,19 +3,23 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <h3><strong>{{ $item['judul_bidang_keahlian'] }}</strong></h3>
+    <h3><strong>{{ $item->nama_bidang_keahlian }}</strong></h3>
         <p>
             <span class="glyphicon glyphicon-tag"></span>
-            <span>{{ $item['label_prodi'] }}: </span><a href="{{ URL::to('prodi/'. $item['id_prodi']) }}">{{ $item['nama_prodi'] }}</a>
-            <br />
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Penulis: </span>
-            <a class="author" href="{{ URL::to('dosen/'. $item['penulis']['id_dosen']) }}">{{ $item['penulis']['nama_dosen'] }}</a>
+            <span>Laboratorium: </span>
+            @foreach ($item->bidangMinat as $i => $bidangMinat) 
+                <a href="{{ URL::to('prodi/'. $bidangMinat->id_bidang_minat) }}">
+                    {{ $bidangMinat->nama_bidang_minat }}
+                </a>
+                @if ($i != $item->bidangMinat->count() - 1)
+                    ,
+                @endif
+            @endforeach
         </p>
         <div class="item-main">
             <div class="row">
                 <div class="col-md-12">
-                    {{ $item['isi_bidang_keahlian'] }}
+                    {{ $item->deskripsi_bidang_keahlian }}
                 </div>
             </div>
         </div>
@@ -29,22 +33,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach ($item['topik_bidang_keahlian'] as $topik)
-
+                    @foreach ($item->topik as $topik)
                         <tr>
                             <td>
-                                <a href="{{ URL::to('topik/' . $topik['id_topik']) }}">{{ $topik['judul_topik'] }}</a>
+                                <a href="{{ URL::to('topik/' . $topik->id_topik) }}">{{ $topik->topik }}</a>
                             </td>
                             <td>
-
-                            @for ($i = 0; $i < count($topik['mahasiswa_topik']); $i++)
-                                <a href="{{ URL::to('mahasiswa/' . $topik['mahasiswa_topik'][$i]['nrp_mahasiswa']) }}">
-                                    {{ $topik['mahasiswa_topik'][$i]['nama_mahasiswa'] }}
+                            @foreach ($topik->tugasAkhir as $i => $tugasAkhir)
+                                <a href="{{ URL::to('mahasiswa/' . $tugasAkhir->nrp_mahasiswa) }}">
+                                    {{ $tugasAkhir->mahasiswa->nama_lengkap }}
                                 </a>
-                                @if ($i < count($topik['mahasiswa_topik']) - 1)
+                                @if ($i < $topik->tugasAkhir->count() - 1)
                                 <span> · </span>
                                 @endif
-                            @endfor
+                            @endforeach
                             </td>
                         </tr>
                     @endforeach

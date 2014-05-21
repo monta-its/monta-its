@@ -25,7 +25,7 @@ class JudulController extends BaseController {
     {
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
-            array('link' => '', 'text' => 'Judul TA')
+            array('link' => '', 'text' => 'Penawaran Judul')
         );
 
         $item = array(

@@ -35,7 +35,7 @@ class Panduan extends Eloquent {
      */
     public function lampiran()
     {
-        return $this->hasOne('Simta\Models\Lampiran', 'id_lampiran', 'id_lampiran');
+        return $this->belongsTo('Simta\Models\Lampiran', 'id_lampiran', 'id_lampiran');
     }
 
 }

@@ -28,5 +28,15 @@ class Pos extends Eloquent {
         return $this->belongsTo('Simta\Models\Pegawai', 'nip_pegawai', 'nip_pegawai');
     }
 
+    /**
+     * Relasi many-to-one dengan tabel Pegawai
+     *
+     * @return Simta\Models\Dosen
+     */
+    public function dosen()
+    {
+        return $this->belongsTo('Simta\Models\Dosen', 'nip_pegawai', 'nip_dosen');
+    }
+
 }
 ?>

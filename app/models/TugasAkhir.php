@@ -74,7 +74,7 @@ class TugasAkhir extends Eloquent {
      */
     public function penawaranJudul()
     {
-        return $this->hasOne('Simta\Models\PenawaranJudul', 'id_penawaran_judul', 'id_penawaran_judul');
+        return $this->belongsTo('Simta\Models\PenawaranJudul', 'id_penawaran_judul', 'id_penawaran_judul');
     }
 }
 ?>

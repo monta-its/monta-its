@@ -194,6 +194,7 @@ class FirstDdl extends Migration {
         Schema::create('bidang_keahlian', function($table) {
             $table->increments('id_bidang_keahlian');
             $table->string('nama_bidang_keahlian');
+            $table->string('deskripsi_bidang_keahlian');
             $table->timestamps();
             $table->softdeletes();
         });

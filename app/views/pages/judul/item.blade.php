@@ -3,44 +3,64 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <h3><strong>{{ $item['judul_judul'] }}</strong></h3>
-        <p>
-            <span class="glyphicon glyphicon-tag"></span>
-            <span>{{ $item['label_prodi'] }}: </span><a href="{{ URL::to('prodi/'. $item['id_prodi']) }}">{{ $item['nama_prodi'] }}</a>
-            <span> · </span>
-            <span class="glyphicon glyphicon-tags"></span>
-            <span>Topik: </span><a href="{{ URL::to('topik/'. $item['id_topik']) }}">{{ $item['nama_topik'] }}</a>
-            <span> · </span>
-            <span class="glyphicon glyphicon-question-sign"></span>
-            <span>Pengambilan: </span>
-            @if ($item['status_terambil'] == false)
-                <span class="label label-success">Tersedia</span>
-            @else
-                <span class="label label-default">Sudah Diambil</span>
+    <h3><strong>{{ $item->judul_tugas_akhir }}</strong></h3>
+    <p>
+        <span class="glyphicon glyphicon-tag"></span>
+        <span>Laboratorium: </span>
+        @foreach ($item->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat) 
+            <a href="{{ URL::to('prodi/'. $bidangMinat->id_bidang_minat) }}">
+                {{ $bidangMinat->nama_bidang_minat }}
+            </a>
+            @if ($i != $item->topik->bidangKeahlian->bidangMinat->count() - 1)
+                ,
             @endif
-            <br />
-            <span class="glyphicon glyphicon-time"></span>
-            <span>Waktu Mulai: </span><strong>{{ $item['waktu_mulai'] }}</strong>
-            <span> · </span>
-            <span class="glyphicon glyphicon-time"></span>
-            <span>Waktu Akhir: </span><strong>{{ $item['waktu_akhir'] }}</strong>
-            <br />
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Penulis: </span>
-            @for ($i = 0; $i < count($item['pembimbing']); $i++)
-            <a class="author" href="{{ URL::to('dosen/'. $item['pembimbing'][$i]['id_dosen']) }}">{{ $item['pembimbing'][$i]['nama_dosen'] }}</a>
-                @if ($i < count($item['pembimbing']) - 1)    
-                <span> · </span>
-                @endif
-            @endfor
-            
-        </p>
-        <div class="item-main">{{ $item['isi_judul'] }}</div>
-        @if ($item['status_terambil'] == false)
-        <p class="text-center">
-            <a href="{{ URL::to('judul/'. $item['id_judul'] . '/ambil') }}" class="btn btn-success">Ambil judul ini!</a>
-        </p>
+        @endforeach
+        <span> · </span>
+        <span class="glyphicon glyphicon-tags"></span>
+        <span>Topik: </span><a href="{{ URL::to('topik/'. $item->id_topik) }}">{{ $item->topik->topik }}</a>
+        <span> · </span>
+        <span class="glyphicon glyphicon-question-sign"></span>
+        <span>Pengambilan: </span>
+        @if ($item->tugasAkhir == null)
+            <span class="label label-success">Tersedia</span>
+        @else
+            <span class="label label-default">Sudah Diambil</span>
         @endif
+        <br />
+        <span class="glyphicon glyphicon-user"></span>
+        <span>Dosen Pembimbing: </span>
+        @if ($item->tugasAkhir != null)
+            @foreach ($item->tugasAkhir->dosenPembimbing as $i => $dosenPembimbing)
+            <a class="author" href="{{ URL::to('dosen/'. $dosenPembimbing->nip_dosen ) }}">{{ $dosenPembimbing->pegawai->nama_lengkap }}</a>
+            @if ($i < $item->tugasAkhir->dosenPembimbing->count() - 1)    
+            <span> · </span>
+            @endif    
+            @endforeach
+        @else
+            <a class="author" href="{{ URL::to('dosen/'. $item->nip_dosen ) }}">{{ $item->dosen->pegawai->nama_lengkap }}</a>
+        @endif
+        <br />
+        @if ($item->tugasAkhir != null)
+        <span class="glyphicon glyphicon-user"></span>
+        <span>Mahasiswa: </span>
+        <a href="{{ URL::to('mahasiswa/' . $item->tugasAkhir->nrp_mahasiswa) }}">{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</a>
+        <br />
+        @endif
+        @if ($item->tugasAkhir != null)
+        <span class="glyphicon glyphicon-time"></span>
+        <span>Tanggal Mulai: </span><strong>{{ $item->tugasAkhir->tanggal_mulai }}</strong>
+        <span> · </span>
+        <span class="glyphicon glyphicon-time"></span>
+        <span>Tanggal Selesai: </span><strong>{{ $item->tugasAkhir->tanggal_selesai }}</strong>
+        <br />
+        @endif
+    </p>
+    <div class="item-main">{{ $item->deskripsi }}</div>
+    @if ($item->tugasAkhir == null)
+    <p class="text-center">
+        <a href="{{ URL::to('judul/'. $item->id_penawaran_judul . '/ambil') }}" class="btn btn-success">Ambil judul ini!</a>
+    </p>
+    @endif
   </div>
 </div>
 

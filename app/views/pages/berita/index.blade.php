@@ -1,16 +1,7 @@
 @extends('layouts.default')
 @section('content')
 
-<!--app/views/pages/berita/index.blade.php-->
-<?php
-/*
-    Item Model
-
-*/
-?>
-
 @foreach($items as $item)
-
 
 <div class="panel panel-default">
   <div class="panel-body">

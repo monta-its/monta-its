@@ -34,7 +34,7 @@ class PanduanController extends BaseController {
             array('link' => '', 'text' => 'Panduan')
         );
 
-        $items = Panduan::get();
+        $items = Panduan::with('pegawai.dosen')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);

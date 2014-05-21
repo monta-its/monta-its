@@ -6,7 +6,7 @@
     <h3><strong>{{ $item->topik }}</strong></h3>
         <p>
             <span class="glyphicon glyphicon-tag"></span>
-            <span>Prodi: </span><a href="{{ URL::to('prodi/'. $item->kode_bidang_minat) }}">{{ $item->bidangMinat->kode_bidang_minat }}</a>
+            <span>Bidang Keahlian: </span><a href="{{ URL::to('bidang_keahlian/'. $item->id_bidang_keahlian) }}">{{ $item->bidangKeahlian->nama_bidang_keahlian }}</a>
             <span> · </span>
         </p>
         <div class="item-main">
@@ -31,8 +31,8 @@
                                     <a href="{{ URL::to('mahasiswa/' . $tugasAkhir->nrp_mahasiswa) }}">{{ $tugasAkhir->mahasiswa->nama_lengkap }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{ URL::to('judul/' . $tugasAkhir->kode_ta) }}">
-                                        {{ $tugasAkhir->judul }}
+                                    <a href="{{ URL::to('judul/' . $tugasAkhir->id_tugas_akhir) }}">
+                                        {{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}
                                     </a>
                                 </td>
                             </tr>

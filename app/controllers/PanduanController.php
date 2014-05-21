@@ -14,7 +14,7 @@ use View;
 use Input;
 use Redirect;
 use Simta\Models\Panduan;
-use Simta\Models\Dosen;
+use Simta\Models\Pegawai;
 use Request;
 use Response;
 use Auth;
@@ -82,19 +82,19 @@ class PanduanController extends BaseController {
             }
             else
             {
-                return Response::json(Panduan::with('dosen', 'dosen.pegawai')->get());
+                return Response::json(Panduan::with('pegawai')->get());
             }
         }
         else if(Request::isMethod('post'))
         {
             $panduan = new Panduan;
-            $dosen = Dosen::find(Auth::User()->nomor_induk);
-            if($dosen != null)
+            $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+            if($pegawai != null)
             {
                 $panduan->judul = Input::get('judul');
                 $panduan->isi = Input::get('isi');
                 $panduan->lampiran = Input::get('lampiran');
-                $panduan->dosen()->associate($dosen);
+                $panduan->pegawai()->associate($pegawai);
                 $panduan->save();
             }
 
@@ -102,13 +102,13 @@ class PanduanController extends BaseController {
         else if(Request::isMethod('put'))
         {
             $panduan = Panduan::find(Input::get('id_panduan'));
-            $dosen = Dosen::find(Auth::User()->nomor_induk);
-            if($dosen != null)
+            $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+            if($pegawai != null)
             {
                 $panduan->judul = Input::get('judul');
                 $panduan->isi = Input::get('isi');
                 $panduan->lampiran = Input::get('lampiran');
-                $panduan->dosen()->associate($dosen);
+                $panduan->pegawai()->associate($pegawai);
                 $panduan->save();
             }
 

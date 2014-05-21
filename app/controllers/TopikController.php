@@ -16,7 +16,7 @@ use Redirect;
 use Response;
 use Request;
 use Simta\Models\Topik;
-use Simta\Models\BidangMinat;
+use Simta\Models\BidangKeahlian;
 
 class TopikController extends BaseController {
 
@@ -26,7 +26,6 @@ class TopikController extends BaseController {
      *
      * @return View
      */
-    // TODO: Tolong definisikan ulang apa itu Topik, kok gak nyambung ya dengan apa yang ada di model dan dasbor
     public function lihatSemuaTopik()
     {
         $breadcrumbs = array(
@@ -34,7 +33,7 @@ class TopikController extends BaseController {
             array('link' => '', 'text' => 'Topik TA')
         );
 
-        $items = Topik::with('bidangMinat')->get();
+        $items = Topik::with('bidangKeahlian')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -50,7 +49,7 @@ class TopikController extends BaseController {
      */
     function lihatIsiTopik($id_topik)
     {
-        $item = Topik::with('bidangMinat', 'tugasAkhir', 'tugasAkhir.mahasiswa')->find($id_topik);
+        $item = Topik::with('bidangKeahlian', 'tugasAkhir', 'tugasAkhir.mahasiswa', 'penawaranJudul')->find($id_topik);
         if($item != null)
         {
             $breadcrumbs = array(
@@ -158,7 +157,6 @@ class TopikController extends BaseController {
         }
         else if(Request::isMethod('delete'))
         {
-            var_dump(Input::get('id_topik'));
             $topik = Topik::find(Input::get('id_topik'));
             $topik->delete();
         }

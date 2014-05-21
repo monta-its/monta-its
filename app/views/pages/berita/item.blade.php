@@ -7,7 +7,7 @@
         <p>
             <span class="glyphicon glyphicon-user"></span>
             <span>Penulis: </span>
-            <a class="author" href="{{ URL::to('dosen/' . $item->dosen()->first()->pegawai()->first()->nip_pegawai) }}">{{ $item->dosen()->first()->pegawai()->first()->nama_lengkap }}</a>
+            <a class="author" href="{{ URL::to('pegawai/' . $item->pegawai()->first()->nip_pegawai) }}">{{ $item->pegawai()->first()->nama_lengkap }}</a>
             <span> · </span>
             <span class="glyphicon glyphicon-time"></span>
             <span>Waktu: </span><strong>{{ $item->updated_at }}</strong>

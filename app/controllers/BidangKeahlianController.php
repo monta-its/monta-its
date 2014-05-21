@@ -14,6 +14,8 @@ use View;
 use Input;
 use Redirect;
 use Simta\Models\BidangKeahlian;
+use Request;
+use Response;
 
 class BidangKeahlianController extends BaseController {
 
@@ -30,7 +32,7 @@ class BidangKeahlianController extends BaseController {
             array('link' => '', 'text' => 'Bidang Keahlian')
         );
 
-        $items = BidangKeahlian::with('bidangMinat', 'dosen.pegawai')->get();
+        $items = BidangKeahlian::with('bidangKeahlian', 'dosen.pegawai')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -46,7 +48,7 @@ class BidangKeahlianController extends BaseController {
      */
     function lihatIsiBidangKeahlian($id_bidang_keahlian)
     {
-        $item = BidangKeahlian::with('topik.tugasAkhir.mahasiswa', 'bidangMinat', 'dosen.pegawai')->find($id_bidang_keahlian);
+        $item = BidangKeahlian::with('topik.tugasAkhir.mahasiswa', 'bidangKeahlian', 'dosen.pegawai')->find($id_bidang_keahlian);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -66,73 +68,22 @@ class BidangKeahlianController extends BaseController {
      * @var string id_prodi
      * @return View
      */
-    function lihatBidangKeahlianDariBidangMinat($id_prodi)
+    function lihatBidangKeahlianDariBidangKeahlian($id_prodi)
     {
         return 'Halaman memuat bidang keahlian yang dengan filter bidang minat tertentu';
     }
 
     /* Kelompok dasbor */
-
     /**
-     * Tampilan daftar bidang_keahlian yang dibuat pada dasbor
+     * Controller untuk Dasbor BidangKeahlian, berbasiskan mekanisme REST
      * @return View
      */
-    function dasborLihatDaftarBidangKeahlian()
+    function dasborBidangKeahlian()
     {
-        return View::make('pages.dasbor.bidang_keahlian.index');
+        if(Request::isMethod('get'))
+        {
+            return Response::json(BidangKeahlian::get());
+        }
     }
 
-    /**
-     * Tambahkan bidang_keahlian baru. Menampilkan laman penambahan bidang_keahlian.
-     *
-     * @return View
-     */
-    function dasborTambahkanBidangKeahlian()
-    {
-        return View::make('pages.dasbor.bidang_keahlian.baru');
-    }
-
-    /**
-     * Simpan bidang_keahlian baru.
-     *
-     * @return View
-     */
-    function dasborSimpanBidangKeahlianBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/bidang_keahlian');
-    }
-
-    /**
-     * Sunting bidang_keahlian
-     *
-     * @var string $id_bidang_keahlian
-     * @return View
-     */
-    function dasborSuntingBidangKeahlian($id_bidang_keahlian)
-    {
-        return View::make('pages.dasbor.bidang_keahlian.sunting');
-    }
-
-    /**
-     * Simpan bidang_keahlian yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanBidangKeahlian()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/pegawai/bidang_keahlian');
-    }
-
-    /**
-     * Hapus bidang_keahlian
-     *
-     * @var string $id_bidang_keahlian
-     * @return View
-     */
-    function dasborHapusBidangKeahlian($id_bidang_keahlian)
-    {
-        return Redirect::to('dasbor/pegawai/bidang_keahlian');
-    }
 }

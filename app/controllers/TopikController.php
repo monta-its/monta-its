@@ -16,7 +16,7 @@ use Redirect;
 use Response;
 use Request;
 use Simta\Models\Topik;
-use Simta\Models\BidangMinat;
+use Simta\Models\BidangKeahlian;
 
 class TopikController extends BaseController {
 
@@ -34,7 +34,7 @@ class TopikController extends BaseController {
             array('link' => '', 'text' => 'Topik TA')
         );
 
-        $items = Topik::with('bidangKeahlian.bidangMinat')->get();
+        $items = Topik::with('bidangMinat')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -50,7 +50,7 @@ class TopikController extends BaseController {
      */
     function lihatIsiTopik($id_topik)
     {
-        $item = Topik::with('bidangKeahlian.bidangMinat', 'penawaranJudul.tugasAkhir.mahasiswa')->find($id_topik);
+        $item = Topik::with('bidangMinat', 'tugasAkhir', 'tugasAkhir.mahasiswa')->find($id_topik);
         if($item != null)
         {
             $breadcrumbs = array(
@@ -127,18 +127,18 @@ class TopikController extends BaseController {
             }
             else
             {
-                return Response::json(Topik::with('bidangMinat')->get());
+                return Response::json(Topik::with('bidangKeahlian')->get());
             }
         }
         else if(Request::isMethod('post'))
         {
             $topik = new Topik;
-            $bidangMinat = BidangMinat::find(Input::get('bidangMinat.kode_bidang_minat'));
-            if($bidangMinat != null)
+            $bidangKeahlian = BidangKeahlian::find(Input::get('bidangKeahlian.id_bidang_keahlian'));
+            if($bidangKeahlian != null)
             {
                 $topik->topik = Input::get('topik');
                 $topik->deskripsi = Input::get('deskripsi');
-                $topik->bidangMinat()->associate($bidangMinat);
+                $topik->bidangKeahlian()->associate($bidangKeahlian);
                 $topik->save();
             }
 
@@ -146,19 +146,18 @@ class TopikController extends BaseController {
         else if(Request::isMethod('put'))
         {
             $topik = Topik::find(Input::get('id_topik'));
-            $bidangMinat = BidangMinat::find(Input::get('bidangMinat.kode_bidang_minat'));
-            if($bidangMinat != null && $topik != null)
+            $bidangKeahlian = BidangKeahlian::find(Input::get('bidangKeahlian.id_bidang_keahlian'));
+            if($bidangKeahlian != null)
             {
                 $topik->topik = Input::get('topik');
                 $topik->deskripsi = Input::get('deskripsi');
-                $topik->bidangMinat()->associate($bidangMinat);
+                $topik->bidangKeahlian()->associate($bidangKeahlian);
                 $topik->save();
             }
 
         }
         else if(Request::isMethod('delete'))
         {
-            var_dump(Input::get('id_topik'));
             $topik = Topik::find(Input::get('id_topik'));
             $topik->delete();
         }

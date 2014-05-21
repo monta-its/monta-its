@@ -18,8 +18,9 @@ var updateTopik = function($rootScope, $http) {
     });
 
     // Ambil data bidang minat tersedia
-    $http.get('{{URL::to('/dasbor/dosen/prodi')}}').success(function(data) {
-        $rootScope.prodis = data;
+    // TODO: Sesuaikan dengan bidang Keahlian
+    $http.get('{{URL::to('/dasbor/dosen/bidang_keahlian')}}').success(function(data) {
+        $rootScope.bidang_keahlian_item = data;
     });
 };
 
@@ -63,8 +64,8 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
                 if(val.id_topik === $scope.topik.id_topik) {
                     $scope.topik.topik = val.topik;
                     $scope.topik.deskripsi = val.deskripsi;
-                    $.each($rootScope.prodis, function(j, val2) {
-                        if(val2.kode_bidang_minat == val.kode_bidang_minat) {
+                    $.each($rootScope.bidang_keahlian_item, function(j, val2) {
+                        if(val2.id_bidang_keahlian == val.id_bidang_keahlian) {
                             $scope.topik.bidangMinat = val2;
                         }
                     });
@@ -111,7 +112,7 @@ app.config(function($httpProvider) {
                     <div class="form-group">
                         <textarea ng-model="topik.deskripsi" class="form-control" rows="10" placeholder="Deskripsi Topik"></textarea>
                     </div>
-                    <select ng-model="topik.bidangMinat" ng-options="prodi.nama_bidang_minat for prodi in prodis"></select>
+                    <select ng-model="topik.bidangKeahlian" ng-options="item.nama_bidang_keahlian for item in bidang_keahlian_item"></select>
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi"  class="btn btn-success" ng-click="tambahTopik()">Tambahkan</button>
@@ -138,7 +139,7 @@ app.config(function($httpProvider) {
                         <tr>
                             <th>Topik</th>
                             <th>Deskripsi</th>
-                            <th>Bidang Minat</th>
+                            <th>Bidang Keahlian</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -146,7 +147,7 @@ app.config(function($httpProvider) {
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td>[[item.topik]]</td>
                             <td>[[item.deskripsi]]</td>
-                            <td>[[item.bidang_minat.nama_bidang_minat]]</td>
+                            <td>[[item.bidang_keahlian.nama_bidang_keahlian]]</td>
                             <td>
                                 <a href="#/sunting/[[item.id_topik]]">Sunting</a>
                                 <a href="#/" ng-click="hapusTopik([[item.id_topik]])">Hapus</a>

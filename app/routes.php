@@ -75,12 +75,7 @@ Route::delete ('/dasbor/dosen/panduan', 'Simta\Controllers\PanduanController@das
 Route::get ('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@lihatSemuaBidangKeahlian');
 Route::get ('/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@lihatIsiBidangKeahlian');
 Route::get ('/bidang_keahlian/prodi/{id_prodi}', 'Simta\Controllers\BidangKeahlianController@lihatBidangKeahlianDariBidangMinat');
-Route::get ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborLihatDaftarBidangKeahlian');
-Route::get ('/dasbor/dosen/bidang_keahlian/baru', 'Simta\Controllers\BidangKeahlianController@dasborTambahkanBidangKeahlian');
-Route::post('/dasbor/dosen/bidang_keahlian/baru', 'Simta\Controllers\BidangKeahlianController@dasborSimpanBidangKeahlianBaru');
-Route::get ('/dasbor/dosen/bidang_keahlian/sunting/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborSuntingBidangKeahlian');
-Route::post('/dasbor/dosen/bidang_keahlian/sunting/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborSimpanPerubahanBidangKeahlian');
-Route::get ('/dasbor/dosen/bidang_keahlian/hapus/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@dasborHapusBidangKeahlian');
+Route::get ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborBidangKeahlian');
 
 // TopikController
 Route::get ('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');

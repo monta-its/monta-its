@@ -16,7 +16,7 @@ class BidangKeahlian extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_bidang_keahlian";
-    protected $fillable = ["nama_bidang_keahlian"];
+    protected $fillable = ["nama_bidang_keahlian", "deskripsi_bidang_keahlian"];
 
     /**
      * Relasi many-to-many dengan tabel Dosen

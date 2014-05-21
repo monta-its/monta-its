@@ -17,7 +17,7 @@ use Redirect;
 use Request;
 use Response;
 use Simta\Models\Pos;
-use Simta\Models\Dosen;
+use Simta\Models\Pegawai;
 use Auth;
 
 class BeritaController extends BaseController {
@@ -78,40 +78,40 @@ class BeritaController extends BaseController {
             }
             else
             {
-                return Response::json(Pos::with('dosen', 'dosen.pegawai')->get());
+                return Response::json(Pos::with('pegawai')->get());
             }
         }
         else if(Request::isMethod('post'))
         {
             $berita = new Pos;
-            $dosen = Dosen::find(Auth::User()->nomor_induk);
-            if($dosen != null)
+            $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+            if($pegawai != null)
             {
                 $berita->judul = Input::get('judul');
                 $berita->isi = Input::get('isi');
-                $berita->is_published = Input::get('is_published');
-                $berita->dosen()->associate($dosen);
+                $berita->apakah_terbit = Input::get('apakah_terbit');
+                $berita->pegawai()->associate($pegawai);
                 $berita->save();
             }
 
         }
         else if(Request::isMethod('put'))
         {
-            $berita = Pos::find(Input::get('id_post'));
-            $dosen = Dosen::find(Auth::User()->nomor_induk);
-            if($dosen != null)
+            $berita = Pos::find(Input::get('id_pos'));
+            $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+            if($pegawai != null)
             {
                 $berita->judul = Input::get('judul');
                 $berita->isi = Input::get('isi');
-                $berita->is_published = Input::get('is_published');
-                $berita->dosen()->associate($dosen);
+                $berita->apakah_terbit = Input::get('apakah_terbit');
+                $berita->pegawai()->associate($pegawai);
                 $berita->save();
             }
 
         }
         else if(Request::isMethod('delete'))
         {
-            $berita = Pos::find(Input::get('id_post'));
+            $berita = Pos::find(Input::get('id_pos'));
             $berita->delete();
         }
     }

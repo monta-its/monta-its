@@ -12,7 +12,7 @@ namespace Simta\Models;
 use Eloquent;
 
 class Lampiran extends Eloquent {
-    protected $table = 'Lampiran';
+    protected $table = 'lampiran';
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_lampiran";

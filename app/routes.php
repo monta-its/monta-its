@@ -99,12 +99,10 @@ Route::get ('/judul/batal', 'Simta\Controllers\JudulController@batalkanJudul');
 Route::get ('/judul/prodi/{id_prodi}', 'Simta\Controllers\JudulController@lihatJudulDariBidangMinat');
 Route::get ('/judul/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\JudulController@lihatJudulDariBidangKeahlian');
 Route::get ('/judul/topik/{id_topik}', 'Simta\Controllers\JudulController@lihatJudulDariTopik');
-Route::get ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborLihatDaftarJudul');
-Route::get ('/dasbor/dosen/judul/baru', 'Simta\Controllers\JudulController@dasborTambahkanJudul');
-Route::post('/dasbor/dosen/judul/baru', 'Simta\Controllers\JudulController@dasborSimpanJudulBaru');
-Route::get ('/dasbor/dosen/judul/sunting/{id_judul}', 'Simta\Controllers\JudulController@dasborSuntingJudul');
-Route::post('/dasbor/dosen/judul/sunting/{id_judul}', 'Simta\Controllers\JudulController@dasborSimpanPerubahanJudul');
-Route::get ('/dasbor/dosen/judul/hapus/{id_judul}', 'Simta\Controllers\JudulController@dasborHapusJudul');
+Route::get ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJudul');
+Route::post ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJudul');
+Route::put ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJudul');
+Route::delete ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJudul');
 
 // SidangController
 /**

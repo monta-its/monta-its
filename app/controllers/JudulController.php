@@ -12,8 +12,12 @@ use BaseController;
 use URL;
 use View;
 use Input;
+use Request;
+use Response;
 use Redirect;
+use Auth;
 use Simta\Models\PenawaranJudul;
+use Simta\Models\Topik;
 
 class JudulController extends BaseController {
     /**
@@ -51,7 +55,7 @@ class JudulController extends BaseController {
             array('link' => URL::to('/judul'), 'text' => 'Penawaran Judul'),
             array('link' => '', 'text' => $item->judul_tugas_akhir)
         );
-        
+
         View::share('breadcrumbs', $breadcrumbs);
         View::share('item', $item);
         return View::make('pages.judul.item');
@@ -110,69 +114,59 @@ class JudulController extends BaseController {
     {
         return 'Batalkan judul yang sedang diambil';
     }
-    
+
     /* Kelompok dasbor */
 
     /**
-     * Tampilan daftar judul yang dibuat pada dasbor
+     * Controller untuk Dasbor Judul (PenawaranJudul), berbasiskan mekanisme REST
      * @return View
      */
-    function dasborLihatDaftarJudul()
+    function dasborJudul()
     {
-        return View::make('pages.dasbor.judul.index');
-    }
-
-    /**
-     * Tambahkan judul baru. Menampilkan laman penambahan judul.
-     *
-     * @return View
-     */
-    function dasborTambahkanJudul()
-    {
-        return View::make('pages.dasbor.judul.baru');
-    }
-
-    /**
-     * Simpan judul baru.
-     *
-     * @return View
-     */
-    function dasborSimpanJudulBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/judul');
-    }
-
-    /**
-     * Sunting judul
-     *
-     * @var string $id_judul
-     * @return View
-     */
-    function dasborSuntingJudul($id_judul)
-    {
-        return View::make('pages.dasbor.judul.sunting');
-    }
-
-    /**
-     * Simpan judul yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanJudul()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/judul');
-    }
-
-    /**
-     * Hapus judul
-     *
-     * @var string $id_judul
-     * @return View
-     */
-    function dasborHapusJudul($id_judul)
-    {
-        return Redirect::to('dasbor/judul');
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.judul.index');
+            }
+            else
+            {
+                $nip_dosen = Auth::user()->nomor_induk;
+                return Response::json(PenawaranJudul::with('dosen', 'dosen.pegawai', 'tugasAkhir', 'tugasAkhir.mahasiswa', 'topik')->where('nip_dosen', $nip_dosen)->get());
+            }
+        }
+        else if(Request::isMethod('post'))
+        {
+            $dosen = Dosen::find(Auth::user()->nomor_induk);
+            $topik = Topik::find(Input::get('topik.id_topik'));
+            $judul = new PenawaranJudul;
+            if($dosen != null and $topik != null)
+            {
+                $judul->judul_tugas_akhir = Input::get('judul_tugas_akhir');
+                $judul->deskripsi = Input::get('deskripsi');
+                $judul->dosen()->associate($dosen);
+                $judul->topik()->associate($topik);
+                $judul->save();
+            }
+        }
+        else if(Request::isMethod('put'))
+        {
+            // One doesn't simply modify dosen according who login now.
+            // $dosen = Dosen::find(Auth::user()->nomor_induk);
+            $topik = Topik::find(Input::get('topik.id_topik'));
+            $judul = PenawaranJudul::find(Input::get('id_penawaran_judul'));
+            if($topik != null)
+            {
+                $judul->judul_tugas_akhir = Input::get('judul_tugas_akhir');
+                $judul->deskripsi = Input::get('deskripsi');
+                $judul->topik()->associate($topik);
+                $judul->save();
+            }
+        }
+        else if(Request::isMethod('delete'))
+        {
+            $judul = PenawaranJudul::find(Input::get('id_penawaran_judul'));
+            $judul->delete();
+        }
     }
 }

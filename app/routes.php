@@ -76,6 +76,9 @@ Route::get ('/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@liha
 Route::get ('/bidang_keahlian/{id_bidang_keahlian}', 'Simta\Controllers\BidangKeahlianController@lihatIsiBidangKeahlian');
 Route::get ('/bidang_keahlian/prodi/{id_prodi}', 'Simta\Controllers\BidangKeahlianController@lihatBidangKeahlianDariBidangMinat');
 Route::get ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborBidangKeahlian');
+Route::post ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborBidangKeahlian');
+Route::put ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborBidangKeahlian');
+Route::delete ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborBidangKeahlian');
 
 // TopikController
 Route::get ('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');

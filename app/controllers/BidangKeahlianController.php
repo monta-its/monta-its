@@ -82,7 +82,37 @@ class BidangKeahlianController extends BaseController {
     {
         if(Request::isMethod('get'))
         {
-            return Response::json(BidangKeahlian::get());
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.bidang_keahlian.index');
+            }
+            else
+            {
+                return Response::json(BidangKeahlian::get());
+            }
+        }
+        else if(Request::isMethod('post'))
+        {
+            $bidang_keahlian = new BidangKeahlian;
+            $bidang_keahlian->nama_bidang_keahlian = Input::get('nama_bidang_keahlian');
+            $bidang_keahlian->deskripsi_bidang_keahlian = Input::get('deskripsi_bidang_keahlian');
+            $bidang_keahlian->save();
+
+        }
+        else if(Request::isMethod('put'))
+        {
+            $bidang_keahlian = BidangKeahlian::find(Input::get('id_bidang_keahlian'));
+            if($bidang_keahlian != null) {
+                $bidang_keahlian->nama_bidang_keahlian = Input::get('nama_bidang_keahlian');
+                $bidang_keahlian->deskripsi_bidang_keahlian = Input::get('deskripsi_bidang_keahlian');
+                $bidang_keahlian->save();
+            }
+
+        }
+        else if(Request::isMethod('delete'))
+        {
+            $bidang_keahlian = BidangKeahlian::find(Input::get('id_bidang_keahlian'));
+            $bidang_keahlian->delete();
         }
     }
 

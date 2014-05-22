@@ -16,7 +16,7 @@ class PenawaranJudul extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_penawaran_judul";
-    protected $fillable = ["judul", "deskripsi"];
+    protected $fillable = ["judul_tugas_akhir", "deskripsi"];
 
     /**
      * Relasi many-to-one dengan tabel Topik

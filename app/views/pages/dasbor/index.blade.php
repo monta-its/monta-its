@@ -1,7 +1,6 @@
 @extends('layouts.dasbor')
 
 @section('content')
-
 <div class="row">
     <div class="col-md-12">
         <h1 class="page-header">Dasbor</h1>
@@ -9,25 +8,127 @@
 </div>
 <div class="row">
     <div class="col-md-8">
+    @if ($sidang != null)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Status Mahasiswa
+                Sidang
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <!--<th class="text-center">No.</th>-->
+                            <th class="text-center">Jenis Sidang</th>
+                            <th class="text-center">Waktu Mulai</th>
+                            <th class="text-center">Waktu Selesai</th>
+                            <th class="text-center">Ruangan</th>
+                            <th class="text-center">Penguji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($sidang as $i => $value)
+                        <tr>
+                            <!--<td>{{ $i + 1 }}</td>-->
+                            <td style="text-transform: capitalize;">{{ $value->jenis_sidang }}</td>
+                            <td>{{ $value->waktu_mulai }}</td>
+                            <td>{{ $value->waktu_mulai }}</td>
+                            <td>
+                            @if ($value->ruangan->nama_ruangan != '')
+                                {{ $value->ruangan->kode_ruangan }}
+                            @else
+                                {{ $value->ruangan->nama_ruangan }} ({{$value->ruangan->kode_ruangan}})
+                            @endif
+                            </td>
+                            <td>
+                            @if ($value->penguji != null)
+                                @foreach ($value->penguji as $j => $penguji) 
+                                    <a href="{{ URL::to('dosen/' . $penguji->nip_dosen) }}">{{ $penguji->pegawai->nama_lengkap }}</a>
+                                    @if ($j < $value->penguji->count() - 1)
+                                    ,
+                                    @endif
+                                @endforeach
+                            @else
+                                <a href="{{ URL::to('dasbor/mahasiswa/penguji') }}" class="btn btn-default">Tentukan</a>
+                            @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+    @if ($tugasAkhir != null)
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Tugas Akhir
             </div>
             <div class="panel-body">
                 <table class="table">
                     <tbody>
                         <tr>
-                            <td class="col-md-3">Tugas Akhir</td>
-                            <td><b>{{ $status['TA'] }}</b></td>
+                            <td>Pembimbing</td>
+                            <td>
+                            @foreach ($tugasAkhir->dosenPembimbing as $i => $pembimbing) 
+                                <a href="{{ URL::to('dosen/' . $pembimbing->nip_dosen) }}">{{ $pembimbing->pegawai->nama_lengkap }}</a>
+                                @if ($i < $tugasAkhir->dosenPembimbing->count() - 1)
+                                ,
+                                @endif
+                            @endforeach
+                            </td>
                         </tr>
                         <tr>
-                            <td>Program Studi</td>
-                            <td><b>{{ $status['Prodi'] }}</b></td>
+                            <td class="col-md-3">Judul</td>
+                            <td>
+                                <b>{{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>
+                            @if ($tugasAkhir->status != '')
+                                <b>{{ $tugasAkhir->status }}</b>
+                            @else
+                                <span class="text-muted">tidak ditentukan</span>
+                            @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Mulai</td>
+                            <td><b>{{ $tugasAkhir->tanggal_mulai }}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Selesai</td>
+                            <td><b>{{ $tugasAkhir->tanggal_selesai }}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Topik</td>
+                            <td>
+                                <a href="{{ URL::to('topik/' . $tugasAkhir->penawaranJudul->id_topik) }}">{{ $tugasAkhir->penawaranJudul->topik->topik }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bidang Keahlian</td>
+                            <td>
+                                <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->topik->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->topik->bidangKeahlian->nama_bidang_keahlian }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Laboratorium</td>
+                            <td>
+                            @foreach ($tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat)
+                                <a href="{{ URL::to('prodi/' . $bidangMinat->id_bidang_minat) }}">{{ $bidangMinat->nama_bidang_minat }}</a>
+                                @if ($i < $tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat->count() - 1)
+                                ,
+                                @endif
+                            @endforeach
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        @endif
         <div class="panel panel-default">
             <div class="panel-heading">
                 Profil Mahasiswa
@@ -37,39 +138,11 @@
                     <tbody>
                         <tr>
                             <td class="col-md-3">Nama</td>
-                            <td>{{ $profil['Nama'] }}</td>
+                            <td>{{ $item->nama_lengkap }}</td>
                         </tr>
                         <tr>
                             <td>NRP</td>
-                            <td>{{ $profil['NRP'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Topik TA</td>
-                            <td>{{ $profil['TopikTA'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Judul TA</td>
-                            <td>{{ $profil['JudulTA'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Deskripsi TA</td>
-                            <td>{{ $profil['DeskripsiTA'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Pembimbing</td>
-                            <td>{{ $profil['Pembimbing'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Penguji</td>
-                            <td>{{ $profil['Penguji'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Mulai</td>
-                            <td>{{ $profil['Mulai'] }}</td>
-                        </tr>
-                        <tr>
-                            <td>Selesai</td>
-                            <td>{{ $profil['Selesai'] }}</td>
+                            <td>{{ $item->nrp_mahasiswa }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -82,34 +155,14 @@
                 Notifikasi
             </div>
             <div class="panel-body">
+            @foreach ($pemberitahuan as $i => $value)
                 <p>
-                    <strong>Dosen Pembimbing</strong> 
-                    <span>memberikan <a href="{{ URL::to('dasbor/proposal') }}" title="">penilaian</a> terhadap proposal Anda.</span>
+                    <span>{{ $value->isi }}</span>
                     <small class="pull-right text-muted">
-                        <i class="fa fa-clock-o fa-fw"></i> 1 days ago
+                        <i class="fa fa-clock-o fa-fw"></i> {{ $value->created_at }}
                     </small>
                 </p>
-                <p>
-                    <strong>Dosen Pembimbing</strong> 
-                    <span>menerima Anda sebagai mahasiswa bimbingannya.</span>
-                    <small class="pull-right text-muted">
-                        <i class="fa fa-clock-o fa-fw"></i> 2 days ago
-                    </small>
-                </p>
-                <p>
-                    <strong>Dosen Pembimbing</strong> 
-                    <span>memverifikasi <a href="{{ URL::to('dasbor/progress/id_progress') }}" title="">progress bimbingan</a> Anda.</span>
-                    <small class="pull-right text-muted">
-                        <i class="fa fa-clock-o fa-fw"></i> 5 days ago
-                    </small>
-                </p>
-                <p>
-                    <strong>Petugas Jurusan</strong> 
-                    <span>menyetujui syarat proposal Anda.</span>
-                    <small class="pull-right text-muted">
-                        <i class="fa fa-clock-o fa-fw"></i> 1 week day ago
-                    </small>
-                </p>
+            @endforeach
             </div>
         </div>
     </div>

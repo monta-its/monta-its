@@ -14,6 +14,7 @@ use View;
 use Input;
 use Redirect;
 use Simta\Models\Mahasiswa;
+use Auth;
 
 class MahasiswaController extends BaseController {
 
@@ -55,26 +56,26 @@ class MahasiswaController extends BaseController {
      */
     function dasborMahasiswa()
     {
-        $status = array(
-            'TA' => 'MAJU SIDANG',
-            'Prodi' => 'REKAYASA PERANGKAT LUNAK',
-        );
+        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.topik.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai', 'tugasAkhir.sidang.ruangan', 'tugasAkhir.sidang.pengujiSidang')->find(Auth::user()->nomor_induk);
+        $tugasAkhir = null;
+        $sidang = null;
+        $pemberitahuan = null;
 
-        $profil = array(
-            'Nama' => 'Michael Schumacher',
-            'NRP' => '5111100000',
-            'TopikTA' => 'Simulasi',
-            'JudulTA' => 'Aplikasi Simulasi Pembalap F1',
-            'DeskripsiTA' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in',
-            'Pembimbing' => 'Kimi Räikkönen',
-            'Penguji' => 'Fernando Alonso',
-            'Mulai' => '1 Januari 2013',
-            'Selesai' => '2 Januari 2013',
+        if ($item->tugasAkhir != null)
+        {
+            $tugasAkhir = $item->tugasAkhir->sortBy('id_tugas_akhir')->last();
+            $sidang = $tugasAkhir->sidang->sortBy('id_sidang');
+        }
 
-        );
+        $pemberitahuan = Mahasiswa::with(array('pemberitahuan' => function($query)
+        {
+            $query->orderBy('id_pemberitahuan_mahasiswa', 'DESC');
+        }))->find(Auth::user()->nomor_induk)->pemberitahuan;
 
-        View::share('status', $status);
-        View::share('profil', $profil);
+        View::share('pemberitahuan', $pemberitahuan);
+        View::share('item', $item);
+        View::share('tugasAkhir', $tugasAkhir);
+        View::share('sidang', $sidang);
         return View::make('pages.dasbor.index');
     }
 

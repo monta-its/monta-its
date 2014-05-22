@@ -159,7 +159,7 @@
                 <p>
                     <span>{{ $value->isi }}</span>
                     <small class="pull-right text-muted">
-                        <i class="fa fa-clock-o fa-fw"></i> {{ $value->created_at }}
+                        <i class="fa fa-clock-o fa-fw"></i> {{ $value->created_at->diffForHumans() }}
                     </small>
                 </p>
             @endforeach

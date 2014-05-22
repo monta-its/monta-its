@@ -92,7 +92,7 @@ app.config(function($httpProvider) {
                 <h2>Pilih Dosen</h2>
                 <ul class="list-unstyled">
                     <li ng-repeat="item in prodi_items">
-                        <h3>[[prodi.nama_bidang_minat]]</h3>
+                        <h3>[[item.nama_bidang_minat]]</h3>
                         <table class="table">
                             <thead>
                                 <tr>

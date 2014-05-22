@@ -16,6 +16,9 @@
                 <a href="#"><span class=""></span>Menu Mahasiswa<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
+                        <a href="{{ URL::to('dasbor/mahasiswa') }}"><span class=""></span> Dasbor</a>
+                    </li>
+                    <li>
                         <a href="{{ URL::to('dasbor/mahasiswa/sit_in') }}"><span class=""></span> Sit In</a>
                     </li>
                     <li>

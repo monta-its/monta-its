@@ -82,7 +82,16 @@ class BidangMinatController extends BaseController {
             }
             else
             {
-                return Response::json(BidangMinat::with('dosenKoordinator', 'dosenKoordinator.pegawai')->get());
+                // With Dosen
+                if(Input::get('dosen') == '')
+                {
+                    return Response::json(BidangMinat::with('dosen', 'dosen.pegawai', 'dosen.bidangKeahlian')->get());
+                }
+                else
+                {
+                    // With Koordinator
+                    return Response::json(BidangMinat::with('dosenKoordinator', 'dosenKoordinator.pegawai')->get());
+                }
             }
         }
         else if(Request::isMethod('post'))

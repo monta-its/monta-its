@@ -131,6 +131,9 @@ Route::get ('/dasbor/pegawai/sidang/hapus/{id_sidang}', 'Simta\Controllers\Sidan
  * Laman Sit In dosen menampilkan form permintaan sit in dan persetujuannya.
  */
 Route::get ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
+Route::post ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
+Route::put ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
+Route::delete ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
 
 // PenggunaController
 Route::get ('/dasbor/pengguna/mahasiswa/tambah', 'Simta\Controllers\PenggunaController@borangTambahPenggunaMahasiswa');
@@ -144,6 +147,18 @@ Route::get('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen
 Route::post('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
 Route::put('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
 Route::delete('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+
+
+// RUTE SPESIAL, AKSES SILANG
+// Special case Ajax request only for Master Data
+if(Request::ajax()){
+    // Bisa diakses semua
+    Route::get ('/dasbor/umum/dosen/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+
+    // Diakses role dan user tertentu (atau mungkin beda role beda perlakuan)
+    // Dienforce di dalam kode secara manual
+    Route::delete('/dasbor/umum/mahasiswa/sitin', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
+}
 
 // BATAS CONCERN CRUD PLAIN
 // DosenController

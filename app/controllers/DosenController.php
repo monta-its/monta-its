@@ -56,8 +56,8 @@ class DosenController extends BaseController {
 
         $item = Dosen::find($id_dosen);
         $item->bidangKeahlian = $item->bidangKeahlian()->get();
-        
-        if ($item == null) 
+
+        if ($item == null)
         {
             return Redirect::to('/');
         }
@@ -84,7 +84,7 @@ class DosenController extends BaseController {
             }
             else
             {
-                return Response::json(Dosen::with('pegawai')->get());
+                return Response::json(Dosen::with('pegawai', 'bidangKeahlian')->get());
             }
 
         }

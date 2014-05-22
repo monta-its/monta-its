@@ -130,7 +130,7 @@ Route::get ('/dasbor/pegawai/sidang/hapus/{id_sidang}', 'Simta\Controllers\Sidan
  * Laman Sit In mahasiswa menampilkan form alur mahasiswa memilih dosen.
  * Laman Sit In dosen menampilkan form permintaan sit in dan persetujuannya.
  */
-Route::get ('/dasbor/sit_in', 'Simta\Controllers\SitInController@lihatLamanSitIn');
+Route::get ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
 
 // PenggunaController
 Route::get ('/dasbor/pengguna/mahasiswa/tambah', 'Simta\Controllers\PenggunaController@borangTambahPenggunaMahasiswa');

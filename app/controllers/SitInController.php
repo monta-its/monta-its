@@ -21,12 +21,12 @@ class SitInController extends BaseController {
      *
      * @return View
      */
-    public function lihatLamanSitIn()
+    public function dasborSitInMahasiswa()
     {
         $item = array(
 
         );
         View::share('item', $item);
-        return View::make('pages.dasbor.sit_in.index');
+        return View::make('pages.dasbor.sit_in.mahasiswa');
     }    
 }

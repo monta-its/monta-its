@@ -112,4 +112,14 @@ class SitInController extends BaseController {
             }
         }
     }
+
+    /**
+     * Dasbor SitIn Dosen berbasis REST
+     *
+     * @return View
+     */
+    public function dasborSitInDosen()
+    {
+        return View::make('pages.dasbor.sit_in.dosen');
+    }
 }

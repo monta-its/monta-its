@@ -134,6 +134,7 @@ Route::get ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasbo
 Route::post ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
 Route::put ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
 Route::delete ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
+Route::get ('/dasbor/dosen/sit_in', 'Simta\Controllers\SitInController@dasborSitInDosen');
 
 // PenggunaController
 Route::get ('/dasbor/pengguna/mahasiswa/tambah', 'Simta\Controllers\PenggunaController@borangTambahPenggunaMahasiswa');

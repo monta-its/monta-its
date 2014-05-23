@@ -48,7 +48,7 @@ class BeritaController extends BaseController {
      */
     function lihatIsiBerita($id_berita)
     {
-        $item = Pos::find($id_berita);
+        $item = Pos::with('pegawai')->find($id_berita);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),

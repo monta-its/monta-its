@@ -226,8 +226,8 @@ class RudeSeeder extends Seeder {
                 }
                 else
                 {
-                    $sitin = new Sitin;
-                    $sitin->disetujui = 0;
+                    $sitin = new SitIn;
+                    $sitin->status = 0;
                     $sitin->mahasiswa()->associate($mahasiswa);
                     $sitin->dosen()->associate($dosen);
                     $sitin->topik()->associate($topik);

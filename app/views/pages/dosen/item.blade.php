@@ -11,12 +11,12 @@
                     <tr>
                         <td class="col-md-2 col-sm-2 col-xs-2"><strong>Nama</strong></td>
                         <td>: </td>
-                        <td>{{ $item->pegawai()->first()->nama_lengkap }}</td>
+                        <td>{{ $item->pegawai->nama_lengkap }}</td>
                     </tr>
                     <tr>
                         <td><strong>NIP</strong></td>
                         <td>: </td>
-                        <td>{{ $item->pegawai()->first()->nip_pegawai }}</td>
+                        <td>{{ $item->nip_dosen }}</td>
                     </tr>
                     <tr>
                         <td><strong>Bidang Ahli</strong></td>
@@ -31,41 +31,31 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>Topik TA</strong></td>
+                        <td><strong>Penawaran Judul</strong></td>
                         <td>: </td>
                         <td>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Judul Topik TA</th>
+                                        <th class="text-center">Judul Tugas Akhir</th>
                                         <th class="text-center col-md-1 col-sm-2 col-xs-2">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @foreach ($item->penawaranJudul as $i => $penawaranJudul)
                                     <tr>
                                         <td>
-                                            <a href="{{ URL::to('topik/id_topik') }}">Judul topik TA 1 menggunakan kakas kerja berbasis pengolah teks dengan abjad lokal yang terintegrasi dengan kalimat lengkap</a>
+                                            <a href="{{ URL::to('judul/' . $penawaranJudul->id_penawaran_judul) }}">{{ $penawaranJudul->judul_tugas_akhir }}</a>
                                         </td>
                                         <td>
+                                        @if ($penawaranJudul->tugasAkhir == null)
                                             <span class="label label-success">Tersedia</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="{{ URL::to('topik/id_topik') }}">Judul topik TA 2</a>
-                                        </td>
-                                        <td>
-                                            <span class="label label-success">Tersedia</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="{{ URL::to('topik/id_topik') }}">Judul topik TA 3</a>
-                                        </td>
-                                        <td>
+                                        @else
                                             <span class="label label-default">Sudah Diambil</span>
+                                        @endif
                                         </td>
                                     </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </td>

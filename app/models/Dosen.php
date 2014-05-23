@@ -30,6 +30,16 @@ class Dosen extends Eloquent {
     }
 
     /**
+     * Relasi one-to-many ke PenawaranJudul
+     *
+     * @return Simta\Models\PenawaranJudul
+     */
+    public function penawaranJudul()
+    {
+        return $this->hasMany('Simta\Models\PenawaranJudul', 'nip_dosen', 'nip_dosen');
+    }
+
+    /**
      * Relasi many-to-many ke Sidang
      * Dengan tabel junction bernama "penguji_sidang"
      *

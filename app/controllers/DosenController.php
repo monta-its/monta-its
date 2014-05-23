@@ -41,7 +41,7 @@ class DosenController extends BaseController {
 
 
     /**
-     * Tampilkan Profil Dosen
+     * Tampilkan Profil Dosen. Menerima parameter $id_dosen yang merupakan NIP dosen.
      *
      * @var string $id_dosen
      * @return View
@@ -54,8 +54,7 @@ class DosenController extends BaseController {
             array('link' => '', 'text' => 'Profil')
         );
 
-        $item = Dosen::find($id_dosen);
-        $item->bidangKeahlian = $item->bidangKeahlian()->get();
+        $item = Dosen::with('bidangKeahlian', 'pegawai', 'penawaranJudul.tugasAkhir')->find($id_dosen);
 
         if ($item == null)
         {

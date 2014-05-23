@@ -56,16 +56,22 @@ class SitInController extends BaseController {
             }
 
             // Pre Insertion Detection
-            // Apakah ada Sitin belum disetujui dengan dosen bersangkutan?
-            if(SitIn::where('nip_dosen', Input::get('dosen.nip_dosen'))->where('disetujui', '0')->where('nrp_mahasiswa', $auth->nomor_induk)->get()->count() != 0)
+            // Apakah sudah memiliki Sitin yang disetujui?
+            if(SitIn::where('nrp_mahasiswa', $auth->nomor_induk)->where('status', '1')->get()->count() >= 1)
             {
-                return Response::json(array('galat' => 'Anda sudah memiliki Sitin dengan dosen bersangkutan yang belum disetujui'));
+                return Response::json(array('galat' => 'Anda sudah memiliki sebuah sitin yang disetujui. Untuk melakukan sitin ulang, Anda tidak dapat menambahkan/membatalkan Sitin tersebut.'));
             }
 
-            // Apakah Sitin sudah ada dua yang belum disetujui
-            if(SitIn::where('disetujui', '0')->where('nrp_mahasiswa', $auth->nomor_induk)->get()->count() >= 2)
+            // Apakah ada Sitin belum status dengan dosen bersangkutan?
+            if(SitIn::where('nip_dosen', Input::get('dosen.nip_dosen'))->where('nrp_mahasiswa', $auth->nomor_induk)->get()->count() != 0)
             {
-                return Response::json(array('galat' => 'Anda sudah memiliki dua Sitin yang sudah disetujui'));
+                return Response::json(array('galat' => 'Anda sudah memiliki Sitin dengan dosen bersangkutan.'));
+            }
+
+            // Apakah Sitin sudah ada dua yang belum status
+            if(SitIn::where('nrp_mahasiswa', $auth->nomor_induk)->get()->count() >= 2)
+            {
+                return Response::json(array('galat' => 'Anda sudah memiliki dua Sitin.'));
             }
 
 
@@ -74,7 +80,7 @@ class SitInController extends BaseController {
                 $sitIn = new Sitin;
                 $sitIn->dosen()->associate($dosen);
                 $sitIn->mahasiswa()->associate($mahasiswa);
-                $sitIn->disetujui = 0;
+                $sitIn->status = 0;
                 $sitIn->save();
 
                 // Membuat pemberitahuan ke Dosen bersankutan
@@ -102,6 +108,10 @@ class SitInController extends BaseController {
                 }
                 else if($auth->peran == 0)
                 {
+                    // Set status ke -1
+                    $sitIn->status = -1;
+                    $sitIn->save();
+
                     // Membuat pemberitahuan ke Dosen bersankutan
                     $pemberitahuan = new PemberitahuanPegawai;
                     $pegawai = Pegawai::find($sitIn->dosen->nip_dosen);

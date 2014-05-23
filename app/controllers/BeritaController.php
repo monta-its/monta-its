@@ -33,7 +33,7 @@ class BeritaController extends BaseController {
             array('link' => '', 'text' => 'Berita')
         );
 
-        $items = Pos::get();
+        $items = Pos::with('pegawai')->get();
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
         return View::make('pages.berita.index');

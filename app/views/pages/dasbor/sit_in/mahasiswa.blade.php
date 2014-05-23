@@ -75,6 +75,7 @@ app.config(function($httpProvider) {
                             <th class="text-center">Nama Dosen</th>
                             <th class="col-md-2 text-center">NIP</th>
                             <th class="col-md-3 text-center">Waktu Sit In</th>
+                            <th class="col-md-1 text-center">Status</th>
                             <th class="col-md-1 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -83,6 +84,9 @@ app.config(function($httpProvider) {
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.dosen.nip_dosen]]</td>
                             <td>[[item.updated_at]]</td>
+                            <td ng-show="item.status == -1">Dibatalkan</td>
+                            <td ng-show="item.status == 0">Diajukan</td>
+                            <td ng-show="item.status == 1">Disetujui</td>
                             <td>
                                 <button class="btn btn-warning" ng-click="batalkanSitIn([[item.id_sit_in]])">Batalkan</a>
                             </td>

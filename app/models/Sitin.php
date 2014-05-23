@@ -16,7 +16,7 @@ class SitIn extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_sit_in";
-    protected $fillable = ["disetujui"];
+    protected $fillable = ["status"];
 
     /**
      * Relasi many-to-one dengan tabel Dosen

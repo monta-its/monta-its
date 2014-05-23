@@ -26,13 +26,14 @@ class MahasiswaController extends BaseController {
      */
     function lihatProfilMahasiswa($id_mahasiswa)
     {
+        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.topik.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai')->find($id_mahasiswa);
+
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
-            array('link' => URL::to('/mahasiswa'), 'text' => 'Mahasiswa'),
-            array('link' => '', 'text' => 'Profil')
+            array('link' => '', 'text' => 'Mahasiswa'),
+            array('link' => '', 'text' => 'Profil ' . $item->nama_lengkap)
         );
         
-        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.topik.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai')->find($id_mahasiswa);
         if ($item == null) 
         {
             return Redirect::to('/');

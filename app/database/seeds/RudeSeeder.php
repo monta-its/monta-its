@@ -169,6 +169,7 @@ class RudeSeeder extends Seeder {
                         $lampiran->nama_lampiran = $faker->word();
                         $lampiran->tipe_lampiran = 'url';
                         $lampiran->path_lampiran = 'http://www.google.com/';
+                        $lampiran->save();
                         $panduan->lampiran()->associate($lampiran);
                         $panduan->save();
                     }
@@ -178,6 +179,7 @@ class RudeSeeder extends Seeder {
                         $lampiran->nama_lampiran = $faker->word();
                         $lampiran->tipe_lampiran = 'file';
                         $lampiran->path_lampiran = 'files/' . $panduan->pegawai->nip_pegawai . '/' . $lampiran->nama_lampiran;
+                        $lampiran->save();
                         $panduan->lampiran()->associate($lampiran);
                         $panduan->save();
                     }

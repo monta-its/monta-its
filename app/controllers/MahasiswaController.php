@@ -31,20 +31,23 @@ class MahasiswaController extends BaseController {
             array('link' => URL::to('/mahasiswa'), 'text' => 'Mahasiswa'),
             array('link' => '', 'text' => 'Profil')
         );
+        
+        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.topik.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai')->find($id_mahasiswa);
+        if ($item == null) 
+        {
+            return Redirect::to('/');
+        }
 
-        $item = array(
-            'nama_mahasiswa' => 'Nama Mahasiswa',
-            'nrp_mahasiswa' => '1234567890',
-            'id_mahasiswa' => '0987654321',
-            'nama_dosen' => 'Nama Dosen Pembimbing',
-            'id_dosen' => 'id_dosen',
-            'judul_topik' => 'Judul Topik TA',
-            'id_topik' => 'id_topik',
-            'judul_judul' => 'Judul Judul TA',
-            'id_judul' => 'id_judul'
-        );
+        $tugasAkhir = null;
+
+        if ($item->tugasAkhir != null)
+        {
+            $tugasAkhir = $item->tugasAkhir->sortBy('id_tugas_akhir')->last();
+        }
+
         View::share('breadcrumbs', $breadcrumbs);
         View::share('item', $item);
+        View::share('tugasAkhir', $tugasAkhir);
         return View::make('pages.mahasiswa.item');
     }
 

@@ -80,7 +80,7 @@ class MahasiswaController extends BaseController {
         View::share('item', $item);
         View::share('tugasAkhir', $tugasAkhir);
         View::share('sidang', $sidang);
-        return View::make('pages.dasbor.index');
+        return View::make('pages.dasbor.mahasiswa.index');
     }
 
 

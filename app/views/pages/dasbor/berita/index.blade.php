@@ -11,9 +11,10 @@ var app = angular.module('dasborBerita', ['ngRoute'], function($interpolateProvi
     updateBerita($rootScope, $http);
 });
 
-var updateBerita = function($rootScope, $http) {
+var updateBerita = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/dosen/berita')}}').success(function(data) {
         $rootScope.items = data;
+        if(callback) callback();
     });
 };
 
@@ -74,12 +75,14 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
                     $location.path('/');
                 });
             };
-            $.each($rootScope.items, function(i, val) {
-                if(val.id_pos === $scope.berita.id_pos) {
-                    $scope.berita.judul = val.judul;
-                    $scope.berita.isi = val.isi;
-                    $scope.berita.apakah_terbit = val.apakah_terbit;
-                }
+            updateBerita($rootScope, $http, function() {
+                $.each($rootScope.items, function(i, val) {
+                    if(val.id_pos === $scope.berita.id_pos) {
+                        $scope.berita.judul = val.judul;
+                        $scope.berita.isi = val.isi;
+                        $scope.berita.apakah_terbit = val.apakah_terbit;
+                    }
+                });
             });
         } else {
             location.path('/');

@@ -69,10 +69,10 @@ class DosenController extends BaseController {
     /* Kelompok dasbor */
 
     /**
-     * Dasbor Dosen berbasis REST
+     * Kelola Dosen berbasis REST
      * @return View
      */
-    function dasborDosen()
+    function kelolaDosen()
     {
 
         if(Request::isMethod('get'))
@@ -86,6 +86,22 @@ class DosenController extends BaseController {
                 return Response::json(Dosen::with('pegawai', 'bidangKeahlian')->get());
             }
 
+        }
+    }
+
+    /**
+     * Dasbor Dosen
+     * @return View
+     */
+    function dasborDosen()
+    {
+
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.dosen.index');
+            }
         }
     }
 

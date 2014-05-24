@@ -143,10 +143,11 @@ Route::post('/dasbor/pengguna/mahasiswa/cari', 'Simta\Controllers\PenggunaContro
 
 
 Route::get('/dosen/{id_dosen}', 'Simta\Controllers\DosenController@lihatProfilDosen');
-Route::get('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
-Route::post('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
-Route::put('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
-Route::delete('/dasbor/dosen/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+Route::get('/dasbor/dosen', 'Simta\Controllers\DosenController@dasborDosen');
+Route::get('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaDosen');
+Route::post('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaDosen');
+Route::put('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaDosen');
+Route::delete('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaDosen');
 
 
 // RUTE SPESIAL, AKSES SILANG

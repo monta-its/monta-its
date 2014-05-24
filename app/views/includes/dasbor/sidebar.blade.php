@@ -36,6 +36,9 @@
                 <a href="#"><span class=""></span>Menu Dosen<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
+                        <a href="{{ URL::to('dasbor/dosen') }}"><span class=""></span> Dasbor</a>
+                    </li>
+                    <li>
                         <a href="{{ URL::to('dasbor/dosen/berita') }}"><span class=""></span> Berita</a>
                     </li>
                     <li>

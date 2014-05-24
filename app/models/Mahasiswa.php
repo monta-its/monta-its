@@ -50,5 +50,14 @@ class Mahasiswa extends Eloquent {
         return $this->belongsTo('Simta\Models\JenjangPendidikan', 'kode_jenjang_pendidikan', 'kode_jenjang_pendidikan');
     }
 
+    /**
+     * Relasi one-to-one dengan tabel Syarat
+     *
+     * @return Simta\Models\Syarat
+     */
+    function syarat()
+    {
+        return $this->belongsToMany('Simta\Models\Syarat', 'syarat_mahasiswa', 'nrp_mahasiswa', 'id_syarat')->withPivot('status');
+    }
 }
 ?>

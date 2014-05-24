@@ -18,6 +18,7 @@ use Simta\Models\TeknikMesin\SitIn;
 use Simta\Models\PenawaranJudul;
 use Simta\Models\Lampiran;
 use Simta\Models\JenjangPendidikan;
+use Simta\Models\Syarat;
 
 class RudeSeeder extends Seeder {
 
@@ -56,6 +57,13 @@ class RudeSeeder extends Seeder {
         $bidang_keahlian->save();
         $bidang_keahlian->bidangMinat()->save($bidang_minat);
 
+        $syarat = new Syarat;
+        $syarat->kode_syarat = $faker->unique->word;
+        $syarat->nama_syarat = $faker->unique->word;
+        $syarat->waktu_syarat = 'pra_sit_in';
+        $syarat->jenis_mahasiswa = 'reguler';
+        $syarat->save();
+
         $topik = new Topik;
         $topik->topik = $faker->unique->word;
         $topik->deskripsi = $faker->text();
@@ -80,6 +88,10 @@ class RudeSeeder extends Seeder {
 
             $mahasiswa->jenjangPendidikan()->associate($jenjang_pendidikan);
             $mahasiswa->save();
+
+            $mahasiswa->syarat()->save($syarat);
+            $mahasiswa->syarat()->first()->status = 0;
+            $mahasiswa->syarat()->first()->save();
 
             for($j = 0; $j < 3; $j++)
             {
@@ -132,7 +144,7 @@ class RudeSeeder extends Seeder {
                 $penawaran_judul->dosen()->associate($dosen);
                 $penawaran_judul->save();
 
-                if(rand(0,1) == 1) 
+                if(rand(0,1) == 1)
                 {
 
                 }
@@ -163,7 +175,7 @@ class RudeSeeder extends Seeder {
                     $panduan->pegawai()->associate($dosen->pegawai);
                     $panduan->save();
 
-                    if(rand(0,1) == 1) 
+                    if(rand(0,1) == 1)
                     {
                         $lampiran = new Lampiran;
                         $lampiran->nama_lampiran = $faker->word();
@@ -173,7 +185,7 @@ class RudeSeeder extends Seeder {
                         $panduan->lampiran()->associate($lampiran);
                         $panduan->save();
                     }
-                    else 
+                    else
                     {
                         $lampiran = new Lampiran;
                         $lampiran->nama_lampiran = $faker->word();
@@ -185,8 +197,8 @@ class RudeSeeder extends Seeder {
                     }
                 }
 
-                if(rand(0,1) == 1) 
-                {   
+                if(rand(0,1) == 1)
+                {
                     $ta = new TugasAkhir;
                     $ta->mahasiswa()->associate($mahasiswa);
                     $ta->tanggal_mulai = "2014-01-01";
@@ -199,7 +211,7 @@ class RudeSeeder extends Seeder {
                     $ta->penawaranJudul()->associate($penawaran_judul);
                     $ta->save();
 
-                    if(rand(0,1) == 1) 
+                    if(rand(0,1) == 1)
                     {
                         $sidang = new Sidang;
                         $sidang->jenis_sidang = "proposal";
@@ -224,7 +236,7 @@ class RudeSeeder extends Seeder {
                             $evaluasi->nilai = rand(60,100);
                             $evaluasi->save();
                         }
-                    }                    
+                    }
                 }
                 else
                 {

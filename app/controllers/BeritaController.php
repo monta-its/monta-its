@@ -78,7 +78,8 @@ class BeritaController extends BaseController {
             }
             else
             {
-                return Response::json(Pos::with('pegawai')->get());
+                $auth = Auth::user();
+                return Response::json(Pos::with('pegawai')->where('nip_pegawai', $auth->nomor_induk)->get());
             }
         }
         else if(Request::isMethod('post'))
@@ -97,8 +98,8 @@ class BeritaController extends BaseController {
         }
         else if(Request::isMethod('put'))
         {
-            $berita = Pos::find(Input::get('id_pos'));
             $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+            $berita = Pos::where('nip_pegawai', Auth::user()->nomor_induk)->find(Input::get('id_pos'));
             if($pegawai != null)
             {
                 $berita->judul = Input::get('judul');

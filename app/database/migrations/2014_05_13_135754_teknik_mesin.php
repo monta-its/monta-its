@@ -31,7 +31,7 @@ class TeknikMesin extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('sitin');
+        Schema::drop('sit_in');
 	}
 
 }

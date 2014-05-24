@@ -46,7 +46,7 @@ class FirstDdl extends Migration {
         });
 
         Schema::create('dosen', function($table)
-        {   
+        {
             $table->string('nip_dosen')->primary();
             $table->string('nidn')->unique();
             $table->string('gelar_depan');
@@ -68,7 +68,7 @@ class FirstDdl extends Migration {
         Schema::create('tugas_akhir', function($table)
         {
             $table->increments('id_tugas_akhir');
-            $table->integer('id_penawaran_judul');   
+            $table->integer('id_penawaran_judul');
             $table->string('nrp_mahasiswa');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
@@ -233,6 +233,26 @@ class FirstDdl extends Migration {
             $table->softDeletes();
         });
 
+        Schema::create('syarat', function($table)
+        {
+            $table->increments('id_syarat');
+            $table->string('kode_syarat')->unique();
+            $table->string('nama_syarat');
+            $table->enum('waktu_syarat', array('pra_sit_in', 'pra_bimbingan', 'pra_sidang_proposal', 'pra_sidang_akhir'));
+            $table->enum('jenis_mahasiswa', array('reguler', 'lintas_jalur'));
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('syarat_mahasiswa', function($table) {
+            $table->increments('id_syarat_mahasiswa');
+            $table->integer('id_syarat');
+            $table->string('nrp_mahasiswa');
+            $table->boolean('status');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('sessions', function($table)
         {
             $table->string('id')->unique();
@@ -271,6 +291,8 @@ class FirstDdl extends Migration {
         Schema::drop('bidang_keahlian_dosen');
         Schema::drop('bidang_keahlian_bidang_minat');
         Schema::drop('sessions');
+        Schema::drop('syarat');
+        Schema::drop('syarat_mahasiswa');
 	}
 
 }

@@ -2,10 +2,12 @@
 
 @section('content')
 
+<script type="text/javascript" src="{{URL::to('assets/angular/angular-file-upload-shim.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/angular/angular.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/angular/angular-route.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('assets/angular/angular-file-upload.min.js')}}"></script>
 <script>
-var app = angular.module('dasborPanduan', ['ngRoute'], function($interpolateProvider) {
+var app = angular.module('dasborPanduan', ['ngRoute', 'angularFileUpload'], function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 }).run(function($rootScope, $http) {
@@ -29,29 +31,72 @@ app.controller('daftarPanduanController', function($scope, $http, $rootScope) {
     };
 });
 
-app.controller('panduanSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
+app.controller('panduanSuntingController', function($rootScope, $scope, $http, $routeParams, $location, $upload){
     var method = $routeParams.method;
     $scope.method = method;
+    $scope.pilihBerkas = function($files) {
+        $scope.panduan.lampiran.berkas_lampiran = $files[0];
+    };
     if(method == "baru") {
         $scope.panduan = {};
         $scope.panduan.judul_panduan = "";
         $scope.panduan.isi_panduan = "";
-        $scope.panduan.lampiran = "";
+        $scope.panduan.lampiran = {};
+        $scope.panduan.lampiran.nama_lampiran = "";
+        $scope.panduan.lampiran.tipe_lampiran = "file";
+        $scope.panduan.lampiran.path_lampiran = "";
         $scope.terbitkanPanduan = function() {
-            $http.post('{{{URL::to('/dasbor/dosen/panduan')}}}', $scope.panduan).success(function(data) {
-                updatePanduan($rootScope, $http)
-                $location.path('/');
-            })
+            if($scope.panduan.lampiran.tipe_lampiran == 'url' || !$scope.panduan.lampiran.berkas_lampiran) {
+                $http.post('{{URL::to('/dasbor/dosen/panduan')}}', $scope.panduan).success(function (data) {
+                    updatePanduan($rootScope, $http);
+                    $location.path('/');
+                });
+            } else if ($scope.panduan.lampiran.tipe_lampiran == 'file') {
+                $upload.upload({
+                    url: '{{URL::to('/dasbor/dosen/panduan')}}',
+                    method: 'POST',
+                    data: $scope.panduan,
+                    file: $scope.panduan.lampiran.berkas_lampiran
+
+                }).success(function(data, status, headers, config) {
+                    alert('Pengunggahan berkas berhasil');
+                    updatePanduan($rootScope, $http);
+                    $location.path('/');
+                }).error(function() {
+                    alert('Pengunggahan berkas gagal')
+                    updatePanduan($rootScope, $http);
+                    $location.path('/');
+                });
+            }
         };
     } else if (method == "sunting") {
         if($routeParams.id) {
             $scope.panduan = {};
             $scope.panduan.id_panduan = $routeParams.id;
             $scope.suntingPanduan = function() {
-                $http.put('{{URL::to('/dasbor/dosen/panduan')}}', $scope.panduan).success(function (data) {
-                    updatePanduan($rootScope, $http);
-                    $location.path('/');
-                });
+                if($scope.panduan.lampiran.tipe_lampiran == 'url' || !$scope.panduan.lampiran.berkas_lampiran) {
+                    $http.put('{{URL::to('/dasbor/dosen/panduan')}}', $scope.panduan).success(function (data) {
+                        updatePanduan($rootScope, $http);
+                        $location.path('/');
+                    });
+                } else if ($scope.panduan.lampiran.tipe_lampiran == 'file') {
+                    $scope.panduan._permit_to_edit = true;
+                    $upload.upload({
+                        url: '{{URL::to('/dasbor/dosen/panduan')}}',
+                        method: 'POST',
+                        data: $scope.panduan,
+                        file: $scope.panduan.lampiran.berkas_lampiran
+
+                    }).success(function(data, status, headers, config) {
+                        alert('Pengunggahan berkas berhasil');
+                        updatePanduan($rootScope, $http);
+                        $location.path('/');
+                    }).error(function() {
+                        alert('Pengunggahan berkas gagal')
+                        updatePanduan($rootScope, $http);
+                        $location.path('/');
+                    });
+                }
             };
             updatePanduan($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
@@ -104,8 +149,19 @@ app.config(function($httpProvider) {
                     <div class="form-group">
                         <textarea ng-model="panduan.isi_panduan" class="form-control" rows="10" name="isiPanduan" id="isiPanduan" placeholder="Isi Panduan"></textarea>
                     </div>
+                    <h3>Lampiran</h3>
                     <div class="form-group">
-                        <input placeholder="Masukkan URL/pranala menuju lampiran (dari Dropbox/Google Drive)" ng-model="panduan.lampiran" class="form-control" rows="10" name="lampiranPanduan" id="lampiranPanduan" />
+                        <input ng-model="panduan.lampiran.nama_lampiran" type="text" class="form-control input-lg"  placeholder="Nama Lampiran">
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" ng-model="panduan.lampiran.tipe_lampiran" value="url"/> Lampiran pranala URL<br/>
+                        <input type="radio" ng-model="panduan.lampiran.tipe_lampiran" value="file"/> Lampiran berkas unggah<br/>
+
+                    </div>
+                    <div class="form-group">
+                        <input ng-show="panduan.lampiran.tipe_lampiran=='url'" placeholder="Masukkan URL/pranala menuju lampiran (dari Dropbox/Google Drive)" ng-model="panduan.lampiran.path_lampiran" class="form-control"/>
+                        <a ng-show="panduan.lampiran.path_lampiran && panduan.lampiran.tipe_lampiran=='file'" href="{{URL::to('/files/')}}/[[panduan.lampiran.path_lampiran]]">Pranala berkas sebelumnya</a>
+                        <input type="file" ng-file-select="pilihBerkas($files)" ng-show="panduan.lampiran.tipe_lampiran=='file'"  class="form-control"/>
                     </div>
                 </div>
                 <div class="col-md-4">

@@ -25,7 +25,7 @@ class Lampiran extends Eloquent {
      */
     public function panduan()
     {
-        return $this->hasOne('Simta\Models\Panduan', 'id_lampiran', 'id_lampiran');
+        return $this->associate('Simta\Models\Panduan', 'id_lampiran', 'id_lampiran');
     }
 
     /**

@@ -109,7 +109,7 @@ app.config(function($httpProvider) {
                         <input ng-model="bidangKeahlian.nama_bidang_keahlian" type="text" class="form-control input-lg" id="judulbidangKeahlian" name="judulbidangKeahlian" placeholder="Nama Bidang Keahlian">
                     </div>
                     <div class="form-group">
-                        <textarea ng-model="bidangKeahlian.deskripsi_bidang_keahlian" class="form-control" rows="10" name="isibidangKeahlian" id="isibidangKeahlian"></textarea>
+                        <textarea ng-model="bidangKeahlian.deskripsi_bidang_keahlian" class="form-control" rows="10" name="isibidangKeahlian" id="isibidangKeahlian" placeholder="Deskripsi Bidang Keahlian"></textarea>
                     </div>
                 </div>
                 <div class="col-md-4">

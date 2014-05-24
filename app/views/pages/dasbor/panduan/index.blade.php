@@ -97,10 +97,10 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="panduan.judul_panduan" type="text" class="form-control input-lg" id="judul_panduanPanduan" name="judul_panduanPanduan" placeholder="judul_panduan panduan">
+                        <input ng-model="panduan.judul_panduan" type="text" class="form-control input-lg" id="judul_panduanPanduan" name="judul_panduanPanduan" placeholder="Judul Panduan">
                     </div>
                     <div class="form-group">
-                        <textarea ng-model="panduan.isi_panduan" class="form-control" rows="10" name="isiPanduan" id="isiPanduan"></textarea>
+                        <textarea ng-model="panduan.isi_panduan" class="form-control" rows="10" name="isiPanduan" id="isiPanduan" placeholder="Isi Panduan"></textarea>
                     </div>
                     <div class="form-group">
                         <input placeholder="Masukkan URL/pranala menuju lampiran (dari Dropbox/Google Drive)" ng-model="panduan.lampiran" class="form-control" rows="10" name="lampiranPanduan" id="lampiranPanduan" />

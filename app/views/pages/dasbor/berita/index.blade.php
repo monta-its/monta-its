@@ -118,7 +118,7 @@ app.config(function($httpProvider) {
                         <input ng-model="berita.judul" type="text" class="form-control input-lg" id="judulBerita" name="judulBerita" placeholder="Judul Berita">
                     </div>
                     <div class="form-group">
-                        <textarea ng-model="berita.isi" class="form-control" rows="10" name="isiBerita" id="isiBerita"></textarea>
+                        <textarea ng-model="berita.isi" class="form-control" rows="10" name="isiBerita" id="isiBerita" placeholder="Isi Berita"></textarea>
                     </div>
                 </div>
                 <div class="col-md-4">

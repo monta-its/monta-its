@@ -21,10 +21,12 @@ var updateBerita = function($rootScope, $http, callback) {
 
 app.controller('daftarBeritaController', function($scope, $http, $rootScope) {
     $scope.hapusBerita = function(id_pos) {
-        $http.delete('{{URL::to('/dasbor/dosen/berita')}}', {'params': {'id_pos': String(id_pos)}}).success(function(data) {
-            updateBerita($rootScope, $http);
-            alert('Berita dihapus');
-        });
+        if(confirm("Yakin untuk menghapus ini?")) {
+            $http.delete('{{URL::to('/dasbor/dosen/berita')}}', {'params': {'id_pos': String(id_pos)}}).success(function(data) {
+                updateBerita($rootScope, $http);
+                alert('Berita dihapus');
+            });
+        }
     };
     $scope.publish = function(id_pos, action) {
         var berita = {};

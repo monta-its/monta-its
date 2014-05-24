@@ -21,10 +21,11 @@ var updateBidangKeahlian = function($rootScope, $http, callback) {
 
 app.controller('daftarBidangKeahlianController', function($scope, $http, $rootScope) {
     $scope.hapusBidangKeahlian = function(id_bidang_keahlian) {
+        if(confirm("Yakin untuk menghapus ini?")) {
         $http.delete('{{URL::to('/dasbor/dosen/bidang_keahlian')}}', {'params': {'id_bidang_keahlian': String(id_bidang_keahlian)}}).success(function(data) {
             updateBidangKeahlian($rootScope, $http);
             alert('Bidang Keahlian dihapus');
-        });
+        }); }
     };
     $scope.publish = function(id_pos, action) {
         var bidangKeahlian = {};

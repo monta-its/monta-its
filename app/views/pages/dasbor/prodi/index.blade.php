@@ -27,10 +27,11 @@ var updateBidangMinat = function($rootScope, $http, callback) {
 
 app.controller('daftarBidangMinatController', function($scope, $http, $rootScope) {
     $scope.hapusBidangMinat = function(kode_bidang_minat) {
+        if(confirm("Yakin untuk menghapus ini?")) {
         $http.delete('{{URL::to('/dasbor/dosen/prodi')}}', {'params': {'kode_bidang_minat': String(kode_bidang_minat)}}).success(function(data) {
             updateBidangMinat($rootScope, $http);
             alert('Prodi dihapus');
-        });
+        });}
     };
 });
 

@@ -29,10 +29,11 @@ app.controller('daftarJudulController', function($scope, $http, $rootScope, $rou
         $scope.searchText = $routeParams.searchText;
     }
     $scope.hapusJudul = function(id_judul) {
+        if(confirm("Yakin untuk menghapus ini?")) {
         $http.delete('{{URL::to('/dasbor/dosen/judul')}}', {'params': {'id_judul': String(id_penawaran_judul)}}).success(function(data) {
             updateJudul($rootScope, $http);
             alert('Judul dihapus');
-        });
+        });}
     };
 });
 

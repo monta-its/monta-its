@@ -24,10 +24,12 @@ var updatePanduan = function($rootScope, $http, callback) {
 
 app.controller('daftarPanduanController', function($scope, $http, $rootScope) {
     $scope.hapusPanduan = function(id_panduan) {
-        $http.delete('{{URL::to('/dasbor/dosen/panduan')}}', {'params': {'id_panduan': String(id_panduan)}}).success(function(data) {
-            updatePanduan($rootScope, $http);
-            alert('Panduan dihapus');
-        });
+        if(confirm("Yakin untuk menghapus ini?")) {
+            $http.delete('{{URL::to('/dasbor/dosen/panduan')}}', {'params': {'id_panduan': String(id_panduan)}}).success(function(data) {
+                updatePanduan($rootScope, $http);
+                alert('Panduan dihapus');
+            });
+        }
     };
 });
 

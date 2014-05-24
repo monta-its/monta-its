@@ -31,10 +31,11 @@ app.controller('daftarTopikController', function($scope, $http, $rootScope, $rou
         $scope.searchText = $routeParams.searchText;
     }
     $scope.hapusTopik = function(id_topik) {
+        if(confirm("Yakin untuk menghapus ini?")) {
         $http.delete('{{URL::to('/dasbor/dosen/topik')}}', {'params': {'id_topik': String(id_topik)}}).success(function(data) {
             updateTopik($rootScope, $http);
             alert('Topik dihapus');
-        });
+        });}
     };
 });
 

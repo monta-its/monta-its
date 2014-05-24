@@ -168,6 +168,7 @@ class FirstDdl extends Migration {
             $table->string('nama_lampiran');
             $table->enum('tipe_lampiran', array('file', 'url'));
             $table->string('path_lampiran');
+            $table->string('nip_pegawai');
             $table->timestamps();
             $table->softdeletes();
         });

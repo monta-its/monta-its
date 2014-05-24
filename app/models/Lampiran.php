@@ -27,5 +27,15 @@ class Lampiran extends Eloquent {
     {
         return $this->hasOne('Simta\Models\Panduan', 'id_lampiran', 'id_lampiran');
     }
+
+    /**
+     * Relasi many-to-one ke Pegawai
+     *
+     * @return Simta\Models\Pegawai
+     */
+    public function pegawai()
+    {
+        return $this->belongsTo('Simta\Models\Pegawai', 'nip_pegawai', 'nip_pegawai');
+    }
 }
 ?>

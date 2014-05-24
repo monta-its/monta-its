@@ -77,5 +77,15 @@ class Pegawai extends Eloquent {
             return true;
         }
     }
+
+    /**
+     * Relasi one-to-many ke Lampiran
+     *
+     * @return Simta\Models\Lampiran
+     */
+    public function lampiran()
+    {
+        return $this->hasMany('Simta\Models\Lampiran', 'nip_pegawai', 'nip_pegawai');
+    }
 }
 ?>

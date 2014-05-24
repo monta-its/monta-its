@@ -93,7 +93,7 @@ app.config(function($httpProvider) {
 </script>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="page-header">Kelola Judul</h1>
+        <h1 class="page-header">Kelola Penawaran Judul</h1>
     </div>
 </div>
 <div ng-app="dasborJudul">
@@ -106,10 +106,10 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="judul.judul_tugas_akhir" type="text" class="form-control input-lg" placeholder="Nama Judul">
+                        <input ng-model="judul.judul_tugas_akhir" type="text" class="form-control input-lg" placeholder="Judul Tugas Akhir">
                     </div>
                     <div class="form-group">
-                        <textarea ng-model="judul.deskripsi" class="form-control" rows="10" placeholder="Deskripsi Judul"></textarea>
+                        <textarea ng-model="judul.deskripsi" class="form-control" rows="10" placeholder="Deskripsi"></textarea>
                     </div>
                     <select ng-model="judul.topik" ng-options="item.topik for item in topik_items"></select>
                 </div>

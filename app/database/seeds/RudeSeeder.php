@@ -175,26 +175,24 @@ class RudeSeeder extends Seeder {
                     $panduan->pegawai()->associate($dosen->pegawai);
                     $panduan->save();
 
+                    $lampiran = new Lampiran;
                     if(rand(0,1) == 1)
                     {
-                        $lampiran = new Lampiran;
                         $lampiran->nama_lampiran = $faker->word();
                         $lampiran->tipe_lampiran = 'url';
                         $lampiran->path_lampiran = 'http://www.google.com/';
-                        $lampiran->save();
-                        $panduan->lampiran()->associate($lampiran);
-                        $panduan->save();
                     }
                     else
                     {
-                        $lampiran = new Lampiran;
                         $lampiran->nama_lampiran = $faker->word();
                         $lampiran->tipe_lampiran = 'file';
                         $lampiran->path_lampiran = 'files/' . $panduan->pegawai->nip_pegawai . '/' . $lampiran->nama_lampiran;
-                        $lampiran->save();
-                        $panduan->lampiran()->associate($lampiran);
-                        $panduan->save();
                     }
+                    $lampiran->save();
+                    $panduan->lampiran()->associate($lampiran);
+                    $panduan->save();
+                    $lampiran->pegawai()->associate($dosen->pegawai);
+                    $lampiran->save();
                 }
 
                 if(rand(0,1) == 1)

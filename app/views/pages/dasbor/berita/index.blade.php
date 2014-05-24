@@ -147,7 +147,6 @@ app.config(function($httpProvider) {
                         <tr>
                             <th>No.</th>
                             <th>Judul</th>
-                            <th>Penulis</th>
                             <th>Waktu</th>
                             <th>Aksi</th>
                         </tr>
@@ -156,7 +155,6 @@ app.config(function($httpProvider) {
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td>[[item.id_pos]]</td>
                             <td>[[item.judul]]</td>
-                            <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
                                 <a href="#/" ng-show="item.apakah_terbit" ng-click="publish([[item.id_pos]], false)">Non publikasi</a>

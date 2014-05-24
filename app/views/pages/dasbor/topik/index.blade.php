@@ -12,16 +12,17 @@ var app = angular.module('dasborTopik', ['ngRoute'], function($interpolateProvid
     updateTopik($rootScope, $http);
 });
 
-var updateTopik = function($rootScope, $http) {
+var updateTopik = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/dosen/topik')}}').success(function(data) {
         $rootScope.items = data;
+        // Ambil data bidang minat tersedia
+        // TODO: Sesuaikan dengan bidang Keahlian
+        $http.get('{{URL::to('/dasbor/dosen/bidang_keahlian')}}').success(function(data) {
+            $rootScope.bidang_keahlian_item = data;
+            if (callback) callback();
+        });
     });
 
-    // Ambil data bidang minat tersedia
-    // TODO: Sesuaikan dengan bidang Keahlian
-    $http.get('{{URL::to('/dasbor/dosen/bidang_keahlian')}}').success(function(data) {
-        $rootScope.bidang_keahlian_item = data;
-    });
 };
 
 
@@ -60,16 +61,18 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
                     $location.path('/');
                 });
             };
-            $.each($rootScope.items, function(i, val) {
-                if(val.id_topik === $scope.topik.id_topik) {
-                    $scope.topik.topik = val.topik;
-                    $scope.topik.deskripsi = val.deskripsi;
-                    $.each($rootScope.bidang_keahlian_item, function(j, val2) {
-                        if(val2.id_bidang_keahlian == val.id_bidang_keahlian) {
-                            $scope.topik.bidangMinat = val2;
-                        }
-                    });
-                }
+            updateTopik($rootScope, $http, function() {
+                $.each($rootScope.items, function(i, val) {
+                    if(val.id_topik === $scope.topik.id_topik) {
+                        $scope.topik.topik = val.topik;
+                        $scope.topik.deskripsi = val.deskripsi;
+                        $.each($rootScope.bidang_keahlian_item, function(j, val2) {
+                            if(val2.id_bidang_keahlian == val.id_bidang_keahlian) {
+                                $scope.topik.bidangMinat = val2;
+                            }
+                        });
+                    }
+                });
             });
         } else {
             location.path('/');

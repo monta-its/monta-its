@@ -12,14 +12,15 @@ var app = angular.module('dasborJudul', ['ngRoute'], function($interpolateProvid
     updateJudul($rootScope, $http);
 });
 
-var updateJudul = function($rootScope, $http) {
+var updateJudul = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/dosen/judul')}}').success(function(data) {
         $rootScope.items = data;
+        $http.get('{{URL::to('/dasbor/dosen/topik')}}').success(function(data) {
+            $rootScope.topik_items = data;
+            if (callback) callback();
+        });
     });
 
-    $http.get('{{URL::to('/dasbor/dosen/topik')}}').success(function(data) {
-        $rootScope.topik_items = data;
-    });
 };
 
 
@@ -59,16 +60,18 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
                     $location.path('/');
                 });
             };
-            $.each($rootScope.items, function(i, val) {
-                if(val.id_penawaran_judul === $scope.judul.id_penawaran_judul) {
-                    $scope.judul.judul_tugas_akhir = val.judul_tugas_akhir;
-                    $scope.judul.deskripsi = val.deskripsi;
-                    $.each($rootScope.topik_items, function(j, val2) {
-                        if(val2.id_topik == val.id_topik) {
-                            $scope.judul.topik = val2;
-                        }
-                    });
-                }
+            updateJudul($rootScope, $http, function() {
+                $.each($rootScope.items, function(i, val) {
+                    if(val.id_penawaran_judul === $scope.judul.id_penawaran_judul) {
+                        $scope.judul.judul_tugas_akhir = val.judul_tugas_akhir;
+                        $scope.judul.deskripsi = val.deskripsi;
+                        $.each($rootScope.topik_items, function(j, val2) {
+                            if(val2.id_topik == val.id_topik) {
+                                $scope.judul.topik = val2;
+                            }
+                        });
+                    }
+                });
             });
         } else {
             location.path('/');

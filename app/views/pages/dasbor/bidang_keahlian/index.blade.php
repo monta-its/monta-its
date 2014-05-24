@@ -11,9 +11,10 @@ var app = angular.module('dasborBidangKeahlian', ['ngRoute'], function($interpol
     updateBidangKeahlian($rootScope, $http);
 });
 
-var updateBidangKeahlian = function($rootScope, $http) {
+var updateBidangKeahlian = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/dosen/bidang_keahlian')}}').success(function(data) {
         $rootScope.items = data;
+        if(callback) callback();
     });
 };
 
@@ -66,11 +67,13 @@ app.controller('bidangKeahlianSuntingController', function($rootScope, $scope, $
                     $location.path('/');
                 });
             };
-            $.each($rootScope.items, function(i, val) {
-                if(val.id_bidang_keahlian === $scope.bidangKeahlian.id_bidang_keahlian) {
-                    $scope.bidangKeahlian.nama_bidang_keahlian = val.nama_bidang_keahlian;
-                    $scope.bidangKeahlian.deskripsi_bidang_keahlian = val.deskripsi_bidang_keahlian;
-                }
+            updateBidangKeahlian($rootScope, $http, function() {
+                $.each($rootScope.items, function(i, val) {
+                    if(val.id_bidang_keahlian === $scope.bidangKeahlian.id_bidang_keahlian) {
+                        $scope.bidangKeahlian.nama_bidang_keahlian = val.nama_bidang_keahlian;
+                        $scope.bidangKeahlian.deskripsi_bidang_keahlian = val.deskripsi_bidang_keahlian;
+                    }
+                });
             });
         } else {
             location.path('/');

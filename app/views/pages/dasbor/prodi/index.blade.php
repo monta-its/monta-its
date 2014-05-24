@@ -12,15 +12,16 @@ var app = angular.module('dasborBidangMinat', ['ngRoute'], function($interpolate
     updateBidangMinat($rootScope, $http);
 });
 
-var updateBidangMinat = function($rootScope, $http) {
+var updateBidangMinat = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/dosen/prodi')}}').success(function(data) {
         $rootScope.items = data;
+        // Ambil data dosen untuk milih koordinator
+        $http.get('{{URL::to('/dasbor/pengguna/dosen')}}').success(function(data) {
+            $rootScope.dosens = data;
+            if(callback) callback();
+        });
     });
 
-    // Ambil data dosen untuk milih koordinator
-    $http.get('{{URL::to('/dasbor/dosen/dosen')}}').success(function(data) {
-        $rootScope.dosens = data;
-    });
 };
 
 
@@ -57,16 +58,18 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
                     $location.path('/');
                 });
             };
-            $.each($rootScope.items, function(i, val) {
-                if(val.kode_bidang_minat === $scope.bidangMinat.kode_bidang_minat) {
-                    $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
-                    $scope.bidangMinat.deskripsi_bidang_minat = val.deskripsi_bidang_minat;
-                    $.each($rootScope.dosens, function(j, val2) {
-                        if(val2.nip_dosen == val.nip_dosen_koordinator) {
-                            $scope.bidangMinat.dosenKoordinator = val2;
-                        }
-                    });
-                }
+            updateBidangMinat($rootScope, $http, function() {
+                $.each($rootScope.items, function(i, val) {
+                    if(val.kode_bidang_minat === $scope.bidangMinat.kode_bidang_minat) {
+                        $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
+                        $scope.bidangMinat.deskripsi_bidang_minat = val.deskripsi_bidang_minat;
+                        $.each($rootScope.dosens, function(j, val2) {
+                            if(val2.nip_dosen == val.nip_dosen_koordinator) {
+                                $scope.bidangMinat.dosenKoordinator = val2;
+                            }
+                        });
+                    }
+                });
             });
         } else {
             location.path('/');

@@ -12,9 +12,10 @@ var app = angular.module('dasborPanduan', ['ngRoute'], function($interpolateProv
     updatePanduan($rootScope, $http);
 });
 
-var updatePanduan = function($rootScope, $http) {
+var updatePanduan = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/dosen/panduan')}}').success(function(data) {
         $rootScope.items = data;
+        if(callback) callback();
     });
 };
 
@@ -52,13 +53,14 @@ app.controller('panduanSuntingController', function($rootScope, $scope, $http, $
                     $location.path('/');
                 });
             };
-            console.log($rootScope.items);
-            $.each($rootScope.items, function(i, val) {
-                if(val.id_panduan === $scope.panduan.id_panduan) {
-                    $scope.panduan.judul_panduan = val.judul_panduan;
-                    $scope.panduan.isi_panduan = val.isi_panduan;
-                    $scope.panduan.lampiran = val.lampiran;
-                }
+            updatePanduan($rootScope, $http, function() {
+                $.each($rootScope.items, function(i, val) {
+                    if(val.id_panduan === $scope.panduan.id_panduan) {
+                        $scope.panduan.judul_panduan = val.judul_panduan;
+                        $scope.panduan.isi_panduan = val.isi_panduan;
+                        $scope.panduan.lampiran = val.lampiran;
+                    }
+                });
             });
         } else {
             location.path('/');

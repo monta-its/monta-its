@@ -16,6 +16,7 @@ use Redirect;
 use Request;
 use Response;
 use Simta\Models\Dosen;
+use Auth;
 
 class DosenController extends BaseController {
     /**
@@ -95,14 +96,13 @@ class DosenController extends BaseController {
      */
     function dasborDosen()
     {
-
-        if(Request::isMethod('get'))
+        $pemberitahuan = Dosen::with(array('pegawai.pemberitahuan' => function($query)
         {
-            if(!Request::ajax())
-            {
-                return View::make('pages.dasbor.dosen.index');
-            }
-        }
+            $query->orderBy('id_pemberitahuan_pegawai', 'DESC');
+        }))->find(Auth::user()->nomor_induk)->pegawai->pemberitahuan;
+        View::share('pemberitahuan', $pemberitahuan);
+        
+        return View::make('pages.dasbor.dosen.index');
     }
 
 }

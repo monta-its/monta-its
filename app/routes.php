@@ -153,6 +153,9 @@ Route::delete('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelol
 Route::get('/dasbor/dosen/bimbingan', 'Simta\Controllers\TugasAkhirController@bimbingan');
 Route::get('/dasbor/dosen/bimbingan/{id_tugas_akhir}', 'Simta\Controllers\TugasAkhirController@profilBimbingan');
 
+// PegawaiController
+Route::get('/dasbor/pegawai', 'Simta\Controllers\PegawaiController@dasborPegawai');
+
 // RUTE SPESIAL, AKSES SILANG
 // Special case Ajax request only for Master Data
 if(Request::ajax()){

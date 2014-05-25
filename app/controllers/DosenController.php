@@ -101,7 +101,7 @@ class DosenController extends BaseController {
             $query->orderBy('id_pemberitahuan_pegawai', 'DESC');
         }))->find(Auth::user()->nomor_induk)->pegawai->pemberitahuan;
         View::share('pemberitahuan', $pemberitahuan);
-        
+
         return View::make('pages.dasbor.dosen.index');
     }
 

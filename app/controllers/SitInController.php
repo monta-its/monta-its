@@ -60,6 +60,14 @@ class SitInController extends BaseController {
                         return Response::json(array('galat' => 'Anda sudah memiliki sebuah sitin yang disetujui. Untuk melakukan sitin ulang, Anda tidak dapat menambahkan/membatalkan Sitin tersebut.'));
                     }
 
+                    // Apakah Kuota Dosen Sitin Sudah Terpenuhi
+                    if($dosen->kuotaSitInSemesterIni() <= 0)
+                    {
+                        return Response::json(array('galat' => 'Kuota sitin dosen bersangkutan sudah habis.'));
+                    }
+
+                    // Cek berapa jumlah bimbingan dosen di semester depan
+
                     // Apakah ada Sitin belum status dengan dosen bersangkutan?
                     if(SitIn::where('nip_dosen', Input::get('dosen.nip_dosen'))->where('nrp_mahasiswa', $auth->nomor_induk)->get()->count() != 0)
                     {

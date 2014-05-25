@@ -201,6 +201,7 @@ class RudeSeeder extends Seeder {
                     $ta->mahasiswa()->associate($mahasiswa);
                     $ta->tanggal_mulai = "2014-01-01";
                     $ta->tanggal_selesai = "2014-05-05";
+                    $ta->target_selesai = "2014-08-08";
                     $ta->status = "pra_diajukan";
                     $ta->topik()->associate($topik);
                     $ta->save();

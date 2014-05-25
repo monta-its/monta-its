@@ -9,6 +9,7 @@
 
 namespace Simta\Models;
 use Eloquent;
+use DateTime;
 
 class Dosen extends Eloquent {
     protected $table = 'dosen';
@@ -114,6 +115,16 @@ class Dosen extends Eloquent {
     }
 
     /**
+     * Relasi dengan tabel SitIn
+     * @return Simta\Models\TeknikMesin\SitIn
+     */
+
+    public function sitIn()
+    {
+        return $this->hasMany('Simta\Models\TeknikMesin\SitIn', 'nip_dosen', 'nip_dosen');
+    }
+
+    /**
      * Mengetahui beban bimbingan TugasAkhir yang dilakukan oleh Dosen sebagai Pembimbing saat ini
      * Dilakukan dengan perhitungan pembimbingTugasAkhir pada tugasAkhir dengan status tidak sama dengan 'selesai' dan 'mengundurkan diri'
      *
@@ -124,5 +135,89 @@ class Dosen extends Eloquent {
         return $this->pembimbingTugasAkhir()->where('status', '!=', 'selesai')->where('status', '!=', 'mengundurkan_diri')->count();
     }
 
+    /**
+     * Mengetahui beban bimbingan TugasAkhir semester depan
+     * Dengan melihat nilai tanggal target_selesai
+     * Apakah ada TugasAkhir dengan status selain 'selesai' dan 'mengundurkan_diri' pada :
+     * - Bulan 7 sampai 12 jika bulan saat ini 1 - 6
+     * - Bulan 1 sampai 6 jika bulan saat ini 7 - 12
+     *
+     * @return int
+    */
+    public function bebanBimbinganSemesterDepan()
+    {
+        // Definisikan semester depan
+        $now = new DateTime("today");
+        $month = (int)$now->format('m');
+        if($month >= 1 && $month <= 6)
+        {
+            $yearMin = (int) $now->format('Y');
+            $monthMin = 7;
+            $dateMin = new DateTime("$yearMin-$monthMin-01");
+
+            $yearMax = (int)$now->format('Y');
+            $monthMax = 12;
+            $dateMax = new DateTime("$yearMax-$monthMax-31");
+        }
+        else if($month >= 7 && $month <= 12)
+        {
+
+            $yearMin = int($now->format('Y')) + 1;
+            $monthMin = 1;
+            $dateMin = new DateTime("$yearMin-$monthMin-01");
+
+            $yearMax = int($now->format('Y')) + 1;
+            $monthMax = 6;
+            $dateMax = new DateTime("$yearMax-$monthMax-30");
+        }
+        return $this->pembimbingTugasAkhir()->where('status', '!=', 'selesai')->where('status', '!=', 'mengundurkan_diri')->whereBetween('target_selesai', array($dateMin, $dateMax))->sharedLock()->count();
+    }
+
+
+    /**
+     * Mengetahui kuota Sitin semester ini
+     * @return int
+    */
+    public function kuotaSitInSemesterIni()
+    {
+        $kuotaTotal = 10;
+
+        // Definisikan semester ini
+        $now = new DateTime("today");
+        $month = (int)$now->format('m');
+        if($month >= 1 && $month <= 6)
+        {
+            $yearMin = (int) $now->format('Y');
+            $monthMin = 1;
+            $dateMin = new DateTime("$yearMin-$monthMin-01");
+
+            $yearMax = (int)$now->format('Y');
+            $monthMax = 6;
+            $dateMax = new DateTime("$yearMax-$monthMax-30");
+        }
+        else if($month >= 7 && $month <= 12)
+        {
+
+            $yearMin = int($now->format('Y'));
+            $monthMin = 7;
+            $dateMin = new DateTime("$yearMin-$monthMin-01");
+
+            $yearMax = int($now->format('Y'));
+            $monthMax = 12;
+            $dateMax = new DateTime("$yearMax-$monthMax-31");
+        }
+
+        $sitInTerambil = $this->sitIn()->whereBetween('created_at', array($dateMin, $dateMax))->sharedLock()->count();
+        return $kuotaTotal - $this->bebanBimbinganSemesterDepan() - $sitInTerambil;
+    }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['kuota_sit_in'] = $this->kuotaSitInSemesterIni();
+        $array['kuota_bimbingan_semester_ini'] = $this->bebanBimbinganSaatIni();
+        $array['kuota_bimbingan_semester_depan'] = $this->bebanBimbinganSemesterDepan();
+        return $array;
+    }
 }
 ?>

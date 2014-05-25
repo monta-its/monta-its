@@ -103,6 +103,7 @@ app.config(function($httpProvider) {
                                     <th class="text-center">Nama Dosen</th>
                                     <th class="text-center col-md-2">NIP</th>
                                     <th class="text-center">Bidang Ahli</th>
+                                    <th class="text-center">Kuota</th>
                                     <th class="text-center col-md-1">Sit In</th>
                                 </tr>
                             </thead>
@@ -113,6 +114,7 @@ app.config(function($httpProvider) {
                                     <td>
                                         <a ng-repeat="bk in dosen.bidang_keahlian" href="{{{URL::to('/bidang_keahlian/')}}}/[[bk.id_bidang_keahlian]]">[[bk.nama_bidang_keahlian]]</a>
                                     </td>
+                                    <td>[[dosen.kuota_sit_in]]</td>
                                     <td>
                                         <button class="btn btn-default" ng-click="pilihSitIn([[dosen.nip_dosen]])">Pilih</a>
                                     </td>

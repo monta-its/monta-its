@@ -162,7 +162,7 @@ app.config(function($httpProvider) {
                     </div>
                     <div class="form-group">
                         <input ng-show="panduan.lampiran.tipe_lampiran=='url'" placeholder="Masukkan URL/pranala menuju lampiran (dari Dropbox/Google Drive)" ng-model="panduan.lampiran.path_lampiran" class="form-control"/>
-                        <a ng-show="panduan.lampiran.path_lampiran && panduan.lampiran.tipe_lampiran=='file'" href="{{URL::to('/files/')}}/[[panduan.lampiran.path_lampiran]]">Pranala berkas sebelumnya</a>
+                        <a ng-show="panduan.lampiran.path_lampiran && panduan.lampiran.tipe_lampiran=='file'" href="{{URL::to('/files/')}}/[[panduan.pegawai.nip_pegawai]]/[[panduan.lampiran.path_lampiran]]">Pranala berkas sebelumnya</a>
                         <input type="file" ng-file-select="pilihBerkas($files)" ng-show="panduan.lampiran.tipe_lampiran=='file'"  class="form-control"/>
                     </div>
                 </div>

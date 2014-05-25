@@ -137,7 +137,7 @@ class PanduanController extends BaseController {
                     if(Input::file('file'))
                     {
                         $filename = Input::file('file')->getClientOriginalName();
-                        Input::file('file')->move('public/files/', $filename);
+                        Input::file('file')->move('public/files/'.$pegawai->nip_pegawai.'/', $filename);
                         $lampiran->path_lampiran = $filename;
                     }
                 }

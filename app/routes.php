@@ -156,6 +156,10 @@ Route::get('/dasbor/dosen/bimbingan/{id_tugas_akhir}', 'Simta\Controllers\TugasA
 // PegawaiController
 Route::get('/dasbor/pegawai', 'Simta\Controllers\PegawaiController@dasborPegawai');
 
+// SyaratController
+Route::get('/dasbor/pegawai/syarat', 'Simta\Controllers\SyaratController@cariSyarat');
+Route::get('/dasbor/pegawai/syarat/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@kelolaSyaratMahasiswa');
+
 // RUTE SPESIAL, AKSES SILANG
 // Special case Ajax request only for Master Data
 if(Request::ajax()){

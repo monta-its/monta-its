@@ -74,6 +74,9 @@
                 <a href="#"><span class=""></span>Menu Pegawai<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
+                        <a href="{{ URL::to('dasbor/pegawai/syarat') }}"><span class=""></span> Syarat</a>
+                    </li>
+                    <li>
                         <a href="{{ URL::to('dasbor/pegawai/sidang') }}"><span class=""></span> Sidang</a>
                     </li>
                     <li>

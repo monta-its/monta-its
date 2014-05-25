@@ -261,6 +261,15 @@ class FirstDdl extends Migration {
             $table->text('payload');
             $table->integer('last_activity');
         });
+
+        Schema::create('pengaturan', function($table)
+        {
+            $table->string('nama')->primary();
+            $table->string('nilai');
+            $table->text('deskripsi');
+            $table->timestamps();
+            $table->softDeletes();
+        });
 	}
 
 	/**
@@ -295,6 +304,7 @@ class FirstDdl extends Migration {
         Schema::drop('sessions');
         Schema::drop('syarat');
         Schema::drop('syarat_mahasiswa');
+        Schema::drop('pengaturan');
 	}
 
 }

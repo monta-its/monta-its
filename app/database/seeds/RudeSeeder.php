@@ -19,6 +19,7 @@ use Simta\Models\PenawaranJudul;
 use Simta\Models\Lampiran;
 use Simta\Models\JenjangPendidikan;
 use Simta\Models\Syarat;
+use Simta\Models\Pengaturan;
 
 class RudeSeeder extends Seeder {
 
@@ -38,6 +39,15 @@ class RudeSeeder extends Seeder {
             $jenjang_pendidikan = new JenjangPendidikan;
             $jenjang_pendidikan->kode_jenjang_pendidikan = 'S1';
             $jenjang_pendidikan->save();
+        }
+
+        for($i=0; $i<5; $i++)
+        {
+            $pengaturan = new Pengaturan;
+            $pengaturan->nama = $faker->unique->word;
+            $pengaturan->nilai = $faker->word;
+            $pengaturan->deskripsi = $faker->sentence();
+            $pengaturan->save();
         }
 
         $ruangan = new Ruangan;

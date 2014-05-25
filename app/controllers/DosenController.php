@@ -102,6 +102,20 @@ class DosenController extends BaseController {
         }))->find(Auth::user()->nomor_induk)->pegawai->pemberitahuan;
         View::share('pemberitahuan', $pemberitahuan);
 
+        $dosen = Dosen::find(Auth::user()->nomor_induk);
+
+        $mahasiswaBimbingan = $dosen->pembimbingTugasAkhir()->with('mahasiswa')->get();
+        View::share('mahasiswaBimbingan', $mahasiswaBimbingan);
+
+        $mahasiswaSitIn = $dosen->sitIn()->with('mahasiswa')->get();
+        View::share('mahasiswaSitIn', $mahasiswaSitIn);
+
+        $jadwalSidangBimbingan = $dosen->pembimbingTugasAkhir()->with('sidang.pengujiSidang.pegawai', 'mahasiswa', 'sidang.ruangan')->get();
+        View::share('jadwalSidangBimbingan', $jadwalSidangBimbingan);
+
+        $jadwalSidangMenguji = $dosen->pengujiSidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai')->get();
+        View::share('jadwalSidangMenguji', $jadwalSidangMenguji);
+
         return View::make('pages.dasbor.dosen.index');
     }
 

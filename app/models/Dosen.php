@@ -48,7 +48,7 @@ class Dosen extends Eloquent {
      */
     public function pengujiSidang()
     {
-        return $this->belongsToMany('Simta\Models\Penguji', 'penguji_sidang', 'nip_dosen', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Sidang', 'penguji_sidang', 'nip_dosen', 'nip_dosen');
     }
 
     /**

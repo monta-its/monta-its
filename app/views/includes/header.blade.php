@@ -70,7 +70,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           @if (Auth::check())
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->nomor_induk  }}<b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->nama_lengkap . ' - ' . Auth::user()->nomor_induk  }}<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li>
                   <a href="{{ URL::to('/dasbor') }}">

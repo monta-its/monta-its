@@ -39,6 +39,12 @@
                         <a href="{{ URL::to('dasbor/dosen') }}"><span class=""></span> Dasbor</a>
                     </li>
                     <li>
+                        <a href="{{ URL::to('dasbor/dosen/bimbingan') }}"><span class=""></span> Bimbingan</a>
+                    </li>
+                    <li>
+                        <a href="{{ URL::to('dasbor/dosen/sit_in') }}"><span class=""></span> Sit In</a>
+                    </li>
+                    <li>
                         <a href="{{ URL::to('dasbor/dosen/berita') }}"><span class=""></span> Berita</a>
                     </li>
                     <li>

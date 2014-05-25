@@ -141,7 +141,7 @@ Route::post('/dasbor/pengguna/mahasiswa/tambah', 'Simta\Controllers\PenggunaCont
 Route::get ('/dasbor/pengguna/mahasiswa/calon', 'Simta\Controllers\PenggunaController@lihatSemuaCalonPenggunaMahasiswa');
 Route::post('/dasbor/pengguna/mahasiswa/cari', 'Simta\Controllers\PenggunaController@lihatHasilPencarianCalonPenggunaMahasiswa');
 
-
+// DosenController
 Route::get('/dosen/{id_dosen}', 'Simta\Controllers\DosenController@lihatProfilDosen');
 Route::get('/dasbor/dosen', 'Simta\Controllers\DosenController@dasborDosen');
 Route::get('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaDosen');
@@ -149,6 +149,9 @@ Route::post('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaD
 Route::put('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaDosen');
 Route::delete('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelolaDosen');
 
+// TugasAkhirController
+Route::get('/dasbor/dosen/bimbingan', 'Simta\Controllers\TugasAkhirController@bimbingan');
+Route::get('/dasbor/dosen/bimbingan/{id_tugas_akhir}', 'Simta\Controllers\TugasAkhirController@profilBimbingan');
 
 // RUTE SPESIAL, AKSES SILANG
 // Special case Ajax request only for Master Data
@@ -164,7 +167,6 @@ if(Request::ajax()){
 }
 
 // BATAS CONCERN CRUD PLAIN
-// DosenController
 /* You don't need this
 Route::get('/dosen', 'Simta\Controllers\DosenController@lihatSemuaDosen');
 Route::get('/dasbor/dosen', 'Simta\Controllers\DosenController@dasborDosen');

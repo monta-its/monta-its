@@ -15,6 +15,7 @@ class TugasAkhir extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_tugas_akhir";
+    protected $fillable = ["tanggal_mulai", "tanggal_selesai", "target_selesai", "status"];
 
     /**
      * Relasi many-to-one dengan tabel Dosen

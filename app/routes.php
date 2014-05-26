@@ -152,6 +152,10 @@ Route::delete('/dasbor/pengguna/dosen', 'Simta\Controllers\DosenController@kelol
 // TugasAkhirController
 Route::get('/dasbor/dosen/bimbingan', 'Simta\Controllers\TugasAkhirController@bimbingan');
 Route::get('/dasbor/dosen/bimbingan/{id_tugas_akhir}', 'Simta\Controllers\TugasAkhirController@profilBimbingan');
+Route::get('/dasbor/dosen/tugas_akhir', 'Simta\Controllers\TugasAkhirController@dasborTugasAkhir');
+Route::post('/dasbor/dosen/tugas_akhir', 'Simta\Controllers\TugasAkhirController@dasborTugasAkhir');
+Route::put('/dasbor/dosen/tugas_akhir', 'Simta\Controllers\TugasAkhirController@dasborTugasAkhir');
+Route::delete('/dasbor/dosen/tugas_akhir', 'Simta\Controllers\TugasAkhirController@dasborTugasAkhir');
 
 // PegawaiController
 Route::get('/dasbor/pegawai', 'Simta\Controllers\PegawaiController@dasborPegawai');

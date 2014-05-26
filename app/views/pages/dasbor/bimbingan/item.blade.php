@@ -13,7 +13,8 @@
                 Profil Tugas Akhir
             </div>
             <div class="panel-body">
-            <form role="form" action="" method="put" accept-charset="utf-8">
+            <form role="form" accept-charset="utf-8" id="form">
+                    <input name="id_tugas_akhir" type="hidden" value="{{{$item->id_tugas_akhir}}}" />
                     <table class="table">
                         <tbody>
                             <tr>
@@ -39,7 +40,9 @@
                                 <td>
                                     <div class="form-group">
                                         <select name="status" class="form-control">
-                                            <option value=""></option>
+                                        @foreach ($status as $s)
+                                            <option value="{{$s->nilai}}" {{($item->status == $s->nilai) ? "selected": ""}}>{{{$s->nama}}}</option>
+                                        @endforeach
                                         </select>
                                     </div>
                                 </td>
@@ -48,7 +51,11 @@
                                 <td>Target Selesai</td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="target_selesai" value="" class="form-control" />
+                                    <div class='input-group date' id='target_selesai' data-date-format="YYYY-MM-DD">
+                                        <input type='text' class="form-control" name="target_selesai" value='{{{$item->target_selesai }}}' />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                     </div>
                                 </td>
                             </tr>
@@ -77,4 +84,27 @@
 
 @section('scripts')
     @include('includes.dasbor.scripts')
+    <link rel="stylesheet" href="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.css')}}"/>
+    <script src="{{URL::to('/assets/moment.min.js')}}"></script>
+    <script src="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
+    <script>
+    $(document).ready(function() {
+        $("form").submit(function() {
+            $.ajax({
+                url: '{{URL::to('/dasbor/dosen/tugas_akhir')}}',
+                method: "PUT",
+                data: $(this).serialize(),
+                success: function() {
+                    alert("Berhasil diubah");
+                    location.reload();
+                }
+            });
+            return false;
+        });
+
+        $("#target_selesai").datetimepicker({
+            pickTime: false
+        });
+    });
+    </script>
 @stop

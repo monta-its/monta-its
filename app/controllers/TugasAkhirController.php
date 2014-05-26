@@ -26,6 +26,10 @@ class TugasAkhirController extends BaseController {
      */
     function bimbingan()
     {
+        $dosen = Dosen::find(Auth::user()->nomor_induk);
+        $mahasiswaBimbingan = $dosen->pembimbingTugasAkhir()->with('mahasiswa')->get();
+
+        View::share('mahasiswaBimbingan', $mahasiswaBimbingan);
         return View::make('pages.dasbor.bimbingan.index');
     }
 
@@ -37,6 +41,10 @@ class TugasAkhirController extends BaseController {
      */
     function profilBimbingan($id_tugas_akhir)
     {
+        $dosen = Dosen::find(Auth::user()->nomor_induk);
+        $tugasAkhir = $dosen->pembimbingTugasAkhir()->with('mahasiswa', 'penawaranJudul')->where('dosen_pembimbing.id_tugas_akhir', $id_tugas_akhir)->first();
+
+        View::share('item', $tugasAkhir);
         return View::make('pages.dasbor.bimbingan.item');
     }
 }

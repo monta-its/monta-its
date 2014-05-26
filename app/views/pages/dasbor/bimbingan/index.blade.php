@@ -25,16 +25,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php $i = 1 ?>
+                    @foreach($mahasiswaBimbingan as $item)
                         <tr>
-                            <td>1</td>
-                            <td>nama lengkap</td>
-                            <td>nrp mahasiswa</td>
-                            <td>status</td>
-                            <td>target selesai</td>
+                            <td>{{$i}}</td>
+                            <td>{{$item->mahasiswa->nama_lengkap}}</td>
+                            <td>{{$item->mahasiswa->nrp_mahasiswa}}</td>
+                            <td>{{$item->status}}</td>
+                            <td>{{$item->target_selesai}}</td>
                             <td>
-                                <a href="{{ URL::to('dasbor/dosen/bimbingan/' . 'id_tugas_akhir') }}">Rincian / Sunting</a>
+                                <a href="{{ URL::to('dasbor/dosen/bimbingan/' . $item->id_tugas_akhir) }}">Rincian / Sunting</a>
                             </td>
                         </tr>
+                    <?php $i++ ?>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

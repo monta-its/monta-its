@@ -19,19 +19,19 @@
                             <tr>
                                 <td class="col-md-3">Nama Mahasiswa</td>
                                 <td>
-                                    nama lengkap
+                                    {{{ $item->mahasiswa->nama_lengkap }}}
                                 </td>
                             </tr>
                             <tr>
                                 <td>NRP Mahasiswa</td>
                                 <td>
-                                    nrp mahasiswa
+                                    {{{ $item->mahasiswa->nrp_mahasiswa}}}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Judul</td>
                                 <td>
-                                    <b>judul tugas akhir</b>
+                                    <b>{{{$item->penawaranJudul->judul_tugas_akhir}}}</b>
                                 </td>
                             </tr>
                             <tr>
@@ -55,13 +55,13 @@
                             <tr>
                                 <td>Tanggal Mulai</td>
                                 <td>
-                                    tanggal mulai
+                                    {{{$item->tanggal_mulai}}}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Tanggal Selesai</td>
                                 <td>
-                                    tanggal selesai
+                                    {{{ $item->tanggal_selesai }}}
                                 </td>
                             </tr>
                         </tbody>

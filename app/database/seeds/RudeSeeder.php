@@ -20,6 +20,7 @@ use Simta\Models\Lampiran;
 use Simta\Models\JenjangPendidikan;
 use Simta\Models\Syarat;
 use Simta\Models\Pengaturan;
+use Simta\Models\StatusTugasAkhir;
 
 class RudeSeeder extends Seeder {
 
@@ -32,6 +33,14 @@ class RudeSeeder extends Seeder {
     {
         $faker = Faker\Factory::create();
 
+        StatusTugasAkhir::create(array('nilai' => 'pra_diajukan', 'nama' => 'Pra Diajukan'));
+        StatusTugasAkhir::create(array('nilai' => 'diajukan', 'nama' => 'Diajukan'));
+        StatusTugasAkhir::create(array('nilai' => 'siap_sidang_proposal', 'nama' => 'Siap Sidang Proposal'));
+        StatusTugasAkhir::create(array('nilai' => 'pengerjaan', 'nama' => 'Pengerjaan'));
+        StatusTugasAkhir::create(array('nilai' => 'siap_sidang', 'nama' => 'Siap Sidang'));
+        StatusTugasAkhir::create(array('nilai' => 'revisi', 'nama' => 'Revisi'));
+        StatusTugasAkhir::create(array('nilai' => 'selesai', 'nama' => 'Selesai'));
+        StatusTugasAkhir::create(array('nilai' => 'mengundurkan_diri', 'nama' => 'Mengundurkan Diri'));
 
         $jenjang_pendidikan = JenjangPendidikan::find('S1');
         if ($jenjang_pendidikan == null)
@@ -212,7 +221,7 @@ class RudeSeeder extends Seeder {
                     $ta->tanggal_mulai = "2014-01-01";
                     $ta->tanggal_selesai = "2014-05-05";
                     $ta->target_selesai = "2014-08-08";
-                    $ta->status = "pra_diajukan";
+                    $ta->status = "diajukan";
                     $ta->topik()->associate($topik);
                     $ta->save();
                     $ta->dosenPembimbing()->save($dosen);

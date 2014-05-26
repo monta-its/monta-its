@@ -76,5 +76,16 @@ class TugasAkhir extends Eloquent {
     {
         return $this->belongsTo('Simta\Models\PenawaranJudul', 'id_penawaran_judul', 'id_penawaran_judul');
     }
+
+    /**
+     * Relasi many-to-one dengan StatusTugasAkhir
+     *
+     * @return Simta\Models\StatusTugasAkhir
+     */
+
+    public function statusTugasAkhir()
+    {
+        return $this->belongTo('Simta\Models\StatusTugasAkhir', 'nilai', 'status');
+    }
 }
 ?>

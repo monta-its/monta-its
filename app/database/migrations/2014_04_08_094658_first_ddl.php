@@ -73,7 +73,8 @@ class FirstDdl extends Migration {
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->date('target_selesai');
-            $table->enum('status', array('pra_diajuakan', 'diajukan', 'siap_sidang_proposal', 'pengerjaan', 'siap_sidang_akhir', 'revisi', 'selesai', 'mengundurkan_diri'));
+            //$table->enum('status', array('pra_diajuakan', 'diajukan', 'siap_sidang_proposal', 'pengerjaan', 'siap_sidang_akhir', 'revisi', 'selesai', 'mengundurkan_diri'));
+            $table->string('status');
             $table->integer('id_topik');
             $table->timestamps();
             $table->softDeletes();
@@ -270,6 +271,13 @@ class FirstDdl extends Migration {
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('status_tugas_akhir', function($table)
+        {
+            $table->string('nilai')->primary();
+            $table->string('nama');
+            $table->timestamps();
+        });
 	}
 
 	/**
@@ -305,6 +313,7 @@ class FirstDdl extends Migration {
         Schema::drop('syarat');
         Schema::drop('syarat_mahasiswa');
         Schema::drop('pengaturan');
+        Schema::drop('status_tugas_akhir');
 	}
 
 }

@@ -13,7 +13,11 @@ use URL;
 use View;
 use Input;
 use Redirect;
+use Request;
+use Response;
 use Simta\Models\Sidang;
+use Simta\Models\TugasAkhir;
+use Simta\Models\Mahasiswa;
 
 class SidangController extends BaseController {
     /**
@@ -103,65 +107,70 @@ class SidangController extends BaseController {
     /* Kelompok dasbor */
 
     /**
-     * Tampilan laman kelola sidang yang dibuat pada dasbor
+     * Dasbor Kelola Sidang berbasis REST
      * @return View
      */
     function dasborKelolaSidang()
     {
-        return View::make('pages.dasbor.sidang.index');
+        $auth = Auth::user();
+        if($auth)
+        {
+            if(Request::isMethod('get'))
+            {
+                if(Request::ajax())
+                {
+                    if($auth->peran == 0)
+                    {
+                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
+                    }
+                    else if($auth->peran == 2)
+                    {
+                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang')->where('penguji_sidang.nip_dosen', $auth->nomor_induk)->get());
+                    }
+                    else
+                    {
+                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang')->get());
+                    }
+
+                }
+                else
+                {
+                    // Sementara view untuk /dasbor/mahasiswa/sidang dulu ini
+                    return View::make('pages.dasbor.sidang.index');
+                }
+            }
+            else if(Request::isMethod('post') || Request::isMethod('put'))
+            {
+                if(Request::isMethod('post'))
+                {
+                    $sidang = new Sidang;
+                    if($auth->peran == 0)
+                    {
+                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('id_tugas_akhir'))->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->first();
+                    }
+                    else
+                    {
+
+                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('id_tugas_akhir'))->first();
+                    }
+                }
+                else if(Request::isMethod('put'))
+                {
+                    if($auth->peran == 0)
+                    {
+
+                    }
+                    else if($auth->peran == 2)
+                    {
+                        $sidang = Sidang::find(Input::get('id_sidang'));
+                    }
+                    else
+                    {
+                    }
+                }
+
+            }
+        }
     }
 
-    /**
-     * Tambahkan sidang baru. Menampilkan laman penambahan sidang.
-     *
-     * @return View
-     */
-    function dasborTambahkanSidang()
-    {
-        return View::make('pages.dasbor.sidang.baru');
-    }
-
-    /**
-     * Simpan sidang baru.
-     *
-     * @return View
-     */
-    function dasborSimpanSidangBaru()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/sidang');
-    }
-
-    /**
-     * Sunting sidang
-     *
-     * @var string $id_sidang
-     * @return View
-     */
-    function dasborSuntingSidang($id_sidang)
-    {
-        return View::make('pages.dasbor.sidang.sunting');
-    }
-
-    /**
-     * Simpan sidang yang telah disunting.
-     *
-     * @return View
-     */
-    function dasborSimpanPerubahanSidang()
-    {
-        //return var_dump(Input::all());
-        return Redirect::to('dasbor/sidang');
-    }
-
-    /**
-     * Hapus sidang
-     *
-     * @var string $id_sidang
-     * @return View
-     */
-    function dasborHapusSidang($id_sidang)
-    {
-        return Redirect::to('dasbor/sidang');
-    }
 }

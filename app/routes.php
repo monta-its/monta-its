@@ -114,14 +114,13 @@ Route::delete ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJ
  * Pegawai mengatur sidang untuk sidang terjadwal mahasiswa secara jamak.
  * Dosen mengatur jadwal untuk menentukan ketersediaannya. (Informasi lebih lengkap, pelajari lagi rekaman progress 1 bersama Bu Wiwik)
  */
-Route::get ('/sidang/proposal', 'Simta\Controllers\SidangController@lihatSidangProposal');
-Route::get ('/sidang/ta', 'Simta\Controllers\SidangController@lihatSidangTA');
-Route::get ('/dasbor/pegawai/sidang', 'Simta\Controllers\SidangController@dasborKelolaSidang');
-Route::get ('/dasbor/pegawai/sidang/baru', 'Simta\Controllers\SidangController@dasborTambahkanSidang');
-Route::post('/dasbor/pegawai/sidang/baru', 'Simta\Controllers\SidangController@dasborSimpanSidangBaru');
-Route::get ('/dasbor/pegawai/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangController@dasborSuntingSidang');
-Route::post('/dasbor/pegawai/sidang/sunting/{id_sidang}', 'Simta\Controllers\SidangController@dasborSimpanPerubahanSidang');
-Route::get ('/dasbor/pegawai/sidang/hapus/{id_sidang}', 'Simta\Controllers\SidangController@dasborHapusSidang');
+Route::get('/sidang/proposal', 'Simta\Controllers\SidangController@lihatSidangProposal');
+Route::get('/sidang/ta', 'Simta\Controllers\SidangController@lihatSidangTA');
+Route::get('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
+Route::get('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
+Route::post('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
+Route::put('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
+Route::delete('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
 
 // SitInController
 /**

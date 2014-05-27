@@ -150,24 +150,26 @@ class SidangController extends BaseController {
                     }
                     else
                     {
-
-                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('id_tugas_akhir'))->first();
+                        $tugasAkhir = TugasAkhir::find(Input::get('id_tugas_akhir'));
                     }
                 }
                 else if(Request::isMethod('put'))
                 {
                     if($auth->peran == 0)
                     {
-
-                    }
-                    else if($auth->peran == 2)
-                    {
-                        $sidang = Sidang::find(Input::get('id_sidang'));
+                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('id_tugas_akhir'))->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->first();
+                        $sidang = Sidang::with('tugasAkhir')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->where('sidang.id_sidang', Input::get('id_sidang'))->first();
                     }
                     else
                     {
+                        $tugasAkhir = TugasAkhir::find(Input::get('id_tugas_akhir'));
+                        $sidang = Sidang::find(Input::get('id_sidang'));
                     }
                 }
+
+                $sidang->fill(Input::get());
+                $sidang->tugasAkhir()->associate($tugasAkhir);
+                $sidang->save();
 
             }
         }

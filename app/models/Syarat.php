@@ -26,6 +26,6 @@ class Syarat extends Eloquent {
      */
     function mahasiswa()
     {
-        return $this->belongsToMany('Simta\Models\Mahasiswa', 'syarat_mahasiswa', 'id_syarat', 'nrp_mahasiswa')->withPivot('status');
+        return $this->belongsToMany('Simta\Models\Mahasiswa', 'syarat_mahasiswa', 'id_syarat', 'nrp_mahasiswa');
     }
 }

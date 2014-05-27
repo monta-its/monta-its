@@ -251,9 +251,7 @@ class FirstDdl extends Migration {
             $table->increments('id_syarat_mahasiswa');
             $table->integer('id_syarat');
             $table->string('nrp_mahasiswa');
-            $table->boolean('status');
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('sessions', function($table)

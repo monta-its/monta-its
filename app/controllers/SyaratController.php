@@ -16,27 +16,63 @@ use Redirect;
 use Request;
 use Response;
 use Simta\Models\Syarat;
+use Simta\Models\Mahasiswa;
 use Auth;
 
 class SyaratController extends BaseController {
     /**
-     * Cari persyaratan berdasarkan NRP Mahasiswa
+     * Dasbor Syarat
+     * Penentuan apakah syarat mahasiswa bersangkutan telah dipenuhi
      * @return View
      */
-    function cariSyarat()
+    function dasborSyarat($nrp_mahasiswa = null)
     {
-        return View::make('pages.dasbor.syarat.cari');
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.syarat.index');
+            }
+            else
+            {
+                if($nrp_mahasiswa)
+                {
+                    $syarat = Mahasiswa::with('syarat')->where('mahasiswa.nrp_mahasiswa', $nrp_mahasiswa)->first();
+                    return Response::json($syarat);
+                }
+                else
+                {
+                    $syarat = Syarat::get();
+                    return Response::json($syarat);
+                }
+            }
+        }
+        else if(Request::isMethod('post') || Request::isMethod('put'))
+        {
+            // Post/Put means check
+            $mahasiswa = Mahasiswa::with('syarat')->find($nrp_mahasiswa);
+            if($mahasiswa != null)
+            {
+                if(!$mahasiswa->syarat->contains(Input::get('id_syarat')))
+                {
+                    $mahasiswa->syarat()->attach(Input::get('id_syarat'));
+                }
+            }
+        }
+        else if(Request::isMethod('delete'))
+        {
+
+            // Delete means uncheck
+            $mahasiswa = Mahasiswa::with('syarat')->find($nrp_mahasiswa);
+            if($mahasiswa != null)
+            {
+                if($mahasiswa->syarat->contains(Input::get('id_syarat')))
+                {
+                    $mahasiswa->syarat()->detach(Input::get('id_syarat'));
+                }
+            }
+        }
     }
 
-    /**
-     * Kelola persyaratan Mahasiswa
-     *
-     * @var string $nrp_mahasiswa
-     * @return View
-     */
-    function kelolaSyaratMahasiswa($nrp_mahasiswa)
-    {
-        return View::make('pages.dasbor.syarat.item');
-    }
 
 }

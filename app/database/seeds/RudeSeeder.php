@@ -109,7 +109,6 @@ class RudeSeeder extends Seeder {
             $mahasiswa->save();
 
             $mahasiswa->syarat()->save($syarat);
-            $mahasiswa->syarat()->first()->status = 0;
             $mahasiswa->syarat()->first()->save();
 
             for($j = 0; $j < 3; $j++)

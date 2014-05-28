@@ -129,7 +129,7 @@ class SidangController extends BaseController {
                         $tugasAkhir = $mahasiswa->tugasAkhir()->get();
                         foreach($tugasAkhir as $ta)
                         {
-                            foreach($ta->sidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul')->get() as $s)
+                            foreach($ta->sidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan')->get() as $s)
                             {
                                 $sidang[] = $s->toArray();
                             }
@@ -172,14 +172,13 @@ class SidangController extends BaseController {
                 {
                     if($auth->peran == 0)
                     {
-                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('id_tugas_akhir'))->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->first();
-                        $sidang = Sidang::with('tugasAkhir')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->where('sidang.id_sidang', Input::get('id_sidang'))->first();
+                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->where('tugas_akhir.id_tugas_akhir', Input::get('tugasAkhir.id_tugas_akhir'))->first();
                     }
                     else
                     {
                         $tugasAkhir = TugasAkhir::find(Input::get('id_tugas_akhir'));
-                        $sidang = Sidang::find(Input::get('id_sidang'));
                     }
+                    $sidang = $tugasAkhir->sidang()->find(Input::get('id_sidang'));
                 }
 
                 $sidang->save();

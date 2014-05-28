@@ -17,20 +17,20 @@ var app = angular.module('dasborSidang', ['ngRoute', 'mgcrea.ngStrap'], function
 var update = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/mahasiswa/sidang')}}').success(function(data) {
         $rootScope.items = data;
+        $http.get('{{URL::to('/dasbor/umum/dosen/tugas_akhir')}}').success(function(data) {
+            $rootScope.tugasAkhir = data;
+            $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}').success(function(data){
+                $rootScope.ruangan = data;
+                $http.get('{{URL::to('/dasbor/pengguna/dosen')}}').success(function(data){
+                    $rootScope.dosen = data;
+                    if(callback) callback();
+                })
+            });
+
+        })
+
     });
 
-    $http.get('{{URL::to('/dasbor/umum/dosen/tugas_akhir')}}').success(function(data) {
-        $rootScope.tugasAkhir = data;
-    })
-
-    $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}').success(function(data){
-        $rootScope.ruangan = data;
-    });
-
-    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}').success(function(data){
-        $rootScope.dosen = data;
-        if(callback) callback();
-    })
 
 
 };
@@ -75,12 +75,41 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         };
     } else if (method == "sunting") {
         if($routeParams.id) {
+            $scope.sunting = function() {
+                $http.put("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
+                    alert('Penyuntingan berhasil');
+                    $location.path("/");
+                    update($rootScope, $http);
+                });
+            }
             update($rootScope, $http, function() {
-                $.each($rootScope.item, function(i, val) {
-                    if(val.id_sidang = $routeParams.id) {
-                        $scope.sidang = val;
-                    } else {
-                        $location.path("/");
+                $.each($rootScope.items, function(i, val) {
+                    if(val.id_sidang == $routeParams.id) {
+                        $scope.sidang = {};
+                        $scope.sidang.id_sidang  = val.id_sidang
+                        $scope.sidang.jenis_sidang = val.jenis_sidang;
+                        $scope.sidang.waktu_mulai = val.waktu_mulai;
+                        $scope.sidang.waktu_selesai = val.waktu_selesai;
+                        $.each($rootScope.tugasAkhir, function(i, ta) {
+                            if(ta.id_tugas_akhir == val.tugas_akhir.id_tugas_akhir) {
+                                $scope.sidang.tugasAkhir = ta;
+                            }
+                        });
+                        $.each($rootScope.ruangan, function(i, ruang) {
+                            if(ruang.id_ruangan == val.ruangan.id_ruangan) {
+                                $scope.sidang.ruangan = ruang;
+                            }
+                        });
+                        $scope.sidang.pengujiSidang = [];
+                        console.log($rootScope.dosen);
+                        console.log(val.penguji_sidang);
+                        $.each($rootScope.dosen, function(i, dos) {
+                            $.each(val.penguji_sidang, function(i, peng) {
+                                if(dos.nip_dosen == peng.nip_dosen) {
+                                    $scope.sidang.pengujiSidang.push(dos);
+                                }
+                            });
+                        });
                     }
                 });
             });
@@ -150,6 +179,11 @@ app.config(function($httpProvider) {
                     <div class="form-group">
                         <button ng-model="sidang.pengujiSidang" data-multiple="1" ng-options="item as item.pegawai.nama_lengkap for item in dosen" class="btn btn-default" bs-select></button>
                     </div>
+                    <ul>
+                    <li ng-repeat="item in sidang.pengujiSidang">
+                    [[item.pegawai.nama_lengkap]]
+                    </li>
+                    </ul>
                 </div>
 
 
@@ -194,8 +228,8 @@ app.config(function($httpProvider) {
                                 <td>[[item.waktu_mulai]]</td>
                                 <td>[[item.waktu_selesai]]</td>
                                 <td>
-                                    <a href="#/">Sunting</a>
-                                    <a href="#/">Hapus</a>
+                                    <a href="#/sunting/[[item.id_sidang]]">Sunting</a>
+                                    <a href="#/" ng-click="hapus([[item.id_sidang]])">Hapus</a>
                                 </td>
                             </tr>
                         </tbody>

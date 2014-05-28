@@ -67,11 +67,11 @@ class TugasAkhirController extends BaseController {
             // Lainnya: Ambil semua tugasAkhir
             if($auth->peran == 0)
             {
-                return Response::json(TugasAkhir::with('penawaranJudul')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
+                return Response::json(TugasAkhir::with('penawaranJudul', 'mahasiswa')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
             }
             else
             {
-                return Response::json(TugasAkhir::with('penawaranJudul')->get());
+                return Response::json(TugasAkhir::with('penawaranJudul', 'mahasiswa')->get());
             }
         }
         else if(Request::isMethod('put') || Request::isMethod('post'))

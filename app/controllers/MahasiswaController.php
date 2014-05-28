@@ -13,6 +13,8 @@ use URL;
 use View;
 use Input;
 use Redirect;
+use Request;
+use Response;
 use Simta\Models\Mahasiswa;
 use Auth;
 
@@ -33,8 +35,8 @@ class MahasiswaController extends BaseController {
             array('link' => '', 'text' => 'Mahasiswa'),
             array('link' => '', 'text' => 'Profil ' . $item->nama_lengkap)
         );
-        
-        if ($item == null) 
+
+        if ($item == null)
         {
             return Redirect::to('/');
         }
@@ -56,31 +58,39 @@ class MahasiswaController extends BaseController {
 
     /**
      * Tampilan laman dasbor awal untuk mahasiswa.
+     * Sekarang mulai mengatur akses REST (melalui AJAX juga)
      * @return View
      */
     function dasborMahasiswa()
     {
-        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.topik.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai', 'tugasAkhir.sidang.ruangan', 'tugasAkhir.sidang.pengujiSidang')->find(Auth::user()->nomor_induk);
-        $tugasAkhir = null;
-        $sidang = null;
-        $pemberitahuan = null;
-
-        if ($item->tugasAkhir != null)
+        if(!Request::ajax())
         {
-            $tugasAkhir = $item->tugasAkhir->sortBy('id_tugas_akhir')->last();
-            $sidang = $tugasAkhir->sidang->sortBy('id_sidang');
+            $item = Mahasiswa::with('tugasAkhir.penawaranJudul.topik.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai', 'tugasAkhir.sidang.ruangan', 'tugasAkhir.sidang.pengujiSidang')->find(Auth::user()->nomor_induk);
+            $tugasAkhir = null;
+            $sidang = null;
+            $pemberitahuan = null;
+
+            if ($item->tugasAkhir != null)
+            {
+                $tugasAkhir = $item->tugasAkhir->sortBy('id_tugas_akhir')->last();
+                $sidang = $tugasAkhir->sidang->sortBy('id_sidang');
+            }
+
+            $pemberitahuan = Mahasiswa::with(array('pemberitahuan' => function($query)
+            {
+                $query->orderBy('id_pemberitahuan_mahasiswa', 'DESC');
+            }))->find(Auth::user()->nomor_induk)->pemberitahuan;
+
+            View::share('pemberitahuan', $pemberitahuan);
+            View::share('item', $item);
+            View::share('tugasAkhir', $tugasAkhir);
+            View::share('sidang', $sidang);
+            return View::make('pages.dasbor.mahasiswa.index');
         }
-
-        $pemberitahuan = Mahasiswa::with(array('pemberitahuan' => function($query)
+        else
         {
-            $query->orderBy('id_pemberitahuan_mahasiswa', 'DESC');
-        }))->find(Auth::user()->nomor_induk)->pemberitahuan;
-
-        View::share('pemberitahuan', $pemberitahuan);
-        View::share('item', $item);
-        View::share('tugasAkhir', $tugasAkhir);
-        View::share('sidang', $sidang);
-        return View::make('pages.dasbor.mahasiswa.index');
+            return Response::json(Mahasiswa::where('aktif', '1')->get());
+        }
     }
 
 

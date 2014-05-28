@@ -170,6 +170,7 @@ Route::delete('/dasbor/pegawai/syarat/{nrp_mahasiswa}', 'Simta\Controllers\Syara
 if(Request::ajax()){
     // Bisa diakses semua
     Route::get ('/dasbor/umum/dosen/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
+    Route::get ('/dasbor/umum/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
 
     // Diakses role dan user tertentu (atau mungkin beda role beda perlakuan)
     // Dienforce di dalam kode secara manual

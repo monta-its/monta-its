@@ -2,15 +2,23 @@
 
 @section('content')
 <script type="text/javascript" src="{{URL::to('assets/angular/angular.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('assets/angular/angular-strap.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('assets/angular/angular-strap.tpl.min.js')}}"></script>
 <script>
-var app = angular.module('dasborSyarat', [], function($interpolateProvider) {
+var app = angular.module('dasborSyarat', ['mgcrea.ngStrap'], function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 });
 
 app.controller('syaratController', function($http, $scope) {
     $scope.syaratTerpilih = {}
+    $scope.nrpMahasiswa = "";
+    $scope.dataMahasiswa = [];
 
+    // Ambil data mahasiswa
+    $http.get('{{{URL::to('/dasbor/umum/mahasiswa')}}}').success(function(data){
+        $scope.dataMahasiswa = data;
+    });
     // Ambil data syarat mentah
     $http.get('{{{URL::to('/dasbor/pegawai/syarat')}}}').success(function(data) {
         $scope.dataSyarat = data;
@@ -18,8 +26,8 @@ app.controller('syaratController', function($http, $scope) {
 
     $scope.cariMahasiswa = function() {
         $http.get('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa).success(function(data) {
-            $scope.dataMahasiswa = data;
-            $.each($scope.dataMahasiswa.syarat, function(i, val) {
+            $scope.dataSyaratMahasiswa = data;
+            $.each($scope.dataSyaratMahasiswa.syarat, function(i, val) {
                 $scope.syaratTerpilih[val.id_syarat] = true;
             });
         });
@@ -53,16 +61,16 @@ app.config(function($httpProvider) {
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="text" ng-model="nrpMahasiswa" class="form-control" placeholder="NRP Mahasiswa"/>
+                    <input type="text" ng-options="mahasiswa.nrp_mahasiswa as mahasiswa.nrp_mahasiswa + ' - ' + mahasiswa.nama_lengkap for mahasiswa in dataMahasiswa" ng-model="nrpMahasiswa" class="form-control" placeholder="NRP Mahasiswa" bs-typeahead/>
                 </div>
                 <button class="btn btn-default" ng-click="cariMahasiswa()">Cari</button>
             </div>
         </div>
 
 
-        <div class="row" ng-show="dataMahasiswa">
+        <div class="row" ng-show="dataSyaratMahasiswa">
             <div class="col-md-12">
-                <h2>[[dataMahasiswa.nama_lengkap]] ([[dataMahasiswa.nrp_mahasiswa]])</h2>
+                <h2>[[dataSyaratMahasiswa.nama_lengkap]] ([[dataSyaratMahasiswa.nrp_mahasiswa]])</h2>
                 <h3>Syarat Sit In</h3>
                 <div class="checkbox">
                     <div ng-repeat="syarat in dataSyarat | filter: {'waktu_syarat': 'pra_sit_in'}">

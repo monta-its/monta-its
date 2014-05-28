@@ -61,7 +61,20 @@ class TugasAkhirController extends BaseController {
     function dasborTugasAkhir()
     {
         $auth = Auth::user();
-        if(Request::isMethod('put') || Request::isMethod('post'))
+        if(Request::isMethod('get'))
+        {
+            // Mahasiswa: Ambil tugasAkhir bimbingannya saja
+            // Lainnya: Ambil semua tugasAkhir
+            if($auth->peran == 0)
+            {
+                return Response::json(TugasAkhir::with('penawaranJudul')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
+            }
+            else
+            {
+                return Response::json(TugasAkhir::with('penawaranJudul')->get());
+            }
+        }
+        else if(Request::isMethod('put') || Request::isMethod('post'))
         {
             if(Request::isMethod('put'))
             {

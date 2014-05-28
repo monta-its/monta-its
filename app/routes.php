@@ -165,12 +165,17 @@ Route::get('/dasbor/pegawai/syarat/{nrp_mahasiswa}', 'Simta\Controllers\SyaratCo
 Route::post('/dasbor/pegawai/syarat/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
 Route::delete('/dasbor/pegawai/syarat/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
 
+// RuanganController
+Route::get('/dasbor/pegawai/ruangan', 'Simta\Controllers\RuanganController@dasborRuangan');
+
 // RUTE SPESIAL, AKSES SILANG
 // Special case Ajax request only for Master Data
 if(Request::ajax()){
     // Bisa diakses semua
     Route::get ('/dasbor/umum/dosen/prodi', 'Simta\Controllers\BidangMinatController@dasborBidangMinat');
     Route::get ('/dasbor/umum/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
+    Route::get('/dasbor/umum/dosen/tugas_akhir', 'Simta\Controllers\TugasAkhirController@dasborTugasAkhir');
+    Route::get('/dasbor/umum/pegawai/ruangan', 'Simta\Controllers\RuanganController@dasborRuangan');
 
     // Diakses role dan user tertentu (atau mungkin beda role beda perlakuan)
     // Dienforce di dalam kode secara manual

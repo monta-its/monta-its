@@ -19,6 +19,8 @@ use Auth;
 use Simta\Models\Sidang;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Mahasiswa;
+use Simta\Models\Ruangan;
+use Simta\Models\Dosen;
 
 class SidangController extends BaseController {
     /**
@@ -137,12 +139,12 @@ class SidangController extends BaseController {
                     else if($auth->peran == 2)
                     {
                         $dosen = Dosen::find($auth->nomor_induk);
-                        $sidang = $dosen->pengujiSidang()->with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul')->get();
+                        $sidang = $dosen->pengujiSidang()->with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan')->get();
                         return Response::json($sidang);
                     }
                     else
                     {
-                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul')->get());
+                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan')->get());
                     }
 
                 }
@@ -159,11 +161,11 @@ class SidangController extends BaseController {
                     $sidang = new Sidang;
                     if($auth->peran == 0)
                     {
-                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('id_tugas_akhir'))->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->first();
+                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('tugasAkhir.id_tugas_akhir'))->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->first();
                     }
                     else
                     {
-                        $tugasAkhir = TugasAkhir::find(Input::get('id_tugas_akhir'));
+                        $tugasAkhir = TugasAkhir::find(Input::get('tugasAkhir.id_tugas_akhir'));
                     }
                 }
                 else if(Request::isMethod('put'))
@@ -180,7 +182,17 @@ class SidangController extends BaseController {
                     }
                 }
 
+                $sidang->save();
+                foreach(Input::get('pengujiSidang') as $penguji)
+                {
+                    $dosen = Dosen::find($penguji['nip_dosen']);
+                    $sidang->pengujiSidang()->save($dosen);
+                }
+
+                $ruangan = Ruangan::find(Input::get('ruangan.id_ruangan'));
+
                 $sidang->fill(Input::get());
+                $sidang->ruangan()->associate($ruangan);
                 $sidang->tugasAkhir()->associate($tugasAkhir);
                 $sidang->save();
 

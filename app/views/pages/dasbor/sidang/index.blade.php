@@ -4,8 +4,10 @@
 
 <script type="text/javascript" src="{{URL::to('assets/angular/angular.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/angular/angular-route.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('assets/angular/angular-strap.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('assets/angular/angular-strap.tpl.min.js')}}"></script>
 <script>
-var app = angular.module('dasborSidang', ['ngRoute'], function($interpolateProvider) {
+var app = angular.module('dasborSidang', ['ngRoute', 'mgcrea.ngStrap'], function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 }).run(function($rootScope, $http) {
@@ -15,8 +17,22 @@ var app = angular.module('dasborSidang', ['ngRoute'], function($interpolateProvi
 var update = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/mahasiswa/sidang')}}').success(function(data) {
         $rootScope.items = data;
-        if(callback) callback();
     });
+
+    $http.get('{{URL::to('/dasbor/umum/dosen/tugas_akhir')}}').success(function(data) {
+        $rootScope.tugasAkhir = data;
+    })
+
+    $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}').success(function(data){
+        $rootScope.ruangan = data;
+    });
+
+    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}').success(function(data){
+        $rootScope.dosen = data;
+        if(callback) callback();
+    })
+
+
 };
 
 
@@ -34,45 +50,40 @@ app.controller('daftarSidangController', function($scope, $http, $rootScope) {
 app.controller('sidangSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
     var method = $routeParams.method;
     $scope.method = method;
+    $scope.jenisSidang = [
+    {
+        jenis: "proposal", nama: "Sidang Proposal"
+    },
+    {
+        jenis: "akhir", nama: "Sidang Akhir"
+    }
+    ];
     if(method == "baru") {
-        $scope.berita = {};
-        $scope.berita.judul = "";
-        $scope.berita.isi = "";
-        $scope.berita.apakah_terbit = true;
-        $scope.terbitkanBerita = function() {
-            $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
-                updateBerita($rootScope, $http)
-                $location.path('/');
-            })
-        };
-        $scope.simpanBerita = function() {
-            $scope.berita.apakah_terbit = false;
-            $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
-                updateBerita($rootScope, $http)
-                $location.path('/');
-            })
+        $scope.sidang = {};
+        $scope.sidang.tugasAkhir = {};
+        $scope.sidang.pengujiSidang = [];
+        $scope.sidang.ruangan = {};
+        $scope.sidang.jenis_sidang = "proposal";
+        $scope.sidang.waktu_mulai = "";
+        $scope.sidang.waktu_selesai = "";
+        $scope.simpan = function() {
+            $http.post("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
+                alert('Sidang baru dibuat.');
+                $location.path("/");
+                update($rootScope, $http);
+            });
         };
     } else if (method == "sunting") {
         if($routeParams.id) {
-            $scope.berita = {};
-            $scope.berita.id_pos = $routeParams.id;
-            $scope.suntingBerita = function() {
-                $http.put('{{URL::to('/dasbor/dosen/berita')}}', $scope.berita).success(function (data) {
-                    updateBerita($rootScope, $http);
-                    $location.path('/');
-                });
-            };
-            updateBerita($rootScope, $http, function() {
-                $.each($rootScope.items, function(i, val) {
-                    if(val.id_pos === $scope.berita.id_pos) {
-                        $scope.berita.judul = val.judul;
-                        $scope.berita.isi = val.isi;
-                        $scope.berita.apakah_terbit = val.apakah_terbit;
+            update($rootScope, $http, function() {
+                $.each($rootScope.item, function(i, val) {
+                    if(val.id_sidang = $routeParams.id) {
+                        $scope.sidang = val;
+                    } else {
+                        $location.path("/");
                     }
                 });
             });
-        } else {
-            location.path('/');
         }
     } else {
         $location.path('/');
@@ -99,11 +110,61 @@ app.config(function($httpProvider) {
 <div class="row" ng-app="dasborSidang">
     <ng-view>
     </ng-view>
+    <script type="text/ng-template" id="sidangSunting.html">
+        <div class="row" ng-controller="sidangSuntingController">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Jenis Sidang</label>
+                    <select class="form-control" ng-model="sidang.jenis_sidang" ng-options="item.jenis as item.nama for item in jenisSidang"></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tugas Akhir</label>
+                    <select class="form-control" ng-model="sidang.tugasAkhir" ng-options="item as item.penawaran_judul.judul_tugas_akhir for item in tugasAkhir" ></select>
+                </div>
+                <div class="form-group">
+                    <label>Ruangan</label>
+                    <select class="form-control" ng-model="sidang.ruangan" ng-options="item as item.nama_ruangan for item in ruangan" ></select>
+                </div>
+
+                <div class="form-group">
+                    <label>Mulai</label>
+                    <div class="form-group">
+                      <input type="text" size="10" class="form-control" ng-model="sidang.waktu_mulai" data-autoclose="1" placeholder="Tanggal Mulai" bs-datepicker>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" size="8" class="form-control" ng-model="sidang.waktu_mulai" data-autoclose="1" placeholder="Waktu Mulai" bs-timepicker>
+                    </div>
+                  </div>
+                <div class="form-group">
+                    <label>Selesai</label>
+                    <div class="form-group">
+                      <input type="text" size="10" class="form-control" ng-model="sidang.waktu_selesai" data-autoclose="1" placeholder="Tanggal Selesai" bs-datepicker>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" size="8" class="form-control" ng-model="sidang.waktu_selesai" data-autoclose="1" placeholder="Waktu Selesai" bs-timepicker>
+                    </div>
+                  </div>
+                <div class="form-group">
+                    <label>Dosen Penguji</label>
+                    <div class="form-group">
+                        <button ng-model="sidang.pengujiSidang" data-multiple="1" ng-options="item as item.pegawai.nama_lengkap for item in dosen" class="btn btn-default" bs-select></button>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-4">
+                <button ng-show="method=='baru'" type="submit" name="aksi" value="Simpan" class="btn btn-success" ng-click="simpan()">Simpan</button>
+                <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="sunting()">Sunting</button>
+            </div>
+        </div>
+    </script>
     <script type="text/ng-template" id="daftarSidang.html">
         <div ng-controller="daftarSidangController">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ URL::to('dasbor/sidang/baru' )}}" class="btn btn-default">Buat Baru</a>
+                    <a href="#/baru" class="btn btn-default">Buat Baru</a>
                 </div>
             </div>
             <div class="row">

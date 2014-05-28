@@ -15,19 +15,19 @@ var app = angular.module('dasborSidang', ['ngRoute', 'mgcrea.ngStrap'], function
 });
 
 var update = function($rootScope, $http, callback) {
-    $http.get('{{URL::to('/dasbor/mahasiswa/sidang')}}').success(function(data) {
-        $rootScope.items = data;
-        $http.get('{{URL::to('/dasbor/umum/dosen/tugas_akhir')}}').success(function(data) {
-            $rootScope.tugasAkhir = data;
-            $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}').success(function(data){
-                $rootScope.ruangan = data;
-                $http.get('{{URL::to('/dasbor/pengguna/dosen')}}').success(function(data){
-                    $rootScope.dosen = data;
+    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}').success(function(data){
+        $rootScope.dosen = data;
+        $http.get('{{URL::to('/dasbor/mahasiswa/sidang')}}').success(function(data) {
+            $rootScope.items = data;
+            $http.get('{{URL::to('/dasbor/umum/dosen/tugas_akhir')}}').success(function(data) {
+                $rootScope.tugasAkhir = data;
+                $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}').success(function(data){
+                    $rootScope.ruangan = data;
                     if(callback) callback();
-                })
+                });
             });
 
-        })
+        });
 
     });
 
@@ -58,6 +58,39 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         jenis: "akhir", nama: "Sidang Akhir"
     }
     ];
+    $scope.tambahDosenPenguji = function() {
+        if($scope.sidang) {
+            if($scope.sidang.pengujiSidang) {
+                $.each($rootScope.dosen, function(i, val) {
+                    if(val.nip_dosen == $scope.dosenPengujiDipilih) {
+                        if(!(val in $scope.sidang.pengujiSidang)) {
+                            var doNot = false;
+                            $.each($scope.sidang.pengujiSidang, function(i, sid) {
+                                if(sid.nip_dosen == $scope.dosenPengujiDipilih)
+                                {
+                                    doNot = true;
+                                }
+                            });
+                            if(!doNot) $scope.sidang.pengujiSidang.push(val);
+                        }
+                        $scope.dosenPengujiDipilih = "";
+                    }
+                });
+            }
+        }
+    }
+    $scope.hapusDosenPenguji = function(nip_dosen) {
+        if($scope.sidang) {
+            if($scope.sidang.pengujiSidang) {
+                $.each($scope.sidang.pengujiSidang, function(i, val) {
+                    if(val.nip_dosen == nip_dosen) {
+                        $scope.sidang.pengujiSidang.splice(i,1);
+                        return;
+                    }
+                });
+            }
+        }
+    }
     if(method == "baru") {
         $scope.sidang = {};
         $scope.sidang.tugasAkhir = {};
@@ -82,10 +115,11 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
                     update($rootScope, $http);
                 });
             }
+            $scope.sidang = {};
+            $scope.sidang.pengujiSidang = [];
             update($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
                     if(val.id_sidang == $routeParams.id) {
-                        $scope.sidang = {};
                         $scope.sidang.id_sidang  = val.id_sidang
                         $scope.sidang.jenis_sidang = val.jenis_sidang;
                         $scope.sidang.waktu_mulai = val.waktu_mulai;
@@ -100,12 +134,10 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
                                 $scope.sidang.ruangan = ruang;
                             }
                         });
-                        $scope.sidang.pengujiSidang = [];
-                        console.log($rootScope.dosen);
-                        console.log(val.penguji_sidang);
                         $.each($rootScope.dosen, function(i, dos) {
                             $.each(val.penguji_sidang, function(i, peng) {
                                 if(dos.nip_dosen == peng.nip_dosen) {
+                                    console.log(dos);
                                     $scope.sidang.pengujiSidang.push(dos);
                                 }
                             });
@@ -177,13 +209,15 @@ app.config(function($httpProvider) {
                 <div class="form-group">
                     <label>Dosen Penguji</label>
                     <div class="form-group">
-                        <button ng-model="sidang.pengujiSidang" data-multiple="1" ng-options="item as item.pegawai.nama_lengkap for item in dosen" class="btn btn-default" bs-select></button>
+                        <form ng-submit="tambahDosenPenguji()">
+                        <input type="text" ng-options="item.nip_dosen as item.nip_dosen + ' - ' + item.pegawai.nama_lengkap for item in dosen" ng-model="dosenPengujiDipilih" class="form-control" placeholder="Masukkan NIP/Nama Dosen" bs-typeahead></input><button type="submit" class="btn">Tambah</button>
+                        <ul>
+                            <li ng-repeat="item in sidang.pengujiSidang">
+                                [[item.pegawai.nama_lengkap]] <button ng-click="hapusDosenPenguji([[item.nip_dosen]])" class="btn">Hapus</button>
+                            </li>
+                        </ul>
+                        </form>
                     </div>
-                    <ul>
-                    <li ng-repeat="item in sidang.pengujiSidang">
-                    [[item.pegawai.nama_lengkap]]
-                    </li>
-                    </ul>
                 </div>
 
 

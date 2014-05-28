@@ -182,10 +182,14 @@ class SidangController extends BaseController {
                 }
 
                 $sidang->save();
+                $sidang->pengujiSidang()->detach();
                 foreach(Input::get('pengujiSidang') as $penguji)
                 {
                     $dosen = Dosen::find($penguji['nip_dosen']);
-                    $sidang->pengujiSidang()->save($dosen);
+                    if(!$sidang->pengujiSidang->contains($dosen->nip_dosen))
+                    {
+                        $sidang->pengujiSidang()->attach($dosen);
+                    }
                 }
 
                 $ruangan = Ruangan::find(Input::get('ruangan.id_ruangan'));

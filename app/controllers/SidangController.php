@@ -15,6 +15,7 @@ use Input;
 use Redirect;
 use Request;
 use Response;
+use Auth;
 use Simta\Models\Sidang;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Mahasiswa;
@@ -110,7 +111,7 @@ class SidangController extends BaseController {
      * Dasbor Kelola Sidang berbasis REST
      * @return View
      */
-    function dasborKelolaSidang()
+    function dasborSidang()
     {
         $auth = Auth::user();
         if($auth)
@@ -121,15 +122,27 @@ class SidangController extends BaseController {
                 {
                     if($auth->peran == 0)
                     {
-                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
+                        $sidang = array();
+                        $mahasiswa = Mahasiswa::find($auth->nomor_induk);
+                        $tugasAkhir = $mahasiswa->tugasAkhir()->get();
+                        foreach($tugasAkhir as $ta)
+                        {
+                            foreach($ta->sidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul')->get() as $s)
+                            {
+                                $sidang[] = $s->toArray();
+                            }
+                        }
+                        return Response::json($sidang);
                     }
                     else if($auth->peran == 2)
                     {
-                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang')->where('penguji_sidang.nip_dosen', $auth->nomor_induk)->get());
+                        $dosen = Dosen::find($auth->nomor_induk);
+                        $sidang = $dosen->pengujiSidang()->with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul')->get();
+                        return Response::json($sidang);
                     }
                     else
                     {
-                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang')->get());
+                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul')->get());
                     }
 
                 }

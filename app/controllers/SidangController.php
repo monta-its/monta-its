@@ -200,6 +200,11 @@ class SidangController extends BaseController {
                 $sidang->save();
 
             }
+            else
+            {
+                $sidang = Sidang::find(Input::get('id_sidang'));
+                $sidang->delete();
+            }
         }
     }
 

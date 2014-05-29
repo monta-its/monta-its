@@ -37,10 +37,10 @@ var update = function($rootScope, $http, callback) {
 
 
 app.controller('daftarSidangController', function($scope, $http, $rootScope) {
-    $scope.hapusBerita = function(id_sidang) {
+    $scope.hapus = function(id_sidang) {
         if(confirm("Yakin untuk menghapus ini?")) {
             $http.delete('{{URL::to('/dasbor/mahasiswa/sidang')}}', {'params': {'id_sidang': String(id_sidang)}}).success(function(data) {
-                updateBerita($rootScope, $http);
+                update($rootScope, $http);
                 alert('Sidang dihapus');
             });
         }

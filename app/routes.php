@@ -130,8 +130,11 @@ Route::delete('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@da
  * Laman Sit In dosen menampilkan form permintaan sit in dan persetujuannya.
  */
 Route::get ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
-Route::post ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
-Route::delete ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
+if(Request::ajax()){
+    Route::get ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@kelolaSitIn');
+    Route::post ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@kelolaSitIn');
+    Route::delete ('/dasbor/mahasiswa/sit_in', 'Simta\Controllers\SitInController@kelolaSitIn');
+}
 Route::get ('/dasbor/dosen/sit_in', 'Simta\Controllers\SitInController@dasborSitInDosen');
 
 // PenggunaController
@@ -179,9 +182,9 @@ if(Request::ajax()){
 
     // Diakses role dan user tertentu (atau mungkin beda role beda perlakuan)
     // Dienforce di dalam kode secara manual
-    Route::get('/dasbor/dosen/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
-    Route::put('/dasbor/dosen/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
-    Route::delete('/dasbor/dosen/mahasiswa/sit_in', 'Simta\Controllers\SitInController@dasborSitInMahasiswa');
+    Route::get('/dasbor/dosen/mahasiswa/sit_in', 'Simta\Controllers\SitInController@kelolaSitIn');
+    Route::put('/dasbor/dosen/mahasiswa/sit_in', 'Simta\Controllers\SitInController@kelolaSitIn');
+    Route::delete('/dasbor/dosen/mahasiswa/sit_in', 'Simta\Controllers\SitInController@kelolaSitIn');
 }
 
 // BATAS CONCERN CRUD PLAIN

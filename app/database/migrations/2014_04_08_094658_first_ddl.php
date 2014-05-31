@@ -276,7 +276,18 @@ class FirstDdl extends Migration {
             $table->string('nama');
             $table->timestamps();
         });
-	}
+
+        Schema::create('berkas_tugas_akhir', function($table)
+        {
+            $table->increments('id_berkas_tugas_akhir');
+            $table->integer('id_tugas_akhir');
+            $table->string('nama_berkas');
+            $table->enum('jenis_berkas', array('proposal', 'akhir', 'lainnya'));
+            $table->string('path');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
 
 	/**
 	 * Reverse the migrations.
@@ -312,6 +323,7 @@ class FirstDdl extends Migration {
         Schema::drop('syarat_mahasiswa');
         Schema::drop('pengaturan');
         Schema::drop('status_tugas_akhir');
+        Schema::drop('berkas_tugas_akhir');
 	}
 
 }

@@ -88,5 +88,14 @@ class TugasAkhir extends Eloquent {
     {
         return $this->belongTo('Simta\Models\StatusTugasAkhir', 'nilai', 'status');
     }
+
+    /**
+     * Relasi one-to-many dengan Berkas
+     * @return Simta\Models\Berkas
+     */
+    public function berkas()
+    {
+        return $this->hasMany('Simta\Models\BerkasTugasAkhir', 'id_tugas_akhir', 'id_tugas_akhir');
+    }
 }
 ?>

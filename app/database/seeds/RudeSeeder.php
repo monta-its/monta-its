@@ -21,6 +21,7 @@ use Simta\Models\JenjangPendidikan;
 use Simta\Models\Syarat;
 use Simta\Models\Pengaturan;
 use Simta\Models\StatusTugasAkhir;
+use Simta\Models\BerkasTugasAkhir;
 
 class RudeSeeder extends Seeder {
 
@@ -227,6 +228,12 @@ class RudeSeeder extends Seeder {
                     $ta->save();
                     $ta->penawaranJudul()->associate($penawaran_judul);
                     $ta->save();
+
+                    $berkas = new BerkasTugasAkhir;
+                    $berkas->nama_berkas = $faker->word();
+                    $berkas->path = '/'.$faker->word();
+                    $berkas->save();
+                    $ta->berkas()->save($berkas);
 
                     if(rand(0,1) == 1)
                     {

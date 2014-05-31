@@ -5,13 +5,13 @@ use Illuminate\Database\Migrations\Migration;
 
 class FirstDdl extends Migration {
 
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
         Schema::create('mahasiswa', function($table)
         {
             $table->string('nrp_mahasiswa')->primary();
@@ -278,15 +278,26 @@ class FirstDdl extends Migration {
             $table->string('nama');
             $table->timestamps();
         });
+
+        Schema::create('berkas_tugas_akhir', function($table)
+        {
+            $table->increments('id_berkas_tugas_akhir');
+            $table->integer('id_tugas_akhir');
+            $table->string('nama_berkas');
+            $table->enum('jenis_berkas', array('proposal', 'akhir', 'lainnya'));
+            $table->string('path');
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
         Schema::drop('mahasiswa');
         Schema::drop('jenjang_pendidikan');
         Schema::drop('dosen');
@@ -314,6 +325,7 @@ class FirstDdl extends Migration {
         Schema::drop('syarat_mahasiswa');
         Schema::drop('pengaturan');
         Schema::drop('status_tugas_akhir');
-    }
+        Schema::drop('berkas_tugas_akhir');
+	}
 
 }

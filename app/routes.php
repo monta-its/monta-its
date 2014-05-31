@@ -171,6 +171,11 @@ Route::delete('/dasbor/pegawai/syarat/{nrp_mahasiswa}', 'Simta\Controllers\Syara
 // RuanganController
 Route::get('/dasbor/pegawai/ruangan', 'Simta\Controllers\RuanganController@dasborRuangan');
 
+// BerkasTugasAkhirController
+Route::get('/dasbor/mahasiswa/berkas', 'Simta\Controllers\BerkasTugasAkhirController@kelolaBerkasTugasAkhir');
+Route::post('/dasbor/mahasiswa/berkas', 'Simta\Controllers\BerkasTugasAkhirController@kelolaBerkasTugasAkhir');
+Route::delete('/dasbor/mahasiswa/berkas', 'Simta\Controllers\BerkasTugasAkhirController@kelolaBerkasTugasAkhir');
+
 // RUTE SPESIAL, AKSES SILANG
 // Special case Ajax request only for Master Data
 if(Request::ajax()){

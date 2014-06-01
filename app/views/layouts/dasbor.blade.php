@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    @include('includes.dasbor.head')
+    @include('includes.head')
     @yield('custom_head')
 </head>
-
 <body>
-
-    <div id="wrapper">
-
-        @include('includes.dasbor.navigation')
-
-        <div id="page-wrapper">
-            @yield('content')
-        </div>
-        <!-- /#page-wrapper -->
-
+    @include('includes.dasbor_header')
+    <div class="container">
+        <!-- content -->
+        <div class="row">
+            <!-- sidebar left -->
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @include('includes.dasbor_sidebar')
+                    </div>
+                </div>
+            </div>
+            <!-- primary -->
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h1>
+                        @yield('page_title')
+                        </h1>
+                        <br />
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .row -->
     </div>
-    <!-- /#wrapper -->
-
-    @yield('scripts')
-
+    <div class="container">
+        @include('includes.footer')
+    </div>
+        
 </body>
-
 </html>

@@ -1,4 +1,7 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Sit In
+@stop
 
 @section('content')
 
@@ -45,11 +48,6 @@ app.config(function($httpProvider) {
 </script>
 <div ng-app="dasborSitInDosen">
     <div ng-controller="sitInController">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="page-header">Sit In</h1>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <h2>Daftar Sit In Saat Ini</h2>

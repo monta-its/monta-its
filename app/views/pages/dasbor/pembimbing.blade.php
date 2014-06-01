@@ -1,12 +1,9 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Pemilihan Dosen Pembimbing
+@stop
 
 @section('content')
-
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Pemilihan Dosen Pembimbing</h1>
-    </div>
-</div>
 <div class="row">
     <div class="panel panel-default">
           <div class="panel-body" align="center">

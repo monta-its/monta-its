@@ -1,4 +1,7 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Dasbor Pegawai
+@stop
 
 @section('content')
 <div class="row">

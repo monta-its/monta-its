@@ -1,12 +1,9 @@
 @extends('layouts.dasbor')
+@section('page_title')
+@yield('title')
+@stop
 
 @section('content')
-
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">@yield('title')</h1>
-    </div>
-</div>
 <form role="form" action="" method="post" accept-charset="utf-8">
     <div class="row">
         <div class="col-md-8">

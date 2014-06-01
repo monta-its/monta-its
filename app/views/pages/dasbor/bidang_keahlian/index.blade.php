@@ -1,4 +1,7 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Kelola Bidang Keahlian
+@stop
 
 @section('content')
 <script type="text/javascript" src="{{URL::to('assets/angular/angular.min.js')}}"></script>
@@ -96,11 +99,6 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Kelola Bidang Keahlian</h1>
-    </div>
-</div>
 <div ng-app="dasborBidangKeahlian">
     <ng-view>
     </ng-view>

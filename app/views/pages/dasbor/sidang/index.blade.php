@@ -1,4 +1,7 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Kelola Sidang
+@stop
 
 @section('content')
 
@@ -163,11 +166,6 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Kelola Sidang</h1>
-    </div>
-</div>
 <div class="row" ng-app="dasborSidang">
     <ng-view>
     </ng-view>

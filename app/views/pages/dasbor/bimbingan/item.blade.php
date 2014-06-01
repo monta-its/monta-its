@@ -1,11 +1,9 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Bimbingan Tugas Akhir
+@stop
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Bimbingan Tugas Akhir</h1>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">

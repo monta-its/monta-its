@@ -2,13 +2,12 @@
 @section('custom_head')
 <link href="{{ URL::to('assets/site-styles/dasbor.css') }}" rel="stylesheet">
 @stop
-@section('content')
 
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Tambah Mahasiswa</h1>
-    </div>
-</div>
+@section('page_title')
+Tambah Mahasiswa
+@stop
+
+@section('content')
 <div class="row">
     <div class="col-md-12">
         @yield('message')

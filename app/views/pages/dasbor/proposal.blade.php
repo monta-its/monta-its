@@ -1,12 +1,9 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Pengunggahan(Upload) Proposal Tugas Akhir
+@stop
 
 @section('content')
-
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Pengunggahan(Upload) Proposal Tugas Akhir</h1>
-    </div>
-</div>
 <div class="row">
     <form class="form-inline" role="form">
           <div class="form-group">

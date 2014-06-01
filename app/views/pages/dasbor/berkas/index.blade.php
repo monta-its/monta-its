@@ -1,4 +1,7 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Kelola dan Unggah Berkas
+@stop
 
 @section('content')
 <script type="text/javascript" src="{{URL::to('assets/angular/angular-file-upload-shim.min.js')}}"></script>
@@ -86,11 +89,6 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Kelola dan Unggah Berkas</h1>
-    </div>
-</div>
 <div ng-app="dasborBerkas">
     <ng-view>
     </ng-view>

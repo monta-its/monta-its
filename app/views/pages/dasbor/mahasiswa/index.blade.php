@@ -1,11 +1,9 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Dasbor Mahasiswa
+@stop
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Dasbor Mahasiswa</h1>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-8">
     @if ($sidang != null)

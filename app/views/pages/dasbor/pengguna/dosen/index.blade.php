@@ -1,12 +1,9 @@
 @extends('layouts.dasbor')
+@section('page_title')
+Kelola Dosen
+@stop
 
 @section('content')
-
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Kelola Dosen</h1>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-12">
         <a href="{{ URL::to('dasbor/dosen/baru' )}}" class="btn btn-default">Buat Baru</a>

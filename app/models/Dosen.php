@@ -207,7 +207,7 @@ class Dosen extends Eloquent {
             $dateMax = new DateTime("$yearMax-$monthMax-31");
         }
 
-        $sitInTerambil = $this->sitIn()->whereBetween('created_at', array($dateMin, $dateMax))->sharedLock()->count();
+        $sitInTerambil = $this->sitIn()->where('status', '=', '1')->whereBetween('created_at', array($dateMin, $dateMax))->sharedLock()->count();
         return $kuotaTotal - $this->bebanBimbinganSemesterDepan() - $sitInTerambil;
     }
 

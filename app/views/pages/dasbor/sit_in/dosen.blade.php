@@ -62,7 +62,7 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter: {status: '1'}: true">
+                        <tr ng-repeat="item in items | filter: {status: 1}: true">
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>
@@ -81,7 +81,7 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter: {status: '0'}: true">
+                        <tr ng-repeat="item in items | filter: {status: 0}: true">
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>
@@ -102,7 +102,7 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter: {status: '-1'}: true">
+                        <tr ng-repeat="item in items | filter: {status: -1}: true">
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>

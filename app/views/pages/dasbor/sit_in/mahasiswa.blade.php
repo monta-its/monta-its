@@ -17,6 +17,7 @@ var app = angular.module('dasborSitInMahasiswa', ['ngRoute'], function($interpol
 var update = function($rootScope, $http) {
     $http.get('{{URL::to('/dasbor/mahasiswa/sit_in')}}').success(function(data) {
         $rootScope.items = data;
+        console.log(data);
     });
 
     // Ambil data Prodi

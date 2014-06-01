@@ -25,22 +25,51 @@ use Simta\Models\PemberitahuanMahasiswa;
 
 class SitInController extends BaseController {
     /**
-     * Dasbor SitIn Mahasiswa berbasis REST
+     * Dasbor SitIn Mahasiswa
      *
      * @return View
      */
     public function dasborSitInMahasiswa()
     {
+        return View::make('pages.dasbor.sit_in.mahasiswa');
+    }
 
+    /**
+     * Dasbor SitIn Dosen
+     *
+     * @return View
+     */
+    public function dasborSitInDosen()
+    {
+        return View::make('pages.dasbor.sit_in.dosen');
+    }
+
+    /**
+     * Menyediakan layanan data Sit In dosen dan mahasiswa
+     *
+     * @return JSON
+     */
+    public function kelolaSitIn()
+    {
         if(Request::isMethod('get'))
         {
-            if(!Request::ajax())
+            if(Request::ajax())
             {
-                return View::make('pages.dasbor.sit_in.mahasiswa');
-            }
-            else
-            {
-                return Response::json(SitIn::with('mahasiswa', 'dosen', 'dosen.pegawai')->get());
+                $auth = Auth::user();
+                if ($auth != null)
+                {
+                    $nomor_induk = $auth->nomor_induk;
+                    if ($auth->peran == 0) 
+                    {
+                        $jenis_nomor_induk = 'nrp_mahasiswa';
+                    }
+                    else 
+                    {
+                        $jenis_nomor_induk = 'nip_dosen';
+                    }
+
+                    return Response::json(SitIn::with('mahasiswa', 'dosen', 'dosen.pegawai')->where($jenis_nomor_induk, '=', $nomor_induk)->get());
+                }
             }
         }
         else if(Request::isMethod('post'))
@@ -50,6 +79,7 @@ class SitInController extends BaseController {
             $mahasiswa = null;
             if($auth != null)
             {
+                // Hanya melayani rekues dari mahasiswa
                 if($auth->peran == 0)
                 {
                     $mahasiswa = Mahasiswa::find($auth->nomor_induk);
@@ -102,7 +132,7 @@ class SitInController extends BaseController {
         else if(Request::isMethod('put'))
         {
             // Hanya bisa diakses oleh dosen
-            // Digunakan untuk proses persetujuan
+            // Digunakan untuk proses persetujuan sit in
             $sitIn = SitIn::with('mahasiswa', 'dosen')->find(Input::get('id_sit_in'));
             $auth = Auth::user();
             if($auth != null)
@@ -160,15 +190,5 @@ class SitInController extends BaseController {
                 }
             }
         }
-    }
-
-    /**
-     * Dasbor SitIn Dosen
-     *
-     * @return View
-     */
-    public function dasborSitInDosen()
-    {
-        return View::make('pages.dasbor.sit_in.dosen');
     }
 }

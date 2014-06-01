@@ -70,7 +70,7 @@ class MahasiswaController extends BaseController {
             $sidang = null;
             $pemberitahuan = null;
 
-            if ($item->tugasAkhir != null)
+            if ($item->tugasAkhir->count() > 0)
             {
                 $tugasAkhir = $item->tugasAkhir->sortBy('id_tugas_akhir')->last();
                 $sidang = $tugasAkhir->sidang->sortBy('id_sidang');

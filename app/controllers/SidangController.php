@@ -24,7 +24,7 @@ use Simta\Models\Dosen;
 
 class SidangController extends BaseController {
     /**
-     * Tampilkan Kalender Sidang Proposal
+     * Tampilkan Kalender Seminar Proposal
      *
      * @return View
      */
@@ -32,7 +32,7 @@ class SidangController extends BaseController {
     {
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
-            array('link' => '', 'text' => 'Sidang Proposal')
+            array('link' => '', 'text' => 'Seminar Proposal')
         );
         $l_item = array(
             array(

@@ -55,7 +55,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
     $scope.method = method;
     $scope.jenisSidang = [
     {
-        jenis: "proposal", nama: "Sidang Proposal"
+        jenis: "proposal", nama: "Seminar Proposal"
     },
     {
         jenis: "akhir", nama: "Sidang Akhir"

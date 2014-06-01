@@ -102,7 +102,7 @@ app.config(function($httpProvider) {
                         </label>
                     </div>
                 </div>
-                <h3>Syarat Sidang Proposal</h3>
+                <h3>Syarat Seminar Proposal</h3>
                 <div class="checkbox">
                     <div ng-repeat="syarat in dataSyarat | filter: {'waktu_syarat': 'pra_seminar_proposal'}">
                         <label>

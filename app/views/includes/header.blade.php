@@ -34,7 +34,7 @@
             array(
               'type' => 'local',
               'url' => 'sidang/proposal',
-              'text' => 'Sidang Proposal',
+              'text' => 'Seminar Proposal',
               'isParent' => false
             ),
             array(

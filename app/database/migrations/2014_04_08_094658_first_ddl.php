@@ -241,7 +241,7 @@ class FirstDdl extends Migration {
             $table->increments('id_syarat');
             $table->string('kode_syarat')->unique();
             $table->string('nama_syarat');
-            $table->enum('waktu_syarat', array('pra_sit_in', 'pra_bimbingan', 'pra_sidang_proposal', 'pra_sidang_akhir'));
+            $table->enum('waktu_syarat', array('pra_sit_in', 'pra_bimbingan', 'pra_seminar_proposal', 'pra_sidang_akhir'));
             $table->enum('jenis_mahasiswa', array('reguler', 'lintas_jalur'));
             $table->timestamps();
             $table->softDeletes();

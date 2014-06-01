@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <ul class="nav">
-<?php 
-    $auth = Auth::user(); 
+<?php
+    $auth = Auth::user();
 ?>
 @if ($auth->peran == 0)
     <li>
@@ -11,7 +11,7 @@
         <a href="{{ URL::to('dasbor/mahasiswa/sit_in') }}"><span class=""></span> Sit In</a>
     </li>
     <li>
-        <a href="{{ URL::to('dasbor/mahasiswa/proposal') }}"><span class=""></span> Unggah Proposal</a>
+        <a href="{{ URL::to('dasbor/mahasiswa/berkas') }}"><span class=""></span> Unggah Berkas</a>
     </li>
     <li>
         <a href="{{ URL::to('dasbor/mahasiswa/pembimbing') }}">Dosen Pembimbing</a>

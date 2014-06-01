@@ -34,14 +34,22 @@ class RudeSeeder extends Seeder {
     {
         $faker = Faker\Factory::create();
 
-        StatusTugasAkhir::create(array('nilai' => 'pra_diajukan', 'nama' => 'Pra Diajukan'));
-        StatusTugasAkhir::create(array('nilai' => 'diajukan', 'nama' => 'Diajukan'));
-        StatusTugasAkhir::create(array('nilai' => 'siap_sidang_proposal', 'nama' => 'Siap Sidang Proposal'));
-        StatusTugasAkhir::create(array('nilai' => 'pengerjaan', 'nama' => 'Pengerjaan'));
-        StatusTugasAkhir::create(array('nilai' => 'siap_sidang', 'nama' => 'Siap Sidang'));
-        StatusTugasAkhir::create(array('nilai' => 'revisi', 'nama' => 'Revisi'));
-        StatusTugasAkhir::create(array('nilai' => 'selesai', 'nama' => 'Selesai'));
-        StatusTugasAkhir::create(array('nilai' => 'mengundurkan_diri', 'nama' => 'Mengundurkan Diri'));
+        try 
+        {
+            StatusTugasAkhir::create(array('nilai' => 'pra_diajukan', 'nama' => 'Pra Diajukan'));
+            StatusTugasAkhir::create(array('nilai' => 'diajukan', 'nama' => 'Diajukan'));
+            StatusTugasAkhir::create(array('nilai' => 'siap_sidang_proposal', 'nama' => 'Siap Sidang Proposal'));
+            StatusTugasAkhir::create(array('nilai' => 'pengerjaan', 'nama' => 'Pengerjaan'));
+            StatusTugasAkhir::create(array('nilai' => 'siap_sidang', 'nama' => 'Siap Sidang'));
+            StatusTugasAkhir::create(array('nilai' => 'revisi', 'nama' => 'Revisi'));
+            StatusTugasAkhir::create(array('nilai' => 'selesai', 'nama' => 'Selesai'));
+            StatusTugasAkhir::create(array('nilai' => 'mengundurkan_diri', 'nama' => 'Mengundurkan Diri'));
+        } 
+        catch (Exception $e) 
+        {
+            
+        }
+        
 
         $jenjang_pendidikan = JenjangPendidikan::find('S1');
         if ($jenjang_pendidikan == null)
@@ -53,11 +61,18 @@ class RudeSeeder extends Seeder {
 
         for($i=0; $i<5; $i++)
         {
-            $pengaturan = new Pengaturan;
-            $pengaturan->nama = $faker->unique->word;
-            $pengaturan->nilai = $faker->word;
-            $pengaturan->deskripsi = $faker->sentence();
-            $pengaturan->save();
+            try 
+            {
+                $pengaturan = new Pengaturan;
+                $pengaturan->nama = $faker->unique->word;
+                $pengaturan->nilai = $faker->word;
+                $pengaturan->deskripsi = $faker->sentence();
+                $pengaturan->save();
+            } 
+            catch (Exception $e) 
+            {
+                
+            }
         }
 
         $ruangan = new Ruangan;
@@ -162,11 +177,6 @@ class RudeSeeder extends Seeder {
                 $penawaran_judul->topik()->associate($topik);
                 $penawaran_judul->dosen()->associate($dosen);
                 $penawaran_judul->save();
-
-                if(rand(0,1) == 1)
-                {
-
-                }
 
                 for($j = 0; $j < 3; $j++)
                 {

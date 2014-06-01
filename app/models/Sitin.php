@@ -4,6 +4,11 @@
  * Model untuk SitIn
  * Implementasi khusus untuk Jurusan Teknik Mesin, ITS
  *
+ * Keterangan Status Sit In:
+ *  0 => diajukan
+ *  1 => disetujui
+ * -1 => dibatalkan (menunggu)
+ *
  * @author Putu Wiramaswara Widya <wiramaswara11@mhs.if.its.ac.id>
  * @package Simta\Models\TeknikMesin\SitIn
  *

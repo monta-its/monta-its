@@ -38,7 +38,7 @@ class RudeSeeder extends Seeder {
         {
             StatusTugasAkhir::create(array('nilai' => 'pra_diajukan', 'nama' => 'Pra Diajukan'));
             StatusTugasAkhir::create(array('nilai' => 'diajukan', 'nama' => 'Diajukan'));
-            StatusTugasAkhir::create(array('nilai' => 'siap_sidang_proposal', 'nama' => 'Siap Sidang Proposal'));
+            StatusTugasAkhir::create(array('nilai' => 'siap_sidang_proposal', 'nama' => 'Siap Seminar Proposal'));
             StatusTugasAkhir::create(array('nilai' => 'pengerjaan', 'nama' => 'Pengerjaan'));
             StatusTugasAkhir::create(array('nilai' => 'siap_sidang', 'nama' => 'Siap Sidang'));
             StatusTugasAkhir::create(array('nilai' => 'revisi', 'nama' => 'Revisi'));
@@ -49,7 +49,86 @@ class RudeSeeder extends Seeder {
         {
             
         }
-        
+
+        while(Syarat::where('waktu_syarat', '=', 'pra_sit_in')->count() < 4)
+        {
+            try 
+            {
+                Syarat::create(array(
+                    'kode_syarat' => $faker->unique->word,
+                    'nama_syarat' => $faker->unique->word,
+                    'waktu_syarat' => 'pra_sit_in',
+                    'jenis_mahasiswa' => 'reguler'
+                ));
+            } catch (Exception $e) 
+            {
+                
+            }
+            
+            // echo Syarat::where('waktu_syarat', '=', 'pra_sit_in')->count() . 'pra_sit_in\n';
+        }
+
+        while(Syarat::where('waktu_syarat', '=', 'pra_bimbingan')->count() < 4)
+        {
+            try 
+            {
+                Syarat::create(array(
+                    'kode_syarat' => $faker->unique->word,
+                    'nama_syarat' => $faker->unique->word,
+                    'waktu_syarat' => 'pra_bimbingan',
+                    'jenis_mahasiswa' => 'reguler'
+                ));
+            } 
+            catch (Exception $e) 
+            {
+                
+            }
+            // echo Syarat::where('waktu_syarat', '=', 'pra_bimbingan')->count() . 'pra_bimbingan\n';
+
+        }
+
+        while(Syarat::where('waktu_syarat', '=', 'pra_seminar_proposal')->count() < 4)
+        {
+            try 
+            {
+                Syarat::create(array(
+                    'kode_syarat' => $faker->unique->word,
+                    'nama_syarat' => $faker->unique->word,
+                    'waktu_syarat' => 'pra_seminar_proposal',
+                    'jenis_mahasiswa' => 'reguler'
+                ));
+            } 
+            catch (Exception $e) 
+            {
+                
+            }
+            // echo Syarat::where('waktu_syarat', '=', 'pra_seminar_proposal')->count() . 'pra_seminar_proposal\n';
+
+        }
+
+        while(Syarat::where('waktu_syarat', '=', 'pra_sidang_akhir')->count() < 4)
+        {
+            try 
+            {
+                Syarat::create(array(
+                    'kode_syarat' => $faker->unique->word,
+                    'nama_syarat' => $faker->unique->word,
+                    'waktu_syarat' => 'pra_sidang_akhir',
+                    'jenis_mahasiswa' => 'reguler'
+                ));
+            } 
+            catch (Exception $e) 
+            {
+                
+            }
+            // echo Syarat::where('waktu_syarat', '=', 'pra_sidang_akhir')->count() . 'pra_sidang_akhir\n';
+
+        }
+
+        $syaratSitIn = Syarat::where('waktu_syarat', '=', 'pra_sit_in')->get();
+        $syaratBimbingan = Syarat::where('waktu_syarat', '=', 'pra_bimbingan')->get();
+        $syaratSeminar = Syarat::where('waktu_syarat', '=', 'pra_seminar_proposal')->get();
+        $syaratSidang = Syarat::where('waktu_syarat', '=', 'pra_sidang_akhir')->get();
 
         $jenjang_pendidikan = JenjangPendidikan::find('S1');
         if ($jenjang_pendidikan == null)
@@ -92,13 +171,6 @@ class RudeSeeder extends Seeder {
         $bidang_keahlian->save();
         $bidang_keahlian->bidangMinat()->save($bidang_minat);
 
-        $syarat = new Syarat;
-        $syarat->kode_syarat = $faker->unique->word;
-        $syarat->nama_syarat = $faker->unique->word;
-        $syarat->waktu_syarat = 'pra_sit_in';
-        $syarat->jenis_mahasiswa = 'reguler';
-        $syarat->save();
-
         $topik = new Topik;
         $topik->topik = $faker->unique->word;
         $topik->deskripsi = $faker->text();
@@ -123,9 +195,6 @@ class RudeSeeder extends Seeder {
 
             $mahasiswa->jenjangPendidikan()->associate($jenjang_pendidikan);
             $mahasiswa->save();
-
-            $mahasiswa->syarat()->save($syarat);
-            $mahasiswa->syarat()->first()->save();
 
             for($j = 0; $j < 3; $j++)
             {
@@ -224,8 +293,19 @@ class RudeSeeder extends Seeder {
                     $lampiran->save();
                 }
 
-                if(rand(0,1) == 1)
+                $acak = rand(0,2);
+                if($acak == 1)
                 {
+                    foreach ($syaratSitIn as $syarat) {
+                        $mahasiswa->syarat()->associate($syarat);
+                        $mahasiswa->save();
+                    }
+
+                    foreach ($syaratBimbingan as $syarat) {
+                        $mahasiswa->syarat()->associate($syarat);
+                        $mahasiswa->save();
+                    }
+
                     $ta = new TugasAkhir;
                     $ta->mahasiswa()->associate($mahasiswa);
                     $ta->tanggal_mulai = "2014-01-01";
@@ -247,6 +327,11 @@ class RudeSeeder extends Seeder {
 
                     if(rand(0,1) == 1)
                     {
+                        foreach ($syaratSeminar as $syarat) {
+                            $mahasiswa->syarat()->associate($syarat);
+                            $mahasiswa->save();
+                        }
+
                         $sidang = new Sidang;
                         $sidang->jenis_sidang = "proposal";
                         $sidang->waktu_mulai = "2014-01-01 00:00:00";
@@ -272,8 +357,13 @@ class RudeSeeder extends Seeder {
                         }
                     }
                 }
-                else
+                else if ($acak == 0)
                 {
+                    foreach ($syaratSitIn as $syarat) {
+                        $mahasiswa->syarat()->associate($syarat);
+                        $mahasiswa->save();
+                    }
+                    
                     $sitin = new SitIn;
                     $sitin->status = 0;
                     $sitin->mahasiswa()->associate($mahasiswa);

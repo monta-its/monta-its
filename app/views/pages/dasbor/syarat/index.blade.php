@@ -38,11 +38,27 @@ app.controller('syaratController', function($http, $scope) {
 
     $scope.simpanSyarat = function() {
         if(confirm('Yakin lakukan perubahan data?')) {
+            $scope.totalSyaratTerpilih = 0;
+            $scope.countSyaratTerpilih = 0;
+            for (syaratTerpilih in $scope.syaratTerpilih) {
+                $scope.totalSyaratTerpilih++;
+            }
+
             $.each($scope.syaratTerpilih, function(i, val) {
                 if(val == true) {
-                    $http.post('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa, {'id_syarat': i});
+                    $http.post('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa, {'id_syarat': i}).success(function(data){
+                        $scope.countSyaratTerpilih++;
+                        if ($scope.countSyaratTerpilih == $scope.totalSyaratTerpilih) {
+                            alert('Data berhasil disimpan.');
+                        }
+                    });
                 } else {
-                    $http.delete('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa, {'params': {'id_syarat': i}});
+                    $http.delete('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa, {'params': {'id_syarat': i}}).success(function(data){
+                        $scope.countSyaratTerpilih++;
+                        if ($scope.countSyaratTerpilih == $scope.totalSyaratTerpilih) {
+                            alert('Data berhasil disimpan.');
+                        }
+                    });
                 }
             });
         }
@@ -88,7 +104,7 @@ app.config(function($httpProvider) {
                 </div>
                 <h3>Syarat Sidang Proposal</h3>
                 <div class="checkbox">
-                    <div ng-repeat="syarat in dataSyarat | filter: {'waktu_syarat': 'pra_sidang_proposal'}">
+                    <div ng-repeat="syarat in dataSyarat | filter: {'waktu_syarat': 'pra_seminar_proposal'}">
                         <label>
                             [[syarat.nama_syarat]]
                             <input type="checkbox" ng-model="syaratTerpilih[syarat.id_syarat]" />

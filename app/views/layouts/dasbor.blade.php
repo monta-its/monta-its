@@ -34,6 +34,6 @@
     <div class="container">
         @include('includes.footer')
     </div>
-        
+    @yield('scripts')    
 </body>
 </html>

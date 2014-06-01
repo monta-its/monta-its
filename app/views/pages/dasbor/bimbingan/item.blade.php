@@ -81,7 +81,6 @@ Bimbingan Tugas Akhir
 @stop
 
 @section('scripts')
-    @include('includes.dasbor.scripts')
     <link rel="stylesheet" href="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.css')}}"/>
     <script src="{{URL::to('/assets/moment.min.js')}}"></script>
     <script src="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>

@@ -73,7 +73,6 @@ class FirstDdl extends Migration {
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->date('target_selesai');
-            //$table->enum('status', array('pra_diajuakan', 'diajukan', 'siap_sidang_proposal', 'pengerjaan', 'siap_sidang_akhir', 'revisi', 'selesai', 'mengundurkan_diri'));
             $table->string('status');
             $table->integer('id_topik');
             $table->timestamps();

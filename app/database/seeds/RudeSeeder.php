@@ -36,12 +36,11 @@ class RudeSeeder extends Seeder {
 
         try 
         {
-            StatusTugasAkhir::create(array('nilai' => 'pra_diajukan', 'nama' => 'Pra Diajukan'));
-            StatusTugasAkhir::create(array('nilai' => 'diajukan', 'nama' => 'Diajukan'));
-            StatusTugasAkhir::create(array('nilai' => 'siap_sidang_proposal', 'nama' => 'Siap Seminar Proposal'));
             StatusTugasAkhir::create(array('nilai' => 'pengerjaan', 'nama' => 'Pengerjaan'));
+            StatusTugasAkhir::create(array('nilai' => 'siap_seminar', 'nama' => 'Siap Seminar'));
             StatusTugasAkhir::create(array('nilai' => 'siap_sidang', 'nama' => 'Siap Sidang'));
-            StatusTugasAkhir::create(array('nilai' => 'revisi', 'nama' => 'Revisi'));
+            StatusTugasAkhir::create(array('nilai' => 'revisi_proposal', 'nama' => 'Revisi Proposal'));
+            StatusTugasAkhir::create(array('nilai' => 'revisi_akhir', 'nama' => 'Revisi Akhir'));
             StatusTugasAkhir::create(array('nilai' => 'selesai', 'nama' => 'Selesai'));
             StatusTugasAkhir::create(array('nilai' => 'mengundurkan_diri', 'nama' => 'Mengundurkan Diri'));
         } 
@@ -309,7 +308,7 @@ class RudeSeeder extends Seeder {
                     $ta->tanggal_mulai = "2014-01-01";
                     $ta->tanggal_selesai = "2014-05-05";
                     $ta->target_selesai = "2014-08-08";
-                    $ta->status = "diajukan";
+                    $ta->status = "pengerjaan";
                     $ta->topik()->associate($topik);
                     $ta->save();
                     $ta->dosenPembimbing()->save($dosen);

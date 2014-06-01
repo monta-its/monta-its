@@ -161,33 +161,102 @@ class SitInController extends BaseController {
         }
         else if(Request::isMethod('delete'))
         {
-            // Ada dua objektif
-            // 1. Mahasiswa hanya bisa menotifikasi dosen bersangkutan
-            // 2. Dosen bersangkutan yang berhak melakukan mekanisme ini
-            $sitIn = SitIn::with('dosen', 'mahasiswa')->find(Input::get('id_sit_in'));
+            $sitIn = SitIn::with('dosen.pegawai', 'mahasiswa')->find(Input::get('id_sit_in'));
             $auth = Auth::user();
             if($auth != null and $sitIn != null)
             {
-                if($auth->peran == 2 || $auth->peran == 3)
+                $pesan = null;
+                // Jika status == diajukan
+                if ($sitIn->status == 0)
                 {
-                    if($auth->nomor_induk == $sitIn->dosen->nip_dosen)
-                    {
-                        $sitIn->delete();
-                    }
-                }
-                else if($auth->peran == 0)
-                {
-                    // Set status ke -1
+                    // Set status ke -1 kemudian langsung hapus
                     $sitIn->status = -1;
                     $sitIn->save();
+                    $sitIn->delete();
 
-                    // Membuat pemberitahuan ke Dosen bersankutan
-                    $pemberitahuan = new PemberitahuanPegawai;
-                    $pegawai = Pegawai::find($sitIn->dosen->nip_dosen);
-                    $pemberitahuan->isi = "Mahasiswa ".$sitIn->mahasiswa->nama_lengkap." - ".$sitIn->mahasiswa->nrp_mahasiswa." memerlukan persetujuan Anda untuk membatalkan Sitin.";
-                    $pemberitahuan->pegawai()->associate($pegawai);
-                    $pemberitahuan->save();
+                    // Jika dosen yang melakukan pembatalan
+                    if ($auth->peran == 2 || $auth->peran == 3) 
+                    {
+                        // Membuat pemberitahuan ke Mahasiswa bersangkutan
+                        // bahwa dosen telah membatalkan Sit In yang belum disetujui
+                        $pemberitahuan = new PemberitahuanMahasiswa;
+                        $mahasiswa = Mahasiswa::find($sitIn->nrp_mahasiswa);
+                        $pemberitahuan->isi = "Dosen ".$sitIn->dosen->pegawai->nama_lengkap." - ".$sitIn->nip_dosen." membatalkan Sit In Anda.";
+                        $pemberitahuan->mahasiswa()->associate($mahasiswa);
+                        $pemberitahuan->save();
+
+                        $pesan = "Sit In telah berhasil dibatalkan. Mahasiswa yang bersangkutan telah mendapatkan notifikasi.";
+                    }
+                    // Jika mahasiswa yang melakukan pembatalan
+                    else if ($auth->peran == 0)
+                    {
+                        // Membuat pemberitahuan ke Dosen bersangkutan
+                        // bahwa mahasiswa telah membatalkan Sit In yang belum disetujui
+                        $pemberitahuan = new PemberitahuanPegawai;
+                        $pegawai = Pegawai::find($sitIn->nip_dosen);
+                        $pemberitahuan->isi = "Mahasiswa ".$sitIn->mahasiswa->nama_lengkap." - ".$sitIn->mahasiswa->nrp_mahasiswa." telah membatalkan Sit In yang belum Anda setujui.";
+                        $pemberitahuan->pegawai()->associate($pegawai);
+                        $pemberitahuan->save();
+
+                        $pesan = "Sit In telah berhasil dibatalkan. Dosen yang bersangkutan telah mendapatkan notifikasi.";
+                    }
                 }
+                // Jika status == disetujui
+                else if ($sitIn->status == 1)
+                {
+                    // Jika dosen yang melakukan pembatalan
+                    if ($auth->peran == 2 || $auth->peran == 3) 
+                    {
+                        $sitIn->delete();
+
+                        // Membuat pemberitahuan ke Mahasiswa bersangkutan
+                        // bahwa dosen telah membatalkan Sit In
+                        $pemberitahuan = new PemberitahuanMahasiswa;
+                        $mahasiswa = Mahasiswa::find($sitIn->nrp_mahasiswa);
+                        $pemberitahuan->isi = "Dosen ".$sitIn->dosen->pegawai->nama_lengkap." - ".$sitIn->nip_dosen." membatalkan Sit In Anda.";
+                        $pemberitahuan->mahasiswa()->associate($mahasiswa);
+                        $pemberitahuan->save();
+
+                        $pesan = "Sit In telah berhasil dibatalkan. Mahasiswa yang bersangkutan telah mendapatkan notifikasi.";
+                    }
+                    // Jika mahasiswa yang melakukan pembatalan
+                    else if ($auth->peran == 0)
+                    {
+                        $sitIn->status = -1;
+                        $sitIn->save();
+
+                        // Membuat pemberitahuan ke Dosen bersangkutan
+                        // bahwa mahasiswa memerlukan persetujuan pembatalan Sit In
+                        $pemberitahuan = new PemberitahuanPegawai;
+                        $pegawai = Pegawai::find($sitIn->nip_dosen);
+                        $pemberitahuan->isi = "Mahasiswa ".$sitIn->mahasiswa->nama_lengkap." - ".$sitIn->mahasiswa->nrp_mahasiswa." memerlukan persetujuan Anda untuk membatalkan Sit In.";
+                        $pemberitahuan->pegawai()->associate($pegawai);
+                        $pemberitahuan->save();
+
+                        $pesan = "Permintaan pembatalan Sit In telah dikirim ke dosen bersangkutan.";
+                    }
+                }
+                // Jika status == dibatalkan
+                else if ($sitIn->status == -1)
+                {
+                    // Jika dosen yang melakukan pembatalan
+                    if ($auth->peran == 2 || $auth->peran == 3) 
+                    {
+                        $sitIn->delete();
+
+                        // Membuat pemberitahuan ke Mahasiswa bersangkutan
+                        // bahwa dosen telah membatalkan Sit In
+                        $pemberitahuan = new PemberitahuanMahasiswa;
+                        $mahasiswa = Mahasiswa::find($sitIn->nrp_mahasiswa);
+                        $pemberitahuan->isi = "Dosen ".$sitIn->dosen->pegawai->nama_lengkap." - ".$sitIn->nip_dosen." membatalkan Sit In Anda.";
+                        $pemberitahuan->mahasiswa()->associate($mahasiswa);
+                        $pemberitahuan->save();
+
+                        $pesan = "Sit In telah berhasil dibatalkan. Mahasiswa yang bersangkutan telah mendapatkan notifikasi.";
+                    }
+                }
+
+                return Response::json(array('pesan' => $pesan));
             }
         }
     }

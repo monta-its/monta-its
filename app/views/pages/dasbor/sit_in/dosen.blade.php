@@ -26,7 +26,7 @@ var update = function($rootScope, $http) {
 app.controller('sitInController', function($scope, $http, $rootScope) {
     $scope.batalkanSitIn = function(id_sit_in) {
         $http.delete('{{URL::to('/dasbor/dosen/mahasiswa/sit_in')}}', {params: {'id_sit_in': String(id_sit_in)}}).success(function(data) {
-            alert("Pembatalan berhasil dilakukan.")
+            alert(data.pesan);
             update($rootScope, $http);
         });
     };

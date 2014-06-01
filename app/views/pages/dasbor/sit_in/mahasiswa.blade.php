@@ -20,7 +20,6 @@ var app = angular.module('dasborSitInMahasiswa', ['ngRoute'], function($interpol
 var update = function($rootScope, $http) {
     $http.get('{{URL::to('/dasbor/mahasiswa/sit_in')}}').success(function(data) {
         $rootScope.items = data;
-        console.log(data);
     });
 
     // Ambil data Prodi
@@ -32,10 +31,13 @@ var update = function($rootScope, $http) {
 
 app.controller('sitInController', function($scope, $http, $rootScope) {
     $scope.batalkanSitIn = function(id_sit_in) {
-        $http.delete('{{URL::to('/dasbor/mahasiswa/sit_in')}}', {'params': {'id_sit_in': String(id_sit_in)}}).success(function(data) {
-            alert("Pengajuan pembatalan Sitin sudah dinotifikasikan ke Dosen bersangkutan. Sitin baru akan dihapus setelah dosen bersangkutan menyetujuinya.");
-            update($rootScope, $http);
-        });
+        if(confirm("Apakah Anda yakin untuk membatalkan Sit In?")) {
+            $http.delete('{{URL::to('/dasbor/mahasiswa/sit_in')}}', {'params': {'id_sit_in': String(id_sit_in)}}).success(function(data) {
+                alert(data.pesan);
+                update($rootScope, $http);
+            });    
+        }
+        
     };
 
     $scope.pilihSitIn = function(nip_dosen) {
@@ -83,10 +85,10 @@ app.config(function($httpProvider) {
                             <td>[[item.dosen.pegawai.nama_lengkap]]</td>
                             <td>[[item.dosen.nip_dosen]]</td>
                             <td>[[item.updated_at]]</td>
-                            <td ng-show="item.status == -1">Dibatalkan</td>
+                            <td ng-show="item.status == -1">Dibatalkan (menunggu)</td>
                             <td ng-show="item.status == 0">Diajukan</td>
                             <td ng-show="item.status == 1">Disetujui</td>
-                            <td>
+                            <td ng-show="item.status != -1">
                                 <button class="btn btn-warning" ng-click="batalkanSitIn([[item.id_sit_in]])">Batalkan</a>
                             </td>
                         </tr>

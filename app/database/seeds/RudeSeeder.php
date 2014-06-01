@@ -297,13 +297,11 @@ class RudeSeeder extends Seeder {
                 if($acak == 1)
                 {
                     foreach ($syaratSitIn as $syarat) {
-                        $mahasiswa->syarat()->associate($syarat);
-                        $mahasiswa->save();
+                        $mahasiswa->syarat()->save($syarat);
                     }
 
                     foreach ($syaratBimbingan as $syarat) {
-                        $mahasiswa->syarat()->associate($syarat);
-                        $mahasiswa->save();
+                        $mahasiswa->syarat()->save($syarat);
                     }
 
                     $ta = new TugasAkhir;
@@ -328,8 +326,7 @@ class RudeSeeder extends Seeder {
                     if(rand(0,1) == 1)
                     {
                         foreach ($syaratSeminar as $syarat) {
-                            $mahasiswa->syarat()->associate($syarat);
-                            $mahasiswa->save();
+                            $mahasiswa->syarat()->save($syarat);
                         }
 
                         $sidang = new Sidang;
@@ -360,8 +357,7 @@ class RudeSeeder extends Seeder {
                 else if ($acak == 0)
                 {
                     foreach ($syaratSitIn as $syarat) {
-                        $mahasiswa->syarat()->associate($syarat);
-                        $mahasiswa->save();
+                        $mahasiswa->syarat()->save($syarat);
                     }
                     
                     $sitin = new SitIn;

@@ -29,10 +29,14 @@ app.controller('syaratController', function($http, $scope) {
 
     $scope.cariMahasiswa = function() {
         $http.get('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa).success(function(data) {
-            $scope.dataSyaratMahasiswa = data;
-            $.each($scope.dataSyaratMahasiswa.syarat, function(i, val) {
-                $scope.syaratTerpilih[val.id_syarat] = true;
-            });
+            if(!($.isEmptyObject(data))) {
+                $scope.dataSyaratMahasiswa = data;
+                $.each($scope.dataSyaratMahasiswa.syarat, function(i, val) {
+                        $scope.syaratTerpilih[val.id_syarat] = true;
+                });
+            } else {
+                alert('Mahasiswa tidak ditemukan.');
+            }
         });
     };
 

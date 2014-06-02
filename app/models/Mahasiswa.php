@@ -59,5 +59,20 @@ class Mahasiswa extends Eloquent {
     {
         return $this->belongsToMany('Simta\Models\Syarat', 'syarat_mahasiswa', 'nrp_mahasiswa', 'id_syarat');
     }
+
+    function apakahLulusSyarat($waktu_syarat)
+    {
+        $totalSyarat = Syarat::where('waktu_syarat','=',$waktu_syarat)->count();
+        if ($totalSyarat == 0)
+        {
+            return false;
+        }
+        else 
+        {
+            $countSyarat = $this->syarat()->where('waktu_syarat','=',$waktu_syarat)->count();
+
+            return $totalSyarat == $countSyarat;
+        }
+    }
 }
 ?>

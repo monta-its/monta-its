@@ -19,6 +19,9 @@ Route::get ('/', function()
     return Redirect::to('/berita');
 });
 
+// TerlarangController
+Route::get ('/dasbor/terlarang', 'Simta\Controllers\TerlarangController@index');
+
 // DasborMainController
 Route::get ('/dasbor','Simta\Controllers\DasborMainController@tentukanDasborMana');
 

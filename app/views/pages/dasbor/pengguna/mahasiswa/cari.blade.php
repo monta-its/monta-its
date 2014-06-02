@@ -39,7 +39,7 @@
                 </tr>
             </tbody>
         </table>
-        <form action="{{ URL::to('dasbor/pengguna/mahasiswa/tambah') }}" method="POST">
+        <form action="{{ URL::to('dasbor/pegawai/pengguna/mahasiswa/tambah') }}" method="POST">
             <input type="hidden" name="nrp_mahasiswa" value="{{ $item['nrp_mahasiswa'] }}" />
             <input type="hidden" name="nama_mahasiswa" value="{{ $item['nama_mahasiswa'] }}" />
             <button type="submit" class="btn btn-primary">Tambahkan</button>

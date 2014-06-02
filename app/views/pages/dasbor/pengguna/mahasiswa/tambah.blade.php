@@ -19,7 +19,7 @@ Tambah Mahasiswa
             <div class="tab-pane active" id="tambah_banyak">
                 <p><strong>Tambah Banyak</strong> menambahkan banyak mahasiswa sekaligus sebagai calon mahasiswa TA yang memiliki akses login ke sistem ini. Untuk memulai, klik tombol di bawah ini untuk mendapatkan daftar mahasiswa yang telah memenuhi syarat sebagai calon mahasiswa TA.</p>
                 <div>
-                    <a href="{{ URL::to('dasbor/pengguna/mahasiswa/calon') }}" class="btn btn-primary">Tampilkan Daftar Calon Mahasiswa TA</a>
+                    <a href="{{ URL::to('dasbor/pegawai/pengguna/mahasiswa/calon') }}" class="btn btn-primary">Tampilkan Daftar Calon Mahasiswa TA</a>
                 </div>
                 
                 <br />
@@ -28,7 +28,7 @@ Tambah Mahasiswa
             <div class="tab-pane" id="tambah_satu">
                 <p><strong>Tambah Satu</strong> memungkinkan penambahan mahasiswa satu persatu berdasarkan NRP. Isi kotak NRP di bawah ini kemudian tekan tombol Cari untuk mulai menambahkan calon mahasiswa TA.</p>
                 <div>
-                    <form class="form-inline" role="form" method="POST" action="{{ URL::to('dasbor/pengguna/mahasiswa/cari') }}">
+                    <form class="form-inline" role="form" method="POST" action="{{ URL::to('dasbor/pegawai/pengguna/mahasiswa/cari') }}">
                         <div class="form-group">
                             <input type="text" class="form-control" id="nrp" placeholder="NRP">
                         </div>

@@ -31,6 +31,13 @@ class SitInController extends BaseController {
      */
     public function dasborSitInMahasiswa()
     {
+        if (!Mahasiswa::find(Auth::user()->nomor_induk)->apakahLulusSyarat('pra_sit_in'))
+        {
+            return Redirect::to('/dasbor/terlarang')
+                ->with('page_title', 'Syarat Sit In Belum Lengkap')
+                ->with('message', 'Anda belum berhak mengakses laman ini karena belum melengkapi persyaratan pra sit in. Silakan lengkapi persyaratan dengan menyerahkannya ke petugas jurusan.');
+                exit;
+        }
         return View::make('pages.dasbor.sit_in.mahasiswa');
     }
 
@@ -51,6 +58,26 @@ class SitInController extends BaseController {
      */
     public function kelolaSitIn()
     {
+        if (Auth::user()->peran == 0)
+        {
+            if (!Mahasiswa::find(Auth::user()->nomor_induk)->apakahLulusSyarat('pra_sit_in'))
+            {
+                if (Request::ajax())
+                {
+                    return Response::json(array('galat' => 'Anda belum berhak mengakses laman ini karena belum melengkapi persyaratan pra sit in. Silakan lengkapi persyaratan dengan menyerahkannya ke petugas jurusan.'));
+                    exit;
+
+                }
+                else
+                {
+                    return Redirect::to('/dasbor/terlarang')
+                    ->with('page_title', 'Syarat Sit In Belum Lengkap')
+                    ->with('message', 'Anda belum berhak mengakses laman ini karena belum melengkapi persyaratan pra sit in. Silakan lengkapi persyaratan dengan menyerahkannya ke petugas jurusan.');
+                    exit;
+                }
+            }
+        }
+
         if(Request::isMethod('get'))
         {
             if(Request::ajax())

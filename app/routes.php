@@ -19,6 +19,9 @@ Route::get ('/', function()
     return Redirect::to('/berita');
 });
 
+// TerlarangController
+Route::get ('/dasbor/terlarang', 'Simta\Controllers\TerlarangController@index');
+
 // DasborMainController
 Route::get ('/dasbor','Simta\Controllers\DasborMainController@tentukanDasborMana');
 
@@ -207,3 +210,44 @@ Route::get('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@
 // Kemungkinan rute yang akan dibuat:
 
 // /statistik
+
+
+// Route for testing purpose
+use Simta\Models\Pegawai;
+use Simta\Models\Mahasiswa;
+use Simta\Models\Syarat;
+Route::get ('/pegawai', function()
+{
+    $p = Pegawai::get();
+    foreach ($p as $pegawai) {
+        if (!$pegawai->apakahDosen())
+        {
+            var_dump($pegawai->toArray());
+        }
+    }
+});
+Route::get ('/mahasiswa', function()
+{
+    $totalSyaratSitIn = Syarat::where('waktu_syarat','=','pra_sit_in')->count();
+    $totalSyaratBimbingan = Syarat::where('waktu_syarat','=','pra_bimbingan')->count();
+    $totalSyaratSeminar = Syarat::where('waktu_syarat','=','pra_seminar_proposal')->count();
+    $totalSyaratSidang = Syarat::where('waktu_syarat','=','pra_sidang_akhir')->count();
+
+    echo '$totalSyaratSitIn = ' . $totalSyaratSitIn . '<br />';
+    echo '$totalSyaratBimbingan = ' . $totalSyaratBimbingan . '<br />';
+    echo '$totalSyaratSeminar = ' . $totalSyaratSeminar . '<br />';
+    echo '$totalSyaratSidang = ' . $totalSyaratSidang . '<br />';
+
+    $m = Mahasiswa::get();
+    foreach ($m as $mahasiswa) {
+        var_dump($mahasiswa->nrp_mahasiswa);
+        echo '$countSyaratSitIn = '. $mahasiswa->syarat()->where('waktu_syarat','=','pra_sit_in')->count() . '<br />';
+        echo '$countSyaratBimbingan = '. $mahasiswa->syarat()->where('waktu_syarat','=','pra_bimbingan')->count() . '<br />';
+        echo '$countSyaratSeminar = '. $mahasiswa->syarat()->where('waktu_syarat','=','pra_seminar_proposal')->count() . '<br />';
+        echo '$countSyaratSidang = '. $mahasiswa->syarat()->where('waktu_syarat','=','pra_sidang_akhir')->count() . '<br />';
+        echo 'Lulus pra_sit_in = ' ; echo $mahasiswa->apakahLulusSyarat('pra_sit_in') ? 'yes' : 'no' ; echo '<br />';
+        echo 'Lulus pra_bimbingan = ' ; echo $mahasiswa->apakahLulusSyarat('pra_bimbingan') ? 'yes' : 'no' ; echo '<br />';
+        echo 'Lulus pra_seminar_proposal = ' ; echo $mahasiswa->apakahLulusSyarat('pra_seminar_proposal') ? 'yes' : 'no' ; echo '<br />';
+        echo 'Lulus pra_sidang_akhir = ' ; echo $mahasiswa->apakahLulusSyarat('pra_sidang_akhir') ? 'yes' : 'no' ; echo '<br />';
+    }
+});

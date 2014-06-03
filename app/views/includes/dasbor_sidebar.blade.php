@@ -66,6 +66,9 @@
         <a href="{{ URL::to('dasbor/pegawai/syarat_mahasiswa') }}"><span class=""></span> Syarat Mahasiswa</a>
     </li>
     <li>
+        <a href="{{ URL::to('dasbor/pegawai/syarat') }}"><span class=""></span> Syarat</a>
+    </li>
+    <li>
         <a href="{{ URL::to('dasbor/pegawai/sidang') }}"><span class=""></span> Sidang</a>
     </li>
     <li>

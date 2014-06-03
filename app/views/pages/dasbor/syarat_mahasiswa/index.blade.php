@@ -1,6 +1,6 @@
 @extends('layouts.dasbor')
 @section('page_title')
-Kelola Syarat
+Kelola Syarat Mahasiswa
 @stop
 
 @section('content')

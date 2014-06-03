@@ -170,6 +170,12 @@ Route::get('/dasbor/pegawai/syarat_mahasiswa', 'Simta\Controllers\SyaratControll
 Route::get('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
 Route::post('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
 Route::delete('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
+Route::get('/dasbor/pegawai/syarat', function(){
+    return View::make('pages.dasbor.syarat.index');
+});
+Route::get('/dasbor/pegawai/syarat/sunting', function(){
+    return View::make('pages.dasbor.syarat.item');
+});
 
 // RuanganController
 Route::get('/dasbor/pegawai/ruangan', 'Simta\Controllers\RuanganController@dasborRuangan');

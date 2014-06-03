@@ -5,21 +5,23 @@
   <div class="panel-body">
     <h3><strong>{{ $item->judul_tugas_akhir }}</strong></h3>
     <p>
-        <span class="glyphicon glyphicon-tag"></span>
-        <span>Laboratorium: </span>
-        @foreach ($item->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat) 
-            <a href="{{ URL::to('prodi/'. $bidangMinat->id_bidang_minat) }}">
-                {{ $bidangMinat->nama_bidang_minat }}
-            </a>
-            @if ($i != $item->topik->bidangKeahlian->bidangMinat->count() - 1)
-                ,
-            @endif
-        @endforeach
-        <span> · </span>
-        <span class="glyphicon glyphicon-tags"></span>
-        <span>Topik: </span><a href="{{ URL::to('topik/'. $item->id_topik) }}">{{ $item->topik->topik }}</a>
-        <span> · </span>
-        <span class="glyphicon glyphicon-question-sign"></span>
+        @if ($item->topik != null)
+            <span class="glyphicon glyphicon-tag"></span>
+            <span>Laboratorium: </span>
+            @foreach ($item->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat) 
+                <a href="{{ URL::to('prodi/'. $bidangMinat->id_bidang_minat) }}">
+                    {{ $bidangMinat->nama_bidang_minat }}
+                </a>
+                @if ($i != $item->topik->bidangKeahlian->bidangMinat->count() - 1)
+                    ,
+                @endif
+            @endforeach
+            <span> · </span>
+            <span class="glyphicon glyphicon-tags"></span>
+            <span>Topik: </span><a href="{{ URL::to('topik/'. $item->id_topik) }}">{{ $item->topik->topik }}</a>
+            <span> · </span>
+            <span class="glyphicon glyphicon-question-sign"></span>
+        @endif
         <span>Pengambilan: </span>
         @if ($item->tugasAkhir == null)
             <span class="label label-success">Tersedia</span>

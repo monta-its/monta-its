@@ -41,6 +41,13 @@ var update = function($rootScope, $http, callback) {
 
 };
 
+var updateDosen = function($rootScope, $http, id_bidang_minat, callback) {
+    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?bidangMinat=' + String(id_bidang_minat)).success(function(data){
+        $rootScope.dosen = data;
+        if(callback) callback();
+    });
+}
+
 
 app.controller('daftarSidangController', function($scope, $http, $rootScope) {
     $scope.hapus = function(id_sidang) {
@@ -56,6 +63,10 @@ app.controller('daftarSidangController', function($scope, $http, $rootScope) {
 app.controller('sidangSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
     $scope.jenisSidang = [{jenis: "proposal", nama: "Seminar Proposal"}, {jenis: "akhir", nama: "Sidang Akhir"}];
     var method = $routeParams.method;
+    $scope.updateDosen = function() {
+        console.log($scope.sidang.tugasAkhir);
+        updateDosen($rootScope, $http, $scope.sidang.tugasAkhir.penawaran_judul.topik.bidang_keahlian.bidang_minat[0].id_bidang_minat);
+    }
     $scope.method = method;
     $scope.tambahDosenPenguji = function() {
         if($scope.sidang) {
@@ -187,7 +198,7 @@ app.config(function($httpProvider) {
 
                 <div class="form-group">
                     <label>Tugas Akhir</label>
-                    <select class="form-control" ng-model="sidang.tugasAkhir" ng-options="item as item.penawaran_judul.judul_tugas_akhir for item in tugasAkhir" ></select>
+                    <select class="form-control" ng-model="sidang.tugasAkhir" ng-options="item as item.penawaran_judul.judul_tugas_akhir for item in tugasAkhir" ng-change="updateDosen()" ></select>
                 </div>
                 <div class="form-group">
                     <label>Ruangan</label>

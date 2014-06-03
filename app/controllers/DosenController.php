@@ -16,6 +16,7 @@ use Redirect;
 use Request;
 use Response;
 use Simta\Models\Dosen;
+use Simta\Models\BidangMinat;
 use Auth;
 
 class DosenController extends BaseController {
@@ -84,7 +85,15 @@ class DosenController extends BaseController {
             }
             else
             {
-                return Response::json(Dosen::with('pegawai', 'bidangKeahlian')->get());
+                if(Input::has('bidangMinat'))
+                {
+                    $bidangMinat = BidangMinat::find(Input::get('bidangMinat'));
+                    return Response::json($bidangMinat->dosen()->with('pegawai', 'bidangKeahlian')->get());
+                }
+                else
+                {
+                    return Response::json(Dosen::with('pegawai', 'bidangKeahlian')->get());
+                }
             }
 
         }

@@ -240,7 +240,7 @@ class RudeSeeder extends Seeder {
                     $jadwalDosen = new JadwalDosen;
                     $jadwalDosen->hari = rand(1,5);
                     $jadwalDosen->sesi = rand(1,5);
-                    $jadwalDosen->apakah_tersedia = rand(1,2);
+                    $jadwalDosen->apakah_tersedia = rand(0,1);
                     $jadwalDosen->dosen()->associate($dosen);
                     $jadwalDosen->save();
                 }

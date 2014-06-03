@@ -265,12 +265,8 @@ Route::get ('/mahasiswa', function()
     }
 });
 
-Route::get ('/dasbor/dosen/jadwal', function()
-{
-    return View::make('pages.dasbor.jadwal.index');
-});
-
-Route::get ('/dasbor/dosen/jadwal/sunting', function()
-{
-    return View::make('pages.dasbor.jadwal.item');
-});
+// JadwalDosenController
+Route::get ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+Route::post ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+Route::put ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+Route::delete ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");

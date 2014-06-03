@@ -345,8 +345,9 @@ class RudeSeeder extends Seeder {
 
                         $sidang = new Sidang;
                         $sidang->jenis_sidang = "proposal";
-                        $sidang->waktu_mulai = "2014-01-01 00:00:00";
-                        $sidang->waktu_selesai = "2014-02-02 10:10:10";
+                        $sidang->sesi = 5;
+                        $sidang->tanggal = "2014-12-12";
+                        $sidang->disetujui = 0;
                         $sidang->ruangan()->associate($ruangan);
                         $sidang->tugasAkhir()->associate($ta);
                         $sidang->save();

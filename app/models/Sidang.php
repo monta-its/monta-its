@@ -15,7 +15,7 @@ class Sidang extends Eloquent {
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_sidang";
-    protected $fillable = ["jenis_sidang", "waktu_mulai", "waktu_selesai"];
+    protected $fillable = ["jenis_sidang", "tanggal", "sesi", "disetujui"];
 
     /**
      * Relasi many-to-one dengan tabel TugasAkhir
@@ -46,6 +46,15 @@ class Sidang extends Eloquent {
     public function pengujiSidang()
     {
         return $this->belongsToMany('Simta\Models\Dosen', 'penguji_sidang', 'id_sidang', 'nip_dosen');
+    }
+
+    /**
+     * Relasi many-to-one dengan tabel SesiSidang
+     * @return Simta\Models\SesiSidang
+     */
+    public function sesiSidang()
+    {
+        return $this->belongsTo('Simta\Models\SesiSidang', 'sesi', 'sesi');
     }
 
 }

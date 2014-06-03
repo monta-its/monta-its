@@ -39,7 +39,10 @@ Bimbingan Tugas Akhir
                                     <div class="form-group">
                                         <select name="status" class="form-control">
                                         @foreach ($status as $s)
-                                            <option value="{{$s->nilai}}" {{($item->status == $s->nilai) ? "selected": ""}}>{{{$s->nama}}}</option>
+                                            @if(($s->nilai == "siap_seminar" && $mahasiswa['lolos_syarat_seminar_proposal'] == false) || ($s->nilai == "siap_sidang" && $mahasiswa['lolos_syarat_sidang_akhir'] == false)))
+                                            @else
+                                                <option value="{{$s->nilai}}" {{($item->status == $s->nilai) ? "selected": ""}}>{{{$s->nama}}}</option>
+                                            @endif
                                         @endforeach
                                         </select>
                                     </div>

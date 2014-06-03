@@ -22,6 +22,7 @@ use Simta\Models\Syarat;
 use Simta\Models\Pengaturan;
 use Simta\Models\StatusTugasAkhir;
 use Simta\Models\BerkasTugasAkhir;
+use Simta\Models\SesiSidang;
 
 class RudeSeeder extends Seeder {
 
@@ -34,7 +35,7 @@ class RudeSeeder extends Seeder {
     {
         $faker = Faker\Factory::create();
 
-        try 
+        try
         {
             StatusTugasAkhir::create(array('nilai' => 'pengerjaan', 'nama' => 'Pengerjaan'));
             StatusTugasAkhir::create(array('nilai' => 'siap_seminar', 'nama' => 'Siap Seminar'));
@@ -43,15 +44,29 @@ class RudeSeeder extends Seeder {
             StatusTugasAkhir::create(array('nilai' => 'revisi_akhir', 'nama' => 'Revisi Akhir'));
             StatusTugasAkhir::create(array('nilai' => 'selesai', 'nama' => 'Selesai'));
             StatusTugasAkhir::create(array('nilai' => 'mengundurkan_diri', 'nama' => 'Mengundurkan Diri'));
-        } 
-        catch (Exception $e) 
+        }
+        catch (Exception $e)
         {
-            
+
+        }
+
+        // SesiSidang
+        try
+        {
+            SesiSidang::create(array('sesi' => '1', 'waktu_mulai' => '07:00:00', 'waktu_selesai' => '08:59:59'));
+            SesiSidang::create(array('sesi' => '2', 'waktu_mulai' => '09:00:00', 'waktu_selesai' => '10:59:59'));
+            SesiSidang::create(array('sesi' => '3', 'waktu_mulai' => '11:00:00', 'waktu_selesai' => '12:59:59'));
+            SesiSidang::create(array('sesi' => '4', 'waktu_mulai' => '13:00:00', 'waktu_selesai' => '14:59:59'));
+            SesiSidang::create(array('sesi' => '5', 'waktu_mulai' => '15:00:00', 'waktu_selesai' => '16:59:59'));
+        }
+        catch (Exception $e)
+        {
+
         }
 
         while(Syarat::where('waktu_syarat', '=', 'pra_sit_in')->count() < 4)
         {
-            try 
+            try
             {
                 Syarat::create(array(
                     'kode_syarat' => $faker->unique->word,
@@ -59,17 +74,17 @@ class RudeSeeder extends Seeder {
                     'waktu_syarat' => 'pra_sit_in',
                     'jenis_mahasiswa' => 'reguler'
                 ));
-            } catch (Exception $e) 
+            } catch (Exception $e)
             {
-                
+
             }
-            
+
             // echo Syarat::where('waktu_syarat', '=', 'pra_sit_in')->count() . 'pra_sit_in\n';
         }
 
         while(Syarat::where('waktu_syarat', '=', 'pra_bimbingan')->count() < 4)
         {
-            try 
+            try
             {
                 Syarat::create(array(
                     'kode_syarat' => $faker->unique->word,
@@ -77,10 +92,10 @@ class RudeSeeder extends Seeder {
                     'waktu_syarat' => 'pra_bimbingan',
                     'jenis_mahasiswa' => 'reguler'
                 ));
-            } 
-            catch (Exception $e) 
+            }
+            catch (Exception $e)
             {
-                
+
             }
             // echo Syarat::where('waktu_syarat', '=', 'pra_bimbingan')->count() . 'pra_bimbingan\n';
 
@@ -88,7 +103,7 @@ class RudeSeeder extends Seeder {
 
         while(Syarat::where('waktu_syarat', '=', 'pra_seminar_proposal')->count() < 4)
         {
-            try 
+            try
             {
                 Syarat::create(array(
                     'kode_syarat' => $faker->unique->word,
@@ -96,10 +111,10 @@ class RudeSeeder extends Seeder {
                     'waktu_syarat' => 'pra_seminar_proposal',
                     'jenis_mahasiswa' => 'reguler'
                 ));
-            } 
-            catch (Exception $e) 
+            }
+            catch (Exception $e)
             {
-                
+
             }
             // echo Syarat::where('waktu_syarat', '=', 'pra_seminar_proposal')->count() . 'pra_seminar_proposal\n';
 
@@ -107,7 +122,7 @@ class RudeSeeder extends Seeder {
 
         while(Syarat::where('waktu_syarat', '=', 'pra_sidang_akhir')->count() < 4)
         {
-            try 
+            try
             {
                 Syarat::create(array(
                     'kode_syarat' => $faker->unique->word,
@@ -115,10 +130,10 @@ class RudeSeeder extends Seeder {
                     'waktu_syarat' => 'pra_sidang_akhir',
                     'jenis_mahasiswa' => 'reguler'
                 ));
-            } 
-            catch (Exception $e) 
+            }
+            catch (Exception $e)
             {
-                
+
             }
             // echo Syarat::where('waktu_syarat', '=', 'pra_sidang_akhir')->count() . 'pra_sidang_akhir\n';
 
@@ -139,17 +154,17 @@ class RudeSeeder extends Seeder {
 
         for($i=0; $i<5; $i++)
         {
-            try 
+            try
             {
                 $pengaturan = new Pengaturan;
                 $pengaturan->nama = $faker->unique->word;
                 $pengaturan->nilai = $faker->word;
                 $pengaturan->deskripsi = $faker->sentence();
                 $pengaturan->save();
-            } 
-            catch (Exception $e) 
+            }
+            catch (Exception $e)
             {
-                
+
             }
         }
 
@@ -358,7 +373,7 @@ class RudeSeeder extends Seeder {
                     foreach ($syaratSitIn as $syarat) {
                         $mahasiswa->syarat()->save($syarat);
                     }
-                    
+
                     $sitin = new SitIn;
                     $sitin->status = 0;
                     $sitin->mahasiswa()->associate($mahasiswa);

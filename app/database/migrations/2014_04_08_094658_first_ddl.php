@@ -287,6 +287,15 @@ class FirstDdl extends Migration {
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('sesi_sidang', function($table)
+        {
+            $table->integer('sesi')->primary();
+            $table->time('waktu_mulai');
+            $table->time('waktu_selesai');
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
 	/**
@@ -324,6 +333,7 @@ class FirstDdl extends Migration {
         Schema::drop('pengaturan');
         Schema::drop('status_tugas_akhir');
         Schema::drop('berkas_tugas_akhir');
+        Schema::drop('sesi_sidang');
 	}
 
 }

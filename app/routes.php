@@ -179,6 +179,12 @@ Route::get('/dasbor/mahasiswa/berkas', 'Simta\Controllers\BerkasTugasAkhirContro
 Route::post('/dasbor/mahasiswa/berkas', 'Simta\Controllers\BerkasTugasAkhirController@kelolaBerkasTugasAkhir');
 Route::delete('/dasbor/mahasiswa/berkas', 'Simta\Controllers\BerkasTugasAkhirController@kelolaBerkasTugasAkhir');
 
+// SesiSidangController
+Route::get('/dasbor/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangController@dasborSesiSidang');
+Route::post('/dasbor/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangController@dasborSesiSidang');
+Route::put('/dasbor/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangController@dasborSesiSidang');
+Route::delete('/dasbor/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangController@dasborSesiSidang');
+
 // RUTE SPESIAL, AKSES SILANG
 // Special case Ajax request only for Master Data
 if(Request::ajax()){
@@ -187,6 +193,7 @@ if(Request::ajax()){
     Route::get ('/dasbor/umum/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
     Route::get('/dasbor/umum/dosen/tugas_akhir', 'Simta\Controllers\TugasAkhirController@dasborTugasAkhir');
     Route::get('/dasbor/umum/pegawai/ruangan', 'Simta\Controllers\RuanganController@dasborRuangan');
+    Route::get('/dasbor/umum/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangController@dasborSesiSidang');
 
     // Diakses role dan user tertentu (atau mungkin beda role beda perlakuan)
     // Dienforce di dalam kode secara manual

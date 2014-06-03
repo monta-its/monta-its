@@ -23,12 +23,12 @@ app.controller('syaratController', function($http, $scope) {
         $scope.dataMahasiswa = data;
     });
     // Ambil data syarat mentah
-    $http.get('{{{URL::to('/dasbor/pegawai/syarat')}}}').success(function(data) {
+    $http.get('{{{URL::to('/dasbor/pegawai/syarat_mahasiswa')}}}').success(function(data) {
         $scope.dataSyarat = data;
     });
 
     $scope.cariMahasiswa = function() {
-        $http.get('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa).success(function(data) {
+        $http.get('{{{URL::to('/dasbor/pegawai/syarat_mahasiswa/')}}}' + '/' + $scope.nrpMahasiswa).success(function(data) {
             if(!($.isEmptyObject(data))) {
                 $scope.dataSyaratMahasiswa = data;
                 $.each($scope.dataSyaratMahasiswa.syarat, function(i, val) {
@@ -50,14 +50,14 @@ app.controller('syaratController', function($http, $scope) {
 
             $.each($scope.syaratTerpilih, function(i, val) {
                 if(val == true) {
-                    $http.post('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa, {'id_syarat': i}).success(function(data){
+                    $http.post('{{{URL::to('/dasbor/pegawai/syarat_mahasiswa/')}}}' + '/' + $scope.nrpMahasiswa, {'id_syarat': i}).success(function(data){
                         $scope.countSyaratTerpilih++;
                         if ($scope.countSyaratTerpilih == $scope.totalSyaratTerpilih) {
                             alert('Data berhasil disimpan.');
                         }
                     });
                 } else {
-                    $http.delete('{{{URL::to('/dasbor/pegawai/syarat/')}}}' + '/' + $scope.nrpMahasiswa, {'params': {'id_syarat': i}}).success(function(data){
+                    $http.delete('{{{URL::to('/dasbor/pegawai/syarat_mahasiswa/')}}}' + '/' + $scope.nrpMahasiswa, {'params': {'id_syarat': i}}).success(function(data){
                         $scope.countSyaratTerpilih++;
                         if ($scope.countSyaratTerpilih == $scope.totalSyaratTerpilih) {
                             alert('Data berhasil disimpan.');

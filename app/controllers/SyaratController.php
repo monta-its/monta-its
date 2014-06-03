@@ -31,7 +31,7 @@ class SyaratController extends BaseController {
         {
             if(!Request::ajax())
             {
-                return View::make('pages.dasbor.syarat.index');
+                return View::make('pages.dasbor.syarat_mahasiswa.index');
             }
             else
             {

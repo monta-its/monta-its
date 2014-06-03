@@ -63,7 +63,7 @@
 @endif
 @if ($auth->peran == 1 || $auth->peran == 3)
     <li>
-        <a href="{{ URL::to('dasbor/pegawai/syarat') }}"><span class=""></span> Syarat</a>
+        <a href="{{ URL::to('dasbor/pegawai/syarat_mahasiswa') }}"><span class=""></span> Syarat Mahasiswa</a>
     </li>
     <li>
         <a href="{{ URL::to('dasbor/pegawai/sidang') }}"><span class=""></span> Sidang</a>

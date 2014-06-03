@@ -125,6 +125,16 @@ class Dosen extends Eloquent {
     }
 
     /**
+     * Relasi dengan tabel JadwalDosen
+     * @return Simta\Models\JadwalDosen
+     */
+
+    public function jadwalDosen()
+    {
+        return $this->hasMany('Simta\Models\JadwalDosen', 'sesi', 'sesi');
+    }
+
+    /**
      * Mengetahui beban bimbingan TugasAkhir yang dilakukan oleh Dosen sebagai Pembimbing saat ini
      * Dilakukan dengan perhitungan pembimbingTugasAkhir pada tugasAkhir dengan status tidak sama dengan 'selesai' dan 'mengundurkan diri'
      *

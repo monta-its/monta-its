@@ -23,6 +23,7 @@ use Simta\Models\Pengaturan;
 use Simta\Models\StatusTugasAkhir;
 use Simta\Models\BerkasTugasAkhir;
 use Simta\Models\SesiSidang;
+use Simta\Models\JadwalDosen;
 
 class RudeSeeder extends Seeder {
 
@@ -233,6 +234,16 @@ class RudeSeeder extends Seeder {
                 $dosen->gelar_depan = "Ir.";
                 $dosen->gelar_belakang = "S.Kom.";
                 $dosen->save();
+
+                for($k=0; $k<5; $k++)
+                {
+                    $jadwalDosen = new JadwalDosen;
+                    $jadwalDosen->hari = rand(1,5);
+                    $jadwalDosen->sesi = rand(1,5);
+                    $jadwalDosen->apakah_tersedia = rand(1,2);
+                    $jadwalDosen->dosen()->associate($dosen);
+                    $jadwalDosen->save();
+                }
 
                 $bidang_minat->dosen()->save($dosen);
                 $bidang_keahlian->dosen()->save($dosen);

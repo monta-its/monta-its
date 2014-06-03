@@ -297,6 +297,17 @@ class FirstDdl extends Migration {
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('jadwal_dosen', function($table)
+        {
+            $table->increments('id_jadwal_dosen');
+            $table->string('nip_dosen');
+            $table->integer('hari');
+            $table->integer('sesi');
+            $table->integer('apakah_tersedia');
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
 	/**
@@ -335,6 +346,7 @@ class FirstDdl extends Migration {
         Schema::drop('status_tugas_akhir');
         Schema::drop('berkas_tugas_akhir');
         Schema::drop('sesi_sidang');
+        Schema::drop('jadwal_dosen');
 	}
 
 }

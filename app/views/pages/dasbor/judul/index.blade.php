@@ -109,12 +109,14 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="judul.judul_tugas_akhir" type="text" class="form-control input-lg" placeholder="Judul Tugas Akhir">
+                        <input ng-model="judul.judul_tugas_akhir" type="text" class="form-control" placeholder="Judul Tugas Akhir">
                     </div>
                     <div class="form-group">
                         <textarea ng-model="judul.deskripsi" class="form-control" rows="10" placeholder="Deskripsi"></textarea>
                     </div>
-                    <select ng-model="judul.topik" ng-options="item.topik for item in topik_items"></select>
+                    <div class="form-group">
+                        <select class="form-control" ng-model="judul.topik" ng-options="item.topik for item in topik_items"></select>                        
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi"  class="btn btn-success" ng-click="tambahJudul()">Tambahkan</button>
@@ -139,20 +141,18 @@ app.config(function($httpProvider) {
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>Judul</th>
-                            <th>Deskripsi</th>
-                            <th>Topik</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th class="text-center">Judul</th>
+                            <th class="text-center col-md-2">Topik</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center col-md-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
-                            <td>[[item.judul_tugas_akhir]]</td>
-                            <td>[[item.deskripsi]]</td>
-                            <td>[[item.topik.topik]]</td>
-                            <td>[[item.tugasAkhir ? "Diambil": "Belum Diambil"]]</td>
-                            <td>
+                            <td><a href="{{ URL::to('/judul') }}/[[item.id_penawaran_judul]]">[[item.judul_tugas_akhir]]</a></td>
+                            <td><a href="{{ URL::to('/topik') }}/[[item.topik.id_topik]]">[[item.topik.topik]]</a></td>
+                            <td class="text-center">[[item.tugasAkhir ? "Diambil": "Belum Diambil"]]</td>
+                            <td class="text-center">
                                 <a href="#/sunting/[[item.id_penawaran_judul]]">Sunting</a>
                                 <a href="#/" ng-click="hapusJudul([[item.id_penawaran_judul]])">Hapus</a>
                             </td>

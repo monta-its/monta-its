@@ -97,7 +97,7 @@ app.config(function($httpProvider) {
                 <div class="col-md-8">
                     <div class="form-group">
                         <label>Nama Sesi (Angka)</label>
-                        <input ng-model="sesiSidang.sesi" type="text" class="form-control input-lg"  placeholder="Nama Sesi Sidang">
+                        <input ng-model="sesiSidang.sesi" type="text" class="form-control"  placeholder="Nama Sesi Sidang">
                     </div>
                     <div class="form-group" ng-class="{'has-error': timepickerForm.time2.$invalid}">
                         <label>Waktu Mulai</label>

@@ -50,7 +50,11 @@ app.config(function($httpProvider) {
     <div ng-controller="sitInController">
         <div class="row">
             <div class="col-md-12">
-                <h2>Daftar Sit In Saat Ini</h2>
+                
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Daftar Sit In Saat Ini
+                </div>
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
@@ -67,8 +71,11 @@ app.config(function($httpProvider) {
                         </tr>
                     </tbody>
                 </table>
-
-                <h2>Daftar Permintaan Sit In</h2>
+            </div>    
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Daftar Permintaan Sit In
+                </div>
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
@@ -84,12 +91,17 @@ app.config(function($httpProvider) {
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
-                                <button ng-click="setujuiSitIn([[item.id_sit_in]])" class="btn btn-warning">Setujui</a>
+                                <a ng-click="setujuiSitIn([[item.id_sit_in]])" class="btn btn-warning btn-xs">Setujui</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <h2>Daftar Pembatalan Sit In</h2>
+            </div>
+                
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Daftar Pembatalan Sit In
+                </div>
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
@@ -105,11 +117,13 @@ app.config(function($httpProvider) {
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
-                                <button ng-click="batalkanSitIn([[item.id_sit_in]])" class="btn btn-warning">Terima Pembatalan</a>
+                                <a ng-click="batalkanSitIn([[item.id_sit_in]])" class="btn btn-warning btn-xs">Terima Pembatalan</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+                
             </div>
         </div>
     </div>

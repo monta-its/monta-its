@@ -74,6 +74,7 @@ class BidangMinatController extends BaseController {
      */
     function dasborBidangMinat()
     {
+        $pesan = "";
         if(Request::isMethod('get'))
         {
             if(!Request::ajax())
@@ -104,25 +105,46 @@ class BidangMinatController extends BaseController {
                 $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
                 $bidangMinat->dosenKoordinator()->associate($dosenKoordinator);
                 $bidangMinat->save();
+                $pesan = "Penyimpan data berhasil.";
+            }
+            else
+            {
+                $pesan = "Data Ketua Laboratorium tidak ditemukan. Penambahan data dibatalkan.";
             }
 
         }
         else if(Request::isMethod('put'))
         {
-            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
+            $bidangMinat = BidangMinat::find(Input::get('id_bidang_minat'));
             $dosenKoordinator = Dosen::find(Input::get('dosenKoordinator.nip_dosen'));
             if($dosenKoordinator != null && $bidangMinat != null)
             {
                 $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');
+                $bidangMinat->kode_bidang_minat = Input::get('kode_bidang_minat');
                 $bidangMinat->dosenKoordinator()->associate($dosenKoordinator);
                 $bidangMinat->save();
+                $pesan = "Perubahan data berhasil disimpan.";
+            }
+            else
+            {
+                $pesan = "Data Ketua Laboratorium atau Laboratorium tidak ditemukan. Penyimpanan perubahan data dibatalkan.";
             }
 
         }
         else if(Request::isMethod('delete'))
         {
-            $bidangMinat = BidangMinat::find(Input::get('kode_bidang_minat'));
-            $bidangMinat->delete();
+            $bidangMinat = BidangMinat::find(Input::get('id_bidang_minat'));
+            if ($bidangMinat != null)
+            {
+                $bidangMinat->delete();                
+                $pesan = "Data berhasil dihapus.";
+            }
+            else
+            {
+                $pesan = "Data Laboratorium tidak ditemukan. Penghapusan data dibatalkan.";
+            }
         }
+
+        return Response::json(array('pesan' => $pesan));
     }
 }

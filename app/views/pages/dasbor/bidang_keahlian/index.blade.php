@@ -108,7 +108,7 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="bidangKeahlian.nama_bidang_keahlian" type="text" class="form-control input-lg" id="judulbidangKeahlian" name="judulbidangKeahlian" placeholder="Nama Bidang Keahlian">
+                        <input ng-model="bidangKeahlian.nama_bidang_keahlian" type="text" class="form-control" id="judulbidangKeahlian" name="judulbidangKeahlian" placeholder="Nama Bidang Keahlian">
                     </div>
                     <div class="form-group">
                         <textarea ng-model="bidangKeahlian.deskripsi_bidang_keahlian" class="form-control" rows="10" name="isibidangKeahlian" id="isibidangKeahlian" placeholder="Deskripsi Bidang Keahlian"></textarea>
@@ -116,7 +116,7 @@ app.config(function($httpProvider) {
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi" value="Simpan" class="btn btn-success" ng-click="simpanBidangKeahlian()">Simpan</button>
-                    <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingBidangKeahlian()">Sunting</button>
+                    <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingBidangKeahlian()">Simpan</button>
                 </div>
             </div>
         </form>
@@ -137,16 +137,16 @@ app.config(function($httpProvider) {
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>Nama</th>
-                            <th>Deskripsi</th>
-                            <th>Aksi</th>
+                            <th class="text-center col-md-3">Nama</th>
+                            <th class="text-center">Deskripsi</th>
+                            <th class="text-center col-md-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
-                            <td>[[item.nama_bidang_keahlian]]</td>
+                            <td><a href="{{ URL::to('/bidang_keahlian') }}/[[item.id_bidang_keahlian]]">[[item.nama_bidang_keahlian]]</a></td>
                             <td>[[item.deskripsi_bidang_keahlian]]</td>
-                            <td>
+                            <td class="text-center">
                                 <a href="#/sunting/[[item.id_bidang_keahlian]]">Sunting</a>
                                 <a href="#/" ng-click="hapusBidangKeahlian([[item.id_bidang_keahlian]])">Hapus</a>
                             </td>

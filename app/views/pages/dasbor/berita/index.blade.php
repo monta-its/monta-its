@@ -118,7 +118,7 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="berita.judul" type="text" class="form-control input-lg" id="judulBerita" name="judulBerita" placeholder="Judul Berita">
+                        <input ng-model="berita.judul" type="text" class="form-control" id="judulBerita" name="judulBerita" placeholder="Judul Berita" />
                     </div>
                     <div class="form-group">
                         <textarea ng-model="berita.isi" class="form-control" rows="10" name="isiBerita" id="isiBerita" placeholder="Isi Berita"></textarea>
@@ -126,8 +126,8 @@ app.config(function($httpProvider) {
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi" value="Terbitkan" class="btn btn-success" ng-click="terbitkanBerita()">Terbitkan</button>
-                    <button ng-show="method=='baru'" type="submit" name="aksi" value="Simpan" class="btn btn-success" ng-click="simpanBerita()">Simpan</button>
-                    <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingBerita()">Sunting</button>
+                    <button ng-show="method=='baru'" type="submit" name="aksi" value="Simpan" class="btn btn-default" ng-click="simpanBerita()">Simpan</button>
+                    <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingBerita()">Simpan</button>
                 </div>
             </div>
         </form>
@@ -148,16 +148,14 @@ app.config(function($httpProvider) {
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Judul</th>
-                            <th>Waktu</th>
-                            <th>Aksi</th>
+                            <th class="text-center">Judul</th>
+                            <th class="text-center">Waktu</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
-                            <td>[[item.id_pos]]</td>
-                            <td>[[item.judul]]</td>
+                            <td><a href="{{ URL::to('/berita') }}/[[item.id_pos]]" title="">[[item.judul]]</a></td>
                             <td>[[item.updated_at]]</td>
                             <td>
                                 <a href="#/" ng-show="item.apakah_terbit" ng-click="publish([[item.id_pos]], false)">Non publikasi</a>

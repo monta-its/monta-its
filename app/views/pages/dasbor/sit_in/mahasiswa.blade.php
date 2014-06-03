@@ -69,35 +69,42 @@ app.config(function($httpProvider) {
     <div ng-controller="sitInController">
         <div class="row">
             <div class="col-md-12">
-                <h2>Daftar Sit In</h2>
-                <table class="table table-condensed table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Nama Dosen</th>
-                            <th class="col-md-2 text-center">NIP</th>
-                            <th class="col-md-3 text-center">Waktu Sit In</th>
-                            <th class="col-md-1 text-center">Status</th>
-                            <th class="col-md-1 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in items">
-                            <td>[[item.dosen.pegawai.nama_lengkap]]</td>
-                            <td>[[item.dosen.nip_dosen]]</td>
-                            <td>[[item.updated_at]]</td>
-                            <td ng-show="item.status == -1">Dibatalkan (menunggu)</td>
-                            <td ng-show="item.status == 0">Diajukan</td>
-                            <td ng-show="item.status == 1">Disetujui</td>
-                            <td ng-show="item.status != -1">
-                                <button class="btn btn-warning" ng-click="batalkanSitIn([[item.id_sit_in]])">Batalkan</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Daftar Sit In
+                    </div>
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Nama Dosen</th>
+                                <th class="col-md-2 text-center">NIP</th>
+                                <th class="col-md-3 text-center">Waktu Sit In</th>
+                                <th class="col-md-1 text-center">Status</th>
+                                <th class="col-md-1 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in items">
+                                <td>[[item.dosen.pegawai.nama_lengkap]]</td>
+                                <td class="text-center">[[item.dosen.nip_dosen]]</td>
+                                <td class="text-center">[[item.updated_at]]</td>
+                                <td ng-show="item.status == -1">Dibatalkan (menunggu)</td>
+                                <td ng-show="item.status == 0">Diajukan</td>
+                                <td ng-show="item.status == 1">Disetujui</td>
+                                <td ng-show="item.status != -1" class="text-center">
+                                    <a class="btn btn-xs btn-warning" ng-click="batalkanSitIn([[item.id_sit_in]])">Batalkan</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    
                 <h2>Pilih Dosen</h2>
                 <ul class="list-unstyled">
-                    <li ng-repeat="item in prodi_items">
-                        <h3>[[item.nama_bidang_minat]]</h3>
+                    <div class="panel panel-default" ng-repeat="item in prodi_items">
+                        <div class="panel-heading">
+                            Laboratorium: [[item.nama_bidang_minat]]
+                        </div>
                         <table class="table table-condensed table-striped">
                             <thead>
                                 <tr>
@@ -111,19 +118,19 @@ app.config(function($httpProvider) {
                             <tbody>
                                 <tr ng-repeat="dosen in item.dosen">
                                     <td>[[dosen.pegawai.nama_lengkap]]</td>
-                                    <td>[[dosen.nip_dosen]]</td>
+                                    <td class="text-center">[[dosen.nip_dosen]]</td>
                                     <td>
                                         <a ng-repeat="bk in dosen.bidang_keahlian" href="{{{URL::to('/bidang_keahlian/')}}}/[[bk.id_bidang_keahlian]]">[[bk.nama_bidang_keahlian]]</a>
                                     </td>
-                                    <td>[[dosen.kuota_sit_in]]</td>
-                                    <td>
-                                        <button class="btn btn-default" ng-click="pilihSitIn([[dosen.nip_dosen]])">Pilih</a>
+                                    <td class="text-center">[[dosen.kuota_sit_in]]</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-xs btn-success" ng-click="pilihSitIn([[dosen.nip_dosen]])">Pilih</a>
                                     </td>
                                 </tr>
 
                             </tbody>
                         </table>
-                    </li>
+                    </div>
                 </ul>
             </div>
         </div>

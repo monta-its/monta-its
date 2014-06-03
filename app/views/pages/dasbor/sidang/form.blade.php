@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
-                <input type="text" class="form-control input-lg" id="sidangSidang" name="sidangSidang" placeholder="Sidang Sidang">
+                <input type="text" class="form-control" id="sidangSidang" name="sidangSidang" placeholder="Sidang Sidang">
             </div>
             <div class="form-group">
                 <textarea class="form-control" rows="10" name="isiSidang" id="isiSidang"></textarea>

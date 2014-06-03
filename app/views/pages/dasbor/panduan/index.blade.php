@@ -144,14 +144,14 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="panduan.judul_panduan" type="text" class="form-control input-lg" id="judul_panduanPanduan" name="judul_panduanPanduan" placeholder="Judul Panduan">
+                        <input ng-model="panduan.judul_panduan" type="text" class="form-control" id="judul_panduanPanduan" name="judul_panduanPanduan" placeholder="Judul Panduan">
                     </div>
                     <div class="form-group">
                         <textarea ng-model="panduan.isi_panduan" class="form-control" rows="10" name="isiPanduan" id="isiPanduan" placeholder="Isi Panduan"></textarea>
                     </div>
                     <h3>Lampiran</h3>
                     <div class="form-group">
-                        <input ng-model="panduan.lampiran.nama_lampiran" type="text" class="form-control input-lg"  placeholder="Nama Lampiran">
+                        <input ng-model="panduan.lampiran.nama_lampiran" type="text" class="form-control"  placeholder="Nama Lampiran">
                     </div>
                     <div class="form-group">
                         <input type="radio" ng-model="panduan.lampiran.tipe_lampiran" value="url"/> Lampiran pranala URL<br/>
@@ -160,19 +160,19 @@ app.config(function($httpProvider) {
                     </div>
                     <div class="form-group">
                         <input ng-show="panduan.lampiran.tipe_lampiran=='url'" placeholder="Masukkan URL/pranala menuju lampiran (dari Dropbox/Google Drive)" ng-model="panduan.lampiran.path_lampiran" class="form-control"/>
-                        <a ng-show="panduan.lampiran.path_lampiran && panduan.lampiran.tipe_lampiran=='file'" href="{{URL::to('/files/')}}/[[panduan.pegawai.nip_pegawai]]/[[panduan.lampiran.path_lampiran]]">Pranala berkas sebelumnya</a>
+                        <a ng-show="panduan.lampiran.path_lampiran && panduan.lampiran.tipe_lampiran=='file'" href="{{URL::to('/')}}[[panduan.pegawai.nip_pegawai]]/[[panduan.lampiran.path_lampiran]]">Pranala berkas sebelumnya</a>
                         <input type="file" ng-file-select="pilihBerkas($files)" ng-show="panduan.lampiran.tipe_lampiran=='file'"  class="form-control"/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi" value="Terbitkan" class="btn btn-success" ng-click="terbitkanPanduan()">Terbitkan</button>
-                    <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingPanduan()">Sunting</button>
+                    <button ng-show="method=='sunting'" type="submit" name="aksi" value="Sunting" class="btn btn-success" ng-click="suntingPanduan()">Simpan</button>
                 </div>
             </div>
         </form>
     </script>
     <script type="text/ng-template" id="daftarPanduan.html">
-        <div class="row" >
+                <div class="row" >
             <div class="col-md-6">
                 <a href="#/baru" class="btn btn-default">Buat Baru</a>
             </div>
@@ -181,22 +181,22 @@ app.config(function($httpProvider) {
                     <input ng-model="searchText" type="text" class="form-control input-xs"  placeholder="Pencarian">
                 </div>
             </div>
-        <div class="row" ng-controller="daftarPanduanController">
-            <div class="col-md-12">
+        </div>
+
+        <div class="row" >
+            <div class="col-md-12" ng-controller="daftarPanduanController">
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>judul_panduan</th>
-                            <th>Penulis</th>
-                            <th>Waktu</th>
-                            <th>Aksi</th>
+                            <th class="text-center">Judul Panduan</th>
+                            <th class="text-center">Penulis</th>
+                            <th class="text-center">Waktu</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
-                            <td>[[item.id_panduan]]</td>
-                            <td>[[item.judul_panduan]]</td>
+                            <td><a href="{{ URL::to('/panduan') }}/[[item.id_panduan]]">[[item.judul_panduan]]</a></td>
                             <td>[[item.pegawai.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>

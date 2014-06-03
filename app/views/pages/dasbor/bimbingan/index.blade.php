@@ -9,36 +9,34 @@ Bimbingan Tugas Akhir
             <div class="panel-heading">
                 Mahasiswa Bimbingan
             </div>
-            <div class="panel-body">
-                <table class="table table-condensed table-striped">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Nama Mahasiswa</th>
-                            <th>NRP</th>
-                            <th>Status Tugas Akhir</th>
-                            <th>Target Selesai</th>
-                            <th>Pilihan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php $i = 1 ?>
-                    @foreach($mahasiswaBimbingan as $item)
-                        <tr>
-                            <td>{{$i}}</td>
-                            <td>{{$item->mahasiswa->nama_lengkap}}</td>
-                            <td>{{$item->mahasiswa->nrp_mahasiswa}}</td>
-                            <td>{{$item->status}}</td>
-                            <td>{{$item->target_selesai}}</td>
-                            <td>
-                                <a href="{{ URL::to('dasbor/dosen/bimbingan/' . $item->id_tugas_akhir) }}">Rincian / Sunting</a>
-                            </td>
-                        </tr>
-                    <?php $i++ ?>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>NRP</th>
+                        <th>Status Tugas Akhir</th>
+                        <th>Target Selesai</th>
+                        <th>Pilihan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php $i = 1 ?>
+                @foreach($mahasiswaBimbingan as $item)
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>{{$item->mahasiswa->nama_lengkap}}</td>
+                        <td>{{$item->mahasiswa->nrp_mahasiswa}}</td>
+                        <td>{{$item->status}}</td>
+                        <td>{{$item->target_selesai}}</td>
+                        <td>
+                            <a href="{{ URL::to('dasbor/dosen/bimbingan/' . $item->id_tugas_akhir) }}">Rincian / Sunting</a>
+                        </td>
+                    </tr>
+                <?php $i++ ?>
+                @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

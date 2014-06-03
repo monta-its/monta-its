@@ -111,16 +111,18 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <input ng-model="topik.topik" type="text" class="form-control input-lg" placeholder="Nama Topik">
+                        <input ng-model="topik.topik" type="text" class="form-control" placeholder="Nama Topik">
                     </div>
                     <div class="form-group">
                         <textarea ng-model="topik.deskripsi" class="form-control" rows="10" placeholder="Deskripsi Topik"></textarea>
                     </div>
-                    <select ng-model="topik.bidangKeahlian" ng-options="item.nama_bidang_keahlian for item in bidang_keahlian_item"></select>
+                    <div class="form-group">
+                        <select class="form-control" ng-model="topik.bidangKeahlian" ng-options="item.nama_bidang_keahlian for item in bidang_keahlian_item"></select>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <button ng-show="method=='baru'" type="submit" name="aksi"  class="btn btn-success" ng-click="tambahTopik()">Tambahkan</button>
-                    <button ng-show="method=='sunting'" type="submit" name="aksi" class="btn btn-success" ng-click="suntingTopik()">Sunting</button>
+                    <button ng-show="method=='sunting'" type="submit" name="aksi" class="btn btn-success" ng-click="suntingTopik()">Simpan</button>
                 </div>
             </div>
         </form>
@@ -141,18 +143,18 @@ app.config(function($httpProvider) {
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>Topik</th>
-                            <th>Deskripsi</th>
-                            <th>Bidang Keahlian</th>
-                            <th>Aksi</th>
+                            <th class="text-center col-md-3">Topik</th>
+                            <th class="text-center">Deskripsi</th>
+                            <th class="text-center col-md-3">Bidang Keahlian</th>
+                            <th class="text-center col-md-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
-                            <td>[[item.topik]]</td>
+                            <td><a href="{{ URL::to('/topik') }}/[[item.id_topik]]">[[item.topik]]</a></td>
                             <td>[[item.deskripsi]]</td>
-                            <td>[[item.bidang_keahlian.nama_bidang_keahlian]]</td>
-                            <td>
+                            <td><a href="{{ URL::to('/bidang_keahlian') }}/[[item.bidang_keahlian.id_bidang_keahlian]]">[[item.bidang_keahlian.nama_bidang_keahlian]]</a></td>
+                            <td class="text-center">
                                 <a href="#/sunting/[[item.id_topik]]">Sunting</a>
                                 <a href="#/" ng-click="hapusTopik([[item.id_topik]])">Hapus</a>
                             </td>

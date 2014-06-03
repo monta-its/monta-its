@@ -73,7 +73,7 @@ app.controller('bidangKeahlianSuntingController', function($rootScope, $scope, $
             };
             updateBidangKeahlian($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
-                    if(val.id_bidang_keahlian === $scope.bidangKeahlian.id_bidang_keahlian) {
+                    if(val.id_bidang_keahlian == $scope.bidangKeahlian.id_bidang_keahlian) {
                         $scope.bidangKeahlian.nama_bidang_keahlian = val.nama_bidang_keahlian;
                         $scope.bidangKeahlian.deskripsi_bidang_keahlian = val.deskripsi_bidang_keahlian;
                     }

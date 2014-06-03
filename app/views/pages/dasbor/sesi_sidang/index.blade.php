@@ -61,7 +61,7 @@ app.controller('sesiSidangSuntingController', function($rootScope, $scope, $http
             };
             update($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
-                    if(val.sesi === $scope.sesiSidang.sesi) {
+                    if(val.sesi == $scope.sesiSidang.sesi) {
                         $scope.sesiSidang.waktu_mulai = val.waktu_mulai;
                         $scope.sesiSidang.waktu_selesai = val.waktu_selesai;
                     }

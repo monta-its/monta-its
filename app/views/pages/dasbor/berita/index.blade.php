@@ -82,7 +82,7 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
             };
             updateBerita($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
-                    if(val.id_pos === $scope.berita.id_pos) {
+                    if(val.id_pos == $scope.berita.id_pos) {
                         $scope.berita.judul = val.judul;
                         $scope.berita.isi = val.isi;
                         $scope.berita.apakah_terbit = val.apakah_terbit;

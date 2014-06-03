@@ -64,7 +64,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
             };
             updateBidangMinat($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
-                    if(val.kode_bidang_minat === $scope.bidangMinat.kode_bidang_minat) {
+                    if(val.kode_bidang_minat == $scope.bidangMinat.kode_bidang_minat) {
                         $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
                         $scope.bidangMinat.deskripsi_bidang_minat = val.deskripsi_bidang_minat;
                         $.each($rootScope.dosens, function(j, val2) {

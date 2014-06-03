@@ -105,7 +105,7 @@ app.controller('panduanSuntingController', function($rootScope, $scope, $http, $
             };
             updatePanduan($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
-                    if(val.id_panduan === $scope.panduan.id_panduan) {
+                    if(val.id_panduan == $scope.panduan.id_panduan) {
                         $scope.panduan.judul_panduan = val.judul_panduan;
                         $scope.panduan.isi_panduan = val.isi_panduan;
                         $scope.panduan.lampiran = val.lampiran;

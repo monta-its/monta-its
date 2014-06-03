@@ -85,10 +85,20 @@ class DosenController extends BaseController {
             }
             else
             {
+                $dosen = array();
                 if(Input::has('bidangMinat'))
                 {
-                    $bidangMinat = BidangMinat::find(Input::get('bidangMinat'));
-                    return Response::json($bidangMinat->dosen()->with('pegawai', 'bidangKeahlian')->get());
+                    $daftarBidangMinat = json_decode(Input::get('bidangMinat'));
+                    foreach($daftarBidangMinat as $dbm)
+                    {
+
+                        $dosenBidangMinat = BidangMinat::find($dbm)->dosen()->with('pegawai', 'bidangKeahlian')->get()->toArray();
+                        foreach ($dosenBidangMinat as $d)
+                        {
+                            $dosen[] = $d;
+                        }
+                    }
+                    return Response::json($dosen);
                 }
                 else
                 {

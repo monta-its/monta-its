@@ -42,7 +42,7 @@ var update = function($rootScope, $http, callback) {
 };
 
 var updateDosen = function($rootScope, $http, id_bidang_minat, callback) {
-    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?bidangMinat=' + String(id_bidang_minat)).success(function(data){
+    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?bidangMinat=' + JSON.stringify(id_bidang_minat)).success(function(data){
         $rootScope.dosen = data;
         if(callback) callback();
     });
@@ -64,8 +64,11 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
     $scope.jenisSidang = [{jenis: "proposal", nama: "Seminar Proposal"}, {jenis: "akhir", nama: "Sidang Akhir"}];
     var method = $routeParams.method;
     $scope.updateDosen = function() {
-        console.log($scope.sidang.tugasAkhir);
-        updateDosen($rootScope, $http, $scope.sidang.tugasAkhir.penawaran_judul.topik.bidang_keahlian.bidang_minat[0].id_bidang_minat);
+        var id_bidang_minat = [];
+        $.each($scope.sidang.tugasAkhir.penawaran_judul.topik.bidang_keahlian.bidang_minat, function(i, val) {
+            id_bidang_minat.push(val.id_bidang_minat)
+        });
+        updateDosen($rootScope, $http, id_bidang_minat);
     }
     $scope.method = method;
     $scope.tambahDosenPenguji = function() {

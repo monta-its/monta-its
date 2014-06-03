@@ -1,6 +1,6 @@
 @extends('layouts.dasbor')
 @section('page_title')
-Kelola Sidang
+Kelola Pengajuan Sidang
 @stop
 
 @section('content')
@@ -26,7 +26,10 @@ var update = function($rootScope, $http, callback) {
                 $rootScope.tugasAkhir = data;
                 $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}').success(function(data){
                     $rootScope.ruangan = data;
-                    if(callback) callback();
+                    $http.get('{{URL::to('/dasbor/umum/pegawai/sesi_sidang')}}').success(function(data) {
+                        $rootScope.sesiSidang = data;
+                        if(callback) callback();
+                    });
                 });
             });
 
@@ -44,23 +47,16 @@ app.controller('daftarSidangController', function($scope, $http, $rootScope) {
         if(confirm("Yakin untuk menghapus ini?")) {
             $http.delete('{{URL::to('/dasbor/mahasiswa/sidang')}}', {'params': {'id_sidang': String(id_sidang)}}).success(function(data) {
                 update($rootScope, $http);
-                alert('Sidang dihapus');
+                alert('Pengajuan Sidang dihapus');
             });
         }
     };
 });
 
 app.controller('sidangSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
+    $scope.jenisSidang = [{jenis: "proposal", nama: "Seminar Proposal"}, {jenis: "akhir", nama: "Sidang Akhir"}];
     var method = $routeParams.method;
     $scope.method = method;
-    $scope.jenisSidang = [
-    {
-        jenis: "proposal", nama: "Seminar Proposal"
-    },
-    {
-        jenis: "akhir", nama: "Sidang Akhir"
-    }
-    ];
     $scope.tambahDosenPenguji = function() {
         if($scope.sidang) {
             if($scope.sidang.pengujiSidang) {
@@ -95,16 +91,23 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         }
     }
     if(method == "baru") {
-        $scope.sidang = {};
-        $scope.sidang.tugasAkhir = {};
-        $scope.sidang.pengujiSidang = [];
-        $scope.sidang.ruangan = {};
-        $scope.sidang.jenis_sidang = "proposal";
-        $scope.sidang.waktu_mulai = "";
-        $scope.sidang.waktu_selesai = "";
+        update($rootScope, $http, function() {
+            $scope.sidang = {};
+            $scope.sidang.tugasAkhir = {};
+            $scope.sidang.pengujiSidang = [];
+            $scope.sidang.ruangan = {};
+            $scope.sidang.jenis_sidang = "akhir";
+            $scope.sidang.tanggal = "";
+            if($rootScope.sesiSidang.length > 0) {
+                $scope.sidang.sesi = $rootScope.sesiSidang[0].sesi;
+            } else {
+                alert('Jadwal Sesi Sidang belum didefinisikan, hubungi Pegawai untuk info lebih lanjut.');
+                $location.path('/');
+            }
+        });
         $scope.simpan = function() {
             $http.post("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
-                alert('Sidang baru dibuat.');
+                alert('Pengajuan baru dibuat.');
                 $location.path("/");
                 update($rootScope, $http);
             });
@@ -125,8 +128,8 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
                     if(val.id_sidang == $routeParams.id) {
                         $scope.sidang.id_sidang  = val.id_sidang
                         $scope.sidang.jenis_sidang = val.jenis_sidang;
-                        $scope.sidang.waktu_mulai = val.waktu_mulai;
-                        $scope.sidang.waktu_selesai = val.waktu_selesai;
+                        $scope.sidang.sesi = val.sesi;
+                        $scope.sidang.tanggal = val.tanggal;
                         $.each($rootScope.tugasAkhir, function(i, ta) {
                             if(ta.id_tugas_akhir == val.tugas_akhir.id_tugas_akhir) {
                                 $scope.sidang.tugasAkhir = ta;
@@ -185,25 +188,15 @@ app.config(function($httpProvider) {
                     <label>Ruangan</label>
                     <select class="form-control" ng-model="sidang.ruangan" ng-options="item as item.nama_ruangan for item in ruangan" ></select>
                 </div>
+                <div class="form-group">
+                    <label>Tanggal</label>
+                    <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-mm-dd" data-autoclose="1" placeholder="Date" bs-datepicker>
+                </div>
 
                 <div class="form-group">
-                    <label>Mulai</label>
-                    <div class="form-group">
-                      <input type="text" size="10" class="form-control" ng-model="sidang.waktu_mulai" data-autoclose="1" placeholder="Tanggal Mulai" bs-datepicker>
-                    </div>
-                    <div class="form-group">
-                      <input type="text" size="8" class="form-control" ng-model="sidang.waktu_mulai" data-autoclose="1" placeholder="Waktu Mulai" bs-timepicker>
-                    </div>
-                  </div>
-                <div class="form-group">
-                    <label>Selesai</label>
-                    <div class="form-group">
-                      <input type="text" size="10" class="form-control" ng-model="sidang.waktu_selesai" data-autoclose="1" placeholder="Tanggal Selesai" bs-datepicker>
-                    </div>
-                    <div class="form-group">
-                      <input type="text" size="8" class="form-control" ng-model="sidang.waktu_selesai" data-autoclose="1" placeholder="Waktu Selesai" bs-timepicker>
-                    </div>
-                  </div>
+                    <label>Sesi Sidang</label>
+                    <select class="form-control" ng-model="sidang.sesi" ng-options="item.sesi as (item.waktu_mulai + ' - ' + item.waktu_selesai) for item in sesiSidang"></select>
+                </div>
                 <div class="form-group">
                     <label>Dosen Penguji</label>
                     <div class="form-group">
@@ -244,6 +237,7 @@ app.config(function($httpProvider) {
                                 <th>Dosen Penguji</th>
                                 <th>Waktu Mulai</th>
                                 <th>Waktu Selesai</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -257,8 +251,11 @@ app.config(function($httpProvider) {
                                         [[penguji.pegawai.nama_lengkap]] </br>
                                     </span>
                                 </td>
-                                <td>[[item.waktu_mulai]]</td>
-                                <td>[[item.waktu_selesai]]</td>
+                                <td>[[item.sesi_sidang.waktu_mulai]]</td>
+                                <td>[[item.sesi_sidang.waktu_selesai]]</td>
+                                <td ng-show="item.disetujui == -1">Ditolak</td>
+                                <td ng-show="item.disetujui == 0">Diajukan</td>
+                                <td ng-show="item.disetujui == 1">Disetujui</td>
                                 <td>
                                     <a href="#/sunting/[[item.id_sidang]]">Sunting</a>
                                     <a href="#/" ng-click="hapus([[item.id_sidang]])">Hapus</a>

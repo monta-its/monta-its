@@ -95,7 +95,7 @@ class FirstDdl extends Migration {
             $table->enum('jenis_sidang', array('proposal', 'akhir'));
             $table->date('tanggal');
             $table->integer('sesi');
-            $table->boolean('disetujui');
+            $table->integer('disetujui');
             $table->integer('id_ruangan');
             $table->timestamps();
             $table->softDeletes();

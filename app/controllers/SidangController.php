@@ -129,7 +129,7 @@ class SidangController extends BaseController {
                         $tugasAkhir = $mahasiswa->tugasAkhir()->get();
                         foreach($tugasAkhir as $ta)
                         {
-                            foreach($ta->sidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan')->get() as $s)
+                            foreach($ta->sidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get() as $s)
                             {
                                 $sidang[] = $s->toArray();
                             }
@@ -139,12 +139,12 @@ class SidangController extends BaseController {
                     else if($auth->peran == 2)
                     {
                         $dosen = Dosen::find($auth->nomor_induk);
-                        $sidang = $dosen->pengujiSidang()->with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan')->get();
+                        $sidang = $dosen->pengujiSidang()->with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get();
                         return Response::json($sidang);
                     }
                     else
                     {
-                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan')->get());
+                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get());
                     }
 
                 }

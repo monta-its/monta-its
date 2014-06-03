@@ -28,7 +28,10 @@ var update = function($rootScope, $http, callback) {
                     $rootScope.ruangan = data;
                     $http.get('{{URL::to('/dasbor/umum/pegawai/sesi_sidang')}}').success(function(data) {
                         $rootScope.sesiSidang = data;
-                        if(callback) callback();
+                        $http.get('{{URL::to('/dasbor/umum/mahasiswa/')}}?mySelf=true').success(function(data) {
+                            $rootScope.mahasiswa = data;
+                            if(callback) callback();
+                        });
                     });
                 });
             });
@@ -61,7 +64,7 @@ app.controller('daftarSidangController', function($scope, $http, $rootScope) {
 });
 
 app.controller('sidangSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
-    $scope.jenisSidang = [{jenis: "proposal", nama: "Seminar Proposal"}, {jenis: "akhir", nama: "Sidang Akhir"}];
+    $scope.jenisSidang = [];
     var method = $routeParams.method;
     $scope.updateDosen = function() {
         var id_bidang_minat = [];
@@ -71,6 +74,20 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         updateDosen($rootScope, $http, id_bidang_minat);
     }
     $scope.method = method;
+    $scope.updateJenisSidang = function() {
+        if($rootScope.mahasiswa.lolos_syarat_seminar_proposal == true) {
+            $scope.jenisSidang.push({jenis: "proposal", nama: "Seminar Proposal"});
+        }
+
+        if($rootScope.mahasiswa.lolos_syarat_sidang_akhir == true) {
+            $scope.jenisSidang.push({jenis: "akhir", nama: "Sidang Akhir"});
+        }
+
+        if($scope.jenisSidang.length == 0) {
+            alert('Anda belum lulus syarat Seminar Proposal atau Sidang Akhir');
+            $location.path('/');
+        }
+    }
     $scope.tambahDosenPenguji = function() {
         if($scope.sidang) {
             if($scope.sidang.pengujiSidang) {
@@ -106,6 +123,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
     }
     if(method == "baru") {
         update($rootScope, $http, function() {
+            $scope.updateJenisSidang();
             $scope.sidang = {};
             $scope.sidang.tugasAkhir = {};
             $scope.sidang.pengujiSidang = [];
@@ -120,11 +138,15 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
             }
         });
         $scope.simpan = function() {
-            $http.post("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
-                alert('Pengajuan baru dibuat.');
-                $location.path("/");
-                update($rootScope, $http);
-            });
+            if($scope.sidang.pengujiSidang.length == 4) {
+                $http.post("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
+                    alert('Pengajuan baru dibuat.');
+                    $location.path("/");
+                    update($rootScope, $http);
+                });
+            } else {
+                alert('Jumlah Dosen Penguji harus berjumlah (empat) orang.');
+            }
         };
     } else if (method == "sunting") {
         if($routeParams.id) {
@@ -143,6 +165,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
             $scope.sidang = {};
             $scope.sidang.pengujiSidang = [];
             update($rootScope, $http, function() {
+                $scope.updateJenisSidang();
                 $.each($rootScope.items, function(i, val) {
                     if(val.id_sidang == $routeParams.id) {
                         $scope.sidang.id_sidang  = val.id_sidang

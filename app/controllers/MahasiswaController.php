@@ -89,7 +89,14 @@ class MahasiswaController extends BaseController {
         }
         else
         {
-            return Response::json(Mahasiswa::where('aktif', '1')->get());
+            if(Request::has('mySelf'))
+            {
+                return Response::json(Mahasiswa::find(Auth::user()->nomor_induk));
+            }
+            else
+            {
+                return Response::json(Mahasiswa::where('aktif', '1')->get());
+            }
         }
     }
 

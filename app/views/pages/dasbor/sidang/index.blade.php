@@ -115,11 +115,16 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
     } else if (method == "sunting") {
         if($routeParams.id) {
             $scope.sunting = function() {
-                $http.put("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
-                    alert('Penyuntingan berhasil');
-                    $location.path("/");
-                    update($rootScope, $http);
-                });
+                // Cek jumlah pengujiSidang apakah 4
+                if($scope.sidang.pengujiSidang.length >= 4) {
+                    $http.put("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
+                        alert('Penyuntingan berhasil');
+                        $location.path("/");
+                        update($rootScope, $http);
+                    });
+                } else {
+                    alert('Jumlah Dosen Penguji minimal adalah 4 (empat) orang.');
+                }
             }
             $scope.sidang = {};
             $scope.sidang.pengujiSidang = [];

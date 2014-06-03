@@ -186,18 +186,21 @@ class SidangController extends BaseController {
                 foreach(Input::get('pengujiSidang') as $penguji)
                 {
                     $dosen = Dosen::find($penguji['nip_dosen']);
-                    if(!$sidang->pengujiSidang->contains($dosen->nip_dosen))
-                    {
-                        $sidang->pengujiSidang()->attach($dosen);
-                    }
+                    $sidang->pengujiSidang()->attach($dosen);
                 }
 
                 $ruangan = Ruangan::find(Input::get('ruangan.id_ruangan'));
+                $jenisSidang = Input::get('jenis_sidang');
+                $mahasiswa = $tugasAkhir->mahasiswa()->first()->toArray();
+                if(($jenisSidang == "proposal" && $mahasiswa['lolos_syarat_seminar_proposal'] == true) ||
+                ($jenisSidang == "akhir" && $mahasiswa['lolos_syarat_sidang_akhir'] == true))
+                {
+                    $sidang->fill(Input::get());
+                    $sidang->ruangan()->associate($ruangan);
+                    $sidang->tugasAkhir()->associate($tugasAkhir);
+                    $sidang->save();
+                }
 
-                $sidang->fill(Input::get());
-                $sidang->ruangan()->associate($ruangan);
-                $sidang->tugasAkhir()->associate($tugasAkhir);
-                $sidang->save();
 
             }
             else

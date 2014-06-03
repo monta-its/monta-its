@@ -46,8 +46,10 @@ class TugasAkhirController extends BaseController {
     {
         $dosen = Dosen::find(Auth::user()->nomor_induk);
         $tugasAkhir = $dosen->pembimbingTugasAkhir()->with('mahasiswa', 'penawaranJudul')->where('dosen_pembimbing.id_tugas_akhir', $id_tugas_akhir)->first();
+        $mahasiswa = $tugasAkhir->mahasiswa()->first()->toArray();
         $statusTugasAkhir = StatusTugasAkhir::get();
 
+        View::share('mahasiswa', $mahasiswa);
         View::share('item', $tugasAkhir);
         View::share('status', $statusTugasAkhir);
         return View::make('pages.dasbor.bimbingan.item');

@@ -60,6 +60,11 @@ class Mahasiswa extends Eloquent {
         return $this->belongsToMany('Simta\Models\Syarat', 'syarat_mahasiswa', 'nrp_mahasiswa', 'id_syarat');
     }
 
+    /**
+     * Mencari tahu apakah mahasiswa bersangkutan sudah lulus syarat tertentu
+     *
+     * @return Simta\Models\Syarat
+     */
     function apakahLulusSyarat($waktu_syarat)
     {
         $totalSyarat = Syarat::where('waktu_syarat','=',$waktu_syarat)->count();
@@ -67,12 +72,22 @@ class Mahasiswa extends Eloquent {
         {
             return false;
         }
-        else 
+        else
         {
             $countSyarat = $this->syarat()->where('waktu_syarat','=',$waktu_syarat)->count();
 
             return $totalSyarat == $countSyarat;
         }
     }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['lolos_syarat_bimbingan'] = $this->apakahLulusSyarat('pra_bimbingan');
+        $array['lolos_syarat_seminar_proposal'] = $this->apakahLulusSyarat('pra_seminar_proposal');
+        $array['lolos_syarat_sidang_akhir'] = $this->apakahLulusSyarat('pra_sidang_akhir');
+        return $array;
+    }
+
 }
 ?>

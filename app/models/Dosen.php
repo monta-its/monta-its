@@ -131,7 +131,7 @@ class Dosen extends Eloquent {
 
     public function jadwalDosen()
     {
-        return $this->hasMany('Simta\Models\JadwalDosen', 'sesi', 'sesi');
+        return $this->hasMany('Simta\Models\JadwalDosen', 'nip_dosen', 'nip_dosen');
     }
 
     /**

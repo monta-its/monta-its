@@ -15,7 +15,7 @@ Pengunggahan(Upload) Proposal Tugas Akhir
         <br>
         <div class="panel panel-default">
           <div class="panel-body">
-            <table class="table">
+            <table class="table table-condensed table-striped">
                 <tbody>
                   <tr>
                     <td>Nama Berkas Proposal</td>

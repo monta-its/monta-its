@@ -12,7 +12,7 @@ Dasbor Mahasiswa
                 Sidang
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <!--<th class="text-center">No.</th>-->
@@ -62,7 +62,7 @@ Dasbor Mahasiswa
                 Tugas Akhir
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <tbody>
                         <tr>
                             <td>Pembimbing</td>
@@ -132,7 +132,7 @@ Dasbor Mahasiswa
                 Profil Mahasiswa
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <tbody>
                         <tr>
                             <td class="col-md-3">Nama</td>

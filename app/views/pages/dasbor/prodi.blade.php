@@ -11,7 +11,7 @@ Dasbor
                 Tugas Akhir
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <tbody>
                         <tr>
                             <td class="col-md-3">Dosen Pembimbing</td>

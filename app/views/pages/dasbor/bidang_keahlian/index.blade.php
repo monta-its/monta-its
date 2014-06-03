@@ -134,7 +134,7 @@ app.config(function($httpProvider) {
         </div>
         <div class="row" ng-controller="daftarBidangKeahlianController">
             <div class="col-md-12">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th>Nama</th>

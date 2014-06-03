@@ -70,7 +70,7 @@ app.config(function($httpProvider) {
         <div class="row">
             <div class="col-md-12">
                 <h2>Daftar Sit In</h2>
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">Nama Dosen</th>
@@ -98,7 +98,7 @@ app.config(function($httpProvider) {
                 <ul class="list-unstyled">
                     <li ng-repeat="item in prodi_items">
                         <h3>[[item.nama_bidang_minat]]</h3>
-                        <table class="table">
+                        <table class="table table-condensed table-striped">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nama Dosen</th>

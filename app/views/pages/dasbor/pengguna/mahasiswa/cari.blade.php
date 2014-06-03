@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-8">
-        <table class="table">
+        <table class="table table-condensed table-striped">
             <tbody>
                 <tr>
                     <td class="col-md-3 col-sm-4 col-xs-4"><strong>Nama</strong></td>

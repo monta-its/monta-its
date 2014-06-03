@@ -6,7 +6,7 @@
     <h3>Profil Dosen</h3>
     <div class="row">
         <div class="col-md-12">
-            <table class="table">
+            <table class="table table-condensed table-striped">
                 <tbody>
                     <tr>
                         <td class="col-md-2 col-sm-2 col-xs-2"><strong>Nama</strong></td>
@@ -34,7 +34,7 @@
                         <td><strong>Penawaran Judul</strong></td>
                         <td>: </td>
                         <td>
-                            <table class="table">
+                            <table class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Judul Tugas Akhir</th>

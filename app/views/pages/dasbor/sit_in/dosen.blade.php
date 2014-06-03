@@ -51,7 +51,7 @@ app.config(function($httpProvider) {
         <div class="row">
             <div class="col-md-12">
                 <h2>Daftar Sit In Saat Ini</h2>
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">Nama Mahasiswa</th>
@@ -69,7 +69,7 @@ app.config(function($httpProvider) {
                 </table>
 
                 <h2>Daftar Permintaan Sit In</h2>
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">Nama Mahasiswa</th>
@@ -90,7 +90,7 @@ app.config(function($httpProvider) {
                     </tbody>
                 </table>
                 <h2>Daftar Pembatalan Sit In</h2>
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">Nama Mahasiswa</th>

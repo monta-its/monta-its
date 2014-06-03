@@ -11,7 +11,7 @@ Dasbor Dosen
                 Mahasiswa Bimbingan
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -41,7 +41,7 @@ Dasbor Dosen
                 Mahasiswa Sit In
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -96,7 +96,7 @@ Dasbor Dosen
                 Jadwal Sidang Mahasiswa Bimbingan
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">No.</th>
@@ -138,7 +138,7 @@ Dasbor Dosen
                 Jadwal Menguji Sidang
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">No.</th>

@@ -100,7 +100,7 @@ app.config(function($httpProvider) {
                 </div>
             </div>
             <div class="col-md-12">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th>Nama Berkas</th>

@@ -10,7 +10,7 @@ Bimbingan Tugas Akhir
                 Mahasiswa Bimbingan
             </div>
             <div class="panel-body">
-                <table class="table">
+                <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
                             <th>No.</th>

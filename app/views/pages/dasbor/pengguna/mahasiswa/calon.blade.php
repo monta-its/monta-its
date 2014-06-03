@@ -1,7 +1,7 @@
 @extends('pages.dasbor.pengguna.mahasiswa.tambah')
 @section('mahasiswa_banyak')
 <form class="form-inline" role="form" method="POST" action="{{ URL::to('dasbor/pegawai/pengguna/mahasiswa/tambah') }}">  
-    <table class="table">
+    <table class="table table-condensed table-striped">
         <thead>
             <tr>
                 <th class="col-md-1 text-center">No.</th>

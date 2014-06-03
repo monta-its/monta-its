@@ -7,7 +7,7 @@ Jadwal Dosen Penguji
 <div class="row">
     <div class="col-md-12">
         <p>Jadwal ketersediaan Bapak/Ibu sebagai dosen penguji seminar/sidang.</p>
-        <table class="table">
+        <table class="table table-condensed table-striped">
             <thead>
                 <tr>
                     <th class="text-center">Hari</th>

@@ -28,7 +28,7 @@
             <button class="btn btn-primary" type="submit">Terapkan</button>
         </div>
     </form>
-    <table class="table">
+    <table class="table table-condensed table-striped">
         <thead>
             <tr>
                 <th class="text-center">No.</th>

@@ -11,7 +11,7 @@ Kelola Dosen
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table class="table">
+        <table class="table table-condensed table-striped">
             <thead>
                 <tr>
                     <th>No.</th>

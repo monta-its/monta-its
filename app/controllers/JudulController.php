@@ -18,6 +18,7 @@ use Redirect;
 use Auth;
 use Simta\Models\PenawaranJudul;
 use Simta\Models\Topik;
+use Simta\Models\Dosen;
 
 class JudulController extends BaseController {
     /**
@@ -123,6 +124,7 @@ class JudulController extends BaseController {
      */
     function dasborJudul()
     {
+        $pesan = "";
         if(Request::isMethod('get'))
         {
             if(!Request::ajax())
@@ -140,13 +142,18 @@ class JudulController extends BaseController {
             $dosen = Dosen::find(Auth::user()->nomor_induk);
             $topik = Topik::find(Input::get('topik.id_topik'));
             $judul = new PenawaranJudul;
-            if($dosen != null and $topik != null)
+            if($dosen != null && $topik != null)
             {
                 $judul->judul_tugas_akhir = Input::get('judul_tugas_akhir');
                 $judul->deskripsi = Input::get('deskripsi');
                 $judul->dosen()->associate($dosen);
                 $judul->topik()->associate($topik);
                 $judul->save();
+                $pesan = "Data berhasil disimpan.";
+            }
+            else
+            {
+                $pesan = 'Dosen atau topik tidak ditemukan. Penambahan data dibatalkan.';
             }
         }
         else if(Request::isMethod('put'))
@@ -161,12 +168,26 @@ class JudulController extends BaseController {
                 $judul->deskripsi = Input::get('deskripsi');
                 $judul->topik()->associate($topik);
                 $judul->save();
+                $pesan = "Perubahan data berhasil disimpan.";
+            }
+            else
+            {
+                $pesan = "Topik tidak ditemukan. Penyimpanan data dibatalkan.";                
             }
         }
         else if(Request::isMethod('delete'))
         {
             $judul = PenawaranJudul::find(Input::get('id_penawaran_judul'));
-            $judul->delete();
+            if ($judul != null) 
+            {
+                $judul->delete();
+                $pesan = "Penghapusan data berhasil.";    
+            }
+            else
+            {
+                $pesan = "Penawaran Judul tidak ditemukan.";
+            }
         }
+        return Response::json(array('pesan' => $pesan));
     }
 }

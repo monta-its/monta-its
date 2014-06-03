@@ -31,11 +31,11 @@ app.controller('daftarJudulController', function($scope, $http, $rootScope, $rou
     if($routeParams) {
         $scope.searchText = $routeParams.searchText;
     }
-    $scope.hapusJudul = function(id_judul) {
+    $scope.hapusJudul = function(id_penawaran_judul) {
         if(confirm("Yakin untuk menghapus ini?")) {
-        $http.delete('{{URL::to('/dasbor/dosen/judul')}}', {'params': {'id_judul': String(id_penawaran_judul)}}).success(function(data) {
+        $http.delete('{{URL::to('/dasbor/dosen/judul')}}', {'params': {'id_penawaran_judul': String(id_penawaran_judul)}}).success(function(data) {
             updateJudul($rootScope, $http);
-            alert('Judul dihapus');
+            alert(data.pesan);
         });}
     };
 });
@@ -49,10 +49,11 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
         $scope.judul.deskripsi = "";
         $scope.judul.topik = {};
         $scope.tambahJudul = function() {
-            $http.post('{{{URL::to('/dasbor/dosen/judul')}}}', $scope.judul).success(function(data) {
+            $http.post('{{{URL::to('/dasbor/dosen/judul')}}}', $scope.judul).success(function(data) {console.log(data);
                 updateJudul($rootScope, $http)
                 $location.path('/');
-            })
+                alert(data.pesan);
+            });
         };
     } else if (method == "sunting") {
         if($routeParams.id) {
@@ -66,7 +67,7 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
             };
             updateJudul($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
-                    if(val.id_penawaran_judul === $scope.judul.id_penawaran_judul) {
+                    if(val.id_penawaran_judul == $scope.judul.id_penawaran_judul) {
                         $scope.judul.judul_tugas_akhir = val.judul_tugas_akhir;
                         $scope.judul.deskripsi = val.deskripsi;
                         $.each($rootScope.topik_items, function(j, val2) {

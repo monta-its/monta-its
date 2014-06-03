@@ -37,7 +37,7 @@ app.controller('daftarTopikController', function($scope, $http, $rootScope, $rou
         if(confirm("Yakin untuk menghapus ini?")) {
         $http.delete('{{URL::to('/dasbor/dosen/topik')}}', {'params': {'id_topik': String(id_topik)}}).success(function(data) {
             updateTopik($rootScope, $http);
-            alert('Topik dihapus');
+            alert(data.pesan);
         });}
     };
 });
@@ -51,7 +51,8 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
         $scope.topik.deskripsi = "";
         $scope.tambahTopik = function() {
             $http.post('{{{URL::to('/dasbor/dosen/topik')}}}', $scope.topik).success(function(data) {
-                updateTopik($rootScope, $http)
+                updateTopik($rootScope, $http);
+                alert(data.pesan);
                 $location.path('/');
             })
         };
@@ -62,17 +63,18 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
             $scope.suntingTopik = function() {
                 $http.put('{{URL::to('/dasbor/dosen/topik')}}', $scope.topik).success(function (data) {
                     updateTopik($rootScope, $http);
+                    alert(data.pesan);
                     $location.path('/');
                 });
             };
             updateTopik($rootScope, $http, function() {
                 $.each($rootScope.items, function(i, val) {
-                    if(val.id_topik === $scope.topik.id_topik) {
+                    if(val.id_topik == $scope.topik.id_topik) {
                         $scope.topik.topik = val.topik;
                         $scope.topik.deskripsi = val.deskripsi;
                         $.each($rootScope.bidang_keahlian_item, function(j, val2) {
                             if(val2.id_bidang_keahlian == val.id_bidang_keahlian) {
-                                $scope.topik.bidangMinat = val2;
+                                $scope.topik.bidangKeahlian = val2;
                             }
                         });
                     }

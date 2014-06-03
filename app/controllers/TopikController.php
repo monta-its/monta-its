@@ -119,6 +119,7 @@ class TopikController extends BaseController {
      */
     function dasborTopik()
     {
+        $pesan = "";
         if(Request::isMethod('get'))
         {
             if(!Request::ajax())
@@ -140,6 +141,11 @@ class TopikController extends BaseController {
                 $topik->deskripsi = Input::get('deskripsi');
                 $topik->bidangKeahlian()->associate($bidangKeahlian);
                 $topik->save();
+                $pesan = "Data berhasil disimpan.";
+            }
+            else
+            {
+                $pesan = 'Bidang Keahlian tidak ditemukan. Penambahan data dibatalkan.';
             }
 
         }
@@ -153,13 +159,26 @@ class TopikController extends BaseController {
                 $topik->deskripsi = Input::get('deskripsi');
                 $topik->bidangKeahlian()->associate($bidangKeahlian);
                 $topik->save();
+                $pesan = 'Perubahan data berhasil disimpan.';
             }
-
+            else
+            {
+                $pesan = 'Bidang Keahlian tidak ditemukan. Penyimpanan data dibatalkan.';
+            }
         }
         else if(Request::isMethod('delete'))
         {
             $topik = Topik::find(Input::get('id_topik'));
-            $topik->delete();
+            if ($topik != null)
+            {
+                $topik->delete();
+                $pesan = 'Penghapusan data berhasil.';
+            }
+            else
+            {
+                $pesan = 'Topik tidak ditemukan. Penghapusan data dibatalkan.';
+            }
         }
+        return Response::json(array('pesan' => $pesan));
     }
 }

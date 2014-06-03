@@ -258,3 +258,13 @@ Route::get ('/mahasiswa', function()
         echo 'Lulus pra_sidang_akhir = ' ; echo $mahasiswa->apakahLulusSyarat('pra_sidang_akhir') ? 'yes' : 'no' ; echo '<br />';
     }
 });
+
+Route::get ('/dasbor/dosen/jadwal', function()
+{
+    return View::make('pages.dasbor.jadwal.index');
+});
+
+Route::get ('/dasbor/dosen/jadwal/sunting', function()
+{
+    return View::make('pages.dasbor.jadwal.item');
+});

@@ -49,6 +49,9 @@
         <a href="{{ URL::to('dasbor/dosen/judul') }}"><span class=""></span> Penawaran Judul</a>
     </li>
     <li>
+        <a href="{{ URL::to('dasbor/dosen/jadwal') }}"><span class=""></span> Jadwal</a>
+    </li>
+    <li>
         <a href="{{ URL::to('dasbor/dosen/sidang') }}"><span class=""></span> Sidang</a>
     </li>
     <li>

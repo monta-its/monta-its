@@ -15,6 +15,8 @@
  */
 namespace Simta\Models\TeknikMesin;
 use Eloquent;
+use Simta\Models\TugasAkhir;
+use Simta\Models\Dosen;
 
 class SitIn extends Eloquent {
     protected $table = 'sit_in';
@@ -52,6 +54,18 @@ class SitIn extends Eloquent {
     public function topik()
     {
         return $this->belongsTo('Simta\Models\Topik', 'id_topik', 'id_topik');
+    }
+
+    public function buatDataTugasAkhir()
+    {
+        $tugasAkhir = TugasAkhir::create(array(
+            'nrp_mahasiswa' => $this->nrp_mahasiswa,
+            'tanggal_mulai' => date('Y-m-d'),
+            'status' => 'pengerjaan',
+            'id_topik' => $this->id_topik
+        ));
+
+        $tugasAkhir->dosenPembimbing()->save($this->dosen);
     }
 }
 ?>

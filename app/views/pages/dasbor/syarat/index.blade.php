@@ -63,7 +63,7 @@ app.controller('suntingSyaratController', function($scope, $rootScope, $http, $r
         $scope.syarat.id_syarat = $routeParams.id;
         update($rootScope, $http, function() {
             for(idx in $rootScope.items) {
-                if($rootScope.items[idx].id_syarat === $scope.syarat.id_syarat) {
+                if($rootScope.items[idx].id_syarat == $scope.syarat.id_syarat) {
                     $scope.syarat.kode_syarat = $rootScope.items[idx].kode_syarat;
                     $scope.syarat.nama_syarat = $rootScope.items[idx].nama_syarat;
                     $scope.syarat.waktu_syarat = $rootScope.items[idx].waktu_syarat;

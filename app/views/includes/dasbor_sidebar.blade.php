@@ -14,12 +14,6 @@
         <a href="{{ URL::to('dasbor/mahasiswa/berkas') }}">Unggah Berkas</a>
     </li>
     <li>
-        <a href="{{ URL::to('dasbor/mahasiswa/pembimbing') }}">Dosen Pembimbing</a>
-    </li>
-    <li>
-        <a href="{{ URL::to('dasbor/mahasiswa/penguji') }}">Dosen Penguji</a>
-    </li>
-    <li>
         <a href="{{ URL::to('dasbor/mahasiswa/sidang') }}">Sidang</a>
     </li>
 @endif

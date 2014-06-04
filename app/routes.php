@@ -40,10 +40,6 @@ Route::delete ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasbo
 
 // MahasiswaController
 Route::get ('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
-Route::get ('/dasbor/mahasiswa/akun', 'Simta\Controllers\MahasiswaController@kelolaAkun');
-Route::get ('/dasbor/mahasiswa/pembimbing', 'Simta\Controllers\MahasiswaController@kelolaPembimbing');
-Route::get ('/dasbor/mahasiswa/penguji', 'Simta\Controllers\MahasiswaController@kelolaPenguji');
-Route::get ('/dasbor/mahasiswa/proposal', 'Simta\Controllers\MahasiswaController@kelolaProposal');
 Route::get ('/mahasiswa/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@lihatProfilMahasiswa');
 
 /* Hanya pegawai yang dapat menambahkan pengguna mahasiswa. Lihat PenggunaController.

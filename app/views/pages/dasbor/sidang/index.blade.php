@@ -211,7 +211,7 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
-<div class="row" ng-app="dasborSidang">
+<div ng-app="dasborSidang">
     <ng-view>
     </ng-view>
     <script type="text/ng-template" id="sidangSunting.html">
@@ -221,7 +221,6 @@ app.config(function($httpProvider) {
                     <label>Jenis Sidang</label>
                     <select class="form-control" ng-model="sidang.jenis_sidang" ng-options="item.jenis as item.nama for item in jenisSidang"></select>
                 </div>
-
                 <div class="form-group">
                     <label>Tugas Akhir</label>
                     <select class="form-control" ng-model="sidang.tugasAkhir" ng-options="item as item.penawaran_judul.judul_tugas_akhir for item in tugasAkhir" ng-change="updateDosen()" ></select>
@@ -234,26 +233,28 @@ app.config(function($httpProvider) {
                     <label>Tanggal</label>
                     <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-mm-dd" data-autoclose="1" placeholder="Date" bs-datepicker>
                 </div>
-
                 <div class="form-group">
                     <label>Sesi Sidang</label>
                     <select class="form-control" ng-model="sidang.sesi" ng-options="item.sesi as (item.waktu_mulai + ' - ' + item.waktu_selesai) for item in sesiSidang"></select>
                 </div>
                 <div class="form-group">
                     <label>Dosen Penguji</label>
-                    <div class="form-group">
-                        <form ng-submit="tambahDosenPenguji()">
-                        <input type="text" ng-options="item.nip_dosen as item.nip_dosen + ' - ' + item.pegawai.nama_lengkap for item in dosen" ng-model="dosenPengujiDipilih" class="form-control" placeholder="Masukkan NIP/Nama Dosen" bs-typeahead></input><button type="submit" class="btn">Tambah</button>
-                        <ul>
-                            <li ng-repeat="item in sidang.pengujiSidang">
-                                [[item.pegawai.nama_lengkap]] <button ng-click="hapusDosenPenguji([[item.nip_dosen]])" class="btn">Hapus</button>
-                            </li>
-                        </ul>
-                        </form>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form role="form" ng-submit="tambahDosenPenguji()">
+                                <div class="form-group">
+                                    <input type="text" ng-options="item.nip_dosen as item.nip_dosen + ' - ' + item.pegawai.nama_lengkap for item in dosen" ng-model="dosenPengujiDipilih" class="form-control" placeholder="Masukkan NIP/Nama Dosen" bs-typeahead />
+                                </div>
+                                <button type="submit" class="btn btn-default">Tambah Penguji</button>
+                                <ul>
+                                    <li ng-repeat="item in sidang.pengujiSidang">
+                                        [[item.pegawai.nama_lengkap]] <button ng-click="hapusDosenPenguji([[item.nip_dosen]])" class="btn">Hapus</button>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
             <div class="col-md-4">
                 <button ng-show="method=='baru'" type="submit" name="aksi" value="Simpan" class="btn btn-success" ng-click="simpan()">Simpan</button>
@@ -270,6 +271,7 @@ app.config(function($httpProvider) {
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <br />
                     <table class="table table-condensed table-striped">
                         <thead>
                             <tr>
@@ -290,7 +292,7 @@ app.config(function($httpProvider) {
                                 <td>[[item.tugas_akhir.mahasiswa.nama_lengkap]] ([[item.tugas_akhir.mahasiswa.nrp_mahasiswa]])</td>
                                 <td>
                                     <span ng-repeat="penguji in item.penguji_sidang">
-                                        [[penguji.pegawai.nama_lengkap]] </br>
+                                    [[penguji.pegawai.nama_lengkap]] <br />
                                     </span>
                                 </td>
                                 <td>[[item.sesi_sidang.waktu_mulai]]</td>

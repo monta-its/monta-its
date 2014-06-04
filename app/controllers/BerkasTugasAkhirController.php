@@ -33,8 +33,8 @@ class BerkasTugasAkhirController extends BaseController {
     {
         $auth = Auth::user();
         $mahasiswa = Mahasiswa::find($auth->nomor_induk);
-
-
+        $pesan = '';
+        
         // GET: Mengambil daftar berkas tugas akhir dari mahasiswa bersangkutan
         if($mahasiswa != null)
         {
@@ -69,25 +69,68 @@ class BerkasTugasAkhirController extends BaseController {
                     if(Input::file('file'))
                     {
                         $filename = Input::file('file')->getClientOriginalName();
-                        $path = 'public/files/berkas/'.Input::get('id_tugas_akhir').'/';
-                        Input::file('file')->move($path, $filename);
+                        $path = 'files/berkas/'.Input::get('id_tugas_akhir').'/';
+                        $berkas->path = $path . $filename;
                         $berkas->nama_berkas = $filename;
-                        $berkas->path = 'files/berkas/'.Input::get('id_tugas_akhir').'/'.$filename;
                         $berkas->save();
+                        
+                        if (File::exists($berkas->path))
+                        {
+                            $pesan = 'Ada berkas dengan nama berkas yang sama. Berkas tersimpan dengan nama perubahan nama.';
+                            $ekstensi = Input::file('file')->getClientOriginalExtension();
+                            $filename = str_replace('.' . $ekstensi , '', $filename);
+                            $filename = $filename . $berkas->created_at . '.' . $ekstensi;
+                            $filename = str_replace(':', '', $filename);
+                            $berkas->nama_berkas = $filename;
+                            $berkas->path = $path . $filename;
+                            $berkas->save();
+                        }
+                        else
+                        {
+                            $pesan = 'Berkas berhasil disimpan.';
+                        }
+
+                        // Save file to specific $path, named it with $filename
+                        Input::file('file')->move($path, $filename);
                         $tugasAkhir->berkas()->save($berkas);
                     }
-
+                    else
+                    {
+                        $pesan = 'Terjadi masalah saat proses pengunggahan berkas. Operasi dibatalkan.';
+                    }
                 }
-
+                else
+                {
+                    $pesan = 'Data Tugas Akhir tidak ditemukan. Penyimpanan berkas dibatalkan.';
+                }
             }
             else if(Request::isMethod('delete'))
             {
                 $berkas = BerkasTugasAkhir::find(Input::get('id_berkas_tugas_akhir'));
-                File::delete('public/'.$berkas->path);
-                $berkas->delete();
+                if ($berkas != null)
+                {
+                    if (File::exists($berkas->path))
+                    {
+                        File::delete($berkas->path);
+                        $pesan = "Penghapusan berkas berhasil.";
+                    }
+                    else
+                    {
+                        $pesan = 'Berkas tidak ditemukan di sistem berkas. Data berkas telah dihapus. Namun, ada kemungkinan berkas masih tersimpan di sistem berkas.';
+                    }
+                    $berkas->delete();
+                }
+                else
+                {
+                    $pesan = 'Data berkas tidak ditemukan. Penghapusan berkas dibatalkan.';
+                }
             }
         }
+        else 
+        {
+            $pesan = 'Data mahasiswa tidak ditemukan. Operasi berkas dibatalkan.';
+        }
+
+        return Response::json(array('pesan' => $pesan));
     }
-
-
 }

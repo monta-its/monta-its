@@ -221,6 +221,31 @@ class Dosen extends Eloquent {
         return $kuotaTotal - $this->bebanBimbinganSemesterDepan() - $sitInTerambil;
     }
 
+    /**
+     * Mengetahui berdasarkan JadwalDosen apakah dosen bersangkutan tersedia pada sesi dan hari dipilih
+     * @return boolean
+    */
+    public function apakahTersediaJadwalDosen($hari, $sesi)
+    {
+        $jadwalDosen = $this->jadwalDosen()->where('hari', $hari)->where('sesi', $sesi);
+
+        // Data tidak ada, anggap tersedia
+        if($jadwalDosen->count() == 0)
+        {
+            return true;
+        }
+
+        $jadwalDosen = $jadwalDosen->first();
+        if($jadwalDosen->apakah_tersedia == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public function toArray()
     {
         $array = parent::toArray();

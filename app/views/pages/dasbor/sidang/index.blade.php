@@ -44,8 +44,8 @@ var update = function($rootScope, $http, callback) {
 
 };
 
-var updateDosen = function($rootScope, $http, id_bidang_minat, callback) {
-    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?bidangMinat=' + JSON.stringify(id_bidang_minat)).success(function(data){
+var updateDosenUp = function($rootScope, $http, id_bidang_minat, hari, sesi, callback) {
+    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?hari=' + String(hari) + '&sesi=' + String(sesi) + '&bidangMinat=' + JSON.stringify(id_bidang_minat)).success(function(data){
         $rootScope.dosen = data;
         if(callback) callback();
     });
@@ -65,14 +65,21 @@ app.controller('daftarSidangController', function($scope, $http, $rootScope) {
 
 app.controller('sidangSuntingController', function($rootScope, $scope, $http, $routeParams, $location) {
     $scope.jenisSidang = [];
+    $scope.sidang = {};
     var method = $routeParams.method;
     $scope.updateDosen = function() {
         var id_bidang_minat = [];
+        var sesi = $scope.sidang.sesi;
+
+        var hari = (new Date($scope.sidang.tanggal)).getDay();
+
         $.each($scope.sidang.tugasAkhir.penawaran_judul.topik.bidang_keahlian.bidang_minat, function(i, val) {
             id_bidang_minat.push(val.id_bidang_minat)
         });
-        updateDosen($rootScope, $http, id_bidang_minat);
-    }
+
+        updateDosenUp($rootScope, $http, id_bidang_minat, hari, sesi);
+    };
+
     $scope.method = method;
     $scope.updateJenisSidang = function() {
         if($rootScope.mahasiswa.lolos_syarat_seminar_proposal == true) {
@@ -124,12 +131,14 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
     if(method == "baru") {
         update($rootScope, $http, function() {
             $scope.updateJenisSidang();
-            $scope.sidang = {};
             $scope.sidang.tugasAkhir = {};
             $scope.sidang.pengujiSidang = [];
             $scope.sidang.ruangan = {};
             $scope.sidang.jenis_sidang = "akhir";
-            $scope.sidang.tanggal = "";
+
+            var date = new Date();
+            $scope.sidang.tanggal = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+
             if($rootScope.sesiSidang.length > 0) {
                 $scope.sidang.sesi = $rootScope.sesiSidang[0].sesi;
             } else {
@@ -162,7 +171,6 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
                     alert('Jumlah Dosen Penguji harus berjumlah (empat) orang.');
                 }
             }
-            $scope.sidang = {};
             $scope.sidang.pengujiSidang = [];
             update($rootScope, $http, function() {
                 $scope.updateJenisSidang();
@@ -232,12 +240,12 @@ app.config(function($httpProvider) {
                 </div>
                 <div class="form-group">
                     <label>Tanggal</label>
-                    <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-mm-dd" data-autoclose="1" placeholder="Date" bs-datepicker>
+                    <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-MM-dd" data-autoclose="1" ng-change="updateDosen()" bs-datepicker>
                 </div>
 
                 <div class="form-group">
                     <label>Sesi Sidang</label>
-                    <select class="form-control" ng-model="sidang.sesi" ng-options="item.sesi as (item.waktu_mulai + ' - ' + item.waktu_selesai) for item in sesiSidang"></select>
+                    <select class="form-control" ng-model="sidang.sesi" ng-options="item.sesi as (item.waktu_mulai + ' - ' + item.waktu_selesai) for item in sesiSidang" ng-change="updateDosen()"></select>
                 </div>
                 <div class="form-group">
                     <label>Dosen Penguji</label>

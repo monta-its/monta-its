@@ -234,10 +234,6 @@ app.config(function($httpProvider) {
                     <select class="form-control" ng-model="sidang.tugasAkhir" ng-options="item as item.penawaran_judul.judul_tugas_akhir for item in tugasAkhir" ng-change="updateDosen()" ></select>
                 </div>
                 <div class="form-group">
-                    <label>Ruangan</label>
-                    <select class="form-control" ng-model="sidang.ruangan" ng-options="item as item.nama_ruangan for item in ruangan" ></select>
-                </div>
-                <div class="form-group">
                     <label>Tanggal</label>
                     <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-MM-dd" data-autoclose="1" ng-change="updateDosen()" bs-datepicker>
                 </div>
@@ -246,21 +242,39 @@ app.config(function($httpProvider) {
                     <select class="form-control" ng-model="sidang.sesi" ng-options="item.sesi as (item.waktu_mulai + ' - ' + item.waktu_selesai) for item in sesiSidang" ng-change="updateDosen()"></select>
                 </div>
                 <div class="form-group">
+                    <label>Ruangan</label>
+                    <select class="form-control" ng-model="sidang.ruangan" ng-options="item as item.nama_ruangan for item in ruangan" ></select>
+                </div>
+                <div class="form-group">
                     <label>Dosen Penguji</label>
                     <div class="panel panel-default">
-                        <div class="panel-body">
-                            <form role="form" ng-submit="tambahDosenPenguji()">
+                        <form role="form" ng-submit="tambahDosenPenguji()">
+                            <div class="panel-body">
                                 <div class="form-group">
                                     <input type="text" ng-options="item.nip_dosen as item.nip_dosen + ' - ' + item.pegawai.nama_lengkap for item in dosen" ng-model="dosenPengujiDipilih" class="form-control" placeholder="Masukkan NIP/Nama Dosen" bs-typeahead />
                                 </div>
-                                <button type="submit" class="btn btn-default">Tambah Penguji</button>
-                                <ul>
-                                    <li ng-repeat="item in sidang.pengujiSidang">
-                                        [[item.pegawai.nama_lengkap]] <button ng-click="hapusDosenPenguji([[item.nip_dosen]])" class="btn">Hapus</button>
-                                    </li>
-                                </ul>
-                            </form>
-                        </div>
+                                <button type="submit" class="btn btn-primary">Tambah Penguji</button>
+                                
+                            </div>
+                            <table class="table table-condensed table-striped">
+                                <thead ng-show="sidang.pengujiSidang.length != 0">
+                                    <tr>
+                                        <th class="text-center">No.</th>
+                                        <th class="text-center">Nama Dosen</th>
+                                        <th class="text-center">NIP</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in sidang.pengujiSidang">
+                                        <td class="col-md-2 text-center">[[$index + 1]].</td>
+                                        <td>[[item.pegawai.nama_lengkap]]</td>
+                                        <td class="col-md-4 text-center">[[item.nip_dosen]]</td>
+                                        <td class="col-md-2 text-center"><button ng-click="hapusDosenPenguji([[item.nip_dosen]])" class="btn btn-xs btn-danger">Hapus</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -280,41 +294,52 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-12">
                     <br />
-                    <table class="table table-condensed table-striped">
-                        <thead>
-                            <tr>
-                                <th>Jenis Sidang</th>
-                                <th>Judul TA</th>
-                                <th>Mahasiswa</th>
-                                <th>Dosen Penguji</th>
-                                <th>Waktu Mulai</th>
-                                <th>Waktu Selesai</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in items">
-                                <td>[[item.jenis_sidang]]</td>
-                                <td>[[item.tugas_akhir.penawaran_judul.judul_tugas_akhir]]</td>
-                                <td>[[item.tugas_akhir.mahasiswa.nama_lengkap]] ([[item.tugas_akhir.mahasiswa.nrp_mahasiswa]])</td>
-                                <td>
-                                    <span ng-repeat="penguji in item.penguji_sidang">
-                                    [[penguji.pegawai.nama_lengkap]] <br />
-                                    </span>
-                                </td>
-                                <td>[[item.sesi_sidang.waktu_mulai]]</td>
-                                <td>[[item.sesi_sidang.waktu_selesai]]</td>
-                                <td ng-show="item.disetujui == -1">Ditolak</td>
-                                <td ng-show="item.disetujui == 0">Diajukan</td>
-                                <td ng-show="item.disetujui == 1">Disetujui</td>
-                                <td>
-                                    <a href="#/sunting/[[item.id_sidang]]">Sunting</a>
-                                    <a href="#/" ng-click="hapus([[item.id_sidang]])">Hapus</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div ng-repeat="item in items">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span ng-show="item.jenis_sidang == 'proposal'">Seminar Proposal</span>
+                                <span ng-show="item.jenis_sidang == 'akhir'">Sidang Akhir</span>
+                                <div class="btn-toolbar pull-right">
+                                    <div class="btn-group">
+                                        <a href="#/" ng-click="hapus([[item.id_sidang]])" class="btn btn-xs btn-danger pull-right">Hapus</a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="#/sunting/[[item.id_sidang]]" class="btn btn-xs btn-default pull-right">Sunting</a>     
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-condensed table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td class="col-md-2"><strong>Judul TA</strong></td>
+                                        <td>[[item.tugas_akhir.penawaran_judul.judul_tugas_akhir]]</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-2"><strong>Mahasiswa</strong></td>
+                                        <td>[[item.tugas_akhir.mahasiswa.nama_lengkap]] ([[item.tugas_akhir.mahasiswa.nrp_mahasiswa]])</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-2"><strong>Dosen Penguji</strong></td>
+                                        <td>
+                                            <span ng-repeat="penguji in item.penguji_sidang">
+                                                <a href="{{ URL::to('/dosen/') }}/[[penguji.nip_dosen]]" title="">[[penguji.pegawai.nama_lengkap]]</a><span ng-show="!$last"> · </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-2"><strong>Sesi</strong></td>
+                                        <td>ke-[[item.sesi_sidang.sesi]]: pukul [[item.sesi_sidang.waktu_mulai]] - [[item.sesi_sidang.waktu_selesai]] WIB</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-2"><strong>Status</strong></td>
+                                        <td ng-show="item.disetujui == -1">Ditolak</td>
+                                        <td ng-show="item.disetujui == 0">Diajukan</td>
+                                        <td ng-show="item.disetujui == 1">Disetujui</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

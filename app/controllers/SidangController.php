@@ -151,7 +151,7 @@ class SidangController extends BaseController {
                 else
                 {
                     // Sementara view untuk /dasbor/mahasiswa/sidang dulu ini
-                    return View::make('pages.dasbor.sidang.index');
+                    return View::make('pages.dasbor.sidang.mahasiswa');
                 }
             }
             else if(Request::isMethod('post') || Request::isMethod('put'))

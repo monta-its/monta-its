@@ -45,7 +45,7 @@ Dasbor Mahasiswa
                                 @endif
                             @endforeach
                         @else
-                            <a href="{{ URL::to('dasbor/mahasiswa/penguji') }}" class="btn btn-default">Tentukan</a>
+                            <a href="{{ URL::to('dasbor/mahasiswa/penguji') }}" class="btn btn-xs btn-default">Tentukan</a>
                         @endif
                         </td>
                     </tr>

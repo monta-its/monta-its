@@ -237,7 +237,7 @@ class RudeSeeder extends Seeder {
                 {
                     $jadwalDosen = new JadwalDosen;
                     $jadwalDosen->hari = rand(1,5);
-                    $jadwalDosen->sesi = rand(1,5);
+                    $jadwalDosen->sesi = rand(1,SesiSidang::count());
                     $jadwalDosen->apakah_tersedia = rand(0,1);
                     $jadwalDosen->dosen()->associate($dosen);
                     $jadwalDosen->save();
@@ -354,7 +354,7 @@ class RudeSeeder extends Seeder {
 
                         $sidang = new Sidang;
                         $sidang->jenis_sidang = "proposal";
-                        $sidang->sesi = 5;
+                        $sidang->sesi = rand(1,SesiSidang::count());
                         $sidang->tanggal = "2014-12-12";
                         $sidang->disetujui = 0;
                         $sidang->ruangan()->associate($ruangan);

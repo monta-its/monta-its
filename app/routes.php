@@ -162,16 +162,15 @@ Route::delete('/dasbor/dosen/tugas_akhir', 'Simta\Controllers\TugasAkhirControll
 Route::get('/dasbor/pegawai', 'Simta\Controllers\PegawaiController@dasborPegawai');
 
 // SyaratController
-Route::get('/dasbor/pegawai/syarat_mahasiswa', 'Simta\Controllers\SyaratController@dasborSyarat');
-Route::get('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
-Route::post('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
-Route::delete('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborSyarat');
-Route::get('/dasbor/pegawai/syarat', function(){
-    return View::make('pages.dasbor.syarat.index');
-});
-Route::get('/dasbor/pegawai/syarat/sunting', function(){
-    return View::make('pages.dasbor.syarat.item');
-});
+Route::get('/dasbor/pegawai/syarat_mahasiswa', 'Simta\Controllers\SyaratController@dasborCentangSyarat');
+Route::get('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborCentangSyarat');
+Route::post('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborCentangSyarat');
+Route::delete('/dasbor/pegawai/syarat_mahasiswa/{nrp_mahasiswa}', 'Simta\Controllers\SyaratController@dasborCentangSyarat');
+
+Route::get('/dasbor/pegawai/syarat', 'Simta\Controllers\SyaratController@dasborKelolaSyarat');
+Route::post('/dasbor/pegawai/syarat', 'Simta\Controllers\SyaratController@dasborKelolaSyarat');
+Route::put('/dasbor/pegawai/syarat', 'Simta\Controllers\SyaratController@dasborKelolaSyarat');
+Route::delete('/dasbor/pegawai/syarat', 'Simta\Controllers\SyaratController@dasborKelolaSyarat');
 
 // RuanganController
 Route::get('/dasbor/pegawai/ruangan', 'Simta\Controllers\RuanganController@dasborRuangan');

@@ -21,11 +21,11 @@ use Auth;
 
 class SyaratController extends BaseController {
     /**
-     * Dasbor Syarat
+     * Dasbor Centang Syarat Mahasiswa
      * Penentuan apakah syarat mahasiswa bersangkutan telah dipenuhi
      * @return View
      */
-    function dasborSyarat($nrp_mahasiswa = null)
+    function dasborCentangSyarat($nrp_mahasiswa = null)
     {
         if(Request::isMethod('get'))
         {
@@ -42,8 +42,7 @@ class SyaratController extends BaseController {
                 }
                 else
                 {
-                    $syarat = Syarat::get();
-                    return Response::json($syarat);
+                    return Response::json(array());
                 }
             }
         }
@@ -71,6 +70,46 @@ class SyaratController extends BaseController {
                     $mahasiswa->syarat()->detach(Input::get('id_syarat'));
                 }
             }
+        }
+    }
+
+
+    /**
+     * Dasbor Kelola Daftar Syarat yang tersedia
+     *
+     * @return View
+     */
+    public function dasborKelolaSyarat()
+    {
+        if(Request::isMethod('get'))
+        {
+            if(!Request::ajax())
+            {
+                return View::make('pages.dasbor.syarat.index');
+            }
+            else
+            {
+                return Response::json(Syarat::get());
+            }
+        }
+        else if(Request::isMethod('post') || Request::isMethod('put'))
+        {
+           if(Request::isMethod('post'))
+           {
+               $syarat = new Syarat;
+           }
+           else
+           {
+               $syarat = Syarat::find(Input::get('id_syarat'));
+           }
+
+           $syarat->fill(Input::get());
+           $syarat->save();
+        }
+        else if(Request::isMethod('delete'))
+        {
+           $syarat = Syarat::find(Input::get('id_syarat'));
+           $syarat->delete();
         }
     }
 

@@ -200,8 +200,6 @@ class SidangController extends BaseController {
                     $sidang->tugasAkhir()->associate($tugasAkhir);
                     $sidang->save();
                 }
-
-
             }
             else
             {

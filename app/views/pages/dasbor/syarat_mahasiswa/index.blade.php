@@ -23,7 +23,7 @@ app.controller('syaratController', function($http, $scope) {
         $scope.dataMahasiswa = data;
     });
     // Ambil data syarat mentah
-    $http.get('{{{URL::to('/dasbor/pegawai/syarat_mahasiswa')}}}').success(function(data) {
+    $http.get('{{{URL::to('/dasbor/pegawai/syarat')}}}').success(function(data) {
         $scope.dataSyarat = data;
     });
 

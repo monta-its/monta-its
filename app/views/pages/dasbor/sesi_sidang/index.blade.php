@@ -29,7 +29,7 @@ app.controller('daftarSesiSidangController', function($scope, $http, $rootScope)
         if(confirm("Yakin untuk menghapus ini?")) {
             $http.delete('{{URL::to('/dasbor/pegawai/sesi_sidang')}}', {'params': {'sesi': String(sesi)}}).success(function(data) {
                 update($rootScope, $http);
-                alert('Sesi Sidang dihapus');
+                alert(data.pesan);
             });
         }
     };
@@ -45,7 +45,8 @@ app.controller('sesiSidangSuntingController', function($rootScope, $scope, $http
         $scope.sesiSidang.waktu_selesai = "";
         $scope.simpan = function() {
             $http.post('{{{URL::to('/dasbor/pegawai/sesi_sidang')}}}', $scope.sesiSidang).success(function(data) {
-                update($rootScope, $http)
+                update($rootScope, $http);
+                alert(data.pesan);
                 $location.path('/');
             })
         };
@@ -56,6 +57,7 @@ app.controller('sesiSidangSuntingController', function($rootScope, $scope, $http
             $scope.sunting = function() {
                 $http.put('{{URL::to('/dasbor/pegawai/sesi_sidang')}}', $scope.sesiSidang).success(function (data) {
                     update($rootScope, $http);
+                    alert(data.pesan);
                     $location.path('/');
                 });
             };
@@ -96,8 +98,8 @@ app.config(function($httpProvider) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label>Nama Sesi (Angka)</label>
-                        <input ng-model="sesiSidang.sesi" type="text" class="form-control"  placeholder="Nama Sesi Sidang">
+                        <label>Nomor Sesi (Angka)</label>
+                        <input ng-model="sesiSidang.sesi" type="text" class="form-control"  placeholder="Nomor Sesi Sidang">
                     </div>
                     <div class="form-group" ng-class="{'has-error': timepickerForm.time2.$invalid}">
                         <label>Waktu Mulai</label>
@@ -138,7 +140,7 @@ app.config(function($httpProvider) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
+                        <tr ng-repeat="item in items | filter: searchText | orderBy:'sesi':reverse">
                             <td>[[item.sesi]]</td>
                             <td>[[item.waktu_mulai]]</td>
                             <td>[[item.waktu_selesai]]</td>

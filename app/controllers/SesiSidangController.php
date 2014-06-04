@@ -30,6 +30,7 @@ class SesiSidangController extends BaseController {
     function dasborSesiSidang()
     {
         $auth = Auth::user();
+        $pesan = '';
         if(Request::isMethod('get'))
         {
             if(!Request::ajax())
@@ -41,28 +42,48 @@ class SesiSidangController extends BaseController {
                 return Response::json(SesiSidang::get());
             }
         }
-        else if(Request::isMethod('post') || Request::isMethod('put'))
+        else if(Request::isMethod('post'))
         {
-            if(Request::isMethod('post'))
+            if (SesiSidang::find(Input::get('sesi')) == null)
             {
                 $sesiSidang = new SesiSidang;
+                $sesiSidang->fill(Input::get());
+                $sesiSidang->save();
+                $pesan = 'Penambahan data berhasil.';
             }
-            else if(Request::isMethod('put'))
+            else
             {
-                $sesiSidang = SesiSidang::find(Input::get('sesi'));
+                $pesan = 'Nomor sesi sudah ada. Penyimpanan data dibatalkan.';
             }
-
-            $sesiSidang->fill(Input::get());
-            $sesiSidang->save();
+            
+        }
+        else if(Request::isMethod('put'))
+        {
+            $sesiSidang = SesiSidang::find(Input::get('sesi'));
+            if ($sesiSidang != null)
+            {
+                $sesiSidang->fill(Input::get());
+                $sesiSidang->save();
+                $pesan = 'Perubahan data berhasil disimpan.';
+            }
+            else
+            {
+                $pesan = 'Data Sesi Sidang tidak ditemukan. Penyimpanan data dibatalkan.';
+            }
         }
         else if(Request::isMethod('delete'))
         {
             $sesiSidang = SesiSidang::find(Input::get('sesi'));
-            $sesiSidang->delete();
+            if ($sesiSidang != null)
+            {
+                $sesiSidang->forceDelete();
+                $pesan = 'Penghapusan data berhasil.';
+            }
+            else
+            {
+                $pesan = 'Data Sesi Sidang tidak ditemukan. Penghapusan data dibatalkan.';
+            }
         }
+        return Response::json(array('pesan' => $pesan));
     }
-
-
-
-
 }

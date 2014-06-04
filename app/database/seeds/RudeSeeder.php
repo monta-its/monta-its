@@ -54,11 +54,9 @@ class RudeSeeder extends Seeder {
         // SesiSidang
         try
         {
-            SesiSidang::create(array('sesi' => '1', 'waktu_mulai' => '07:00:00', 'waktu_selesai' => '08:59:59'));
-            SesiSidang::create(array('sesi' => '2', 'waktu_mulai' => '09:00:00', 'waktu_selesai' => '10:59:59'));
-            SesiSidang::create(array('sesi' => '3', 'waktu_mulai' => '11:00:00', 'waktu_selesai' => '12:59:59'));
-            SesiSidang::create(array('sesi' => '4', 'waktu_mulai' => '13:00:00', 'waktu_selesai' => '14:59:59'));
-            SesiSidang::create(array('sesi' => '5', 'waktu_mulai' => '15:00:00', 'waktu_selesai' => '16:59:59'));
+            SesiSidang::create(array('sesi' => '1', 'waktu_mulai' => '08:00', 'waktu_selesai' => '12:00'));
+            SesiSidang::create(array('sesi' => '2', 'waktu_mulai' => '13:00', 'waktu_selesai' => '17:00'));
+            SesiSidang::create(array('sesi' => '3', 'waktu_mulai' => '18:30', 'waktu_selesai' => '22:30'));
         }
         catch (Exception $e)
         {

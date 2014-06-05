@@ -35,9 +35,18 @@ app.controller('sitInController', function($scope, $http, $rootScope) {
             $http.delete('{{URL::to('/dasbor/mahasiswa/sit_in')}}', {'params': {'id_sit_in': String(id_sit_in)}}).success(function(data) {
                 alert(data.pesan);
                 update($rootScope, $http);
-            });    
+            });
         }
-        
+
+    };
+
+    $scope.buatDataTugasAkhir = function(id_sit_in) {
+        if(confirm('Konfirmasikan pemrosesan TA dari Sitin?')) {
+            $http.post('{{URL::to('/dasbor/mahasiswa/proses_ta')}}', {id_sit_in: String(id_sit_in)}).success(function(data) {
+                alert('Tugas Akhir telah dibuat.');
+                update($rootScope, $http);
+            });
+        }
     };
 
     $scope.pilihSitIn = function(nip_dosen) {
@@ -91,14 +100,16 @@ app.config(function($httpProvider) {
                                 <td ng-show="item.status == -1">Dibatalkan (menunggu)</td>
                                 <td ng-show="item.status == 0">Diajukan</td>
                                 <td ng-show="item.status == 1">Disetujui</td>
+                                <td ng-show="item.status == 2">TA Terproses</td>
                                 <td ng-show="item.status != -1" class="text-center">
-                                    <a class="btn btn-xs btn-warning" ng-click="batalkanSitIn([[item.id_sit_in]])">Batalkan</a>
+                                    <a class="btn btn-xs btn-warning" ng-show="item.status==0" ng-click="batalkanSitIn([[item.id_sit_in]])">Batalkan</a>
+                                    <a class="btn btn-xs btn-success" ng-show="item.status==1" ng-click="buatDataTugasAkhir([[item.id_sit_in]])">Proses TA</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                    
+
                 <h2>Pilih Dosen</h2>
                 <ul class="list-unstyled">
                     <div class="panel panel-default" ng-repeat="item in prodi_items">

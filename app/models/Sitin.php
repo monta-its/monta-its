@@ -17,6 +17,8 @@ namespace Simta\Models\TeknikMesin;
 use Eloquent;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Dosen;
+use Simta\Models\Mahasiswa;
+use Simta\Models\Topik;
 
 class SitIn extends Eloquent {
     protected $table = 'sit_in';
@@ -56,16 +58,34 @@ class SitIn extends Eloquent {
         return $this->belongsTo('Simta\Models\Topik', 'id_topik', 'id_topik');
     }
 
+    /**
+     * Buat data Tugas Akhir dari SitIn ini jika sudah disetujui
+     *
+     * @return Simta\Models\Topik
+     */
     public function buatDataTugasAkhir()
     {
-        $tugasAkhir = TugasAkhir::create(array(
-            'nrp_mahasiswa' => $this->nrp_mahasiswa,
-            'tanggal_mulai' => date('Y-m-d'),
-            'status' => 'pengerjaan',
-            'id_topik' => $this->id_topik
-        ));
+        if($this->status == 1)
+        {
+            $tugasAkhir = new TugasAkhir;
+            $mahasiswa = Mahasiswa::find($this->nrp_mahasiswa);
+            $topik = Topik::find($this->id_topik);
+            $tugasAkhir->mahasiswa()->associate($mahasiswa);
+            $tugasAkhir->topik()->associate($topik);
+            $tugasAkhir->tanggal_mulai = date('Y-m-d');
+            $tugasAkhir->status = "pengerjaan";
+            $tugasAkhir->save();
 
-        $tugasAkhir->dosenPembimbing()->save($this->dosen);
+            $tugasAkhir->dosenPembimbing()->save($this->dosen);
+
+            $this->status = 2;
+            $this->save();
+            return $tugasAkhir;
+        }
+        else
+        {
+            return null;
+        }
     }
 }
 ?>

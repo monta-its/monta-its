@@ -50,7 +50,7 @@ app.config(function($httpProvider) {
     <div ng-controller="sitInController">
         <div class="row">
             <div class="col-md-12">
-                
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Daftar Sit In Saat Ini
@@ -71,7 +71,7 @@ app.config(function($httpProvider) {
                         </tr>
                     </tbody>
                 </table>
-            </div>    
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Daftar Permintaan Sit In
@@ -97,7 +97,7 @@ app.config(function($httpProvider) {
                     </tbody>
                 </table>
             </div>
-                
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Daftar Pembatalan Sit In
@@ -123,7 +123,7 @@ app.config(function($httpProvider) {
                     </tbody>
                 </table>
             </div>
-                
+
             </div>
         </div>
     </div>

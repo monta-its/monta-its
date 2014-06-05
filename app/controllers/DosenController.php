@@ -50,7 +50,7 @@ class DosenController extends BaseController {
      */
     function lihatProfilDosen($id_dosen)
     {
-        $item = Dosen::with('bidangKeahlian', 'pegawai', 'penawaranJudul.tugasAkhir')->find($id_dosen);
+        $item = Dosen::with('bidangKeahlian', 'pegawai', 'penawaranJudul.tugasAkhir', 'pembimbingTugasAkhir.mahasiswa', 'pembimbingTugasAkhir.penawaranJudul', 'sitIn.mahasiswa')->find($id_dosen);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),

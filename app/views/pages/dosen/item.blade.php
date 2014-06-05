@@ -31,6 +31,82 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><strong>Bimbingan</strong></td>
+                        <td>: </td>
+                        <td>
+                        @if ($item->pembimbingTugasAkhir->count() != 0)
+                            <p>{{$item->pembimbingTugasAkhir->count()}} mahasiswa</p>
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Nama Mahasiswa</th>
+                                        <th class="text-center col-md-2">NRP</th>
+                                        <th class="text-center">Judul Tugas Akhir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($item->pembimbingTugasAkhir as $key => $tugasAkhir)
+                                    <tr>
+                                        <td>
+                                            <a href="{{URL::to('/mahasiswa/' . $tugasAkhir->nrp_mahasiswa)}}" >{{$tugasAkhir->mahasiswa->nama_lengkap}}</a>
+                                        </td>
+                                        <td class="text-center">
+                                            {{$tugasAkhir->nrp_mahasiswa}}
+                                        </td>
+                                        <td>
+                                            <a href="{{URL::to('/judul/' . $tugasAkhir->id_penawaran_judul)}}" >{{$tugasAkhir->penawaranJudul->judul_tugas_akhir}}</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            tidak ada
+                        @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sit In</strong></td>
+                        <td>: </td>
+                        <td>
+                        @if ($item->sitIn->count() != 0)
+                            <p>{{$item->sitIn->count()}} mahasiswa</p>
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Nama Mahasiswa</th>
+                                        <th class="text-center col-md-2">NRP</th>
+                                        <th class="text-center col-md-2">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($item->sitIn as $key => $sitIn)
+                                    <tr>
+                                        <td>
+                                            <a href="{{URL::to('/mahasiswa/' . $sitIn->nrp_mahasiswa)}}" >{{$sitIn->mahasiswa->nama_lengkap}}</a>
+                                        </td>
+                                        <td class="text-center">
+                                            {{$sitIn->nrp_mahasiswa}}
+                                        </td>
+                                        <td>
+                                        @if ($sitIn->status == 0)
+                                            <span class="label label-default">Diajukan (menunggu)</span>
+                                        @elseif ($sitIn->status == 1)
+                                            <span class="label label-success">Disetujui</span>
+                                        @elseif ($sitIn->status == -1)
+                                            <span class="label label-danger">Dibatalkan (menunggu)</span>
+                                        @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            tidak ada
+                        @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <td><strong>Penawaran Judul</strong></td>
                         <td>: </td>
                         <td>

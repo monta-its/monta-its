@@ -21,12 +21,20 @@ var update = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/pengguna/dosen')}}').success(function(data){
         $rootScope.dosen = data;
         $http.get('{{URL::to('/dasbor/mahasiswa/sidang')}}').success(function(data) {
+            $.each(data, function(index, val) {
+                val.sesi_sidang.waktu_mulai = moment(val.sesi_sidang.waktu_mulai, ['HH:mm:ss','h:mm:ss']).format('HH:mm');
+                val.sesi_sidang.waktu_selesai = moment(val.sesi_sidang.waktu_selesai, ['HH:mm:ss','h:mm:ss']).format('HH:mm');
+            });
             $rootScope.items = data;
             $http.get('{{URL::to('/dasbor/umum/dosen/tugas_akhir')}}').success(function(data) {
                 $rootScope.tugasAkhir = data;
                 $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}').success(function(data){
                     $rootScope.ruangan = data;
                     $http.get('{{URL::to('/dasbor/umum/pegawai/sesi_sidang')}}').success(function(data) {
+                        $.each(data, function(index, val) {
+                            val.waktu_mulai = moment(val.waktu_mulai, ['HH:mm:ss','h:mm:ss']).format('HH:mm');
+                            val.waktu_selesai = moment(val.waktu_selesai, ['HH:mm:ss','h:mm:ss']).format('HH:mm');
+                        });
                         $rootScope.sesiSidang = data;
                         $http.get('{{URL::to('/dasbor/umum/mahasiswa/')}}?mySelf=true').success(function(data) {
                             $rootScope.mahasiswa = data;
@@ -235,7 +243,12 @@ app.config(function($httpProvider) {
                 </div>
                 <div class="form-group">
                     <label>Tanggal</label>
-                    <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-MM-dd" data-autoclose="1" ng-change="updateDosen()" bs-datepicker>
+                    
+                    <div class='input-group date' id='tanggal' data-date-format="YYYY-MM-DD">
+                        <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-MM-dd" data-autoclose="1" ng-change="updateDosen()" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Sesi Sidang</label>
@@ -347,6 +360,17 @@ app.config(function($httpProvider) {
 </div>
 @stop
 
+@section('custom_head')
+    <link rel="stylesheet" href="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.css')}}"/>
+@stop
 @section('scripts')
-    @include('includes.dasbor.scripts')
+    <script src="{{URL::to('/assets/moment.min.js')}}"></script>
+    <script src="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
+    <script>
+    $(document).ready(function() {
+        $("#tanggal").datetimepicker({
+            pickTime: false
+        });
+    });
+    </script>
 @stop

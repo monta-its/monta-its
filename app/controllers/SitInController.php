@@ -52,6 +52,28 @@ class SitInController extends BaseController {
     }
 
     /**
+     * Memproses data Sit In ke dalam bentuk Tugas Akhir
+     * Diakses oleh Mahasiswa ketika Sitin mereka disetujui
+     *
+     * @return JSON
+     */
+    public function prosesTA()
+    {
+        if(Request::isMethod('post'))
+        {
+            if(Auth::user()->peran == 0)
+            {
+                // Ambil Sitin yang sesuai untuk mahasiswa bersangkutan
+
+                $sitIn = SitIn::where('nrp_mahasiswa', Auth::user()->nomor_induk)->find(Input::get('id_sit_in'))->first();
+                $tugasAkhir = $sitIn->buatDataTugasAkhir();
+
+                return Response::json($tugasAkhir);
+            }
+        }
+    }
+
+    /**
      * Menyediakan layanan data Sit In dosen dan mahasiswa
      *
      * @return JSON
@@ -86,11 +108,11 @@ class SitInController extends BaseController {
                 if ($auth != null)
                 {
                     $nomor_induk = $auth->nomor_induk;
-                    if ($auth->peran == 0) 
+                    if ($auth->peran == 0)
                     {
                         $jenis_nomor_induk = 'nrp_mahasiswa';
                     }
-                    else 
+                    else
                     {
                         $jenis_nomor_induk = 'nip_dosen';
                     }
@@ -202,7 +224,7 @@ class SitInController extends BaseController {
                     $sitIn->delete();
 
                     // Jika dosen yang melakukan pembatalan
-                    if ($auth->peran == 2 || $auth->peran == 3) 
+                    if ($auth->peran == 2 || $auth->peran == 3)
                     {
                         // Membuat pemberitahuan ke Mahasiswa bersangkutan
                         // bahwa dosen telah membatalkan Sit In yang belum disetujui
@@ -232,7 +254,7 @@ class SitInController extends BaseController {
                 else if ($sitIn->status == 1)
                 {
                     // Jika dosen yang melakukan pembatalan
-                    if ($auth->peran == 2 || $auth->peran == 3) 
+                    if ($auth->peran == 2 || $auth->peran == 3)
                     {
                         $sitIn->delete();
 
@@ -267,7 +289,7 @@ class SitInController extends BaseController {
                 else if ($sitIn->status == -1)
                 {
                     // Jika dosen yang melakukan pembatalan
-                    if ($auth->peran == 2 || $auth->peran == 3) 
+                    if ($auth->peran == 2 || $auth->peran == 3)
                     {
                         $sitIn->delete();
 

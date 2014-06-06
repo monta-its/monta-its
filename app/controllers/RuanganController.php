@@ -36,7 +36,26 @@ class RuanganController extends BaseController {
             }
             else
             {
-                return Response::json(Ruangan::get());
+                if(Input::has('sesi') && Input::has('tanggal'))
+                {
+                    $ruangan = Ruangan::get();
+                    $tanggal = Input::get('tanggal');
+                    $sesi = Input::get('sesi');
+                    $result = array();
+                    foreach($ruangan as $r)
+                    {
+                        if($r->apakahTersediaRuangan($tanggal, $sesi))
+                        {
+                            $result[] = $r->toArray();
+                        }
+                    }
+
+                    return Response::json($result);
+                }
+                else
+                {
+                    return Response::json(Ruangan::get());
+                }
             }
 
         }

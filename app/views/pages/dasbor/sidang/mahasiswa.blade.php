@@ -52,10 +52,15 @@ var update = function($rootScope, $http, callback) {
 
 };
 
-var updateDosenUp = function($rootScope, $http, id_bidang_minat, hari, sesi, callback) {
+var updateDosenUp = function($rootScope, $http, id_bidang_minat, hari, sesi, tanggal, callback) {
     $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?hari=' + String(hari) + '&sesi=' + String(sesi) + '&bidangMinat=' + JSON.stringify(id_bidang_minat)).success(function(data){
         $rootScope.dosen = data;
-        if(callback) callback();
+
+        // Tambahan: Update juga list ruangan
+        $http.get('{{URL::to('/dasbor/umum/pegawai/ruangan')}}?sesi=' + String(sesi) + '&tanggal=' + String(tanggal)).success(function(data) {
+            $rootScope.ruangan = data;
+            if(callback) callback();
+        });
     });
 }
 
@@ -80,12 +85,13 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         var sesi = $scope.sidang.sesi;
 
         var hari = (new Date($scope.sidang.tanggal)).getDay();
+        var tanggal = $scope.sidang.tanggal;
 
         $.each($scope.sidang.tugasAkhir.penawaran_judul.topik.bidang_keahlian.bidang_minat, function(i, val) {
             id_bidang_minat.push(val.id_bidang_minat)
         });
 
-        updateDosenUp($rootScope, $http, id_bidang_minat, hari, sesi);
+        updateDosenUp($rootScope, $http, id_bidang_minat, hari, sesi, tanggal);
     };
 
     $scope.method = method;
@@ -243,7 +249,7 @@ app.config(function($httpProvider) {
                 </div>
                 <div class="form-group">
                     <label>Tanggal</label>
-                    
+
                     <div class='input-group date' id='tanggal' data-date-format="YYYY-MM-DD">
                         <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-MM-dd" data-autoclose="1" ng-change="updateDosen()" />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -267,7 +273,7 @@ app.config(function($httpProvider) {
                                     <input type="text" ng-options="item.nip_dosen as item.nip_dosen + ' - ' + item.pegawai.nama_lengkap for item in dosen" ng-model="dosenPengujiDipilih" class="form-control" placeholder="Masukkan NIP/Nama Dosen" bs-typeahead />
                                 </div>
                                 <button type="submit" class="btn btn-primary">Tambah Penguji</button>
-                                
+
                             </div>
                             <table class="table table-condensed table-striped">
                                 <thead ng-show="sidang.pengujiSidang.length != 0">
@@ -317,7 +323,7 @@ app.config(function($httpProvider) {
                                         <a href="#/" ng-click="hapus([[item.id_sidang]])" class="btn btn-xs btn-danger pull-right">Hapus</a>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="#/sunting/[[item.id_sidang]]" class="btn btn-xs btn-default pull-right">Sunting</a>     
+                                        <a href="#/sunting/[[item.id_sidang]]" class="btn btn-xs btn-default pull-right">Sunting</a>
                                     </div>
                                 </div>
                             </div>

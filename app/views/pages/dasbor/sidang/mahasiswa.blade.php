@@ -252,7 +252,12 @@ app.config(function($httpProvider) {
                 </div>
                 <div class="form-group">
                     <label>Tanggal</label>
-                    <input type="text" class="form-control" ng-model="sidang.tanggal" data-date-format="yyyy-MM-dd" data-date-type="string" data-min-date="today"  data-autoclose="1" name="date2" ng-change="updateDosen()" bs-datepicker>
+
+                    <div class='input-group date' id='tanggal' data-date-format="YYYY-MM-DD">
+                        <input type="text" size="10" class="form-control" ng-model="sidang.tanggal" data-time-type="string" date-time-format="yyyy-MM-dd" data-autoclose="1" ng-change="updateDosen()" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Sesi Sidang</label>
@@ -365,9 +370,17 @@ app.config(function($httpProvider) {
 @stop
 
 @section('custom_head')
+    <link rel="stylesheet" href="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.css')}}"/>
 @stop
 @section('scripts')
 
     <script src="{{URL::to('/assets/moment.min.js')}}"></script>
-
+    <script src="{{URL::to('/assets/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
+    <script>
+    $(document).ready(function() {
+        $("#tanggal").datetimepicker({
+            pickTime: false
+        });
+    });
+    </script>
 @stop

@@ -381,6 +381,9 @@ app.config(function($httpProvider) {
         $("#tanggal").datetimepicker({
             pickTime: false
         });
+        $("#tanggal").on('change', function(){
+            $("#tanggal input").trigger('input');
+        });
     });
     </script>
 @stop

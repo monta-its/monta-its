@@ -54,7 +54,11 @@
                                             {{$tugasAkhir->nrp_mahasiswa}}
                                         </td>
                                         <td>
+                                        @if ($tugasAkhir->penawaranJudul != null)
                                             <a href="{{URL::to('/judul/' . $tugasAkhir->id_penawaran_judul)}}" >{{$tugasAkhir->penawaranJudul->judul_tugas_akhir}}</a>
+                                        @else
+                                            <span class="text-muted">Belum ditentukan</span>
+                                        @endif
                                         </td>
                                     </tr>
                                 @endforeach

@@ -73,12 +73,6 @@ Dasbor Mahasiswa
                         </td>
                     </tr>
                     <tr>
-                        <td class="col-md-3">Judul</td>
-                        <td>
-                            <b>{{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}</b>
-                        </td>
-                    </tr>
-                    <tr>
                         <td>Status</td>
                         <td>
                         @if ($tugasAkhir->status != '')
@@ -93,32 +87,42 @@ Dasbor Mahasiswa
                         <td><b>{{ $tugasAkhir->tanggal_mulai }}</b></td>
                     </tr>
                     <tr>
-                        <td>Tanggal Selesai</td>
-                        <td><b>{{ $tugasAkhir->tanggal_selesai }}</b></td>
+                        <td>Target Selesai</td>
+                        <td><b>{{ $tugasAkhir->target_selesai }}</b></td>
                     </tr>
+                    @if ($tugasAkhir->penawaranJudul != null)
                     <tr>
-                        <td>Topik</td>
+                        <td class="col-md-3">Judul</td>
                         <td>
-                            <a href="{{ URL::to('topik/' . $tugasAkhir->penawaranJudul->id_topik) }}">{{ $tugasAkhir->penawaranJudul->topik->topik }}</a>
+                            <b>{{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}</b>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Bidang Keahlian</td>
-                        <td>
-                            <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->topik->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->topik->bidangKeahlian->nama_bidang_keahlian }}</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Laboratorium</td>
-                        <td>
-                        @foreach ($tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat)
-                            <a href="{{ URL::to('prodi/' . $bidangMinat->id_bidang_minat) }}">{{ $bidangMinat->nama_bidang_minat }}</a>
-                            @if ($i < $tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat->count() - 1)
-                            ,
-                            @endif
-                        @endforeach
-                        </td>
-                    </tr>
+                        @if ($tugasAkhir->penawaranJudul->topik != null)
+                        <tr>
+                            <td>Topik</td>
+                            <td>
+                                <a href="{{ URL::to('topik/' . $tugasAkhir->penawaranJudul->id_topik) }}">{{ $tugasAkhir->penawaranJudul->topik->topik }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bidang Keahlian</td>
+                            <td>
+                                <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->topik->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->topik->bidangKeahlian->nama_bidang_keahlian }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Laboratorium</td>
+                            <td>
+                            @foreach ($tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat)
+                                <a href="{{ URL::to('prodi/' . $bidangMinat->id_bidang_minat) }}">{{ $bidangMinat->nama_bidang_minat }}</a>
+                                @if ($i < $tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat->count() - 1)
+                                ,
+                                @endif
+                            @endforeach
+                            </td>
+                        </tr>
+                        @endif
+                    @endif
                 </tbody>
             </table>
         </div>

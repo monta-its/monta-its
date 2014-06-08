@@ -59,16 +59,24 @@ class SitInController extends BaseController {
      */
     public function prosesTA()
     {
+        $pesan = '';
+        $tugasAkhir = null;
         if(Request::isMethod('post'))
         {
             if(Auth::user()->peran == 0)
             {
                 // Ambil Sitin yang sesuai untuk mahasiswa bersangkutan
-
-                $sitIn = SitIn::where('nrp_mahasiswa', Auth::user()->nomor_induk)->find(Input::get('id_sit_in'))->first();
+                $sitIn = SitIn::where('nrp_mahasiswa', Auth::user()->nomor_induk)->where('status', '=', 1)->find(Input::get('id_sit_in'));
                 $tugasAkhir = $sitIn->buatDataTugasAkhir();
-
-                return Response::json($tugasAkhir);
+                if ($tugasAkhir != null)
+                {
+                    $pesan = 'Sit In telah diproses. Anda kini telah menjadi mahasiswa bimbingan ';
+                }
+                else
+                {
+                    $pesan = 'Anda tidak memiliki sit in yang telah disetujui.';
+                }
+                return Response::json(array('pesan'=>$pesan, 'tugas_akhir'=>$tugasAkhir));
             }
         }
     }

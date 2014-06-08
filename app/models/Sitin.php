@@ -8,6 +8,7 @@
  *  0 => diajukan
  *  1 => disetujui
  * -1 => dibatalkan (menunggu)
+ *  2 => bimbingan (sit in telah menjadi bimbingan)
  *
  * @author Putu Wiramaswara Widya <wiramaswara11@mhs.if.its.ac.id>
  * @package Simta\Models\TeknikMesin\SitIn
@@ -69,14 +70,14 @@ class SitIn extends Eloquent {
         {
             $tugasAkhir = new TugasAkhir;
             $mahasiswa = Mahasiswa::find($this->nrp_mahasiswa);
-            $topik = Topik::find($this->id_topik);
+            //$topik = Topik::find($this->id_topik);
             $tugasAkhir->mahasiswa()->associate($mahasiswa);
-            $tugasAkhir->topik()->associate($topik);
+            //$tugasAkhir->topik()->associate($topik);
             $tugasAkhir->tanggal_mulai = date('Y-m-d');
             $tugasAkhir->status = "pengerjaan";
             $tugasAkhir->save();
 
-            $tugasAkhir->dosenPembimbing()->save($this->dosen);
+            $tugasAkhir->dosenPembimbing()->save($this->dosen()->first());
 
             $this->status = 2;
             $this->save();

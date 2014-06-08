@@ -115,11 +115,11 @@ Route::delete ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJ
  */
 Route::get('/sidang/proposal', 'Simta\Controllers\SidangController@lihatSidangProposal');
 Route::get('/sidang/ta', 'Simta\Controllers\SidangController@lihatSidangTA');
-Route::get('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
-Route::get('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
-Route::post('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
-Route::put('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
-Route::delete('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidang');
+Route::get('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
+Route::get('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
+Route::post('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
+Route::put('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
+Route::delete('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
 
 // SitInController
 /**

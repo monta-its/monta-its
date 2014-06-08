@@ -110,11 +110,12 @@ class SidangController extends BaseController {
     /* Kelompok dasbor */
 
     /**
-     * Dasbor Kelola Sidang berbasis REST
+     * Dasbor Kelola Sidang Mahasiswa berbasis REST
      * @return View
      */
-    function dasborSidang()
+    function dasborSidangMahasiswa()
     {
+        $pesan = '';
         $auth = Auth::user();
         if($auth)
         {
@@ -199,13 +200,28 @@ class SidangController extends BaseController {
                     $sidang->ruangan()->associate($ruangan);
                     $sidang->tugasAkhir()->associate($tugasAkhir);
                     $sidang->save();
+                    $pesan = 'Penyimpanan data berhasil.';
+                }
+                else
+                {
+                    $pesan = 'Anda tidak berhak mengajukan sidang. Lengkapilah terlebih dahulu persyaratan pra seminar proposal atau pra sidang akhir.';
                 }
             }
             else
             {
                 $sidang = Sidang::find(Input::get('id_sidang'));
-                $sidang->delete();
+                if ($sidang != null)
+                {
+                    $sidang->delete();
+                    $pesan = 'Penghapusan data berhasil.';
+                }
+                else
+                {
+                    $pesan = 'Data seminar / sidang tidak ditemukan. Penghapusan data dibatalkan.';
+                }
             }
+
+            return Response::json(array('pesan' => $pesan));
         }
     }
 

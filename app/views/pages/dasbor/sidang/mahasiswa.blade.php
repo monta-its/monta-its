@@ -72,7 +72,7 @@ app.controller('daftarSidangController', function($scope, $http, $rootScope) {
         if(confirm("Yakin untuk menghapus ini?")) {
             $http.delete('{{URL::to('/dasbor/mahasiswa/sidang')}}', {'params': {'id_sidang': String(id_sidang)}}).success(function(data) {
                 update($rootScope, $http);
-                alert('Pengajuan Sidang dihapus');
+                alert(data.pesan);
             });
         }
     };
@@ -107,7 +107,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         }
 
         if($scope.jenisSidang.length == 0) {
-            alert('Anda belum lulus syarat Seminar Proposal atau Sidang Akhir');
+            alert('Anda belum melengkapi persyaratan Seminar Proposal atau Sidang Akhir');
             $location.path('/');
         }
     }
@@ -165,7 +165,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         $scope.simpan = function() {
             if($scope.sidang.pengujiSidang.length == 4) {
                 $http.post("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
-                    alert('Pengajuan baru dibuat.');
+                    alert(data.pesan);
                     $location.path("/");
                     update($rootScope, $http);
                 });
@@ -179,7 +179,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
                 // Cek jumlah pengujiSidang apakah 4
                 if($scope.sidang.pengujiSidang.length == 4) {
                     $http.put("{{{URL::to('/dasbor/mahasiswa/sidang')}}}", $scope.sidang).success(function(data) {
-                        alert('Penyuntingan berhasil');
+                        alert(data.pesan);
                         $location.path("/");
                         update($rootScope, $http);
                     });

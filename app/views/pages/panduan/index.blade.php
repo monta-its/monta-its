@@ -1,5 +1,7 @@
 @extends('layouts.default')
-
+@section('page_title')
+Panduan
+@stop
 @section('content')
 @foreach($items as $item)
 

@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('page_title')
+{{ $item->nama_bidang_minat }}
+@stop
 @section('content')
 
 <!-- // TODO: Bro, istilah Bidang Ahli disini diubah ke Bidang Keahlian setiap dosen, baca segala TODO yang ada di routes.php lagi :( -->

@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('page_title')
+{{ $item->judul_tugas_akhir }}
+@stop
 @section('content')
 
 <div class="panel panel-default">

@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('page_title')
+{{ $item->nama_bidang_keahlian }}
+@stop
 @section('content')
 
 <div class="panel panel-default">

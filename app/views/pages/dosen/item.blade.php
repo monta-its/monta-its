@@ -1,4 +1,7 @@
 @extends('layouts.custom-sidebar')
+@section('page_title')
+Profil {{ $item->pegawai->nama_lengkap }
+@stop
 @section('content')
 
 <div class="panel panel-default">

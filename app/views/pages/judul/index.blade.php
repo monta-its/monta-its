@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('page_title')
+Penawaran Judul
+@stop
 @section('content')
 
 @foreach($items as $item)

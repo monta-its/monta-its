@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('page_title')
+{{ $item->topik }}
+@stop
 @section('content')
 
 <div class="panel panel-default">

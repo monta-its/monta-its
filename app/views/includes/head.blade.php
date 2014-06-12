@@ -1,8 +1,9 @@
 <meta charset="utf-8" />
 <title>
-    @yield('page_title')
+@yield('page_title') - SIMTA Teknik Mesin ITS
 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="Shortcut Icon" href="{{URL::to('assets/images/favicon-mesin.ico')}}" type="image/x-icon" />
 
 <!--
 <link href="http://netdna.bootstrapcdn.com/bootswatch/3.1.1/lumen/bootstrap.min.css" rel="stylesheet" />

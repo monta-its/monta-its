@@ -1,5 +1,7 @@
 @extends('layouts.default')
-
+@section('page_title')
+Evaluasi
+@stop
 @section('content')
 <div class="panel panel-default">
   <div class="panel-body">

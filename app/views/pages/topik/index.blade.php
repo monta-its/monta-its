@@ -1,4 +1,7 @@
 @extends('layouts.default')
+@section('page_title')
+Topik
+@stop
 @section('content')
 
 @foreach($items as $item)

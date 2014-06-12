@@ -28,7 +28,16 @@
         <a href="{{ URL::to('dasbor/dosen/bimbingan') }}">Bimbingan</a>
     </li>
     <li>
+        <a href="{{ URL::to('dasbor/dosen/judul') }}">Penawaran Judul</a>
+    </li>
+    <li>
+        <a href="{{ URL::to('dasbor/dosen/sidang') }}">Sidang</a>
+    </li>
+    <li>
         <a href="{{ URL::to('dasbor/dosen/jadwal') }}">Jadwal</a>
+    </li>
+    <li>
+        <a href="{{ URL::to('dasbor/dosen/nilai') }}">Penilaian</a>
     </li>
     <li>
         <a href="{{ URL::to('dasbor/dosen/berita') }}">Berita</a>
@@ -44,12 +53,6 @@
     </li>
     <li>
         <a href="{{ URL::to('dasbor/dosen/topik') }}">Topik</a>
-    </li>
-    <li>
-        <a href="{{ URL::to('dasbor/dosen/judul') }}">Penawaran Judul</a>
-    </li>
-    <li>
-        <a href="{{ URL::to('dasbor/dosen/sidang') }}">Sidang</a>
     </li>
     <li>
         <a href="{{ URL::to('dasbor/dosen/pengguna/mahasiswa/tambah') }}">Tambah Mahasiswa</a>

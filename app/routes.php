@@ -266,3 +266,15 @@ Route::get ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@das
 Route::post ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
 Route::put ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
 Route::delete ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+
+Route::get ('/pdf', function()
+{
+    if (1 == 21)
+    {
+        return View::make('reports.berita_acara');
+    }
+    else{
+        $pdf = PDF::loadView('reports.berita_acara')->setPaper('folio');
+        return $pdf->download('test_print.pdf');
+    }
+});

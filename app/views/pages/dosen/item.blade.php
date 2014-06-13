@@ -1,6 +1,6 @@
 @extends('layouts.custom-sidebar')
 @section('page_title')
-Profil {{ $item->pegawai->nama_lengkap }
+Profil {{ $item->pegawai->nama_lengkap }}
 @stop
 @section('content')
 

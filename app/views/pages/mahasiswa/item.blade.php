@@ -22,78 +22,86 @@ Profil {{ $item->nama_lengkap }}
                         <td>{{ $item->nrp_mahasiswa }}</td>
                     </tr>
                     @if ($tugasAkhir != null)
-                    <tr>
-                        <td><strong>Dosen Pembimbing</strong></td>
-                        <td>: </td>
-                        <td>
-                        @foreach ($tugasAkhir->dosenPembimbing as $i => $pembimbing) 
-                            <a href="{{ URL::to('dosen/' . $pembimbing->nip_dosen) }}">{{ $pembimbing->pegawai->nama_lengkap }}</a>
-                            @if ($i < $tugasAkhir->dosenPembimbing->count() - 1)
-                            ,
-                            @endif
-                        @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-3"><strong>Judul</strong></td>
-                        <td>: </td>
-                        <td>
-                            {{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Status</strong></td>
-                        <td>: </td>
-                        <td>
-                        @if ($tugasAkhir->status != '')
-                            {{ $tugasAkhir->status }}
-                        @else
-                            <span class="text-muted">tidak ditentukan</span>
-                        @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tanggal Mulai</strong></td>
-                        <td>: </td>
-                        <td>{{ $tugasAkhir->tanggal_mulai }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tanggal Selesai</strong></td>
-                        <td>: </td>
-                        <td>{{ $tugasAkhir->tanggal_selesai }}</td>
-                    </tr>
-                    @if ($tugasAkhir->penawaranJudul->topik != null)
                         <tr>
-                            <td><strong>Topik</strong></td>
+                            <td><strong>Dosen Pembimbing</strong></td>
                             <td>: </td>
                             <td>
-                                <a href="{{ URL::to('topik/' . $tugasAkhir->penawaranJudul->id_topik) }}">{{ $tugasAkhir->penawaranJudul->topik->topik }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Bidang Keahlian</strong></td>
-                            <td>: </td>
-                            <td>
-                                <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->topik->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->topik->bidangKeahlian->nama_bidang_keahlian }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Laboratorium</strong></td>
-                            <td>: </td>
-                            <td>
-                            @foreach ($tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat)
-                                <a href="{{ URL::to('prodi/' . $bidangMinat->id_bidang_minat) }}">{{ $bidangMinat->nama_bidang_minat }}</a>
-                                @if ($i < $tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat->count() - 1)
+                            @foreach ($tugasAkhir->dosenPembimbing as $i => $pembimbing) 
+                                <a href="{{ URL::to('dosen/' . $pembimbing->nip_dosen) }}">{{ $pembimbing->pegawai->nama_lengkap }}</a>
+                                @if ($i < $tugasAkhir->dosenPembimbing->count() - 1)
                                 ,
                                 @endif
                             @endforeach
                             </td>
                         </tr>
-                    @else
                         <tr>
-                            <td colspan="3">Data topik tidak ditemukan.</td>
+                            <td><strong>Status Tugas Akhir</strong></td>
+                            <td>: </td>
+                            <td>
+                            @if ($tugasAkhir->status != '')
+                                {{ $tugasAkhir->status }}
+                            @else
+                                <span class="text-muted">tidak ditentukan</span>
+                            @endif
+                            </td>
                         </tr>
-                    @endif
+                        <tr>
+                            <td><strong>Tanggal Mulai</strong></td>
+                            <td>: </td>
+                            <td>{{ $tugasAkhir->tanggal_mulai }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Target Selesai</strong></td>
+                            <td>: </td>
+                            <td>
+                            @if ($tugasAkhir->target_selesai != 0)
+                            {{ $tugasAkhir->target_selesai }}
+                            @else
+                            Belum ditentukan
+                            @endif
+                            </td>
+                        </tr>
+                        @if ($tugasAkhir->penawaranJudul != null)
+                        <tr>
+                            <td class="col-md-3"><strong>Judul</strong></td>
+                            <td>: </td>
+                            <td>
+                                {{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}
+                            </td>
+                        </tr>
+                            @if ($tugasAkhir->penawaranJudul->topik != null)
+                                <tr>
+                                    <td><strong>Topik</strong></td>
+                                    <td>: </td>
+                                    <td>
+                                        <a href="{{ URL::to('topik/' . $tugasAkhir->penawaranJudul->id_topik) }}">{{ $tugasAkhir->penawaranJudul->topik->topik }}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bidang Keahlian</strong></td>
+                                    <td>: </td>
+                                    <td>
+                                        <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->topik->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->topik->bidangKeahlian->nama_bidang_keahlian }}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Laboratorium</strong></td>
+                                    <td>: </td>
+                                    <td>
+                                    @foreach ($tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat)
+                                        <a href="{{ URL::to('prodi/' . $bidangMinat->id_bidang_minat) }}">{{ $bidangMinat->nama_bidang_minat }}</a>
+                                        @if ($i < $tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat->count() - 1)
+                                        ,
+                                        @endif
+                                    @endforeach
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td colspan="3">Data topik tidak ditemukan.</td>
+                                </tr>
+                            @endif
+                        @endif
                     @endif
                 </tbody>
             </table>

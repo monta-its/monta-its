@@ -8,8 +8,14 @@
   @include('includes.header')
 
   <div class="container">
-    @include('includes.breadcrumb')
-
+    @if (isset($breadcrumbs))
+      @include('includes.breadcrumb')
+    @else
+      <ol class="breadcrumb">
+        <li><a href="{{URL::to('/')}}">Beranda</a></li>
+        <li class="active">@yield('page_title')</li>
+      </ol>
+    @endif
     <!-- content -->
     <div class="row">
     

@@ -1,7 +1,7 @@
 <?php
 /**
  * JudulController
- * Handle everything under "/judul" and "/dasbor/judul" routes
+ * Handle everything about Penawaran Judul, under "/judul" and "/dasbor/judul" routes
  *
  * @author Ifan Iqbal <ifaniqbal.com@gmail.com>
  * @package Simta\Controllers\JudulController
@@ -16,9 +16,12 @@ use Request;
 use Response;
 use Redirect;
 use Auth;
+use Session;
 use Simta\Models\PenawaranJudul;
 use Simta\Models\Topik;
 use Simta\Models\Dosen;
+use Simta\Models\Mahasiswa;
+use Simta\Models\TugasAkhir;
 
 class JudulController extends BaseController {
     /**
@@ -103,7 +106,70 @@ class JudulController extends BaseController {
      */
     function ambilJudul($id_judul)
     {
-        return 'Ambil judul kemudian redirect ke laman profil TA yang memuat informasi pengambilan';
+        // apakah login
+        if (Auth::check())
+        {
+            // apakah mahasiswa
+            if (Auth::user()->peran == 0)
+            {
+                // do nothing, proceed next outer code :D
+            }
+            else
+            {
+                Session::set('page_title', 'Hanya Untuk Mahasiswa');
+                Session::set('message', 'Anda harus login sebagai mahasiswa untuk melakukan aksi tersebut.');
+                return Redirect::to('/terlarang');
+            }
+        }
+        else
+        {
+            Session::set('page_title', 'Login Dibutuhkan');
+            Session::set('message', 'Anda harus login sebagai mahasiswa untuk melakukan aksi tersebut.');
+            return Redirect::to('/terlarang');
+        }
+
+        $penawaranJudul = PenawaranJudul::find($id_judul);
+        $nrp_mahasiswa = Auth::user()->nomor_induk;
+        if ($penawaranJudul != null)
+        {
+            // judul tersedia
+            if ($penawaranJudul->tugasAkhir == null)
+            {
+                $mahasiswa = Mahasiswa::with('tugasAkhir')->find($nrp_mahasiswa);return var_dump($mahasiswa->tugasAkhir);
+                // apakah mahasiswa telah memiliki data tugas akhir atau telah bimbingan
+                if ($mahasiswa->tugasAkhir != null)
+                {
+                    /**
+                     * TODO:
+                     * - ambil data TA terkahir, yaitu data TA pada periode yang sama
+                     * dengan periode aktif.
+                     * - perhatikan kondisi untuk mahasiswa yang pernah mengambil TA di 
+                     * sebelumnya namun tidak lulus.
+                     */
+                    return "Lihat bagian TODO di JudulController line 142";
+                    $mahasiswa->tugasAkhir->penawaranJudul()->associate($penawaranJudul);
+                    $mahasiswa->tugasAkhir->save();
+                    return Redirect::to('/dasbor/mahasiswa');    
+                }
+                else
+                {
+                    Session::set('page_title', 'Data Tugas Akhir Tidak Ditemukan');
+                    Session::set('message', 'Anda belum berhak melakukan aksi tersebut karena Anda belum tercatat sebagai mahasiswa bimbingan. Silakan selesaikan kewajiban sit in Anda.');
+                    return Redirect::to('/terlarang');
+                }
+            }
+            {
+                Session::set('page_title', 'Judul Tidak Tersedia');
+                Session::set('message', 'Judul yang hendak Anda ambil tidak tersedia atau sudah diambil oleh mahasiswa lainnya. Jika ini merupakan suatu kesalahan, silakan laporkan hal ini ke dosen pembimbing Anda.');
+                return Redirect::to('/terlarang');
+            }
+        }
+        else 
+        {
+            Session::set('page_title', 'Tidak Ditemukan');
+            Session::set('message', 'Data penawaran judul yang Anda maksudkan tidak ditemukan.');
+            return Redirect::to('/terlarang');
+        }
     }
 
     /**

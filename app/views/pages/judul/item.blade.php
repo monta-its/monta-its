@@ -63,7 +63,7 @@
     <div class="item-main">{{ $item->deskripsi }}</div>
     @if ($item->tugasAkhir == null)
     <p class="text-center">
-        <a href="{{ URL::to('judul/'. $item->id_penawaran_judul . '/ambil') }}" class="btn btn-success">Ambil judul ini!</a>
+        <a href="{{ URL::to('judul/ambil/'. $item->id_penawaran_judul ) }}" class="btn btn-success">Ambil judul ini!</a>
     </p>
     @endif
   </div>

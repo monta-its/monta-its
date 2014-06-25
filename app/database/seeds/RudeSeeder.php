@@ -8,7 +8,8 @@ use Simta\Models\PemberitahuanMahasiswa;
 use Simta\Models\PemberitahuanPegawai;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Sidang;
-use Simta\Models\Evaluasi;
+use Simta\Models\NilaiAkhir;
+use Simta\Models\NilaiProposal;
 use Simta\Models\Ruangan;
 use Simta\Models\BidangMinat;
 use Simta\Models\BidangKeahlian;
@@ -171,6 +172,57 @@ class RudeSeeder extends Seeder {
         $ruangan->kode_ruangan = $faker->unique->word;
         $ruangan->nama_ruangan = $faker->sentence();
         $ruangan->save();
+
+        /*
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Mekanika & Mesin Fluida',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Mekanika Benda Padat',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Metalurgi',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Otomasi Industri',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Otomotif',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Perancangan & Pengembangan Produk',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Proses Manufaktur',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Sistem Manufaktur',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Teknik Cor',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Teknik Pembakaran & Bahan Bakar',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Thermodinamika & Perpindahan Panas',
+            'deskripsi_bidang_minat' => ''
+        );
+        BidangMinat::create(
+            'nama_bidang_minat' => 'Vibrasi & Sistem Dinamis',
+            'deskripsi_bidang_minat' => ''
+        );
+        */
 
         $bidang_minat = new BidangMinat;
         $bidang_minat->kode_bidang_minat = $faker->unique->word;
@@ -352,29 +404,65 @@ class RudeSeeder extends Seeder {
                             $mahasiswa->syarat()->save($syarat);
                         }
 
-                        $sidang = new Sidang;
-                        $sidang->jenis_sidang = "proposal";
-                        $sidang->sesi = rand(1,SesiSidang::count());
-                        $sidang->tanggal = "2014-12-12";
-                        $sidang->disetujui = 0;
-                        $sidang->ruangan()->associate($ruangan);
-                        $sidang->tugasAkhir()->associate($ta);
-                        $sidang->save();
+                        $seminar = new Sidang;
+                        $seminar->jenis_sidang = "proposal";
+                        $seminar->sesi = rand(1,SesiSidang::count());
+                        $seminar->tanggal = "2014-12-12";
+                        $seminar->disetujui = 1;
+                        $seminar->ruangan()->associate($ruangan);
+                        $seminar->tugasAkhir()->associate($ta);
+                        $seminar->save();
 
-                        $penguji = Dosen::orderBy(DB::raw('RAND()'))->take(1)->get();
-                        $penguji = $penguji[0];
-
-                        $sidang->pengujiSidang()->save($penguji);
-                        $sidang->save();
-
-                        for($j = 0; $j < 2; $j++)
+                        if ($seminar->disetujui == 1)
                         {
-                            $evaluasi = new Evaluasi;
-                            $evaluasi->jenis_penilaian = "Nilai Dosen";
-                            $evaluasi->dosen()->associate($penguji);
-                            $evaluasi->tugasAkhir()->associate($ta);
-                            $evaluasi->nilai = rand(60,100);
-                            $evaluasi->save();
+                            for($j = 0; $j < 4; $j++)
+                            {
+                                $penguji = Dosen::orderBy(DB::raw('RAND()'))->take(1)->get();
+                                $penguji = $penguji[0];
+
+                                $seminar->pengujiSidang()->save($penguji);
+                                $seminar->save();
+
+                                $nilaiProposal = new NilaiProposal;
+                                $nilaiProposal->dosen()->associate($penguji);
+                                $nilaiProposal->tugasAkhir()->associate($ta);
+                                $nilaiProposal->nilai = rand(60,100);
+                                $nilaiProposal->save();
+                            }
+
+                            if(rand(2,3) == 2)
+                            {
+                                foreach ($syaratSidang as $syarat) {
+                                    $mahasiswa->syarat()->save($syarat);
+                                }
+
+                                $sidang = new Sidang;
+                                $sidang->jenis_sidang = "akhir";
+                                $sidang->sesi = rand(1,SesiSidang::count());
+                                $sidang->tanggal = "2014-12-30";
+                                $sidang->disetujui = 1;
+                                $sidang->ruangan()->associate($ruangan);
+                                $sidang->tugasAkhir()->associate($ta);
+                                $sidang->save();
+
+                                if ($sidang->disetujui == 1)
+                                {
+                                    for($j = 0; $j < 4; $j++)
+                                    {
+                                        $penguji = Dosen::orderBy(DB::raw('RAND()'))->take(1)->get();
+                                        $penguji = $penguji[0];
+
+                                        $sidang->pengujiSidang()->save($penguji);
+                                        $sidang->save();
+
+                                        $nilaiAkhir = new NilaiAkhir;
+                                        $nilaiAkhir->dosen()->associate($penguji);
+                                        $nilaiAkhir->tugasAkhir()->associate($ta);
+                                        $nilaiAkhir->nilai = rand(60,100);
+                                        $nilaiAkhir->save();
+                                    }
+                                }
+                            }
                         }
                     }
                 }

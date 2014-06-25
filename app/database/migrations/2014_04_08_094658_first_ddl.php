@@ -79,6 +79,26 @@ class FirstDdl extends Migration {
             $table->softDeletes();
         });
 
+        Schema::create('nilai_proposal', function($table)
+        {
+            $table->increments('id_nilai_proposal');
+            $table->integer('nilai');
+            $table->string('nip_dosen');
+            $table->integer('id_tugas_akhir');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('nilai_akhir', function($table)
+        {
+            $table->increments('id_nilai_akhir');
+            $table->integer('nilai');
+            $table->string('nip_dosen');
+            $table->integer('id_tugas_akhir');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('dosen_pembimbing', function($table)
         {
             $table->increments('id_dosen_pembimbing');
@@ -106,18 +126,6 @@ class FirstDdl extends Migration {
             $table->increments('id_penguji_sidang');
             $table->integer('id_sidang');
             $table->string('nip_dosen');
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('evaluasi', function($table)
-        {
-            $table->increments('id_evaluasi');
-            $table->integer('id_tugas_akhir');
-            $table->string('jenis_penilaian');
-            $table->string('nip_dosen');
-            $table->integer('nilai');
-            $table->string('deskripsi_nilai');
             $table->timestamps();
             $table->softDeletes();
         });

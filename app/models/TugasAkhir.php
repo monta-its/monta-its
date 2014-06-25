@@ -28,6 +28,16 @@ class TugasAkhir extends Eloquent {
     }
 
     /**
+     * Alias untuk dosenPembimbing
+     *
+     * @return Simta\Models\Dosen
+     */
+    public function dosen()
+    {
+        return $this->dosenPembimbing();
+    }
+
+    /**
      * Relasi many-to-one dengan tabel Mahasiswa
      *
      * @return Simta\Models\Mahasiswa
@@ -48,15 +58,24 @@ class TugasAkhir extends Eloquent {
     }
 
     /**
-     * Relasi one-to-many dengan tabel Evaluasi
+     * Relasi one-to-many ke NilaiProposal
      *
-     * @return Simta\Models\Evaluasi
+     * @return Simta\Models\NilaiProposal
      */
-    public function evaluasi()
+    public function nilaiProposal()
     {
-        return $this->hasMany('Simta\Models\Evaluasi', 'id_tugas_akhir', 'id_tugas_akhir');
+        return $this->hasMany('Simta\Models\NilaiProposal', 'id_tugas_akhir', 'id_tugas_akhir');
     }
 
+    /**
+     * Relasi one-to-many ke NilaiAkhir
+     *
+     * @return Simta\Models\NilaiAkhir
+     */
+    public function nilaiAkhir()
+    {
+        return $this->hasMany('Simta\Models\NilaiAkhir', 'id_tugas_akhir', 'id_tugas_akhir');
+    }
 
     /**
      * Relasi many-to-one dengan Topik

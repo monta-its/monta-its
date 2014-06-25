@@ -1,20 +1,21 @@
 <?php
 /**
- * Model untuk Evaluasi
+ * Model untuk nilai proposal, yaitu nilai setelah seminar proposal.
  *
- * @author Putu Wiramaswara Widya <wiramaswara11@mhs.if.its.ac.id>
- * @package Simta\Models\Evaluasi
+ * @author Ifan Iqbal <ifaniqbal.com@gmail.com>
+ * @package Simta\Models\NilaiProposal
  *
  */
 namespace Simta\Models;
 use Eloquent;
 
 
-class Evaluasi extends Eloquent {
-    protected $table = 'evaluasi';
-    protected $primaryKey = 'id_evaluasi';
+class NilaiProposal extends Eloquent {
+    protected $table = 'nilai_proposal';
+    protected $primaryKey = 'id_nilai_proposal';
     public $timestamps = true;
     protected $softDelete = true;
+    protected $fillable = ["nilai"];
 
     /**
      * Relasi many-to-one ke TugasAkhir
@@ -35,7 +36,5 @@ class Evaluasi extends Eloquent {
     {
         return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
     }
-
-
 }
 ?>

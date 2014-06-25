@@ -175,6 +175,17 @@ Route::post('/dasbor/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangControll
 Route::put('/dasbor/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangController@dasborSesiSidang');
 Route::delete('/dasbor/pegawai/sesi_sidang', 'Simta\Controllers\SesiSidangController@dasborSesiSidang');
 
+// JadwalDosenController
+Route::get ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+Route::post ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+Route::put ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+Route::delete ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
+
+// NilaiController
+Route::get ('/dasbor/dosen/nilai', "Simta\Controllers\NilaiController@daftarNilaiMahasiswa");
+Route::get ('/dasbor/dosen/nilai/akhir/{nrp_mahasiswa}', "Simta\Controllers\NilaiController@nilaiAkhirMahasiswa");
+Route::get ('/dasbor/dosen/nilai/proposal/{nrp_mahasiswa}', "Simta\Controllers\NilaiController@nilaiProposalMahasiswa");
+
 // RUTE SPESIAL, AKSES SILANG
 // Special case Ajax request only for Master Data
 if(Request::ajax()){
@@ -248,12 +259,6 @@ Route::get ('/mahasiswa', function()
         echo 'Lulus pra_sidang_akhir = ' ; echo $mahasiswa->apakahLulusSyarat('pra_sidang_akhir') ? 'yes' : 'no' ; echo '<br />';
     }
 });
-
-// JadwalDosenController
-Route::get ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
-Route::post ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
-Route::put ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
-Route::delete ('/dasbor/dosen/jadwal', "Simta\Controllers\JadwalDosenController@dasborJadwalDosen");
 
 Route::get ('/pdf', function()
 {

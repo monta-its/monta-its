@@ -31,6 +31,36 @@ class Dosen extends Eloquent {
     }
 
     /**
+     * Alias untuk pembimbingTugasAkhir
+     *
+     * @return Simta\Models\TugasAkhir
+     */
+    public function tugasAkhir()
+    {
+        return $this->pembimbingTugasAkhir();
+    }
+
+    /**
+     * Relasi one-to-many ke NilaiProposal
+     *
+     * @return Simta\Models\NilaiProposal
+     */
+    public function nilaiProposal()
+    {
+        return $this->hasMany('Simta\Models\NilaiProposal', 'nip_dosen', 'nip_dosen');
+    }
+
+    /**
+     * Relasi one-to-many ke NilaiAkhir
+     *
+     * @return Simta\Models\NilaiAkhir
+     */
+    public function nilaiAkhir()
+    {
+        return $this->hasMany('Simta\Models\NilaiAkhir', 'nip_dosen', 'nip_dosen');
+    }
+
+    /**
      * Relasi one-to-many ke PenawaranJudul
      *
      * @return Simta\Models\PenawaranJudul
@@ -48,7 +78,17 @@ class Dosen extends Eloquent {
      */
     public function pengujiSidang()
     {
-        return $this->belongsToMany('Simta\Models\Sidang', 'penguji_sidang', 'nip_dosen', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Sidang', 'penguji_sidang', 'nip_dosen', 'id_sidang');
+    }
+
+    /**
+     * Alias untuk pengujiSidang
+     *
+     * @return Simta\Models\Sidang
+     */
+    public function sidang()
+    {
+        return $this->pengujiSidang();
     }
 
     /**

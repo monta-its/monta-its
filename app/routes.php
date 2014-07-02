@@ -14,10 +14,7 @@
 
 /* Rute fix ke controller */
 
-Route::get ('/', function()
-{
-    return Redirect::to('/berita');
-});
+Route::get ('/', 'Simta\Controllers\BeritaController@lihatSemuaBerita');
 
 // TerlarangController
 Route::get ('/dasbor/terlarang', 'Simta\Controllers\TerlarangController@dasborTerlarang');

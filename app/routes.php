@@ -85,7 +85,7 @@ Route::delete ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborT
 Route::get ('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
 Route::get ('/judul/{id_judul}', 'Simta\Controllers\JudulController@lihatIsiJudul');
 Route::get ('/judul/ambil/{id_judul}', 'Simta\Controllers\JudulController@ambilJudul');
-Route::get ('/judul/batal', 'Simta\Controllers\JudulController@batalkanJudul');
+Route::get ('/judul/batal/{id_judul}', 'Simta\Controllers\JudulController@batalkanJudul');
 Route::get ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJudul');
 Route::post ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJudul');
 Route::put ('/dasbor/dosen/judul', 'Simta\Controllers\JudulController@dasborJudul');
@@ -221,6 +221,7 @@ Route::get('/dasbor/dosen/hapus/{id_dosen}', 'Simta\Controllers\DosenController@
 use Simta\Models\Pegawai;
 use Simta\Models\Mahasiswa;
 use Simta\Models\Syarat;
+use Simta\Models\PenawaranJudul;
 Route::get ('/pegawai', function()
 {
     $p = Pegawai::get();
@@ -233,6 +234,7 @@ Route::get ('/pegawai', function()
 });
 Route::get ('/mahasiswa', function()
 {
+    return var_dump(PenawaranJudul::with('tugasAkhir')->find(1)->tugasAkhir);
     $totalSyaratSitIn = Syarat::where('waktu_syarat','=','pra_sit_in')->count();
     $totalSyaratBimbingan = Syarat::where('waktu_syarat','=','pra_bimbingan')->count();
     $totalSyaratSeminar = Syarat::where('waktu_syarat','=','pra_seminar_proposal')->count();

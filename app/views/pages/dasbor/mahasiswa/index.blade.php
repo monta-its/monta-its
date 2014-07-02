@@ -94,7 +94,7 @@ Dasbor Mahasiswa
                     <tr>
                         <td class="col-md-3">Judul</td>
                         <td>
-                            <b>{{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}</b>
+                            <a href="{{ URL::to('/judul/' . $tugasAkhir->id_penawaran_judul) }}">{{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}</a> <a href="{{ URL::to('/judul/batal/' . $tugasAkhir->id_penawaran_judul) }}" class="btn btn-xs btn-danger">Batalkan</a>
                         </td>
                     </tr>
                         @if ($tugasAkhir->penawaranJudul->topik != null)
@@ -122,6 +122,13 @@ Dasbor Mahasiswa
                             </td>
                         </tr>
                         @endif
+                    @else
+                    <tr>
+                        <td class="col-md-3">Judul</td>
+                        <td>
+                            <a href="{{ URL::to('/judul') }}" class="btn btn-xs btn-default">Tentukan</a>
+                        </td>
+                    </tr>
                     @endif
                 </tbody>
             </table>

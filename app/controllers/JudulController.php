@@ -98,13 +98,7 @@ class JudulController extends BaseController {
         return 'Halaman memuat judul-judul yang dengan filter topik tertentu';
     }
 
-    /**
-     * Ambil judul tertentu
-     *
-     * @var string id_judul
-     * @return View
-     */
-    function ambilJudul($id_judul)
+    private function cekLoginSpesial()
     {
         // apakah login
         if (Auth::check())
@@ -127,29 +121,54 @@ class JudulController extends BaseController {
             Session::set('message', 'Anda harus login sebagai mahasiswa untuk melakukan aksi tersebut.');
             return Redirect::to('/terlarang');
         }
+    }
 
-        $penawaranJudul = PenawaranJudul::find($id_judul);
+    /**
+     * Ambil judul tertentu
+     *
+     * @var string id_judul
+     * @return View
+     */
+    function ambilJudul($id_judul)
+    {
+        $this->cekLoginSpesial();
+
+        $penawaranJudul = PenawaranJudul::with('dosen')->find($id_judul);
         $nrp_mahasiswa = Auth::user()->nomor_induk;
         if ($penawaranJudul != null)
         {
             // judul tersedia
             if ($penawaranJudul->tugasAkhir == null)
             {
-                $mahasiswa = Mahasiswa::with('tugasAkhir')->find($nrp_mahasiswa);return var_dump($mahasiswa->tugasAkhir);
+                $mahasiswa = Mahasiswa::with('tugasAkhir.penawaranJudul', 'tugasAkhir.dosenPembimbing')->find($nrp_mahasiswa);
                 // apakah mahasiswa telah memiliki data tugas akhir atau telah bimbingan
-                if ($mahasiswa->tugasAkhir != null)
+                if ($mahasiswa->tugasAkhir->count() != 0)
                 {
-                    /**
-                     * TODO:
-                     * - ambil data TA terkahir, yaitu data TA pada periode yang sama
-                     * dengan periode aktif.
-                     * - perhatikan kondisi untuk mahasiswa yang pernah mengambil TA di 
-                     * sebelumnya namun tidak lulus.
-                     */
-                    return "Lihat bagian TODO di JudulController line 142";
-                    $mahasiswa->tugasAkhir->penawaranJudul()->associate($penawaranJudul);
-                    $mahasiswa->tugasAkhir->save();
-                    return Redirect::to('/dasbor/mahasiswa');    
+                    // urutkan berdasarkan tanggal mulai
+                    $mahasiswa->tugasAkhir->sort(function($a, $b)
+                    {
+                        $a = $a->created_at;
+                        $b = $b->created_at;
+                        if ($a === $b) {
+                            return 0;
+                        }
+                        return ($a > $b) ? 1 : -1;
+                    });
+                    $tugasAkhirTerakhir = $mahasiswa->tugasAkhir->last();
+                    
+                    foreach ($tugasAkhirTerakhir->dosenPembimbing as $dosenPembimbing) 
+                    {
+                        if ($dosenPembimbing->nip_dosen == $penawaranJudul->dosen->nip_dosen)
+                        {
+                            $tugasAkhirTerakhir->penawaranJudul()->associate($penawaranJudul);
+                            $tugasAkhirTerakhir->save();
+                            return Redirect::to('/dasbor/mahasiswa');    
+                        }
+                    }
+                    
+                    Session::set('page_title', 'Anda Tidak Berhak Mengambil Judul Tersebut');
+                    Session::set('message', 'Judul yang ditawarkan bukan berasal dari dosen pembimbing Anda.');
+                    return Redirect::to('/terlarang');
                 }
                 else
                 {
@@ -175,11 +194,45 @@ class JudulController extends BaseController {
     /**
      * Batalkan judul yang sedang diambil
      *
+     * @var string id_judul
      * @return View
      */
-    function batalkanJudul()
+    function batalkanJudul($id_judul)
     {
-        return 'Batalkan judul yang sedang diambil';
+        $this->cekLoginSpesial();
+
+        $penawaranJudul = PenawaranJudul::with('tugasAkhir')->find($id_judul);
+        $nrp_mahasiswa = Auth::user()->nomor_induk;
+        if ($penawaranJudul != null)
+        {
+            if ($penawaranJudul->tugasAkhir != null)
+            {
+                if ($penawaranJudul->tugasAkhir->nrp_mahasiswa == $nrp_mahasiswa)
+                {
+                    $penawaranJudul->tugasAkhir->id_penawaran_judul = null;
+                    $penawaranJudul->tugasAkhir->save();
+                    return Redirect::to('/dasbor/mahasiswa');    
+                }
+                else
+                {
+                    Session::set('page_title', 'Anda Tidak Berhak Melakukan Aksi Tersebut');
+                    Session::set('message', 'Judul yang ditawarkan sedang diambil oleh mahasiswa lain.');
+                    return Redirect::to('/terlarang');
+                }
+            }
+            else
+            {
+                Session::set('page_title', 'Anda Tidak Berhak Melakukan Aksi Tersebut');
+                Session::set('message', 'Judul yang ditawarkan tidak sedang Anda ambil atau sedang diambil oleh mahasiswa lain.');
+                return Redirect::to('/terlarang');
+            }
+        }
+        else 
+        {
+            Session::set('page_title', 'Tidak Ditemukan');
+            Session::set('message', 'Data penawaran judul yang Anda maksudkan tidak ditemukan.');
+            return Redirect::to('/terlarang');
+        }
     }
 
     /* Kelompok dasbor */

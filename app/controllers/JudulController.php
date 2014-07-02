@@ -106,20 +106,20 @@ class JudulController extends BaseController {
             // apakah mahasiswa
             if (Auth::user()->peran == 0)
             {
-                // do nothing, proceed next outer code :D
+                return true;
             }
             else
             {
                 Session::set('page_title', 'Hanya Untuk Mahasiswa');
                 Session::set('message', 'Anda harus login sebagai mahasiswa untuk melakukan aksi tersebut.');
-                return Redirect::to('/terlarang');
+                return false;
             }
         }
         else
         {
             Session::set('page_title', 'Login Dibutuhkan');
             Session::set('message', 'Anda harus login sebagai mahasiswa untuk melakukan aksi tersebut.');
-            return Redirect::to('/terlarang');
+            return false;
         }
     }
 
@@ -131,7 +131,10 @@ class JudulController extends BaseController {
      */
     function ambilJudul($id_judul)
     {
-        $this->cekLoginSpesial();
+        if (!$this->cekLoginSpesial())
+        {
+            return Redirect::to('/terlarang');
+        }
 
         $penawaranJudul = PenawaranJudul::with('dosen')->find($id_judul);
         $nrp_mahasiswa = Auth::user()->nomor_induk;
@@ -199,7 +202,10 @@ class JudulController extends BaseController {
      */
     function batalkanJudul($id_judul)
     {
-        $this->cekLoginSpesial();
+        if (!$this->cekLoginSpesial())
+        {
+            return Redirect::to('/terlarang');
+        }
 
         $penawaranJudul = PenawaranJudul::with('tugasAkhir')->find($id_judul);
         $nrp_mahasiswa = Auth::user()->nomor_induk;

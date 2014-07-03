@@ -5,24 +5,24 @@ Evaluasi
 @section('content')
 <div class="panel panel-default">
   <div class="panel-body">
-    <form action="" method="" class="form-horizontal row">
-        <div class="form-group col-md-4">
+    <form action="" method="get" class="form-horizontal row">
+        <!-- <div class="form-group col-md-4">
             <label for="filter" class="col-md-3 control-label">Filter</label>
             <div class="col-md-9">
                 <select class="form-control" name="filter" id="filter">
-                    <option>Prodi</option>
-                    <option>Ruang Sidang</option>
+                    <option>Laboratorium</option>
+                    <option>Ruangan</option>
                 </select>
             </div>
-        </div>
+        </div> -->
         <div class="form-group col-md-4">
-            <label for="filter" class="col-md-3 control-label">Order</label>
+            <label for="filter" class="col-md-3 control-label">Urut</label>
             <div class="col-md-9">
-                <select class="form-control" name="filter" id="filter">
-                    <option>Tanggal</option>
-                    <option>Nama Mahasiswa</option>
-                    <option>Prodi</option>
-                    <option>Ruang Sidang</option>
+                <select class="form-control" name="urut" id="urut">
+                    <option value="tanggal">Tanggal</option>
+                    <option value="nama_lengkap">Nama Mahasiswa</option>
+                    <option value="bidang_minat">Laboratorium</option>
+                    <option value="ruangan">Ruangan</option>
                 </select>
             </div>
         </div>
@@ -36,20 +36,23 @@ Evaluasi
                 <th class="text-center">No.</th>
                 <th class="text-center">Tanggal</th>
                 <th class="text-center">Nama Mahasiswa</th>
-                <th class="text-center">Prodi</th>
-                <th class="text-center">Ruang Sidang</th>
+                <th class="text-center">Laboratorium</th>
+                <th class="text-center">Ruangan</th>
+                <th class="text-center">Sesi</th>
             </tr>
         </thead>
         <tbody>
-        @for ($i = 0; $i < count($l_item) ; $i++)
+        <?php $i = 1; ?>
+        @foreach ($l_item as $item)
             <tr>
-                <td class="text-center">{{ $i + 1 }}</td>
-                <td>{{ $l_item[$i]['tanggal_sidang'] }}</td>
-                <td>{{ $l_item[$i]['nama_mahasiswa'] }}</td>
-                <td>{{ $l_item[$i]['nama_prodi'] }}</td>
-                <td class="text-center">{{ $l_item[$i]['ruang_sidang'] }}</td>
+                <td class="text-center">{{ $i++ }}</td>
+                <td>{{ $item->tanggal }}</td>
+                <td>{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</td>
+                <td>{{ $item->tugasAkhir->topik->bidangKeahlian->bidangMinat->first()->nama_bidang_minat }}</td>
+                <td class="text-center">{{ $item->ruangan->kode_ruangan }}</td>
+                <td class="text-center">{{ $item->sesiSidang->waktu_mulai }} - {{ $item->sesiSidang->waktu_selesai }}</td>
             </tr>
-        @endfor
+        @endforeach
         </tbody>
     </table>    
   </div>

@@ -34,32 +34,59 @@ class SidangController extends BaseController {
             array('link' => URL::to('/'), 'text' => 'Beranda'),
             array('link' => '', 'text' => 'Seminar Proposal')
         );
-        $l_item = array(
-            array(
-                'tanggal_sidang' => '15-10-2014 10:00AM',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-                'ruang_sidang' => 'IF-201',
-                'label_prodi' => 'Prodi',
-                'nama_prodi' => 'Nama Prodi'
-            ),
-            array(
-                'tanggal_sidang' => '15-10-2014 10:00AM',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-                'ruang_sidang' => 'IF-201',
-                'label_prodi' => 'Prodi',
-                'nama_prodi' => 'Nama Prodi'
-            ),
-            array(
-                'tanggal_sidang' => '15-10-2014 10:00AM',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-                'ruang_sidang' => 'IF-201',
-                'label_prodi' => 'Prodi',
-                'nama_prodi' => 'Nama Prodi'
-            )
-        );
+
+        $l_item = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul', 'tugasAkhir.topik.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'proposal')->get();
+        
+        $urut = Input::get('urut');
+        if ($urut == 'tanggal' || $urut == null)
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->tanggal;
+                $b = $b->tanggal;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+        else if ($urut == 'nama_lengkap')
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->tugasAkhir->mahasiswa->nama_lengkap;
+                $b = $b->tugasAkhir->mahasiswa->nama_lengkap;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+        else if ($urut == 'bidang_minat')
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->tugasAkhir->topik->bidangKeahlian->bidangMinat->first()->nama_bidang_minat;
+                $b = $b->tugasAkhir->topik->bidangKeahlian->bidangMinat->first()->nama_bidang_minat;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+        else if ($urut == 'ruangan')
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->ruangan->kode_ruangan;
+                $b = $b->ruangan->kode_ruangan;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+
         View::share('breadcrumbs', $breadcrumbs);
         View::share('l_item', $l_item);
         return View::make('pages.sidang.index');
@@ -74,34 +101,61 @@ class SidangController extends BaseController {
     {
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
-            array('link' => '', 'text' => 'Sidang TA')
+            array('link' => '', 'text' => 'Sidang Akhir')
         );
-        $l_item = array(
-            array(
-                'tanggal_sidang' => '15-10-2014 10:00AM',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-                'ruang_sidang' => 'IF-201',
-                'label_prodi' => 'Prodi',
-                'nama_prodi' => 'Nama Prodi'
-            ),
-            array(
-                'tanggal_sidang' => '15-10-2014 10:00AM',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-                'ruang_sidang' => 'IF-201',
-                'label_prodi' => 'Prodi',
-                'nama_prodi' => 'Nama Prodi'
-            ),
-            array(
-                'tanggal_sidang' => '15-10-2014 10:00AM',
-                'nama_mahasiswa' => 'Nama Mahasiswa',
-                'judul' => 'Judul Proposal Yang Panjang Sepanjang Panjangnya',
-                'ruang_sidang' => 'IF-201',
-                'label_prodi' => 'Prodi',
-                'nama_prodi' => 'Nama Prodi'
-            )
-        );
+
+        $l_item = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul', 'tugasAkhir.topik.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'akhir')->get();
+        
+        $urut = Input::get('urut');
+        if ($urut == 'tanggal' || $urut == null)
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->tanggal;
+                $b = $b->tanggal;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+        else if ($urut == 'nama_lengkap')
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->tugasAkhir->mahasiswa->nama_lengkap;
+                $b = $b->tugasAkhir->mahasiswa->nama_lengkap;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+        else if ($urut == 'bidang_minat')
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->tugasAkhir->topik->bidangKeahlian->bidangMinat->first()->nama_bidang_minat;
+                $b = $b->tugasAkhir->topik->bidangKeahlian->bidangMinat->first()->nama_bidang_minat;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+        else if ($urut == 'ruangan')
+        {
+            $l_item->sort(function($a, $b)
+            {
+                $a = $a->ruangan->kode_ruangan;
+                $b = $b->ruangan->kode_ruangan;
+                if ($a === $b) {
+                    return 0;
+                }
+                return ($a > $b) ? 1 : -1;
+            });
+        }
+
         View::share('breadcrumbs', $breadcrumbs);
         View::share('l_item', $l_item);
         return View::make('pages.sidang.index');

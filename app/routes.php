@@ -105,6 +105,9 @@ Route::get('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasbo
 Route::post('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
 Route::put('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
 Route::delete('/dasbor/mahasiswa/sidang', 'Simta\Controllers\SidangController@dasborSidangMahasiswa');
+Route::get('/dasbor/pegawai/sidang', 'Simta\Controllers\SidangController@dasborSidangPegawai');
+Route::get('/dasbor/pegawai/berita_acara/{id_sidang}', 'Simta\Controllers\SidangController@unduhBeritaAcara');
+
 
 // SitInController
 /**

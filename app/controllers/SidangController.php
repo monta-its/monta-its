@@ -16,6 +16,7 @@ use Redirect;
 use Request;
 use Response;
 use Auth;
+use PDF;
 use Simta\Models\Sidang;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Mahasiswa;
@@ -278,6 +279,47 @@ class SidangController extends BaseController {
             }
 
             return Response::json(array('pesan' => $pesan));
+        }
+    }
+
+    /**
+     * Dasbor kelola sidang oleh Pegawai
+     * @return View
+     */
+    function dasborSidangPegawai()
+    {
+        $l_item_proposal = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul', 'tugasAkhir.topik.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'proposal')->get();
+        $l_item_akhir = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul', 'tugasAkhir.topik.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'akhir')->get();
+
+        View::share('l_item_proposal', $l_item_proposal);
+        View::share('l_item_akhir', $l_item_akhir);
+        return View::make('pages.dasbor.sidang.pegawai');
+    }
+
+    /**
+     * Unduh berkas berita acara seminar dan sidang
+     * @param  string $id_sidang ID seminar atau sidang yang ingin 
+     * @return File Mime type : application/pdf
+     */
+    function unduhBeritaAcara($id_sidang)
+    {
+        $sidang = Sidang::with('pengujiSidang.pegawai', 'tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul', 'tugasAkhir.topik.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->find($id_sidang);
+        if ($sidang != null)
+        {
+            $jenis_berita_acara = '';
+            $sidang->jenis_sidang == 'akhir' ? $jenis_berita_acara = 'Sidang' : $jenis_berita_acara = 'Seminar Proposal';
+            
+            setlocale(LC_ALL, 'IND');
+            View::share('jenis_berita_acara', $jenis_berita_acara);
+            View::share('sidang', $sidang);
+            $pdf = PDF::loadView('reports.berita_acara')->setPaper('folio');
+            return $pdf->download($sidang->id_sidang . '-' . $sidang->jenis_sidang . '-' . $sidang->ruangan->kode_ruangan . '-' . $sidang->tugasAkhir->nrp_mahasiswa. '.pdf');
+        }
+        else
+        {
+            Session::set('page_title', 'Tidak Ditemukan');
+            Session::set('message', 'Data seminar atau sidang yang Anda maksudkan tidak ditemukan.');
+            return Redirect::to('/sidang/terlarang');
         }
     }
 

@@ -114,7 +114,7 @@ h4 {
     </tbody>
 </table>
 <hr />
-<h3 class="center" style="margin-bottom: 0; padding-bottom: 0;">Seminar Proposal Tugas Akhir Periode Semester Genap 2013 - 2014</h3>
+<h3 class="center" style="margin-bottom: 0; padding-bottom: 0;">{{ $jenis_berita_acara }} Tugas Akhir Periode Semester Genap 2013 - 2014</h3>
 
 <table class="center">
     <tbody>
@@ -134,16 +134,16 @@ h4 {
             <th style="width: 7em;">Jam</th>
             <th style="width: 5em;">Ruangan</th>
             <th style="width: 7em;">Bidang</th>
-            <th style="width: 7em;">Seminar ke</th>
+            <th style="width: 7em;">{{ $jenis_berita_acara }} ke</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="center">Rabu</td>
-            <td class="center">28 Mei 2014</td>
-            <td class="center">09:00</td>
-            <td class="center">A.210A</td>
-            <td class="center">MT</td>
+            <td class="center">{{ strftime("%A", strtotime($sidang->tanggal)) }}</td>
+            <td class="center">{{ $sidang->tanggal }}</td>
+            <td class="center">{{ $sidang->sesiSidang->waktu_mulai }} - {{ $sidang->sesiSidang->waktu_selesai }}</td>
+            <td class="center">{{ $sidang->ruangan->kode_ruangan }}</td>
+            <td class="center">{{ $sidang->tugasAkhir->topik->BidangKeahlian->BidangMinat->first()->nama_bidang_minat }}</td>
             <td class="center">1</td>
         </tr>
     </tbody>
@@ -152,14 +152,14 @@ h4 {
 <table id="tugas-akhir">
     <tbody>
         <tr>
-            <td style="width: 8em;"><strong>Topik Proposal</strong></td>
+            <td style="width: 8em;"><strong>Topik</strong></td>
             <td style="width: 1em;"><strong>:</strong></td>
-            <td></td>
+            <td>{{$sidang->tugasAkhir->topik->topik}}</td>
         </tr>
         <tr>
-            <td><strong>Judul Proposal</strong></td>
+            <td><strong>Judul</strong></td>
             <td><strong>:</strong></td>
-            <td>Analisa Pengaruh Perilaku Panas Austempering Terhadap Ketangguhan, Kekerasan dan Struktur Mikro FCD 600</td>
+            <td>{{$sidang->tugasAkhir->penawaranJudul->judul_tugas_akhir}}</td>
         </tr>
     </tbody>
 </table>
@@ -175,8 +175,8 @@ h4 {
     </thead>
     <tbody>
         <tr style="line-height: 2.5;">
-            <td>5111100098</td>
-            <td>Ifan Iqbal</td>
+            <td>{{$sidang->tugasAkhir->mahasiswa->nrp_mahasiswa}}</td>
+            <td>{{$sidang->tugasAkhir->mahasiswa->nama_lengkap}}</td>
             <td></td>
         </tr>
     </tbody>
@@ -192,26 +192,14 @@ h4 {
         </tr>
     </thead>
     <tbody>
+    <?php $i = 0; ?>
+    @foreach ($sidang->pengujiSidang as $penguji)
         <tr style="line-height: 2.5;">
-            <td class="center">#.</td>
-            <td style="padding-left: 8px;">Nama Dosen Penguji, S.Gelar</td>
-            <td><strong>#.</strong> </td>
+            <td class="center">{{++$i}}</td>
+            <td style="padding-left: 8px;">{{$penguji->gelar_depan}} {{$penguji->pegawai->nama_lengkap}} {{$penguji->gelar_belakang}}</td>
+            <td><strong>{{$i}}.</strong> </td>
         </tr>
-        <tr style="line-height: 2.5;">
-            <td class="center">#.</td>
-            <td style="padding-left: 8px;">Nama Dosen Penguji, S.Gelar</td>
-            <td><strong>#.</strong> </td>
-        </tr>
-        <tr style="line-height: 2.5;">
-            <td class="center">#.</td>
-            <td style="padding-left: 8px;">Nama Dosen Penguji, S.Gelar</td>
-            <td><strong>#.</strong> </td>
-        </tr>
-        <tr style="line-height: 2.5;">
-            <td class="center">#.</td>
-            <td style="padding-left: 8px;">Nama Dosen Penguji, S.Gelar</td>
-            <td><strong>#.</strong> </td>
-        </tr>
+    @endforeach
     </tbody>
 </table>
 <br />
@@ -228,8 +216,8 @@ h4 {
     </thead>
     <tbody>
         <tr style="line-height: 2;">
-            <td>5111100098</td>
-            <td>Ifan Iqbal</td>
+            <td>{{$sidang->tugasAkhir->mahasiswa->nrp_mahasiswa}}</td>
+            <td>{{$sidang->tugasAkhir->mahasiswa->nama_lengkap}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -259,13 +247,13 @@ h4 {
             </td>
             <td style="width: 6em;">&nbsp;</td>
             <td style="width: 20em;">
-                Surabaya, 10 November 2014<br />
+                Surabaya, {{$sidang->tanggal}}<br />
                 <strong>Moderator / Pembimbing Proposal TA,</strong><br />
                 <br />
                 <br />
                 <br />
                 <br />
-                <strong><u>Nama Moderator, S.Gelar</u></strong><br />
+                <strong><u>_____________________________</u></strong><br />
             </td>
         </tr>
     </tbody>

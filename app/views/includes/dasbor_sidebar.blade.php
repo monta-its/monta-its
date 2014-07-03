@@ -66,7 +66,7 @@
         <a href="{{ URL::to('dasbor/pegawai/syarat') }}">Syarat</a>
     </li>
     <li>
-        <a href="{{ URL::to('dasbor/pegawai/sidang') }}">Sidang</a>
+        <a href="{{ URL::to('dasbor/pegawai/sidang') }}">Seminar &amp; Sidang</a>
     </li>
     <li>
         <a href="{{ URL::to('dasbor/pegawai/sesi_sidang') }}">Sesi Sidang</a>

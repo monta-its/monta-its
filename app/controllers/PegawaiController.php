@@ -25,6 +25,12 @@ class PegawaiController extends BaseController {
      */
     function dasborPegawai()
     {
+        $pemberitahuan = Pegawai::with(array('pemberitahuan' => function($query)
+        {
+            $query->orderBy('id_pemberitahuan_pegawai', 'DESC');
+        }))->find(Auth::user()->nomor_induk)->pemberitahuan;
+        View::share('pemberitahuan', $pemberitahuan);
+
         return View::make('pages.dasbor.pegawai.index');
     }
 

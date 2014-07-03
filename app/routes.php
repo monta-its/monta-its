@@ -231,6 +231,7 @@ Route::get ('/pegawai', function()
     foreach ($p as $pegawai) {
         if (!$pegawai->apakahDosen())
         {
+            echo "<pre>";
             var_dump($pegawai->toArray());
         }
     }

@@ -1,10 +1,12 @@
 @extends('layouts.default')
 @section('page_title')
-Evaluasi
+{{ $page_title }}
 @stop
 @section('content')
 <div class="panel panel-default">
   <div class="panel-body">
+    <h1>{{ $page_title }}</h1>
+    <br>
     <form action="" method="get" class="form-horizontal row">
         <!-- <div class="form-group col-md-4">
             <label for="filter" class="col-md-3 control-label">Filter</label>

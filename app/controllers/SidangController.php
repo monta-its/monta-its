@@ -87,6 +87,7 @@ class SidangController extends BaseController {
             });
         }
 
+        View::share('page_title', 'Daftar Seminar Proposal');
         View::share('breadcrumbs', $breadcrumbs);
         View::share('l_item', $l_item);
         return View::make('pages.sidang.index');
@@ -156,6 +157,7 @@ class SidangController extends BaseController {
             });
         }
 
+        View::share('page_title', 'Daftar Sidang Akhir');
         View::share('breadcrumbs', $breadcrumbs);
         View::share('l_item', $l_item);
         return View::make('pages.sidang.index');

@@ -274,3 +274,16 @@ Route::get ('/pdf', function()
         return $pdf->download('test_print.pdf');
     }
 });
+
+Route::get ('/sqlsrv', function(){
+    return var_dump(DB::connection('sqlsrv')->select('select MA_Email from _BAHAN_MONTA_MAHASISWA'));
+});
+Route::get ('/sqlsrv/image', function(){
+    $response = Response::make(DB::connection('sqlsrv')->select("select MA_Photo from _BAHAN_MONTA_MAHASISWA where MA_Email = 'Paper12.ittang@yahoo.com'")[0]->MA_Photo, 200);
+    $response->header('Content-Type', 'image/jpeg');
+    return $response;
+});
+
+Route::get ('/info', function(){
+    phpinfo();
+});

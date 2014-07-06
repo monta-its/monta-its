@@ -198,25 +198,25 @@ class Dosen extends Eloquent {
     {
         // Definisikan semester depan
         $now = new DateTime("today");
-        $month = (int)$now->format('m');
+        $month = intval($now->format('m'));
         if($month >= 1 && $month <= 6)
         {
-            $yearMin = (int) $now->format('Y');
+            $yearMin = intval($now->format('Y'));
             $monthMin = 7;
             $dateMin = new DateTime("$yearMin-$monthMin-01");
 
-            $yearMax = (int)$now->format('Y');
+            $yearMax = intval($now->format('Y'));
             $monthMax = 12;
             $dateMax = new DateTime("$yearMax-$monthMax-31");
         }
         else if($month >= 7 && $month <= 12)
         {
 
-            $yearMin = int($now->format('Y')) + 1;
+            $yearMin = intval($now->format('Y')) + 1;
             $monthMin = 1;
             $dateMin = new DateTime("$yearMin-$monthMin-01");
 
-            $yearMax = int($now->format('Y')) + 1;
+            $yearMax = intval($now->format('Y')) + 1;
             $monthMax = 6;
             $dateMax = new DateTime("$yearMax-$monthMax-30");
         }
@@ -234,25 +234,25 @@ class Dosen extends Eloquent {
 
         // Definisikan semester ini
         $now = new DateTime("today");
-        $month = (int)$now->format('m');
+        $month = intval($now->format('m'));
         if($month >= 1 && $month <= 6)
         {
-            $yearMin = (int) $now->format('Y');
+            $yearMin = intval($now->format('Y'));
             $monthMin = 1;
             $dateMin = new DateTime("$yearMin-$monthMin-01");
 
-            $yearMax = (int)$now->format('Y');
+            $yearMax = intval($now->format('Y'));
             $monthMax = 6;
             $dateMax = new DateTime("$yearMax-$monthMax-30");
         }
         else if($month >= 7 && $month <= 12)
         {
 
-            $yearMin = int($now->format('Y'));
+            $yearMin = intval($now->format('Y'));
             $monthMin = 7;
             $dateMin = new DateTime("$yearMin-$monthMin-01");
 
-            $yearMax = int($now->format('Y'));
+            $yearMax = intval($now->format('Y'));
             $monthMax = 12;
             $dateMax = new DateTime("$yearMax-$monthMax-31");
         }

@@ -238,7 +238,6 @@ Route::get ('/pegawai', function()
 });
 Route::get ('/mahasiswa', function()
 {
-    return var_dump(PenawaranJudul::with('tugasAkhir')->find(1)->tugasAkhir);
     $totalSyaratSitIn = Syarat::where('waktu_syarat','=','pra_sit_in')->count();
     $totalSyaratBimbingan = Syarat::where('waktu_syarat','=','pra_bimbingan')->count();
     $totalSyaratSeminar = Syarat::where('waktu_syarat','=','pra_seminar_proposal')->count();

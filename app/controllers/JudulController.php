@@ -158,17 +158,17 @@ class JudulController extends BaseController {
                         return ($a > $b) ? 1 : -1;
                     });
                     $tugasAkhirTerakhir = $mahasiswa->tugasAkhir->last();
-                    
-                    foreach ($tugasAkhirTerakhir->dosenPembimbing as $dosenPembimbing) 
+
+                    foreach ($tugasAkhirTerakhir->dosenPembimbing as $dosenPembimbing)
                     {
                         if ($dosenPembimbing->nip_dosen == $penawaranJudul->dosen->nip_dosen)
                         {
                             $tugasAkhirTerakhir->penawaranJudul()->associate($penawaranJudul);
                             $tugasAkhirTerakhir->save();
-                            return Redirect::to('/dasbor/mahasiswa');    
+                            return Redirect::to('/dasbor/mahasiswa');
                         }
                     }
-                    
+
                     Session::set('page_title', 'Anda Tidak Berhak Mengambil Judul Tersebut');
                     Session::set('message', 'Judul yang ditawarkan bukan berasal dari dosen pembimbing Anda.');
                     return Redirect::to('/terlarang');
@@ -186,7 +186,7 @@ class JudulController extends BaseController {
                 return Redirect::to('/terlarang');
             }
         }
-        else 
+        else
         {
             Session::set('page_title', 'Tidak Ditemukan');
             Session::set('message', 'Data penawaran judul yang Anda maksudkan tidak ditemukan.');
@@ -217,7 +217,7 @@ class JudulController extends BaseController {
                 {
                     $penawaranJudul->tugasAkhir->id_penawaran_judul = null;
                     $penawaranJudul->tugasAkhir->save();
-                    return Redirect::to('/dasbor/mahasiswa');    
+                    return Redirect::to('/dasbor/mahasiswa');
                 }
                 else
                 {
@@ -233,7 +233,7 @@ class JudulController extends BaseController {
                 return Redirect::to('/terlarang');
             }
         }
-        else 
+        else
         {
             Session::set('page_title', 'Tidak Ditemukan');
             Session::set('message', 'Data penawaran judul yang Anda maksudkan tidak ditemukan.');
@@ -273,7 +273,10 @@ class JudulController extends BaseController {
                 $judul->deskripsi = Input::get('deskripsi');
                 $judul->dosen()->associate($dosen);
                 $judul->topik()->associate($topik);
-                $judul->save();
+                if(!$judul->save())
+                {
+                    return Response::json(array('error' => $judul->validatorMessage));
+                }
                 $pesan = "Data berhasil disimpan.";
             }
             else
@@ -292,21 +295,24 @@ class JudulController extends BaseController {
                 $judul->judul_tugas_akhir = Input::get('judul_tugas_akhir');
                 $judul->deskripsi = Input::get('deskripsi');
                 $judul->topik()->associate($topik);
-                $judul->save();
+                if(!$judul->save())
+                {
+                    return Response::json(array('error' => $judul->validatorMessage));
+                }
                 $pesan = "Perubahan data berhasil disimpan.";
             }
             else
             {
-                $pesan = "Topik tidak ditemukan. Penyimpanan data dibatalkan.";                
+                $pesan = "Topik tidak ditemukan. Penyimpanan data dibatalkan.";
             }
         }
         else if(Request::isMethod('delete'))
         {
             $judul = PenawaranJudul::find(Input::get('id_penawaran_judul'));
-            if ($judul != null) 
+            if ($judul != null)
             {
                 $judul->delete();
-                $pesan = "Penghapusan data berhasil.";    
+                $pesan = "Penghapusan data berhasil.";
             }
             else
             {

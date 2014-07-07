@@ -50,9 +50,13 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
         $scope.judul.topik = {};
         $scope.tambahJudul = function() {
             $http.post('{{{URL::to('/dasbor/dosen/judul')}}}', $scope.judul).success(function(data) {console.log(data);
-                updateJudul($rootScope, $http)
-                $location.path('/');
-                alert(data.pesan);
+                if(data.error) {
+                    alert('Data belum lengkap.')
+                } else {
+                    updateJudul($rootScope, $http)
+                    $location.path('/');
+                    alert(data.pesan);
+                }
             });
         };
     } else if (method == "sunting") {
@@ -61,8 +65,13 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
             $scope.judul.id_penawaran_judul = $routeParams.id;
             $scope.suntingJudul = function() {
                 $http.put('{{URL::to('/dasbor/dosen/judul')}}', $scope.judul).success(function (data) {
-                    updateJudul($rootScope, $http);
-                    $location.path('/');
+                    if(data.error) {
+                        alert('Data belum lengkap.')
+                    } else {
+                        updateJudul($rootScope, $http)
+                        $location.path('/');
+                        alert(data.pesan);
+                    }
                 });
             };
             updateJudul($rootScope, $http, function() {
@@ -115,7 +124,7 @@ app.config(function($httpProvider) {
                         <textarea ng-model="judul.deskripsi" class="form-control" rows="10" placeholder="Deskripsi"></textarea>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" ng-model="judul.topik" ng-options="item.topik for item in topik_items"></select>                        
+                        <select class="form-control" ng-model="judul.topik" ng-options="item.topik for item in topik_items"></select>
                     </div>
                 </div>
                 <div class="col-md-4">

@@ -51,9 +51,13 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
         $scope.topik.deskripsi = "";
         $scope.tambahTopik = function() {
             $http.post('{{{URL::to('/dasbor/dosen/topik')}}}', $scope.topik).success(function(data) {
-                updateTopik($rootScope, $http);
-                alert(data.pesan);
-                $location.path('/');
+                if(data.error) {
+                    alert('Data belum lengkap.')
+                } else {
+                    updateTopik($rootScope, $http);
+                    alert(data.pesan);
+                    $location.path('/');
+                }
             })
         };
     } else if (method == "sunting") {
@@ -62,9 +66,13 @@ app.controller('topikSuntingController', function($rootScope, $scope, $http, $ro
             $scope.topik.id_topik = $routeParams.id;
             $scope.suntingTopik = function() {
                 $http.put('{{URL::to('/dasbor/dosen/topik')}}', $scope.topik).success(function (data) {
-                    updateTopik($rootScope, $http);
-                    alert(data.pesan);
-                    $location.path('/');
+                    if(data.error) {
+                        alert('Data belum lengkap.')
+                    } else {
+                        updateTopik($rootScope, $http);
+                        alert(data.pesan);
+                        $location.path('/');
+                    }
                 });
             };
             updateTopik($rootScope, $http, function() {

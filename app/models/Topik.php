@@ -9,14 +9,15 @@
  */
 
 namespace Simta\Models;
-use Eloquent;
+use EloquentValidator;
 
-class Topik extends Eloquent {
+class Topik extends EloquentValidator {
     protected $table = 'topik';
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_topik";
     protected $fillable = ["topik", "deskripsi"];
+    protected $rules = array("topik" => "required", "deskripsi" => "required");
 
     /**
      * Relasi many-to-one dengan tabel BidangKeahlian

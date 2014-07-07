@@ -140,7 +140,10 @@ class TopikController extends BaseController {
                 $topik->topik = Input::get('topik');
                 $topik->deskripsi = Input::get('deskripsi');
                 $topik->bidangKeahlian()->associate($bidangKeahlian);
-                $topik->save();
+                if(!$topik->save())
+                {
+                    return Response::json(array('error' => $topik->validatorMessage));
+                }
                 $pesan = "Data berhasil disimpan.";
             }
             else
@@ -158,7 +161,10 @@ class TopikController extends BaseController {
                 $topik->topik = Input::get('topik');
                 $topik->deskripsi = Input::get('deskripsi');
                 $topik->bidangKeahlian()->associate($bidangKeahlian);
-                $topik->save();
+                if(!$topik->save())
+                {
+                    return Response::json(array('error' => $topik->validatorMessage));
+                }
                 $pesan = 'Perubahan data berhasil disimpan.';
             }
             else

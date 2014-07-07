@@ -92,7 +92,10 @@ class BeritaController extends BaseController {
                 $berita->isi = Input::get('isi');
                 $berita->apakah_terbit = Input::get('apakah_terbit');
                 $berita->pegawai()->associate($pegawai);
-                $berita->save();
+                if(!$berita->save())
+                {
+                    return Response::json(array('error' => $berita->validatorMessage));
+                }
             }
 
         }
@@ -106,7 +109,10 @@ class BeritaController extends BaseController {
                 $berita->isi = Input::get('isi');
                 $berita->apakah_terbit = Input::get('apakah_terbit');
                 $berita->pegawai()->associate($pegawai);
-                $berita->save();
+                if(!$berita->save())
+                {
+                    return Response::json(array('error' => $berita->validatorMessage));
+                }
             }
 
         }

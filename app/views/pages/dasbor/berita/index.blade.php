@@ -59,15 +59,23 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
         $scope.berita.apakah_terbit = true;
         $scope.terbitkanBerita = function() {
             $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
-                updateBerita($rootScope, $http)
-                $location.path('/');
+                if(!data.error) {
+                    updateBerita($rootScope, $http)
+                    $location.path('/');
+                } else {
+                    alert('Data belum lengkap.')
+                }
             })
         };
         $scope.simpanBerita = function() {
             $scope.berita.apakah_terbit = false;
             $http.post('{{{URL::to('/dasbor/dosen/berita')}}}', $scope.berita).success(function(data) {
-                updateBerita($rootScope, $http)
-                $location.path('/');
+                if(!data.error) {
+                    updateBerita($rootScope, $http)
+                    $location.path('/');
+                } else {
+                    alert('Data belum lengkap.')
+                }
             })
         };
     } else if (method == "sunting") {
@@ -76,8 +84,12 @@ app.controller('beritaSuntingController', function($rootScope, $scope, $http, $r
             $scope.berita.id_pos = $routeParams.id;
             $scope.suntingBerita = function() {
                 $http.put('{{URL::to('/dasbor/dosen/berita')}}', $scope.berita).success(function (data) {
-                    updateBerita($rootScope, $http);
-                    $location.path('/');
+                    if(!data.error) {
+                        updateBerita($rootScope, $http)
+                        $location.path('/');
+                    } else {
+                        alert('Data belum lengkap.')
+                    }
                 });
             };
             updateBerita($rootScope, $http, function() {

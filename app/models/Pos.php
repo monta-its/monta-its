@@ -9,14 +9,17 @@
  */
 
 namespace Simta\Models;
-use Eloquent;
+use EloquentValidator;
 
-class Pos extends Eloquent {
+class Pos extends EloquentValidator {
     protected $table = 'pos';
     public $timestamps = true;
     protected $softDelete = true;
     protected $primaryKey = "id_pos";
     protected $fillable = ["judul", "isi", "apakah_terbit"];
+    protected $rules = array("judul" => "required",
+                             "isi" => "required",
+                             "apakah_terbit" => "required");
 
     /**
      * Relasi many-to-one dengan tabel Pegawai

@@ -73,14 +73,6 @@ Route::post ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianC
 Route::put ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborBidangKeahlian');
 Route::delete ('/dasbor/dosen/bidang_keahlian', 'Simta\Controllers\BidangKeahlianController@dasborBidangKeahlian');
 
-// TopikController
-Route::get ('/topik', 'Simta\Controllers\TopikController@lihatSemuaTopik');
-Route::get ('/topik/{id_topik}', 'Simta\Controllers\TopikController@lihatIsiTopik');
-Route::get ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
-Route::post ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
-Route::put ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
-Route::delete ('/dasbor/dosen/topik', 'Simta\Controllers\TopikController@dasborTopik');
-
 // JudulController : PenawaranJudul
 Route::get ('/judul', 'Simta\Controllers\JudulController@lihatSemuaJudul');
 Route::get ('/judul/{id_judul}', 'Simta\Controllers\JudulController@lihatIsiJudul');

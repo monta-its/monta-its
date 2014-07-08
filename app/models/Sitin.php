@@ -19,7 +19,6 @@ use Eloquent;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Dosen;
 use Simta\Models\Mahasiswa;
-use Simta\Models\Topik;
 
 class SitIn extends Eloquent {
     protected $table = 'sit_in';
@@ -48,21 +47,10 @@ class SitIn extends Eloquent {
         return $this->belongsTo('Simta\Models\Mahasiswa', 'nrp_mahasiswa', 'nrp_mahasiswa');
     }
 
-
-    /**
-     * Relasi many-to-one dengan tabel Topik
-     *
-     * @return Simta\Models\Topik
-     */
-    public function topik()
-    {
-        return $this->belongsTo('Simta\Models\Topik', 'id_topik', 'id_topik');
-    }
-
     /**
      * Buat data Tugas Akhir dari SitIn ini jika sudah disetujui
      *
-     * @return Simta\Models\Topik
+     * @return Simta\Models\TugasAkhir
      */
     public function buatDataTugasAkhir()
     {
@@ -70,9 +58,7 @@ class SitIn extends Eloquent {
         {
             $tugasAkhir = new TugasAkhir;
             $mahasiswa = Mahasiswa::find($this->nrp_mahasiswa);
-            //$topik = Topik::find($this->id_topik);
             $tugasAkhir->mahasiswa()->associate($mahasiswa);
-            //$tugasAkhir->topik()->associate($topik);
             $tugasAkhir->tanggal_mulai = date('Y-m-d');
             $tugasAkhir->status = "pengerjaan";
             $tugasAkhir->save();

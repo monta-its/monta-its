@@ -48,7 +48,7 @@ class BidangKeahlianController extends BaseController {
      */
     function lihatIsiBidangKeahlian($id_bidang_keahlian)
     {
-        $item = BidangKeahlian::with('topik.tugasAkhir.mahasiswa', 'bidangMinat', 'dosen.pegawai')->find($id_bidang_keahlian);
+        $item = BidangKeahlian::with('penawaranJudul.tugasAkhir.mahasiswa', 'bidangMinat', 'dosen.pegawai')->find($id_bidang_keahlian);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),

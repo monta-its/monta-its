@@ -97,31 +97,18 @@ Dasbor Mahasiswa
                             <a href="{{ URL::to('/judul/' . $tugasAkhir->id_penawaran_judul) }}">{{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}</a> <a href="{{ URL::to('/judul/batal/' . $tugasAkhir->id_penawaran_judul) }}" class="btn btn-xs btn-danger">Batalkan</a>
                         </td>
                     </tr>
-                        @if ($tugasAkhir->penawaranJudul->topik != null)
-                        <tr>
-                            <td>Topik</td>
-                            <td>
-                                <a href="{{ URL::to('topik/' . $tugasAkhir->penawaranJudul->id_topik) }}">{{ $tugasAkhir->penawaranJudul->topik->topik }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Bidang Keahlian</td>
-                            <td>
-                                <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->topik->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->topik->bidangKeahlian->nama_bidang_keahlian }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Laboratorium</td>
-                            <td>
-                            @foreach ($tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat)
-                                <a href="{{ URL::to('prodi/' . $bidangMinat->id_bidang_minat) }}">{{ $bidangMinat->nama_bidang_minat }}</a>
-                                @if ($i < $tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat->count() - 1)
-                                ,
-                                @endif
-                            @endforeach
-                            </td>
-                        </tr>
-                        @endif
+                    <tr>
+                        <td>Bidang Keahlian</td>
+                        <td>
+                            <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->bidangKeahlian->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->bidangKeahlian->nama_bidang_keahlian }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Laboratorium</td>
+                        <td>
+                            <a href="{{ URL::to('prodi/' . $tugasAkhir->penawaranJudul->bidangMinat->id_bidang_minat) }}">{{ $tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat }}</a>
+                        </td>
+                    </tr>
                     @else
                     <tr>
                         <td class="col-md-3">Judul</td>

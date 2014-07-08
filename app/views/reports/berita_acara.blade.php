@@ -143,7 +143,7 @@ h4 {
             <td class="center">{{ $sidang->tanggal }}</td>
             <td class="center">{{ $sidang->sesiSidang->waktu_mulai }} - {{ $sidang->sesiSidang->waktu_selesai }}</td>
             <td class="center">{{ $sidang->ruangan->kode_ruangan }}</td>
-            <td class="center">{{ $sidang->tugasAkhir->topik->BidangKeahlian->BidangMinat->first()->nama_bidang_minat }}</td>
+            <td class="center">{{ $sidang->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat }}</td>
             <td class="center">1</td>
         </tr>
     </tbody>
@@ -154,7 +154,7 @@ h4 {
         <tr>
             <td style="width: 8em;"><strong>Topik</strong></td>
             <td style="width: 1em;"><strong>:</strong></td>
-            <td>{{$sidang->tugasAkhir->topik->topik}}</td>
+            <td></td>
         </tr>
         <tr>
             <td><strong>Judul</strong></td>

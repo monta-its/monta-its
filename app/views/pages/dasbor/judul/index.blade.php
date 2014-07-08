@@ -18,9 +18,6 @@ var app = angular.module('dasborJudul', ['ngRoute'], function($interpolateProvid
 var updateJudul = function($rootScope, $http, callback) {
     $http.get('{{URL::to('/dasbor/dosen/judul')}}').success(function(data) {
         $rootScope.items = data;
-        $http.get('{{URL::to('/dasbor/dosen/topik')}}').success(function(data) {
-            $rootScope.topik_items = data;
-            if (callback) callback();
         });
     });
 
@@ -47,7 +44,6 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
         $scope.judul = {};
         $scope.judul.judul_tugas_akhir = "";
         $scope.judul.deskripsi = "";
-        $scope.judul.topik = {};
         $scope.tambahJudul = function() {
             $http.post('{{{URL::to('/dasbor/dosen/judul')}}}', $scope.judul).success(function(data) {console.log(data);
                 if(data.error) {
@@ -79,11 +75,6 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
                     if(val.id_penawaran_judul == $scope.judul.id_penawaran_judul) {
                         $scope.judul.judul_tugas_akhir = val.judul_tugas_akhir;
                         $scope.judul.deskripsi = val.deskripsi;
-                        $.each($rootScope.topik_items, function(j, val2) {
-                            if(val2.id_topik == val.id_topik) {
-                                $scope.judul.topik = val2;
-                            }
-                        });
                     }
                 });
             });
@@ -99,7 +90,6 @@ app.controller('judulSuntingController', function($rootScope, $scope, $http, $ro
 app.config(function($routeProvider) {
     $routeProvider
     .when('/', { templateUrl: 'daftarJudul.html'})
-    .when('/topik/:searchText', { templateUrl: 'daftarJudul.html'})
     .when('/:method', { templateUrl: 'judulSunting.html'})
     .when('/:method/:id', { templateUrl: 'judulSunting.html'})
 });
@@ -122,9 +112,6 @@ app.config(function($httpProvider) {
                     </div>
                     <div class="form-group">
                         <textarea ng-model="judul.deskripsi" class="form-control" rows="10" placeholder="Deskripsi"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" ng-model="judul.topik" ng-options="item.topik for item in topik_items"></select>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -151,7 +138,6 @@ app.config(function($httpProvider) {
                     <thead>
                         <tr>
                             <th class="text-center">Judul</th>
-                            <th class="text-center col-md-2">Topik</th>
                             <th class="text-center">Status</th>
                             <th class="text-center col-md-2">Aksi</th>
                         </tr>
@@ -159,7 +145,6 @@ app.config(function($httpProvider) {
                     <tbody>
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td><a href="{{ URL::to('/judul') }}/[[item.id_penawaran_judul]]">[[item.judul_tugas_akhir]]</a></td>
-                            <td><a href="{{ URL::to('/topik') }}/[[item.topik.id_topik]]">[[item.topik.topik]]</a></td>
                             <td class="text-center">[[item.tugasAkhir ? "Diambil": "Belum Diambil"]]</td>
                             <td class="text-center">
                                 <a href="#/sunting/[[item.id_penawaran_judul]]">Sunting</a>

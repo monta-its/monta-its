@@ -55,7 +55,7 @@ var update = function($rootScope, $http, callback) {
 };
 
 var updateDosenUp = function($rootScope, $http, id_bidang_minat, hari, sesi, tanggal, callback) {
-    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?hari=' + String(hari) + '&sesi=' + String(sesi) + '&bidangMinat=' + JSON.stringify(id_bidang_minat)).success(function(data){
+    $http.get('{{URL::to('/dasbor/pengguna/dosen')}}?hari=' + String(hari) + '&sesi=' + String(sesi) + '&bidangMinat=' + String(id_bidang_minat)).success(function(data){
         $rootScope.dosen = data;
 
         // Tambahan: Update juga list ruangan
@@ -83,15 +83,11 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
     $scope.sidang = {};
     var method = $routeParams.method;
     $scope.updateDosen = function() {
-        var id_bidang_minat = [];
+        var id_bidang_minat = $scope.sidang.tugasAkhir.penawaran_judul.bidang_minat.id_bidang_minat;
         var sesi = $scope.sidang.sesi;
 
         var hari = (new Date($scope.sidang.tanggal)).getDay();
         var tanggal = $scope.sidang.tanggal;
-
-        $.each($scope.sidang.tugasAkhir.penawaran_judul.topik.bidang_keahlian.bidang_minat, function(i, val) {
-            id_bidang_minat.push(val.id_bidang_minat)
-        });
 
         updateDosenUp($rootScope, $http, id_bidang_minat, hari, sesi, tanggal);
     };

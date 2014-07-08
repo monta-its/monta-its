@@ -78,16 +78,6 @@ class TugasAkhir extends Eloquent {
     }
 
     /**
-     * Relasi many-to-one dengan Topik
-     *
-     * @return Simta\Models\Topik
-     */
-    public function topik()
-    {
-        return $this->belongsTo('Simta\Models\Topik', 'id_topik', 'id_topik');
-    }
-
-    /**
      * Relasi one-to-one dengan PenawaranJudul
      *
      * @return Simta\Models\PenawaranJudul

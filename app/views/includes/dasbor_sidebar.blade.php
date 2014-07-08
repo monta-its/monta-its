@@ -52,9 +52,6 @@
         <a href="{{ URL::to('dasbor/dosen/bidang_keahlian') }}">Bidang Keahlian</a>
     </li>
     <li>
-        <a href="{{ URL::to('dasbor/dosen/topik') }}">Topik</a>
-    </li>
-    <li>
         <a href="{{ URL::to('dasbor/dosen/pengguna/mahasiswa/tambah') }}">Tambah Mahasiswa</a>
     </li>
 @endif

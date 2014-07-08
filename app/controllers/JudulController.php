@@ -36,7 +36,7 @@ class JudulController extends BaseController {
             array('link' => '', 'text' => 'Penawaran Judul')
         );
 
-        $items = PenawaranJudul::with('topik.bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->get();
+        $items = PenawaranJudul::with('bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -52,7 +52,7 @@ class JudulController extends BaseController {
      */
     function lihatIsiJudul($id_judul)
     {
-        $item = PenawaranJudul::with('topik.bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->find($id_judul);
+        $item = PenawaranJudul::with('bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->find($id_judul);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -85,17 +85,6 @@ class JudulController extends BaseController {
     function lihatJudulDariBidangKeahlian($id_bidang_keahlian)
     {
         return 'Halaman memuat judul-judul yang dengan filter bidang keahlian tertentu';
-    }
-
-    /**
-     * Tampilkan daftar judul berdasarkan topik
-     *
-     * @var string id_topik
-     * @return View
-     */
-    function lihatJudulDariTopik($id_topik)
-    {
-        return 'Halaman memuat judul-judul yang dengan filter topik tertentu';
     }
 
     private function cekLoginSpesial()
@@ -259,20 +248,18 @@ class JudulController extends BaseController {
             else
             {
                 $nip_dosen = Auth::user()->nomor_induk;
-                return Response::json(PenawaranJudul::with('dosen', 'dosen.pegawai', 'tugasAkhir', 'tugasAkhir.mahasiswa', 'topik')->where('nip_dosen', $nip_dosen)->get());
+                return Response::json(PenawaranJudul::with('dosen', 'dosen.pegawai', 'tugasAkhir', 'tugasAkhir.mahasiswa')->where('nip_dosen', $nip_dosen)->get());
             }
         }
         else if(Request::isMethod('post'))
         {
             $dosen = Dosen::find(Auth::user()->nomor_induk);
-            $topik = Topik::find(Input::get('topik.id_topik'));
             $judul = new PenawaranJudul;
-            if($dosen != null && $topik != null)
+            if($dosen != null)
             {
                 $judul->judul_tugas_akhir = Input::get('judul_tugas_akhir');
                 $judul->deskripsi = Input::get('deskripsi');
                 $judul->dosen()->associate($dosen);
-                $judul->topik()->associate($topik);
                 if(!$judul->save())
                 {
                     return Response::json(array('error' => $judul->validatorMessage));
@@ -281,20 +268,18 @@ class JudulController extends BaseController {
             }
             else
             {
-                $pesan = 'Dosen atau topik tidak ditemukan. Penambahan data dibatalkan.';
+                $pesan = 'Dosen tidak ditemukan. Penambahan data dibatalkan.';
             }
         }
         else if(Request::isMethod('put'))
         {
             // One doesn't simply modify dosen according who login now.
             // $dosen = Dosen::find(Auth::user()->nomor_induk);
-            $topik = Topik::find(Input::get('topik.id_topik'));
             $judul = PenawaranJudul::find(Input::get('id_penawaran_judul'));
-            if($topik != null)
+            if($judul != null)
             {
                 $judul->judul_tugas_akhir = Input::get('judul_tugas_akhir');
                 $judul->deskripsi = Input::get('deskripsi');
-                $judul->topik()->associate($topik);
                 if(!$judul->save())
                 {
                     return Response::json(array('error' => $judul->validatorMessage));
@@ -303,7 +288,7 @@ class JudulController extends BaseController {
             }
             else
             {
-                $pesan = "Topik tidak ditemukan. Penyimpanan data dibatalkan.";
+                $pesan = "Judul tidak ditemukan. Penyimpanan data dibatalkan.";
             }
         }
         else if(Request::isMethod('delete'))

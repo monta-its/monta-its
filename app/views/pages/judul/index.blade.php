@@ -10,22 +10,12 @@ Penawaran Judul
   <div class="panel-body">
     <h3><a href="{{ URL::to('judul/'. $item->id_penawaran_judul) }}">{{ $item->judul_tugas_akhir }}</a></h3>
     <p>
-        @if ($item->topik != null)
-            <span class="glyphicon glyphicon-tag"></span>
-            <span>Laboratorium: </span>
-            @foreach ($item->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat) 
-                <a href="{{ URL::to('prodi/'. $bidangMinat->id_bidang_minat) }}">
-                    {{ $bidangMinat->nama_bidang_minat }}
-                </a>
-                @if ($i != $item->topik->bidangKeahlian->bidangMinat->count() - 1)
-                    ,
-                @endif
-            @endforeach
-            <span> · </span>
-            <span class="glyphicon glyphicon-tags"></span>
-            <span>Topik: </span><a href="{{ URL::to('topik/'. $item->id_topik) }}">{{ $item->topik->topik }}</a>
-            <span> · </span>
-        @endif
+        <span class="glyphicon glyphicon-tag"></span>
+        <span>Laboratorium: </span>
+            <a href="{{ URL::to('prodi/'. $item->bidangMinat->id_bidang_minat) }}">
+                {{ $item->bidangMinat->nama_bidang_minat }}
+            </a>
+        <span> · </span>
         <span class="glyphicon glyphicon-question-sign"></span>
         <span>Pengambilan: </span>
         @if ($item->tugasAkhir == null)

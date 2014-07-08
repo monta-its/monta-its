@@ -57,9 +57,6 @@
                         <a href="{{ URL::to('dasbor/dosen/bidang_keahlian') }}"><span class=""></span> Bidang Keahlian</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('dasbor/dosen/topik') }}"><span class=""></span> Topik</a>
-                    </li>
-                    <li>
                         <a href="{{ URL::to('dasbor/dosen/judul') }}"><span class=""></span> Penawaran Judul</a>
                     </li>
                     <li>

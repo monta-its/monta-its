@@ -69,38 +69,20 @@ Profil {{ $item->nama_lengkap }}
                                 {{ $tugasAkhir->penawaranJudul->judul_tugas_akhir }}
                             </td>
                         </tr>
-                            @if ($tugasAkhir->penawaranJudul->topik != null)
-                                <tr>
-                                    <td><strong>Topik</strong></td>
-                                    <td>: </td>
-                                    <td>
-                                        <a href="{{ URL::to('topik/' . $tugasAkhir->penawaranJudul->id_topik) }}">{{ $tugasAkhir->penawaranJudul->topik->topik }}</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Bidang Keahlian</strong></td>
-                                    <td>: </td>
-                                    <td>
-                                        <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->topik->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->topik->bidangKeahlian->nama_bidang_keahlian }}</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Laboratorium</strong></td>
-                                    <td>: </td>
-                                    <td>
-                                    @foreach ($tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat as $i => $bidangMinat)
-                                        <a href="{{ URL::to('prodi/' . $bidangMinat->id_bidang_minat) }}">{{ $bidangMinat->nama_bidang_minat }}</a>
-                                        @if ($i < $tugasAkhir->penawaranJudul->topik->bidangKeahlian->bidangMinat->count() - 1)
-                                        ,
-                                        @endif
-                                    @endforeach
-                                    </td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td colspan="3">Data topik tidak ditemukan.</td>
-                                </tr>
-                            @endif
+                        <tr>
+                            <td><strong>Bidang Keahlian</strong></td>
+                            <td>: </td>
+                            <td>
+                                <a href="{{ URL::to('bidang_keahlian/' . $tugasAkhir->penawaranJudul->bidangKeahlian->id_bidang_keahlian) }}">{{ $tugasAkhir->penawaranJudul->bidangKeahlian->nama_bidang_keahlian }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Laboratorium</strong></td>
+                            <td>: </td>
+                            <td>
+                                <a href="{{ URL::to('prodi/' . $tugasAkhir->penawaranJudul->bidangMinat->id_bidang_minat) }}">{{ $tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat }}</a>
+                            </td>
+                        </tr>
                         @endif
                     @endif
                 </tbody>

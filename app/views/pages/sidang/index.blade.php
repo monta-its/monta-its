@@ -50,7 +50,7 @@
                 <td class="text-center">{{ $i++ }}</td>
                 <td>{{ $item->tanggal }}</td>
                 <td>{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</td>
-                <td>{{ $item->tugasAkhir->topik->bidangKeahlian->bidangMinat->first()->nama_bidang_minat }}</td>
+                <td>{{ $item->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat }}</td>
                 <td class="text-center">{{ $item->ruangan->kode_ruangan }}</td>
                 <td class="text-center">{{ $item->sesiSidang->waktu_mulai }} - {{ $item->sesiSidang->waktu_selesai }}</td>
             </tr>

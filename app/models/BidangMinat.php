@@ -19,14 +19,14 @@ class BidangMinat extends Eloquent {
     public $incrementing = true;
 
     /**
-     * Relasi many-to-many dengan tabel Dosen
+     * Relasi one-to-many dengan tabel Dosen
      * Tabel junction bernama "dosen_bidang_minat"
      *
      * @return Simta\Models\Dosen
      */
     public function dosen()
     {
-        return $this->belongsToMany('Simta\Models\Dosen', 'dosen_bidang_minat', 'id_bidang_minat', 'nip_dosen');
+        return $this->hasMany('Simta\Models\Dosen', 'id_bidang_minat', 'id_bidang_minat');
     }
 
     /**
@@ -47,7 +47,7 @@ class BidangMinat extends Eloquent {
      */
     public function bidangKeahlian()
     {
-        return $this->belongsToMany('Simta\Models\BidangKeahlian', 'bidang_keahlian_bidang_minat', 'id_bidang_minat', 'id_bidang_keahlian');
+        return $this->hasMany('Simta\Models\BidangKeahlian', 'id_bidang_minat', 'id_bidang_minat');
     }
 
 }

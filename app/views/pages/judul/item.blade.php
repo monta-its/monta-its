@@ -10,16 +10,16 @@
     <p>
         <span class="glyphicon glyphicon-tag"></span>
         <span>Laboratorium: </span>
-            <a href="{{ URL::to('prodi/'. $item->bidangMinat->id_bidang_minat) }}">
-                {{ $item->bidangMinat->nama_bidang_minat }}
+            <a href="{{ URL::to('prodi/'. $item->bidangKeahlian->bidangMinat->id_bidang_minat) }}">
+                {{ $item->bidangKeahlian->bidangMinat->nama_bidang_minat }}
             </a>
         <span> · </span>
         <span class="glyphicon glyphicon-question-sign"></span>
-        <span>Pengambilan: </span>
+        <span>Status Pengambilan: </span>
         @if ($item->tugasAkhir == null)
             <span class="label label-success">Tersedia</span>
         @else
-            <span class="label label-default">Sudah Diambil</span>
+            <span class="label label-default">Diambil</span> - <a href="{{ URL::to( 'mahasiswa/' . $item->tugasAkhir->nrp_mahasiswa) }}">{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</a>
         @endif
         <br />
         <span class="glyphicon glyphicon-user"></span>
@@ -36,17 +36,11 @@
         @endif
         <br />
         @if ($item->tugasAkhir != null)
-        <span class="glyphicon glyphicon-user"></span>
-        <span>Mahasiswa: </span>
-        <a href="{{ URL::to('mahasiswa/' . $item->tugasAkhir->nrp_mahasiswa) }}">{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</a>
-        <br />
-        @endif
-        @if ($item->tugasAkhir != null)
         <span class="glyphicon glyphicon-time"></span>
-        <span>Tanggal Mulai: </span><strong>{{ $item->tugasAkhir->tanggal_mulai }}</strong>
+        <span>Tanggal Mulai: </span><strong>{{ date('d-m-Y', strtotime($item->tugasAkhir->tanggal_mulai)) }}</strong>
         <span> · </span>
         <span class="glyphicon glyphicon-time"></span>
-        <span>Tanggal Selesai: </span><strong>{{ $item->tugasAkhir->tanggal_selesai }}</strong>
+        <span>Target Selesai: </span><strong>{{ date('d-m-Y', strtotime($item->tugasAkhir->target_selesai)) }}</strong>
         <br />
         @endif
     </p>

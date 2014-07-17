@@ -106,7 +106,7 @@ Dasbor Mahasiswa
                     <tr>
                         <td>Laboratorium</td>
                         <td>
-                            <a href="{{ URL::to('prodi/' . $tugasAkhir->penawaranJudul->bidangMinat->id_bidang_minat) }}">{{ $tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat }}</a>
+                            <a href="{{ URL::to('prodi/' . $tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->id_bidang_minat) }}">{{ $tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->nama_bidang_minat }}</a>
                         </td>
                     </tr>
                     @else

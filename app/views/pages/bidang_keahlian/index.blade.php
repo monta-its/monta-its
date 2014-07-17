@@ -12,14 +12,9 @@ Bidang Keahlian
     <p>
         <span class="glyphicon glyphicon-tag"></span>
         <span>Laboratorium: </span>
-        @foreach ($item->bidangMinat as $i => $bidangMinat) 
-            <a href="{{ URL::to('prodi/'. $bidangMinat->id_bidang_minat) }}">
-                {{ $bidangMinat->nama_bidang_minat }}
-            </a>
-            @if ($i != $item->bidangMinat->count() - 1)
-                ,
-            @endif
-        @endforeach
+        <a href="{{ URL::to('prodi/'. $item->bidangMinat->id_bidang_minat) }}">
+            {{ $item->bidangMinat->nama_bidang_minat }}
+        </a>
         <br />
         <span class="glyphicon glyphicon-user"></span>
         <span>Dosen: </span>

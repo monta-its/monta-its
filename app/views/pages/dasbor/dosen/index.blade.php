@@ -11,6 +11,7 @@ Dasbor Dosen
                 Mahasiswa Sit In <a href="{{ URL::to('/dasbor/dosen/bimbingan') }}" class="pull-right btn btn-xs btn-default">Selengkapnya</a>
                 Mahasiswa Bimbingan 
             </div>
+            @if (count($mahasiswaBimbingan) > 0)
             <table class="table table-condensed table-striped">
                 <thead>
                     <tr>
@@ -34,11 +35,15 @@ Dasbor Dosen
                     @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="panel-footer">Tidak ada data</div>
+            @endif
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 Mahasiswa Sit In <a href="{{ URL::to('/dasbor/dosen/sit_in') }}" class="pull-right btn btn-xs btn-default">Selengkapnya</a>
             </div>
+            @if (count($mahasiswaSitIn) > 0)
             <table class="table table-condensed table-striped">
                 <thead>
                     <tr>
@@ -66,6 +71,9 @@ Dasbor Dosen
                     @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="panel-footer">Tidak ada data</div>
+            @endif
         </div>
     </div>
     <div class="col-md-4">
@@ -92,14 +100,14 @@ Dasbor Dosen
             <div class="panel-heading">
                 Jadwal Sidang Mahasiswa Bimbingan <a href="{{ URL::to('/dasbor/dosen/sidang') }}" class="pull-right btn btn-xs btn-default">Selengkapnya</a>
             </div>
+            @if (count($jadwalSidangBimbingan) > 0)
             <table class="table table-condensed table-striped">
                 <thead>
                     <tr>
                         <th class="text-center">No.</th>
                         <th class="text-center">Nama Mahasiswa</th>
                         <th class="text-center">Jenis Sidang</th>
-                        <th class="text-center">Waktu Mulai</th>
-                        <th class="text-center">Waktu Selesai</th>
+                        <th class="text-center">Sesi (Waktu)</th>
                         <th class="text-center">Ruangan</th>
                         <th class="text-center">Penguji</th>
                     </tr>
@@ -109,37 +117,39 @@ Dasbor Dosen
                 <?php $i = 1 ?>
                 @foreach ($jadwalSidangBimbingan as $value)
                 <tr>
-                        @foreach($value->sidang as $sidang)
-                        <td class="text-center">{{ $i }}</td>
-                        <td class="text-center">{{$value->mahasiswa->nama_lengkap}}</td>
-                        <td class="text-center">{{$sidang->jenis_sidang}}</td>
-                        <td class="text-center">{{$sidang->waktu_mulai}}</td>
-                        <td class="text-center">{{$sidang->waktu_selesai}}</td>
-                        <td class="text-center">{{$sidang->ruangan->nama_ruangan}}</td>
-                        <td class="text-center">
+                    @foreach($value->sidang as $sidang)
+                    <td class="text-center">{{$i}}</td>
+                    <td>{{$sidang->tugasAkhir->mahasiswa->nama_lengkap}}</td>
+                    <td class="text-center">{{$sidang->jenis_sidang}}</td>
+                    <td class="text-center">ke-{{$sidang->sesiSidang->sesi}}: {{date('H:i', strtotime($sidang->sesiSidang->waktu_mulai))}}-{{date('H:i', strtotime($sidang->sesiSidang->waktu_selesai))}}</td>
+                    <td class="text-center">{{$sidang->ruangan->nama_ruangan}}</td>
+                    <td class="text-center">
                         @foreach($sidang->pengujiSidang as $dosen)
-                        {{$dosen->pegawai->nama_lengkap}}<br/>
+                        <a href="{{URL::to('dosen/' . $dosen->nip_dosen)}}">{{$dosen->pegawai->nama_lengkap}}</a><br/>
                         @endforeach
-                        </td>
-                        <?php $i++ ?>
-                        @endforeach
+                    </td>
+                    <?php $i++ ?>
+                    @endforeach
                 </tr>
                 @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="panel-footer">Tidak ada data</div>
+            @endif
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 Jadwal Menguji Sidang <a href="#" class="pull-right btn btn-xs btn-default">Selengkapnya</a>
             </div>
+            @if (count($jadwalSidangMenguji) > 0)
             <table class="table table-condensed table-striped">
                 <thead>
                     <tr>
                         <th class="text-center">No.</th>
                         <th class="text-center">Nama Mahasiswa</th>
                         <th class="text-center">Jenis Sidang</th>
-                        <th class="text-center">Waktu Mulai</th>
-                        <th class="text-center">Waktu Selesai</th>
+                        <th class="text-center">Sesi (Waktu)</th>
                         <th class="text-center">Ruangan</th>
                         <th class="text-center">Penguji</th>
                     </tr>
@@ -148,24 +158,24 @@ Dasbor Dosen
                 <?php $i = 1; ?>
                 @foreach($jadwalSidangMenguji as $value)
                     <tr>
-                    <td>{{$i}}</td>
-                    <td>{{$value->tugasAkhir->mahasiswa->nama_lengkap}}</td>
-                    <td>{{$value->jenis_sidang}}</td>
-                    <td>{{$value->waktu_mulai}}</td>
-                    <td>{{$value->waktu_selesai}}</td>
-                    <td class="text-center">
-                    @foreach($value->pengujiSidang as $dosen)
-                    {{$dosen->pegawai->nama_lengkap}}<br/>
-                    @endforeach
-                    </td>
-                    <?php $i++ ?>
+                        <td class="text-center">{{$i}}</td>
+                        <td>{{$value->tugasAkhir->mahasiswa->nama_lengkap}}</td>
+                        <td class="text-center">{{$value->jenis_sidang}}</td>
+                        <td class="text-center">ke-{{$value->sesiSidang->sesi}}: {{date('H:i', strtotime($value->sesiSidang->waktu_mulai))}}-{{date('H:i', strtotime($value->sesiSidang->waktu_selesai))}}</td>
+                        <td class="text-center">{{$value->ruangan->nama_ruangan}}</td>
+                        <td class="text-center">
+                            @foreach($value->pengujiSidang as $dosen)
+                            <a href="{{URL::to('dosen/' . $dosen->nip_dosen)}}">{{$dosen->pegawai->nama_lengkap}}</a><br/>
+                            @endforeach
+                        </td>
+                        <?php $i++ ?>
                     </tr>
-
-
-
                 @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="panel-footer">Tidak ada data</div>
+            @endif
         </div>
     </div>
 </div>

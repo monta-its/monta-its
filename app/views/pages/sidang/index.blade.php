@@ -21,10 +21,10 @@
             <label for="filter" class="col-md-3 control-label">Urut</label>
             <div class="col-md-9">
                 <select class="form-control" name="urut" id="urut">
-                    <option value="tanggal">Tanggal</option>
-                    <option value="nama_lengkap">Nama Mahasiswa</option>
-                    <option value="bidang_minat">Laboratorium</option>
-                    <option value="ruangan">Ruangan</option>
+                    <option value="tanggal" {{ $urut == 'tanggal' ? 'selected' : '' }}>Tanggal</option>
+                    <option value="nama_lengkap" {{ $urut == 'nama_lengkap' ? 'selected' : '' }}>Nama Mahasiswa</option>
+                    <option value="bidang_minat" {{ $urut == 'bidang_minat' ? 'selected' : '' }}>Laboratorium</option>
+                    <option value="ruangan" {{ $urut == 'ruangan' ? 'selected' : '' }}>Ruangan</option>
                 </select>
             </div>
         </div>
@@ -48,9 +48,9 @@
         @foreach ($l_item as $item)
             <tr>
                 <td class="text-center">{{ $i++ }}</td>
-                <td>{{ $item->tanggal }}</td>
+                <td>{{ date('d-m-Y', strtotime($item->tanggal)) }}</td>
                 <td>{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</td>
-                <td>{{ $item->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat }}</td>
+                <td>{{ $item->tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->nama_bidang_minat }}</td>
                 <td class="text-center">{{ $item->ruangan->kode_ruangan }}</td>
                 <td class="text-center">{{ $item->sesiSidang->waktu_mulai }} - {{ $item->sesiSidang->waktu_selesai }}</td>
             </tr>
@@ -60,4 +60,6 @@
   </div>
 </div>
 
+
 @stop
+

@@ -39,5 +39,10 @@ class PenawaranJudul extends EloquentValidator {
     {
         return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
     }
+
+    public function bidangKeahlian()
+    {
+        return $this->belongsTo('Simta\Models\BidangKeahlian', 'id_bidang_keahlian', 'id_bidang_keahlian');
+    }
 }
 ?>

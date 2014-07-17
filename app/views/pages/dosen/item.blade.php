@@ -34,6 +34,13 @@ Profil {{ $item->pegawai->nama_lengkap }}
                         </td>
                     </tr>
                     <tr>
+                        <td><strong>Laboratorium</strong></td>
+                        <td>: </td>
+                        <td>
+                            <a href="{{ URL::to('bidang_minat/' . $item->id_bidang_minat) }}">{{ $item->bidangMinat->nama_bidang_keahlian }}</a> 
+                        </td>
+                    </tr>
+                    <tr>
                         <td><strong>Bimbingan</strong></td>
                         <td>: </td>
                         <td>

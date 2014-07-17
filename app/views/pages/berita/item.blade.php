@@ -17,7 +17,7 @@
             @endif
             <span> · </span>
             <span class="glyphicon glyphicon-time"></span>
-            <span>Waktu: </span><strong>{{ $item->updated_at }}</strong>
+            <span>Waktu: </span><strong>{{ date('d-m-Y H:i:s', strtotime($item->updated_at)) }}</strong>
         </p>
         <div class="item-main">{{ $item->isi }}</div>
   </div>

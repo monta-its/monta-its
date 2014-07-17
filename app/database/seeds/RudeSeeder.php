@@ -14,7 +14,6 @@ use Simta\Models\Ruangan;
 use Simta\Models\BidangMinat;
 use Simta\Models\BidangKeahlian;
 use Simta\Models\Panduan;
-use Simta\Models\Topik;
 use Simta\Models\TeknikMesin\SitIn;
 use Simta\Models\PenawaranJudul;
 use Simta\Models\Lampiran;
@@ -35,6 +34,8 @@ class RudeSeeder extends Seeder {
      */
     public function run()
     {
+        DB::connection()->disableQueryLog();
+
         $faker = Faker\Factory::create();
 
         try
@@ -233,17 +234,9 @@ class RudeSeeder extends Seeder {
         $bidang_keahlian = new BidangKeahlian;
         $bidang_keahlian->nama_bidang_keahlian = $faker->unique->word;
         $bidang_keahlian->deskripsi_bidang_keahlian = $faker->text();
+        $bidang_keahlian->bidangMinat()->associate($bidang_minat);
         $bidang_keahlian->save();
-        $bidang_keahlian->bidangMinat()->save($bidang_minat);
-
-        $topik = new Topik;
-        $topik->topik = $faker->unique->word;
-        $topik->deskripsi = $faker->text();
-        $topik->bidangKeahlian()->associate($bidang_keahlian);
-        $topik->save();
-
         $counter = 0;
-
         for($i = 0; $i < 10; $i++)
         {
             $mahasiswa = Mahasiswa::create(
@@ -275,15 +268,21 @@ class RudeSeeder extends Seeder {
             $pegawai->aktif = 1;
             $pegawai->save();
 
-
             if(rand(0,1) == 1) {
                 $dosen = new Dosen;
                 $dosen->nidn = $faker->unique->randomNumber(7);
                 $dosen->hak_akses_pegawai = rand(0,1);
-                $dosen->pegawai()->associate($pegawai);
                 $dosen->gelar_depan = "Ir.";
                 $dosen->gelar_belakang = "S.Kom.";
+                $dosen->pegawai()->associate($pegawai);
                 $dosen->save();
+                $dosen->bidangMinat()->associate($bidang_minat);
+                $dosen->bidangKeahlian()->attach($bidang_keahlian);
+                $dosen->save();
+                
+                $nip_dosen = $dosen->nip_dosen;
+                unset($dosen);
+                $dosen = Dosen::find($nip_dosen);
 
                 for($k=0; $k<5; $k++)
                 {
@@ -295,33 +294,29 @@ class RudeSeeder extends Seeder {
                     $jadwalDosen->save();
                 }
 
-                $bidang_minat->dosen()->save($dosen);
-                $bidang_keahlian->dosen()->save($dosen);
-
                 if($counter == 0)
                 {
                     $bidang_minat->dosenKoordinator()->associate($dosen);
-                    $dosen->save();
                     $bidang_minat->save();
                     $counter = 1;
                 }
 
                 // this one not belongs to any TugasAkhir
-                $penawaran_judul1 = new PenawaranJudul;
-                $penawaran_judul1->judul_tugas_akhir = $faker->sentence();
-                $penawaran_judul1->deskripsi = $faker->text();
-                $penawaran_judul1->topik()->associate($topik);
-                $penawaran_judul1->dosen()->associate($dosen);
-                $penawaran_judul1->save();
-
+                $penawaran_judul = new PenawaranJudul;
+                $penawaran_judul->judul_tugas_akhir = $faker->sentence();
+                $penawaran_judul->deskripsi = $faker->sentence();
+                $penawaran_judul->dosen()->associate($dosen);
+                $penawaran_judul->bidangKeahlian()->associate($bidang_keahlian);
+                $penawaran_judul->save();
+echo "checkpoint 310\n";
                 // see TugasAkhir bellow to see its relationship
                 $penawaran_judul = new PenawaranJudul;
                 $penawaran_judul->judul_tugas_akhir = $faker->sentence();
-                $penawaran_judul->deskripsi = $faker->text();
-                $penawaran_judul->topik()->associate($topik);
+                $penawaran_judul->deskripsi = $faker->sentence();
                 $penawaran_judul->dosen()->associate($dosen);
+                $penawaran_judul->bidangKeahlian()->associate($bidang_keahlian);
                 $penawaran_judul->save();
-
+echo "checkpoint 317\n";
                 for($j = 0; $j < 3; $j++)
                 {
                    $pemberitahuan = new PemberitahuanPegawai;
@@ -329,7 +324,7 @@ class RudeSeeder extends Seeder {
                    $pemberitahuan->save();
                    $pegawai->pemberitahuan()->save($pemberitahuan);
                 }
-
+echo "checkpoint 325\n";
                 for($j = 0; $j < 5; $j++)
                 {
                     $pos = new Pos;
@@ -367,7 +362,7 @@ class RudeSeeder extends Seeder {
                     $lampiran->pegawai()->associate($dosen->pegawai);
                     $lampiran->save();
                 }
-
+echo "checkpoint 363\n";
                 $acak = rand(0,2);
                 if($acak == 1)
                 {
@@ -385,7 +380,6 @@ class RudeSeeder extends Seeder {
                     $ta->tanggal_selesai = "2014-05-05";
                     $ta->target_selesai = "2014-08-08";
                     $ta->status = "pengerjaan";
-                    $ta->topik()->associate($topik);
                     $ta->save();
                     $ta->dosenPembimbing()->save($dosen);
                     $ta->save();
@@ -397,7 +391,7 @@ class RudeSeeder extends Seeder {
                     $berkas->path = '/'.$faker->word();
                     $berkas->save();
                     $ta->berkas()->save($berkas);
-
+echo "checkpoint 392\n";
                     if(rand(0,1) == 1)
                     {
                         foreach ($syaratSeminar as $syarat) {
@@ -444,7 +438,7 @@ class RudeSeeder extends Seeder {
                                 $sidang->ruangan()->associate($ruangan);
                                 $sidang->tugasAkhir()->associate($ta);
                                 $sidang->save();
-
+echo "checkpoint 439\n";
                                 if ($sidang->disetujui == 1)
                                 {
                                     for($j = 0; $j < 4; $j++)
@@ -476,11 +470,12 @@ class RudeSeeder extends Seeder {
                     $sitin->status = 0;
                     $sitin->mahasiswa()->associate($mahasiswa);
                     $sitin->dosen()->associate($dosen);
-                    $sitin->topik()->associate($topik);
                     $sitin->save();
                 }
             }
         }
+
+        DB::connection()->enableQueryLog();
     }
 
 }

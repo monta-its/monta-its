@@ -143,7 +143,7 @@ h4 {
             <td class="center">{{ $sidang->tanggal }}</td>
             <td class="center">{{ $sidang->sesiSidang->waktu_mulai }} - {{ $sidang->sesiSidang->waktu_selesai }}</td>
             <td class="center">{{ $sidang->ruangan->kode_ruangan }}</td>
-            <td class="center">{{ $sidang->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat }}</td>
+            <td class="center">{{ $sidang->tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->nama_bidang_minat }}</td>
             <td class="center">1</td>
         </tr>
     </tbody>

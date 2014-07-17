@@ -32,7 +32,7 @@ class BidangMinatController extends BaseController {
             array('link' => '', 'text' => 'Prodi')
         );
 
-        $items = BidangMinat::get();
+        $items = BidangMinat::with('bidangKeahlian')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -47,7 +47,7 @@ class BidangMinatController extends BaseController {
      */
     public function lihatRincianBidangMinat($id_prodi)
     {
-        $item = BidangMinat::with('dosen', 'dosen.bidangKeahlian', 'dosen.pegawai')->find($id_prodi);
+        $item = BidangMinat::with('dosen.bidangKeahlian', 'dosen.pegawai', 'bidangKeahlian.penawaranJudul.tugasAkhir.mahasiswa', 'bidangKeahlian.penawaranJudul.dosen.pegawai')->find($id_prodi);
         if($item != null)
         {
             $breadcrumbs = array(

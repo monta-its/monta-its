@@ -29,13 +29,22 @@ class BidangKeahlian extends Eloquent {
     }
 
     /**
-     * Relasi many-to-many dengan tabel BidangMinat
+     * Relasi one-to-one
      *
      * @return Simta\Models\BidangMinat
      */
     public function bidangMinat()
     {
-        return $this->belongsToMany('Simta\Models\BidangMinat', 'bidang_keahlian_bidang_minat', 'id_bidang_keahlian', 'id_bidang_minat');
+        return $this->belongsTo('Simta\Models\BidangMinat', 'id_bidang_minat', 'id_bidang_minat');
+    }
+
+    /**
+     * Relasi one-to-many dengan model PenawaranJudul
+     * @return Eloquent\Collection Array of PenawaranJudul
+     */
+    public function penawaranJudul()
+    {
+        return $this->hasMany('Simta\Models\PenawaranJudul', 'id_bidang_keahlian', 'id_bidang_keahlian');
     }
 
 }

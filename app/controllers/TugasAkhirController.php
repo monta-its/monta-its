@@ -56,7 +56,9 @@ class TugasAkhirController extends BaseController {
     }
 
     /**
-     * Tugas Akhir dalam bentuk REST
+     * Mengelola rekues ajax yang dibuat dari
+     * laman bimbingan untuk menyimpan perubahan 
+     * data tugas akhir.
      *
      * @return Response::json
      */
@@ -65,15 +67,15 @@ class TugasAkhirController extends BaseController {
         $auth = Auth::user();
         if(Request::isMethod('get'))
         {
-            // Mahasiswa: Ambil tugasAkhir bimbingannya saja
-            // Lainnya: Ambil semua tugasAkhir
+            // Mahasiswa: Ambil tugasAkhir-nya sendiri
+            // Lainnya: Ambil semua tugasAkhir mahasiswa bimbingan
             if($auth->peran == 0)
             {
-                return Response::json(TugasAkhir::with('penawaranJudul.bidangKeahlian', 'penawaranJudul.bidangMinat', 'mahasiswa')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
+                return Response::json(TugasAkhir::with('penawaranJudul.bidangKeahlian', 'penawaranJudul.bidangKeahlian.bidangMinat', 'mahasiswa')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
             }
             else
             {
-                return Response::json(TugasAkhir::with('penawaranJudul.bidangKeahlian', 'penawaranJudul.bidangMinat', 'mahasiswa')->get());
+                return Response::json(TugasAkhir::with('penawaranJudul.bidangKeahlian', 'penawaranJudul.bidangKeahlian.bidangMinat', 'mahasiswa')->get());
             }
         }
         else if(Request::isMethod('put') || Request::isMethod('post'))

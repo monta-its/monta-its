@@ -83,7 +83,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
     $scope.sidang = {};
     var method = $routeParams.method;
     $scope.updateDosen = function() {
-        var id_bidang_minat = $scope.sidang.tugasAkhir.penawaran_judul.bidang_minat.id_bidang_minat;
+        var id_bidang_minat = $scope.sidang.tugasAkhir.penawaran_judul.bidang_keahlian.bidang_minat.id_bidang_minat;
         var sesi = $scope.sidang.sesi;
 
         var hari = (new Date($scope.sidang.tanggal)).getDay();

@@ -28,7 +28,7 @@ class MahasiswaController extends BaseController {
      */
     function lihatProfilMahasiswa($id_mahasiswa)
     {
-        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai')->find($id_mahasiswa);
+        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai')->find($id_mahasiswa);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -65,7 +65,7 @@ class MahasiswaController extends BaseController {
     {
         if(!Request::ajax())
         {
-            $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai', 'tugasAkhir.sidang.ruangan', 'tugasAkhir.sidang.pengujiSidang')->find(Auth::user()->nomor_induk);
+            $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai', 'tugasAkhir.sidang.ruangan', 'tugasAkhir.sidang.pengujiSidang')->find(Auth::user()->nomor_induk);
             $tugasAkhir = null;
             $sidang = null;
             $pemberitahuan = null;

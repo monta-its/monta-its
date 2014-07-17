@@ -34,7 +34,7 @@ class NilaiController extends BaseController {
         $nip_dosen = Auth::user()->nomor_induk;
         # mahasiswa yang belum dinilai
         # oleh dosen pembimbingnya dan dosen pengujinya
-        $dosen = Dosen::find('8194505');
+        $dosen = Dosen::find($nip_dosen);
         if ($dosen != null)
         {
             # tugas akhir berdasarkan dosen pembimbing

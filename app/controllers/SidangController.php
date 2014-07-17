@@ -36,11 +36,12 @@ class SidangController extends BaseController {
             array('link' => '', 'text' => 'Seminar Proposal')
         );
 
-        $l_item = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'proposal')->get();
+        $l_item = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'proposal')->get();
         
         $urut = Input::get('urut');
         if ($urut == 'tanggal' || $urut == null)
         {
+            $urut = 'tanggal';
             $l_item->sort(function($a, $b)
             {
                 $a = $a->tanggal;
@@ -67,8 +68,8 @@ class SidangController extends BaseController {
         {
             $l_item->sort(function($a, $b)
             {
-                $a = $a->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat;
-                $b = $b->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat;
+                $a = $a->tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->nama_bidang_minat;
+                $b = $b->tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->nama_bidang_minat;
                 if ($a === $b) {
                     return 0;
                 }
@@ -87,7 +88,12 @@ class SidangController extends BaseController {
                 return ($a > $b) ? 1 : -1;
             });
         }
+        else 
+        {
+            $urut = 'tanggal';
+        }
 
+        View::share('urut', $urut);
         View::share('page_title', 'Daftar Seminar Proposal');
         View::share('breadcrumbs', $breadcrumbs);
         View::share('l_item', $l_item);
@@ -106,11 +112,12 @@ class SidangController extends BaseController {
             array('link' => '', 'text' => 'Sidang Akhir')
         );
 
-        $l_item = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'akhir')->get();
+        $l_item = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'akhir')->get();
         
         $urut = Input::get('urut');
         if ($urut == 'tanggal' || $urut == null)
         {
+            $urut = 'tanggal';
             $l_item->sort(function($a, $b)
             {
                 $a = $a->tanggal;
@@ -137,8 +144,8 @@ class SidangController extends BaseController {
         {
             $l_item->sort(function($a, $b)
             {
-                $a = $a->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat;
-                $b = $b->tugasAkhir->penawaranJudul->bidangMinat->nama_bidang_minat;
+                $a = $a->tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->nama_bidang_minat;
+                $b = $b->tugasAkhir->penawaranJudul->bidangKeahlian->bidangMinat->nama_bidang_minat;
                 if ($a === $b) {
                     return 0;
                 }
@@ -158,6 +165,7 @@ class SidangController extends BaseController {
             });
         }
 
+        View::share('urut', $urut);
         View::share('page_title', 'Daftar Sidang Akhir');
         View::share('breadcrumbs', $breadcrumbs);
         View::share('l_item', $l_item);
@@ -288,8 +296,8 @@ class SidangController extends BaseController {
      */
     function dasborSidangPegawai()
     {
-        $l_item_proposal = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'proposal')->get();
-        $l_item_akhir = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'akhir')->get();
+        $l_item_proposal = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'proposal')->get();
+        $l_item_akhir = Sidang::with('tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->where('jenis_sidang', 'akhir')->get();
 
         View::share('l_item_proposal', $l_item_proposal);
         View::share('l_item_akhir', $l_item_akhir);
@@ -303,7 +311,7 @@ class SidangController extends BaseController {
      */
     function unduhBeritaAcara($id_sidang)
     {
-        $sidang = Sidang::with('pengujiSidang.pegawai', 'tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangMinat', 'ruangan', 'sesiSidang')->find($id_sidang);
+        $sidang = Sidang::with('pengujiSidang.pegawai', 'tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->find($id_sidang);
         if ($sidang != null)
         {
             $jenis_berita_acara = '';

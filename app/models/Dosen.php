@@ -123,13 +123,13 @@ class Dosen extends Eloquent {
     }
 
     /**
-     * Relasi many-to-many ke BidangMinat
+     * Relasi one-to-one ke BidangMinat
      *
      * @return Simta\Models\BidangMinat
      */
     public function bidangMinat()
     {
-        return $this->belongsToMany('Simta\Models\BidangMinat', 'dosen_bidang_minat', 'nip_dosen', 'id_bidang_minat');
+        return $this->belongsTo('Simta\Models\BidangMinat', 'id_bidang_minat', 'id_bidang_minat');
     }
 
 

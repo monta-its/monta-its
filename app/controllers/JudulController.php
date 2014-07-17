@@ -36,7 +36,7 @@ class JudulController extends BaseController {
             array('link' => '', 'text' => 'Penawaran Judul')
         );
 
-        $items = PenawaranJudul::with('bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->get();
+        $items = PenawaranJudul::with('bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -52,7 +52,7 @@ class JudulController extends BaseController {
      */
     function lihatIsiJudul($id_judul)
     {
-        $item = PenawaranJudul::with('bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->find($id_judul);
+        $item = PenawaranJudul::with('bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->find($id_judul);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),

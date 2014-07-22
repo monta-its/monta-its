@@ -9,6 +9,11 @@ Bimbingan Tugas Akhir
             <div class="panel-heading">
                 Mahasiswa Bimbingan
             </div>
+            @if (count($mahasiswaBimbingan) == 0)
+            <div class="panel-footer">
+                Tidak ada data
+            </div>
+            @else
             <table class="table table-condensed table-striped">
                 <thead>
                     <tr>
@@ -37,6 +42,7 @@ Bimbingan Tugas Akhir
                 @endforeach
                 </tbody>
             </table>
+            @endif
         </div>
     </div>
 </div>

@@ -16,9 +16,10 @@ var app = angular.module('dasborJudul', ['ngRoute'], function($interpolateProvid
 });
 
 var updateJudul = function($rootScope, $http, callback) {
+    $('#app').hide();
     $http.get('{{URL::to('/dasbor/dosen/judul')}}').success(function(data) {
         $rootScope.items = data;
-        });
+        $('#app').show();
     });
 
 };
@@ -98,7 +99,7 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
-<div ng-app="dasborJudul">
+<div id="app" ng-app="dasborJudul" style="display:none;">
     <ng-view>
     </ng-view>
 

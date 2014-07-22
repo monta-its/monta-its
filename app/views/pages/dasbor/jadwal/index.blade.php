@@ -12,6 +12,7 @@ var app = angular.module('dasborJadwalDosen', [], function($interpolateProvider)
 });
 
 var update = function($rootScope, $http, callback) {
+    $('#app').hide();
     // Ambil JadwalDosen
     $http.get('{{{URL::to('/dasbor/dosen/jadwal')}}}?mySelf=true').success(function(data) {
         $rootScope.jadwalDosen = data;
@@ -21,6 +22,7 @@ var update = function($rootScope, $http, callback) {
     $http.get('{{{URL::to('/dasbor/umum/pegawai/sesi_sidang')}}}').success(function(data) {
         $rootScope.sesiSidang = data;
         if(callback) callback();
+        $('#app').show();
     });
 }
 
@@ -67,31 +69,31 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
-<div ng-app="dasborJadwalDosen">
-<div ng-controller="kelolaJadwalDosen">
-<div class="row">
-    <div class="col-md-12">
-        <p>Jadwal ketersediaan Bapak/Ibu sebagai dosen penguji seminar/sidang.</p>
-        <table class="table table-condensed table-striped">
-            <thead>
-                <tr>
-                    <th class="text-center">Hari</th>
-                    <th class="text-center" ng-repeat="sd in sesiSidang">Sesi [[sd.sesi]] ([[sd.waktu_mulai]] - [[sd.waktu_selesai]])</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="h in hari">
-                    <td>[[h.nama]]</td>
-                    <td class="text-center" ng-repeat="sd in sesiSidang">
-                    <button class="label label-success" ng-click="setTidakTersedia([[sd.sesi]],[[h.id]])" ng-show="statusJadwal([[sd.sesi]],[[h.id]])==1">tersedia</button>
-                    <button class="label label-danger"  ng-click="setTersedia([[sd.sesi]],[[h.id]])" ng-show="statusJadwal([[sd.sesi]],[[h.id]])==0">tidak tersedia</button>
-                    <button class="label label-default"  ng-click="setTersedia([[sd.sesi]],[[h.id]])" ng-show="statusJadwal([[sd.sesi]],[[h.id]])==-1">belum ditentukan</button></td>
-                </tr>
-            </tbody>
-        </table>
+<div id="app" ng-app="dasborJadwalDosen" style="display:none;">
+    <div ng-controller="kelolaJadwalDosen">
+        <div class="row">
+            <div class="col-md-12">
+                <p>Jadwal ketersediaan Bapak/Ibu sebagai dosen penguji seminar/sidang.</p>
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Hari</th>
+                            <th class="text-center" ng-repeat="sd in sesiSidang">Sesi [[sd.sesi]] ([[sd.waktu_mulai]] - [[sd.waktu_selesai]])</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="h in hari">
+                            <td>[[h.nama]]</td>
+                            <td class="text-center" ng-repeat="sd in sesiSidang">
+                            <button class="label label-success" ng-click="setTidakTersedia([[sd.sesi]],[[h.id]])" ng-show="statusJadwal([[sd.sesi]],[[h.id]])==1">tersedia</button>
+                            <button class="label label-danger"  ng-click="setTersedia([[sd.sesi]],[[h.id]])" ng-show="statusJadwal([[sd.sesi]],[[h.id]])==0">tidak tersedia</button>
+                            <button class="label label-default"  ng-click="setTersedia([[sd.sesi]],[[h.id]])" ng-show="statusJadwal([[sd.sesi]],[[h.id]])==-1">belum ditentukan</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
-</div>
 </div>
 
 @stop

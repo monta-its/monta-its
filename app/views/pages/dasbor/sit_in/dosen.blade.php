@@ -17,8 +17,46 @@ var app = angular.module('dasborSitInDosen', ['ngRoute'], function($interpolateP
 });
 
 var update = function($rootScope, $http) {
+    $('#app').hide();
     $http.get('{{URL::to('/dasbor/dosen/mahasiswa/sit_in')}}').success(function(data) {
         $rootScope.items = data;
+        var count_sit_in_saat_ini = 0;
+        var count_permintaan_sit_in = 0;
+        var count_pembatalan_sit_in = 0;
+        for (var i = data.length - 1; i >= 0; i--) {
+            if (data[i].status == 1) {
+                count_sit_in_saat_ini++;
+            } else if (data[i].status == 0) {
+                count_permintaan_sit_in++;
+            } else if (data[i].status == -1) {
+                count_pembatalan_sit_in++;
+            }
+        };
+
+        if (count_sit_in_saat_ini == 0) {
+            $('.sit_in_saat_ini').css('display', '');
+            $('#sit_in_saat_ini').css('display', 'none');
+        } else {
+            $('#sit_in_saat_ini').css('display', '');
+            $('.sit_in_saat_ini').css('display', 'none');
+        }
+
+        if (count_permintaan_sit_in == 0) {
+            $('.permintaan_sit_in').css('display', '');
+            $('#permintaan_sit_in').css('display', 'none');
+        } else {
+            $('#permintaan_sit_in').css('display', '');
+            $('.permintaan_sit_in').css('display', 'none');
+        }
+
+        if (count_pembatalan_sit_in == 0) {
+            $('.pembatalan_sit_in').css('display', '');
+            $('#pembatalan_sit_in').css('display', 'none');
+        } else {
+            $('#pembatalan_sit_in').css('display', '');
+            $('.pembatalan_sit_in').css('display', 'none');
+        }
+        $('#app').show();
     });
 
 }
@@ -46,7 +84,7 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 });
 </script>
-<div ng-app="dasborSitInDosen">
+<div id="app" ng-app="dasborSitInDosen" style="display:none;">
     <div ng-controller="sitInController">
         <div class="row">
             <div class="col-md-12">
@@ -55,9 +93,13 @@ app.config(function($httpProvider) {
                 <div class="panel-heading">
                     Daftar Sit In Saat Ini
                 </div>
-                <table class="table table-condensed table-striped">
+                <div class="sit_in_saat_ini panel-footer" style="display:none;">
+                    Tidak ada data
+                </div>
+                <table id="sit_in_saat_ini" class="table table-condensed table-striped">
                     <thead>
                         <tr>
+                            <th class="text-center">No.</th>
                             <th class="text-center">Nama Mahasiswa</th>
                             <th class="col-md-2 text-center">NRP</th>
                             <th class="col-md-3 text-center">Waktu Permintaan</th>
@@ -65,6 +107,7 @@ app.config(function($httpProvider) {
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: {status: 1}: true">
+                            <th class="text-center">[[$index+1]]</th>
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>
@@ -76,9 +119,13 @@ app.config(function($httpProvider) {
                 <div class="panel-heading">
                     Daftar Permintaan Sit In
                 </div>
-                <table class="table table-condensed table-striped">
+                <div class="permintaan_sit_in panel-footer" style="display:none;">
+                    Tidak ada data
+                </div>
+                <table id="permintaan_sit_in" class="table table-condensed table-striped">
                     <thead>
                         <tr>
+                            <th class="text-center">No.</th>
                             <th class="text-center">Nama Mahasiswa</th>
                             <th class="col-md-2 text-center">NRP</th>
                             <th class="col-md-3 text-center">Waktu Permintaan</th>
@@ -87,6 +134,7 @@ app.config(function($httpProvider) {
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: {status: 0}: true">
+                            <th class="text-center">[[$index+1]]</th>
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>
@@ -102,9 +150,13 @@ app.config(function($httpProvider) {
                 <div class="panel-heading">
                     Daftar Pembatalan Sit In
                 </div>
-                <table class="table table-condensed table-striped">
+                <div class="pembatalan_sit_in panel-footer" style="display:none;">
+                    Tidak ada data
+                </div>
+                <table id="pembatalan_sit_in" class="table table-condensed table-striped">
                     <thead>
                         <tr>
+                            <th class="text-center">No.</th>
                             <th class="text-center">Nama Mahasiswa</th>
                             <th class="col-md-2 text-center">NRP</th>
                             <th class="col-md-3 text-center">Waktu Permintaan</th>
@@ -113,6 +165,7 @@ app.config(function($httpProvider) {
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in items | filter: {status: -1}: true">
+                            <th class="text-center">[[$index+1]]</th>
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
                             <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
                             <td>[[item.updated_at]]</td>

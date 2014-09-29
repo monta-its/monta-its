@@ -13,8 +13,8 @@ use Eloquent;
 
 class Pengaturan extends Eloquent {
     protected $table = 'pengaturan';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "nama";
     protected $fillable = ["nama", "nilai", "deskripsi"];
 

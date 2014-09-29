@@ -36,6 +36,14 @@ Route::post ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasborB
 Route::put ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasborBerita');
 Route::delete ('/dasbor/dosen/berita', 'Simta\Controllers\BeritaController@dasborBerita');
 
+// NBeritaController
+Route::get ('/n/berita/index', 'Simta\Controllers\NBeritaController@index');
+Route::get ('/n/berita/detail/{id_berita}', 'Simta\Controllers\NBeritaController@detail');
+Route::get ('/n/berita/manage', 'Simta\Controllers\NBeritaController@manage');
+Route::get ('/n/berita/create', 'Simta\Controllers\NBeritaController@create');
+Route::get ('/n/berita/update', 'Simta\Controllers\NBeritaController@update');
+Route::get ('/n/berita/delete', 'Simta\Controllers\NBeritaController@delete');
+
 // MahasiswaController
 Route::get ('/dasbor/mahasiswa', 'Simta\Controllers\MahasiswaController@dasborMahasiswa');
 Route::get ('/mahasiswa/{id_mahasiswa}', 'Simta\Controllers\MahasiswaController@lihatProfilMahasiswa');
@@ -217,17 +225,7 @@ use Simta\Models\Pegawai;
 use Simta\Models\Mahasiswa;
 use Simta\Models\Syarat;
 use Simta\Models\PenawaranJudul;
-Route::get ('/pegawai', function()
-{
-    $p = Pegawai::get();
-    foreach ($p as $pegawai) {
-        if (!$pegawai->apakahDosen())
-        {
-            echo "<pre>";
-            var_dump($pegawai->toArray());
-        }
-    }
-});
+
 Route::get ('/mahasiswa', function()
 {
     $totalSyaratSitIn = Syarat::where('waktu_syarat','=','pra_sit_in')->count();
@@ -278,3 +276,53 @@ Route::get ('/sqlsrv/image', function(){
 Route::get ('/info', function(){
     phpinfo();
 });
+
+/// dari siakad
+Route::get ('/', 'Simta\Controllers\HomeController@index');
+Route::get ('login', 'Simta\Controllers\HomeController@login');
+Route::post('login', array('before' => 'csrf', 'uses' => 'Simta\Controllers\HomeController@login'));
+Route::get ('logout', 'Simta\Controllers\HomeController@logout');
+Route::get ('user', 'Simta\Controllers\UserController@index');
+
+// Route::group(array('before' => 'auth'), function()
+// {
+    Route::get ('user/manage', 'Simta\Controllers\UserController@manage');
+    Route::get ('user/detail', 'Simta\Controllers\UserController@detail');
+    Route::get ('user/detail/{id_user}', 'Simta\Controllers\UserController@detail');
+    Route::get ('user/create', 'Simta\Controllers\UserController@create');
+    Route::post('user/create', array('before' => 'csrf', 'uses' => 'Simta\Controllers\UserController@create'));
+    Route::get ('user/update', 'Simta\Controllers\UserController@update');
+    Route::get ('user/update/{id_user}', 'Simta\Controllers\UserController@update');
+    Route::post('user/update/{id_user}', array('before' => 'csrf', 'uses' => 'Simta\Controllers\UserController@update'));
+    Route::get ('user/delete/{id_user}', 'Simta\Controllers\UserController@delete');
+    Route::get ('user/change_password/{id_user}', 'Simta\Controllers\UserController@changePassword');
+    Route::post('user/change_password/{id_user}', array('before' => 'csrf', 'uses' => 'Simta\Controllers\UserController@changePassword'));
+    Route::post('user/change_acting_group', array('before' => 'csrf', 'uses' => 'Simta\Controllers\UserController@changeActingGroup'));
+    
+    Route::get ('group', 'Simta\Controllers\GroupController@index');
+    Route::get ('group/manage', 'Simta\Controllers\GroupController@manage');
+    Route::get ('group/detail/{id_group}', 'Simta\Controllers\GroupController@detail');
+    Route::get ('group/create', 'Simta\Controllers\GroupController@create');
+    Route::post('group/create', array('before' => 'csrf', 'uses' => 'Simta\Controllers\GroupController@create'));
+    Route::get ('group/update/{id_group}', 'Simta\Controllers\GroupController@update');
+    Route::post('group/update/{id_group}', array('before' => 'csrf', 'uses' => 'Simta\Controllers\GroupController@update'));
+    Route::get ('group/delete/{id_group}', 'Simta\Controllers\GroupController@delete');
+    
+    Route::get ('menu', 'Simta\Controllers\MenuController@index');
+    Route::get ('menu/manage', 'Simta\Controllers\MenuController@manage');
+    Route::get ('menu/detail/{id_menu}', 'Simta\Controllers\MenuController@detail');
+    Route::get ('menu/create', 'Simta\Controllers\MenuController@create');
+    Route::post('menu/create', array('before' => 'csrf', 'uses' => 'Simta\Controllers\MenuController@create'));
+    Route::get ('menu/update/{id_menu}', 'Simta\Controllers\MenuController@update');
+    Route::post('menu/update/{id_menu}', array('before' => 'csrf', 'uses' => 'Simta\Controllers\MenuController@update'));
+    Route::get ('menu/delete/{id_menu}', 'Simta\Controllers\MenuController@delete');
+    
+    Route::get ('permission', 'Simta\Controllers\PermissionController@index');
+    Route::get ('permission/manage', 'Simta\Controllers\PermissionController@manage');
+    Route::get ('permission/detail/{id_permission}', 'Simta\Controllers\PermissionController@detail');
+    Route::get ('permission/create', 'Simta\Controllers\PermissionController@create');
+    Route::post('permission/create', array('before' => 'csrf', 'uses' => 'Simta\Controllers\PermissionController@create'));
+    Route::get ('permission/update/{id_permission}', 'Simta\Controllers\PermissionController@update');
+    Route::post('permission/update/{id_permission}', array('before' => 'csrf', 'uses' => 'Simta\Controllers\PermissionController@update'));
+    Route::get ('permission/delete/{id_permission}', 'Simta\Controllers\PermissionController@delete');
+// });

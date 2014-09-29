@@ -1,6 +1,6 @@
 @extends('layouts.custom-sidebar')
 @section('page_title')
-Profil {{ $item->pegawai->nama_lengkap }}
+Profil {{ $item->nama_lengkap }}
 @stop
 @section('content')
 
@@ -14,12 +14,12 @@ Profil {{ $item->pegawai->nama_lengkap }}
                     <tr>
                         <td class="col-md-2 col-sm-2 col-xs-2"><strong>Nama</strong></td>
                         <td>: </td>
-                        <td>{{ $item->pegawai->nama_lengkap }}</td>
+                        <td>{{ $item->nama_lengkap }}</td>
                     </tr>
                     <tr>
                         <td><strong>NIP</strong></td>
                         <td>: </td>
-                        <td>{{ $item->nip_dosen }}</td>
+                        <td>{{ $item->nip }}</td>
                     </tr>
                     <tr>
                         <td><strong>Bidang Ahli</strong></td>
@@ -58,10 +58,10 @@ Profil {{ $item->pegawai->nama_lengkap }}
                                 @foreach ($item->pembimbingTugasAkhir as $key => $tugasAkhir)
                                     <tr>
                                         <td>
-                                            <a href="{{URL::to('/mahasiswa/' . $tugasAkhir->nrp_mahasiswa)}}" >{{$tugasAkhir->mahasiswa->nama_lengkap}}</a>
+                                            <a href="{{URL::to('/mahasiswa/' . $tugasAkhir->nrp)}}" >{{$tugasAkhir->mahasiswa->nama_lengkap}}</a>
                                         </td>
                                         <td class="text-center">
-                                            {{$tugasAkhir->nrp_mahasiswa}}
+                                            {{$tugasAkhir->nrp}}
                                         </td>
                                         <td>
                                         @if ($tugasAkhir->penawaranJudul != null)
@@ -97,10 +97,10 @@ Profil {{ $item->pegawai->nama_lengkap }}
                                 @foreach ($item->sitIn as $key => $sitIn)
                                     <tr>
                                         <td>
-                                            <a href="{{URL::to('/mahasiswa/' . $sitIn->nrp_mahasiswa)}}" >{{$sitIn->mahasiswa->nama_lengkap}}</a>
+                                            <a href="{{URL::to('/mahasiswa/' . $sitIn->nrp)}}" >{{$sitIn->mahasiswa->nama_lengkap}}</a>
                                         </td>
                                         <td class="text-center">
-                                            {{$sitIn->nrp_mahasiswa}}
+                                            {{$sitIn->nrp}}
                                         </td>
                                         <td>
                                         @if ($sitIn->status == 0)

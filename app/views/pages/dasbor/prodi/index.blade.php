@@ -23,7 +23,7 @@ var updateBidangMinat = function($rootScope, $http, callback) {
             $rootScope.dosens = data;
             $.each($rootScope.items, function(i, item) {
                 $.each($rootScope.dosens, function(i, dosen) {
-                    if(item.nip_dosen_koordinator == dosen.nip_dosen) {
+                    if(item.nip_koordinator == dosen.nip) {
                         item.dosenKoordinator = dosen;
                     }
                 });
@@ -78,7 +78,7 @@ app.controller('bidangMinatSuntingController', function($rootScope, $scope, $htt
                         $scope.bidangMinat.nama_bidang_minat = val.nama_bidang_minat;
                         $scope.bidangMinat.deskripsi_bidang_minat = val.deskripsi_bidang_minat;
                         $.each($rootScope.dosens, function(j, val2) {
-                            if(val2.nip_dosen == val.nip_dosen_koordinator) {
+                            if(val2.nip == val.nip_koordinator) {
                                 $scope.bidangMinat.dosenKoordinator = val2;
                             }
                         });
@@ -124,7 +124,7 @@ app.config(function($httpProvider) {
                     </div>
                     <div class="form-group">
                         <label for="ketuaLaboratorium">Ketua Laboratorium</label>
-                        <select id="ketuaLaboratorium" class="form-control" ng-model="bidangMinat.dosenKoordinator" ng-options="dosen.pegawai.nama_lengkap for dosen in dosens"></select>
+                        <select id="ketuaLaboratorium" class="form-control" ng-model="bidangMinat.dosenKoordinator" ng-options="dosen.nama_lengkap for dosen in dosens"></select>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -160,7 +160,7 @@ app.config(function($httpProvider) {
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td>[[item.kode_bidang_minat]]</td>
                             <td>[[item.nama_bidang_minat]]</td>
-                            <td>[[item.dosenKoordinator.pegawai.nama_lengkap]]</td>
+                            <td>[[item.dosenKoordinator.nama_lengkap]]</td>
                             <td>
                                 <a href="#/sunting/[[item.id_bidang_minat]]">Sunting</a>
                                 <a href="#/" ng-click="hapusBidangMinat([[item.id_bidang_minat]])">Hapus</a>

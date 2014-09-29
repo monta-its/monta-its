@@ -12,9 +12,9 @@ use Eloquent;
 
 class BidangMinat extends Eloquent {
     protected $table = 'bidang_minat';
-    public $timestamps = true;
-    protected $softDelete = true;
-    protected $fillable = ['kode_bidang_minat', "nama_bidang_minat", "deskripsi_bidang_minat", "nip_dosen_koordinator"];
+    public $timestamps = false;
+    protected $softDelete = false;
+    protected $fillable = ['kode_bidang_minat', "nama_bidang_minat", "deskripsi_bidang_minat", "nip_koordinator"];
     protected $primaryKey = "id_bidang_minat";
     public $incrementing = true;
 
@@ -37,7 +37,7 @@ class BidangMinat extends Eloquent {
      */
     public function dosenKoordinator()
     {
-        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen_koordinator', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Dosen', 'nip_koordinator', 'nip');
     }
 
     /**

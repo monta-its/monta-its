@@ -175,7 +175,7 @@ h4 {
     </thead>
     <tbody>
         <tr style="line-height: 2.5;">
-            <td>{{$sidang->tugasAkhir->mahasiswa->nrp_mahasiswa}}</td>
+            <td>{{$sidang->tugasAkhir->mahasiswa->nrp}}</td>
             <td>{{$sidang->tugasAkhir->mahasiswa->nama_lengkap}}</td>
             <td></td>
         </tr>
@@ -216,7 +216,7 @@ h4 {
     </thead>
     <tbody>
         <tr style="line-height: 2;">
-            <td>{{$sidang->tugasAkhir->mahasiswa->nrp_mahasiswa}}</td>
+            <td>{{$sidang->tugasAkhir->mahasiswa->nrp}}</td>
             <td>{{$sidang->tugasAkhir->mahasiswa->nama_lengkap}}</td>
             <td></td>
             <td></td>

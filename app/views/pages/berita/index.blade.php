@@ -14,11 +14,7 @@ Berita
     <p>
         <span class="glyphicon glyphicon-user"></span>
         <span>Penulis: </span>
-        @if ($item->pegawai->apakahDosen())
-        <a class="author" href="{{ URL::to('dosen/'. $item->nip_pegawai) }}">{{ $item->pegawai->nama_lengkap }}</a>
-        @else
-        <span>{{ $item->pegawai->nama_lengkap }}</span>
-        @endif
+        <a class="author" href="{{ URL::to('dosen/'. $item->person->nip) }}">{{ $item->person->nama_lengkap }}</a>
         <span> · </span>
         <span class="glyphicon glyphicon-time"></span>
         <span>Waktu: </span><strong>{{ date('d-m-Y H:i:s', strtotime($item->updated_at)) }}</strong>

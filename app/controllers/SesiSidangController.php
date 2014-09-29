@@ -29,7 +29,7 @@ class SesiSidangController extends BaseController {
      */
     function dasborSesiSidang()
     {
-        $auth = Auth::user();
+        
         $pesan = '';
         if(Request::isMethod('get'))
         {

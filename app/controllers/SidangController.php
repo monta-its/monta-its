@@ -181,36 +181,36 @@ class SidangController extends BaseController {
     function dasborSidangMahasiswa()
     {
         $pesan = '';
-        $auth = Auth::user();
-        if($auth)
+        
+        if(Auth::check())
         {
             if(Request::isMethod('get'))
             {
                 if(Request::ajax())
                 {
-                    if($auth->peran == 0)
+                    if(Auth::user()->peran == 0)
                     {
                         $sidang = array();
-                        $mahasiswa = Mahasiswa::find($auth->nomor_induk);
+                        $mahasiswa = Mahasiswa::find(Auth::user()->person_id);
                         $tugasAkhir = $mahasiswa->tugasAkhir()->get();
                         foreach($tugasAkhir as $ta)
                         {
-                            foreach($ta->sidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get() as $s)
+                            foreach($ta->sidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get() as $s)
                             {
                                 $sidang[] = $s->toArray();
                             }
                         }
                         return Response::json($sidang);
                     }
-                    else if($auth->peran == 2)
+                    else if(Auth::user()->peran == 2)
                     {
-                        $dosen = Dosen::find($auth->nomor_induk);
-                        $sidang = $dosen->pengujiSidang()->with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get();
+                        $dosen = Dosen::find(Auth::user()->person_id);
+                        $sidang = $dosen->pengujiSidang()->with('tugasAkhir', 'pengujiSidang', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get();
                         return Response::json($sidang);
                     }
                     else
                     {
-                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang.pegawai', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get());
+                        return Response::json(Sidang::with('tugasAkhir', 'pengujiSidang', 'tugasAkhir.penawaranJudul', 'ruangan', 'sesiSidang')->get());
                     }
 
                 }
@@ -225,9 +225,9 @@ class SidangController extends BaseController {
                 if(Request::isMethod('post'))
                 {
                     $sidang = new Sidang;
-                    if($auth->peran == 0)
+                    if(Auth::user()->peran == 0)
                     {
-                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('tugasAkhir.id_tugas_akhir'))->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->first();
+                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.id_tugas_akhir', Input::get('tugasAkhir.id_tugas_akhir'))->where('tugas_akhir.nrp', Auth::user()->person_id)->first();
                     }
                     else
                     {
@@ -236,9 +236,9 @@ class SidangController extends BaseController {
                 }
                 else if(Request::isMethod('put'))
                 {
-                    if($auth->peran == 0)
+                    if(Auth::user()->peran == 0)
                     {
-                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->where('tugas_akhir.id_tugas_akhir', Input::get('tugasAkhir.id_tugas_akhir'))->first();
+                        $tugasAkhir = TugasAkhir::with('mahasiswa')->where('tugas_akhir.nrp', Auth::user()->person_id)->where('tugas_akhir.id_tugas_akhir', Input::get('tugasAkhir.id_tugas_akhir'))->first();
                     }
                     else
                     {
@@ -251,7 +251,7 @@ class SidangController extends BaseController {
                 $sidang->pengujiSidang()->detach();
                 foreach(Input::get('pengujiSidang') as $penguji)
                 {
-                    $dosen = Dosen::find($penguji['nip_dosen']);
+                    $dosen = Dosen::find($penguji['nip']);
                     $sidang->pengujiSidang()->attach($dosen);
                 }
 
@@ -311,7 +311,7 @@ class SidangController extends BaseController {
      */
     function unduhBeritaAcara($id_sidang)
     {
-        $sidang = Sidang::with('pengujiSidang.pegawai', 'tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->find($id_sidang);
+        $sidang = Sidang::with('pengujiSidang', 'tugasAkhir.mahasiswa', 'tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'ruangan', 'sesiSidang')->find($id_sidang);
         if ($sidang != null)
         {
             $jenis_berita_acara = '';
@@ -321,7 +321,7 @@ class SidangController extends BaseController {
             View::share('jenis_berita_acara', $jenis_berita_acara);
             View::share('sidang', $sidang);
             $pdf = PDF::loadView('reports.berita_acara')->setPaper('folio');
-            return $pdf->download($sidang->id_sidang . '-' . $sidang->jenis_sidang . '-' . $sidang->ruangan->kode_ruangan . '-' . $sidang->tugasAkhir->nrp_mahasiswa. '.pdf');
+            return $pdf->download($sidang->id_sidang . '-' . $sidang->jenis_sidang . '-' . $sidang->ruangan->kode_ruangan . '-' . $sidang->tugasAkhir->nrp. '.pdf');
         }
         else
         {

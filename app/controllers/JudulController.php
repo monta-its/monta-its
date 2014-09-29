@@ -36,7 +36,7 @@ class JudulController extends BaseController {
             array('link' => '', 'text' => 'Penawaran Judul')
         );
 
-        $items = PenawaranJudul::with('bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->get();
+        $items = PenawaranJudul::with('bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing', 'dosen')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -52,7 +52,7 @@ class JudulController extends BaseController {
      */
     function lihatIsiJudul($id_judul)
     {
-        $item = PenawaranJudul::with('bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing.pegawai', 'dosen.pegawai')->find($id_judul);
+        $item = PenawaranJudul::with('bidangKeahlian.bidangMinat', 'tugasAkhir.mahasiswa', 'tugasAkhir.dosenPembimbing', 'dosen')->find($id_judul);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -126,13 +126,13 @@ class JudulController extends BaseController {
         }
 
         $penawaranJudul = PenawaranJudul::with('dosen')->find($id_judul);
-        $nrp_mahasiswa = Auth::user()->nomor_induk;
+        $nrp = Auth::user()->person_id;
         if ($penawaranJudul != null)
         {
             // judul tersedia
             if ($penawaranJudul->tugasAkhir == null)
             {
-                $mahasiswa = Mahasiswa::with('tugasAkhir.penawaranJudul', 'tugasAkhir.dosenPembimbing')->find($nrp_mahasiswa);
+                $mahasiswa = Mahasiswa::with('tugasAkhir.penawaranJudul', 'tugasAkhir.dosenPembimbing')->find($nrp);
                 // apakah mahasiswa telah memiliki data tugas akhir atau telah bimbingan
                 if ($mahasiswa->tugasAkhir->count() != 0)
                 {
@@ -150,7 +150,7 @@ class JudulController extends BaseController {
 
                     foreach ($tugasAkhirTerakhir->dosenPembimbing as $dosenPembimbing)
                     {
-                        if ($dosenPembimbing->nip_dosen == $penawaranJudul->dosen->nip_dosen)
+                        if ($dosenPembimbing->nip == $penawaranJudul->dosen->nip)
                         {
                             $tugasAkhirTerakhir->penawaranJudul()->associate($penawaranJudul);
                             $tugasAkhirTerakhir->save();
@@ -197,12 +197,12 @@ class JudulController extends BaseController {
         }
 
         $penawaranJudul = PenawaranJudul::with('tugasAkhir')->find($id_judul);
-        $nrp_mahasiswa = Auth::user()->nomor_induk;
+        $nrp = Auth::user()->person_id;
         if ($penawaranJudul != null)
         {
             if ($penawaranJudul->tugasAkhir != null)
             {
-                if ($penawaranJudul->tugasAkhir->nrp_mahasiswa == $nrp_mahasiswa)
+                if ($penawaranJudul->tugasAkhir->nrp == $nrp)
                 {
                     $penawaranJudul->tugasAkhir->id_penawaran_judul = null;
                     $penawaranJudul->tugasAkhir->save();
@@ -247,13 +247,13 @@ class JudulController extends BaseController {
             }
             else
             {
-                $nip_dosen = Auth::user()->nomor_induk;
-                return Response::json(PenawaranJudul::with('dosen', 'dosen.pegawai', 'tugasAkhir', 'tugasAkhir.mahasiswa')->where('nip_dosen', $nip_dosen)->get());
+                $nip = Auth::user()->person_id;
+                return Response::json(PenawaranJudul::with('dosen', 'dosen', 'tugasAkhir', 'tugasAkhir.mahasiswa')->where('nip', $nip)->get());
             }
         }
         else if(Request::isMethod('post'))
         {
-            $dosen = Dosen::find(Auth::user()->nomor_induk);
+            $dosen = Dosen::find(Auth::user()->person_id);
             $judul = new PenawaranJudul;
             if($dosen != null)
             {
@@ -274,7 +274,7 @@ class JudulController extends BaseController {
         else if(Request::isMethod('put'))
         {
             // One doesn't simply modify dosen according who login now.
-            // $dosen = Dosen::find(Auth::user()->nomor_induk);
+            // $dosen = Dosen::find(Auth::user()->person_id);
             $judul = PenawaranJudul::find(Input::get('id_penawaran_judul'));
             if($judul != null)
             {

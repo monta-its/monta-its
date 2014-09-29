@@ -50,12 +50,12 @@ class DosenController extends BaseController {
      */
     function lihatProfilDosen($id_dosen)
     {
-        $item = Dosen::with('bidangKeahlian', 'bidangMinat', 'pegawai', 'penawaranJudul.tugasAkhir', 'pembimbingTugasAkhir.mahasiswa', 'pembimbingTugasAkhir.penawaranJudul', 'sitIn.mahasiswa')->find($id_dosen);
+        $item = Dosen::with('bidangKeahlian', 'bidangMinat', 'penawaranJudul.tugasAkhir', 'pembimbingTugasAkhir.mahasiswa', 'pembimbingTugasAkhir.penawaranJudul', 'sitIn.mahasiswa')->find($id_dosen);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
             array('link' => '', 'text' => 'Dosen'),
-            array('link' => '', 'text' => 'Profil ' . $item->pegawai->nama_lengkap)
+            array('link' => '', 'text' => 'Profil ' . $item->nama_lengkap)
         );
 
         if ($item == null)
@@ -92,7 +92,7 @@ class DosenController extends BaseController {
                     foreach($daftarBidangMinat as $dbm)
                     {
 
-                        $dosenBidangMinat = BidangMinat::find($dbm)->dosen()->with('pegawai', 'bidangKeahlian')->get();
+                        $dosenBidangMinat = BidangMinat::find($dbm)->dosen()->with('bidangKeahlian')->get();
                         foreach ($dosenBidangMinat as $d)
                         {
                             if($d->apakahTersediaJadwalDosen(Input::get('hari'), Input::get('sesi')))
@@ -105,7 +105,7 @@ class DosenController extends BaseController {
                 }
                 else
                 {
-                    return Response::json(Dosen::with('pegawai', 'bidangKeahlian')->get());
+                    return Response::json(Dosen::with('bidangKeahlian')->get());
                 }
             }
 
@@ -118,13 +118,13 @@ class DosenController extends BaseController {
      */
     function dasborDosen()
     {
-        $pemberitahuan = Dosen::with(array('pegawai.pemberitahuan' => function($query)
+        $pemberitahuan = Dosen::with(array('pemberitahuan' => function($query)
         {
-            $query->orderBy('id_pemberitahuan_pegawai', 'DESC');
-        }))->find(Auth::user()->nomor_induk)->pegawai->pemberitahuan;
+            $query->orderBy('id_pemberitahuan', 'DESC');
+        }))->find(Auth::user()->person_id)->pemberitahuan;
         View::share('pemberitahuan', $pemberitahuan);
 
-        $dosen = Dosen::find(Auth::user()->nomor_induk);
+        $dosen = Dosen::find(Auth::user()->person_id);
 
         $mahasiswaBimbingan = $dosen->pembimbingTugasAkhir()->with('mahasiswa')->get();
         View::share('mahasiswaBimbingan', $mahasiswaBimbingan);
@@ -132,10 +132,10 @@ class DosenController extends BaseController {
         $mahasiswaSitIn = $dosen->sitIn()->with('mahasiswa')->get();
         View::share('mahasiswaSitIn', $mahasiswaSitIn);
 
-        $jadwalSidangBimbingan = $dosen->pembimbingTugasAkhir()->with('sidang.pengujiSidang.pegawai', 'mahasiswa', 'sidang.ruangan')->get();
+        $jadwalSidangBimbingan = $dosen->pembimbingTugasAkhir()->with('sidang.pengujiSidang', 'mahasiswa', 'sidang.ruangan')->get();
         View::share('jadwalSidangBimbingan', $jadwalSidangBimbingan);
 
-        $jadwalSidangMenguji = $dosen->pengujiSidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang.pegawai')->get();
+        $jadwalSidangMenguji = $dosen->pengujiSidang()->with('tugasAkhir.mahasiswa', 'pengujiSidang')->get();
         View::share('jadwalSidangMenguji', $jadwalSidangMenguji);
 
         return View::make('pages.dasbor.dosen.index');

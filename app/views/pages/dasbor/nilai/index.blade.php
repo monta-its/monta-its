@@ -27,19 +27,19 @@ Penilaian
                 @foreach ($tugasAkhirBimbingan as $i => $ta)
                     <tr>
                         <td>{{ $i + 1 }}</td>
-                        <td><a href="{{ URL::to('/mahasiswa/' . $ta->nrp_mahasiswa ) }}" title="NRP {{ $ta->nrp_mahasiswa }}">{{ $ta->mahasiswa->nama_lengkap }}</a></td>
+                        <td><a href="{{ URL::to('/mahasiswa/' . $ta->nrp ) }}" title="NRP {{ $ta->nrp }}">{{ $ta->mahasiswa->nama_lengkap }}</a></td>
                         <td>
-                    @if ($ta->nilaiProposal()->where('nip_dosen', $nip_dosen)->count() == 0)
-                        <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ta->nrp_mahasiswa) }}" class="btn btn-default btn-xs">tentukan</a>
+                    @if ($ta->nilaiProposal()->where('nip', $nip)->count() == 0)
+                        <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ta->nrp) }}" class="btn btn-default btn-xs">tentukan</a>
                     @else
-                        <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ta->nrp_mahasiswa) }}" class="btn btn-default btn-xs">{{ $ta->nilaiProposal()->where('nip_dosen', $nip_dosen)->get()->nilai }}</a>
+                        <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ta->nrp) }}" class="btn btn-default btn-xs">{{ $ta->nilaiProposal()->where('nip', $nip)->get()->nilai }}</a>
                     @endif
                         </td>
                         <td>
-                    @if ($ta->nilaiAkhir()->where('nip_dosen', $nip_dosen)->count() == 0)
-                        <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ta->nrp_mahasiswa) }}" class="btn btn-default btn-xs">tentukan</a>
+                    @if ($ta->nilaiAkhir()->where('nip', $nip)->count() == 0)
+                        <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ta->nrp) }}" class="btn btn-default btn-xs">tentukan</a>
                     @else
-                        <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ta->nrp_mahasiswa) }}" class="">{{ $ta->nilaiAkhir()->where('nip_dosen', $nip_dosen)->get()->first()->nilai }}</a>
+                        <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ta->nrp) }}" class="">{{ $ta->nilaiAkhir()->where('nip', $nip)->get()->first()->nilai }}</a>
                     @endif
                         </td>
                         <td></td>
@@ -70,23 +70,23 @@ Penilaian
                 @foreach ($seminarDanSidang as $i => $ss)
                     <tr>
                         <td>{{ $i+1 }}</td>
-                        <td><a href="{{ URL::to('/mahasiswa/' . $ss->tugasAkhir->nrp_mahasiswa ) }}" title="NRP {{ $ss->tugasAkhir->nrp_mahasiswa }}">{{ $ss->tugasAkhir->mahasiswa->nama_lengkap }}</a></td>
+                        <td><a href="{{ URL::to('/mahasiswa/' . $ss->tugasAkhir->nrp ) }}" title="NRP {{ $ss->tugasAkhir->nrp }}">{{ $ss->tugasAkhir->mahasiswa->nama_lengkap }}</a></td>
                         @if ($ss->jenis_sidang == 'akhir')
                         <td>Sidang Akhir</td>
                         <td>
-                            @if ($ss->tugasAkhir->nilaiAkhir()->where('nip_dosen', $nip_dosen)->count() == 0)
-                                <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ss->tugasAkhir->nrp_mahasiswa) }}" class="btn btn-default btn-xs">tentukan</a>
+                            @if ($ss->tugasAkhir->nilaiAkhir()->where('nip', $nip)->count() == 0)
+                                <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ss->tugasAkhir->nrp) }}" class="btn btn-default btn-xs">tentukan</a>
                             @else
-                                <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ss->tugasAkhir->nrp_mahasiswa) }}" class="">{{ $ss->tugasAkhir->nilaiAkhir()->where('nip_dosen', $nip_dosen)->get()->first()->nilai }}</a>
+                                <a href="{{ URL::to('/dasbor/dosen/nilai/akhir/' . $ss->tugasAkhir->nrp) }}" class="">{{ $ss->tugasAkhir->nilaiAkhir()->where('nip', $nip)->get()->first()->nilai }}</a>
                             @endif
                         </td>
                         @else
                         <td>Seminar Proposal</td>
                         <td>
-                            @if ($ss->tugasAkhir->nilaiProposal()->where('nip_dosen', $nip_dosen)->count() == 0)
-                                <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ss->tugasAkhir->nrp_mahasiswa) }}" class="btn btn-default btn-xs">tentukan</a>
+                            @if ($ss->tugasAkhir->nilaiProposal()->where('nip', $nip)->count() == 0)
+                                <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ss->tugasAkhir->nrp) }}" class="btn btn-default btn-xs">tentukan</a>
                             @else
-                                <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ss->tugasAkhir->nrp_mahasiswa) }}" class="">{{ $ss->tugasAkhir->nilaiProposal()->where('nip_dosen', $nip_dosen)->get()->first()->nilai }}</a>
+                                <a href="{{ URL::to('/dasbor/dosen/nilai/proposal/' . $ss->tugasAkhir->nrp) }}" class="">{{ $ss->tugasAkhir->nilaiProposal()->where('nip', $nip)->get()->first()->nilai }}</a>
                             @endif
                         </td>
                         @endif

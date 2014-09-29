@@ -15,7 +15,7 @@
                     </tr>
                     <tr>
                         <th>NRP</th>
-                        <td>{{ $item->nrp_mahasiswa }}</td>
+                        <td>{{ $item->nrp }}</td>
                     </tr>
                     <tr>
                         <th>Judul Tugas Akhir</th>

@@ -12,8 +12,8 @@ use Eloquent;
 
 class JenjangPendidikan extends Eloquent {
     protected $table = 'jenjang_pendidikan';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $fillable = ['kode_jenjang_pendidikan', 'nama_jenjang_pendidikan'];
     protected $primaryKey = "kode_jenjang_pendidikan";
     public $incrementing = false;

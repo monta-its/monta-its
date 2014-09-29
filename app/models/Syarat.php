@@ -13,11 +13,10 @@ use Eloquent;
 
 class Syarat extends Eloquent {
     protected $table = 'syarat';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_syarat";
     protected $fillable = ["kode_syarat", "nama_syarat", "waktu_syarat", "jenis_mahasiswa"];
-
 
     /**
      * Relasi many-to-many dengan tabel Mahasiswa
@@ -26,6 +25,6 @@ class Syarat extends Eloquent {
      */
     function mahasiswa()
     {
-        return $this->belongsToMany('Simta\Models\Mahasiswa', 'syarat_mahasiswa', 'id_syarat', 'nrp_mahasiswa');
+        return $this->belongsToMany('Simta\Models\Mahasiswa', 'syarat_mahasiswa', 'id_syarat', 'nrp');
     }
 }

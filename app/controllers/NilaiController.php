@@ -31,10 +31,10 @@ class NilaiController extends BaseController {
      */
     public function daftarNilaiMahasiswa()
     {
-        $nip_dosen = Auth::user()->nomor_induk;
+        $nip = Auth::user()->person_id;
         # mahasiswa yang belum dinilai
         # oleh dosen pembimbingnya dan dosen pengujinya
-        $dosen = Dosen::find($nip_dosen);
+        $dosen = Dosen::find($nip);
         if ($dosen != null)
         {
             # tugas akhir berdasarkan dosen pembimbing
@@ -44,16 +44,16 @@ class NilaiController extends BaseController {
         }
         View::share('tugasAkhirBimbingan', $tugasAkhirBimbingan);
         View::share('seminarDanSidang', $seminarDanSidang);
-        View::share('nip_dosen', $nip_dosen);
+        View::share('nip', $nip);
         return View::make('pages.dasbor.nilai.index');
     }
 
-    public function nilaiAkhirMahasiswa($nrp_mahasiswa)
+    public function nilaiAkhirMahasiswa($nrp)
     {
         $item = new \StdClass;
         $item->page_title = '';
         $item->nama_lengkap = '';
-        $item->nrp_mahasiswa = '';
+        $item->nrp = '';
         $item->judul_tugas_akhir = '';
         $item->jenis_nilai = '';
         $item->nilai = '';
@@ -63,12 +63,12 @@ class NilaiController extends BaseController {
         return View::make('pages.dasbor.nilai.item');
     }
 
-    public function nilaiProposalMahasiswa($nrp_mahasiswa)
+    public function nilaiProposalMahasiswa($nrp)
     {
         $item = new \StdClass;
         $item->page_title = '';
         $item->nama_lengkap = '';
-        $item->nrp_mahasiswa = '';
+        $item->nrp = '';
         $item->judul_tugas_akhir = '';
         $item->jenis_nilai = '';
         $item->nilai = '';

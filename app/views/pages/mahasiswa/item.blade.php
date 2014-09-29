@@ -19,7 +19,7 @@ Profil {{ $item->nama_lengkap }}
                     <tr>
                         <td><strong>NRP</strong></td>
                         <td>: </td>
-                        <td>{{ $item->nrp_mahasiswa }}</td>
+                        <td>{{ $item->nrp }}</td>
                     </tr>
                     @if ($tugasAkhir != null)
                         <tr>
@@ -27,7 +27,7 @@ Profil {{ $item->nama_lengkap }}
                             <td>: </td>
                             <td>
                             @foreach ($tugasAkhir->dosenPembimbing as $i => $pembimbing) 
-                                <a href="{{ URL::to('dosen/' . $pembimbing->nip_dosen) }}">{{ $pembimbing->pegawai->nama_lengkap }}</a>
+                                <a href="{{ URL::to('dosen/' . $pembimbing->nip) }}">{{ $pembimbing->nama_lengkap }}</a>
                                 @if ($i < $tugasAkhir->dosenPembimbing->count() - 1)
                                 ,
                                 @endif

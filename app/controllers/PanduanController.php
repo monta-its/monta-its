@@ -35,7 +35,7 @@ class PanduanController extends BaseController {
             array('link' => '', 'text' => 'Panduan')
         );
 
-        $items = Panduan::with('pegawai.dosen')->get();
+        $items = Panduan::with('person')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -51,7 +51,7 @@ class PanduanController extends BaseController {
      */
     function lihatIsiPanduan($id_panduan)
     {
-        $item = Panduan::find($id_panduan);
+        $item = Panduan::with('person')->find($id_panduan);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -83,7 +83,7 @@ class PanduanController extends BaseController {
             }
             else
             {
-                return Response::json(Panduan::with('pegawai', 'lampiran')->where('nip_pegawai', Auth::user()->nomor_induk)->get());
+                return Response::json(Panduan::with('lampiran')->where('nip', Auth::user()->person_id)->get());
             }
         }
         else if(Request::isMethod('post'))
@@ -100,15 +100,15 @@ class PanduanController extends BaseController {
             $permitToEdit = Input::get('_permit_to_edit');
             if($permitToEdit == true)
             {
-                $panduan = Panduan::where('nip_pegawai', Auth::user()->nomor_induk)->find(Input::get('id_panduan'));
-                $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+                $panduan = Panduan::where('nip', Auth::user()->person_id)->find(Input::get('id_panduan'));
+                $pegawai = Pegawai::find(Auth::user()->person_id);
                 $lampiran = $panduan->lampiran()->first();
             }
             else
             {
                 $panduan = new Panduan;
                 $lampiran = new Lampiran;
-                $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+                $pegawai = Pegawai::find(Auth::user()->person_id);
             }
 
             if($pegawai != null)
@@ -137,12 +137,12 @@ class PanduanController extends BaseController {
                     if(Input::file('file'))
                     {
                         $filename = Input::file('file')->getClientOriginalName();
-                        Input::file('file')->move('public/files/'.$pegawai->nip_pegawai.'/', $filename);
+                        Input::file('file')->move('public/files/'.$pegawai->nip.'/', $filename);
                         $lampiran->path_lampiran = $filename;
                     }
                 }
                 $lampiran->save();
-                $panduan->pegawai()->associate($pegawai);
+                $panduan->person()->associate($pegawai);
                 $panduan->lampiran()->associate($lampiran);
                 $panduan->save();
 
@@ -151,8 +151,8 @@ class PanduanController extends BaseController {
         }
         else if(Request::isMethod('put'))
         {
-            $panduan = Panduan::where('nip_pegawai', Auth::user()->nomor_induk)->find(Input::get('id_panduan'));
-            $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+            $panduan = Panduan::where('nip', Auth::user()->person_id)->find(Input::get('id_panduan'));
+            $pegawai = Pegawai::find(Auth::user()->person_id);
             $lampiran = $panduan->lampiran()->first();
             if($pegawai != null)
             {
@@ -162,7 +162,7 @@ class PanduanController extends BaseController {
                 $lampiran->tipe_lampiran = Input::get('lampiran.tipe_lampiran');
                 $lampiran->path_lampiran = Input::get('lampiran.path_lampiran');
                 $lampiran->save();
-                $panduan->pegawai()->associate($pegawai);
+                $panduan->person()->associate($pegawai);
                 $panduan->save();
             }
 

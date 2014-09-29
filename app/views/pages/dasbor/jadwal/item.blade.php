@@ -7,7 +7,7 @@ Sunting Jadwal
 <div class="row">
     <div class="col-md-12">
         <form role="form" action="{{ URL::to('/dasbor/dosen/jadwal') }}" method="get" accept-charset="utf-8">
-            <input type="hidden" name="nip_dosen" value="1234567890" />
+            <input type="hidden" name="nip" value="1234567890" />
             <div class="form-group">
                 <label for="hari">Hari</label>
                 <select name="hari" class="form-control">

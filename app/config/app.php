@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecresstKey!!!',
+	'key' => 'SimtaSecresstKey!',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return array(
 		'Illuminate\Database\DatabaseServiceProvider',
 		'Illuminate\Encryption\EncryptionServiceProvider',
 		'Illuminate\Filesystem\FilesystemServiceProvider',
-		'Illuminate\Hashing\HashServiceProvider',
+		// 'Illuminate\Hashing\HashServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
 		'Illuminate\Log\LogServiceProvider',
 		'Illuminate\Mail\MailServiceProvider',
@@ -107,6 +107,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
+		'Simta\Libraries\SimtaHasherServiceProvider',
 
 	),
 

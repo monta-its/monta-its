@@ -4,8 +4,7 @@ use Simta\Models\Mahasiswa;
 use Simta\Models\Pegawai;
 use Simta\Models\Dosen;
 use Simta\Models\Pos;
-use Simta\Models\PemberitahuanMahasiswa;
-use Simta\Models\PemberitahuanPegawai;
+use Simta\Models\Pemberitahuan;
 use Simta\Models\TugasAkhir;
 use Simta\Models\Sidang;
 use Simta\Models\NilaiAkhir;
@@ -24,6 +23,8 @@ use Simta\Models\StatusTugasAkhir;
 use Simta\Models\BerkasTugasAkhir;
 use Simta\Models\SesiSidang;
 use Simta\Models\JadwalDosen;
+use Simta\Models\User;
+use Simta\Models\Group;
 
 class RudeSeeder extends Seeder {
 
@@ -80,8 +81,8 @@ class RudeSeeder extends Seeder {
 
             }
 
-            // echo Syarat::where('waktu_syarat', '=', 'pra_sit_in')->count() . 'pra_sit_in\n';
         }
+                                                echo "checkpoint 86\n";
 
         while(Syarat::where('waktu_syarat', '=', 'pra_bimbingan')->count() < 4)
         {
@@ -98,7 +99,6 @@ class RudeSeeder extends Seeder {
             {
 
             }
-            // echo Syarat::where('waktu_syarat', '=', 'pra_bimbingan')->count() . 'pra_bimbingan\n';
 
         }
 
@@ -117,9 +117,9 @@ class RudeSeeder extends Seeder {
             {
 
             }
-            // echo Syarat::where('waktu_syarat', '=', 'pra_seminar_proposal')->count() . 'pra_seminar_proposal\n';
 
         }
+                                                echo "checkpoint 122\n";
 
         while(Syarat::where('waktu_syarat', '=', 'pra_sidang_akhir')->count() < 4)
         {
@@ -136,8 +136,6 @@ class RudeSeeder extends Seeder {
             {
 
             }
-            // echo Syarat::where('waktu_syarat', '=', 'pra_sidang_akhir')->count() . 'pra_sidang_akhir\n';
-
         }
 
         $syaratSitIn = Syarat::where('waktu_syarat', '=', 'pra_sit_in')->get();
@@ -152,6 +150,7 @@ class RudeSeeder extends Seeder {
             $jenjang_pendidikan->kode_jenjang_pendidikan = 'S1';
             $jenjang_pendidikan->save();
         }
+                                                echo "checkpoint 152\n";
 
         for($i=0; $i<5; $i++)
         {
@@ -224,6 +223,7 @@ class RudeSeeder extends Seeder {
             'deskripsi_bidang_minat' => ''
         );
         */
+                                                echo "checkpoint 224\n";
 
         $bidang_minat = new BidangMinat;
         $bidang_minat->kode_bidang_minat = $faker->unique->word;
@@ -237,242 +237,278 @@ class RudeSeeder extends Seeder {
         $bidang_keahlian->bidangMinat()->associate($bidang_minat);
         $bidang_keahlian->save();
         $counter = 0;
+
+        $mhsGroup = Group::with('user')->where('name_group', '=', 'mahasiswa')->first();
+        $dosenGroup = Group::with('user')->where('name_group', '=', 'dosen')->first();
+        $pegawaiGroup = Group::with('user')->where('name_group', '=', 'pegawai')->first();
+        $mhsUser = $mhsGroup->user;
+        $dosenUser = $dosenGroup->user;
+        $pegawaiUser = $pegawaiGroup->user;
+                                                echo "checkpoint 245\n";
+
+        $mhsUser_index = 0;
+        $dosenUser_index = 0;
+        $pegawaiUser_index = 0;
+
         for($i = 0; $i < 10; $i++)
         {
             $mahasiswa = Mahasiswa::create(
                 array(
-                    'nrp_mahasiswa' => $faker->unique->randomNumber(7),
+                    'nrp' => $faker->unique->randomNumber(7),
                     'nama_lengkap' => $faker->name,
-                    'kata_sandi' => Hash::make('password'),
                     'angkatan' => 2011,
                     'sks_tempuh' => 110,
                     'sks_lulus' => 95,
-                    'aktif' => 1
                 )
             );
+
+            $mahasiswa->user()->save($mhsUser[$mhsUser_index++]);
 
             $mahasiswa->jenjangPendidikan()->associate($jenjang_pendidikan);
             $mahasiswa->save();
 
             for($j = 0; $j < 3; $j++)
             {
-               $pemberitahuan = new PemberitahuanMahasiswa;
+               $pemberitahuan = new Pemberitahuan;
                $pemberitahuan->isi = $faker->sentence();
                $mahasiswa->pemberitahuan()->save($pemberitahuan);
             }
+                                                echo "checkpoint 276\n";
 
+            /**
+             * PEGAWAI
+             */
+            
             $pegawai = new Pegawai;
-            $pegawai->nip_pegawai = $faker->unique->randomNumber(7);
-            $pegawai->nama_lengkap = $faker->name;
-            $pegawai->kata_sandi = Hash::make('password');
-            $pegawai->aktif = 1;
+            $pegawai->nip = $faker->unique->randomNumber(7);
+            $pegawai->nama_lengkap = $pegawaiUser[$pegawaiUser_index]->name_user;
+            $pegawai->save();
+            $pegawai->user()->save($pegawaiUser[$pegawaiUser_index++]);
             $pegawai->save();
 
-            if(rand(0,1) == 1) {
-                $dosen = new Dosen;
-                $dosen->nidn = $faker->unique->randomNumber(7);
-                $dosen->hak_akses_pegawai = rand(0,1);
-                $dosen->gelar_depan = "Ir.";
-                $dosen->gelar_belakang = "S.Kom.";
-                $dosen->pegawai()->associate($pegawai);
-                $dosen->save();
-                $dosen->bidangMinat()->associate($bidang_minat);
-                $dosen->bidangKeahlian()->attach($bidang_keahlian);
-                $dosen->save();
-                
-                $nip_dosen = $dosen->nip_dosen;
-                unset($dosen);
-                $dosen = Dosen::find($nip_dosen);
+            /**
+             * DOSEN
+             */
 
-                for($k=0; $k<5; $k++)
+            $dosen = new Dosen;
+            $dosen->nama_lengkap = $dosenUser[$dosenUser_index]->name_user;
+            $dosen->nip = $faker->unique->randomNumber(7);
+            $dosen->nidn = $faker->unique->randomNumber(7);
+            $dosen->gelar_depan = "Ir.";
+            $dosen->gelar_belakang = "S.Kom.";
+            $dosen->save();
+            $dosen->user()->save($dosenUser[$dosenUser_index++]);
+            $dosen->bidangMinat()->associate($bidang_minat);
+            $dosen->bidangKeahlian()->save($bidang_keahlian);
+            $dosen->save();
+
+            $nip = $dosen->nip;
+            unset($dosen);
+            $dosen = Dosen::find($nip);
+
+            for($k=0; $k<5; $k++)
+            {
+                $jadwalDosen = new JadwalDosen;
+                $jadwalDosen->hari = rand(1,5);
+                $jadwalDosen->sesi = rand(1,SesiSidang::count());
+                $jadwalDosen->apakah_tersedia = rand(0,1);
+                $jadwalDosen->dosen()->associate($dosen);
+                $jadwalDosen->save();
+            }
+
+            if($counter == 0)
+            {
+                $bidang_minat->dosenKoordinator()->associate($dosen);
+                $bidang_minat->save();
+                $counter = 1;
+            }
+
+            // this one not belongs to any TugasAkhir
+            $penawaran_judul = new PenawaranJudul;
+            $penawaran_judul->judul_tugas_akhir = $faker->sentence();
+            $penawaran_judul->deskripsi = $faker->sentence();
+            $penawaran_judul->dosen()->associate($dosen);
+            $penawaran_judul->bidangKeahlian()->associate($bidang_keahlian);
+            $penawaran_judul->save();
+                                            echo "checkpoint 310\n";
+            // see TugasAkhir bellow to see its relationship
+            $penawaran_judul = new PenawaranJudul;
+            $penawaran_judul->judul_tugas_akhir = $faker->sentence();
+            $penawaran_judul->deskripsi = $faker->sentence();
+            $penawaran_judul->dosen()->associate($dosen);
+            $penawaran_judul->bidangKeahlian()->associate($bidang_keahlian);
+            $penawaran_judul->save();
+                                            echo "checkpoint 317\n";
+            for($j = 0; $j < 3; $j++)
+            {
+               $pemberitahuan = new Pemberitahuan;
+               $pemberitahuan->isi = $faker->sentence();
+               $pemberitahuan->save();
+               $dosen->pemberitahuan()->save($pemberitahuan);
+            }
+                                            echo "checkpoint 325\n";
+            for($j = 0; $j < 5; $j++)
+            {
+                $pos = new Pos;
+                $pos->judul = $faker->sentence();
+                $pos->isi = $faker->text();
+                $pos->apakah_terbit = true;
+                $pos->save();
+                $dosen->pos()->save($pos);
+            }
+
+            echo "checkpoint 358\n";
+
+            $nip = $dosen->nip;
+            unset($dosen);
+            $dosen = Dosen::find($nip);
+
+            for($j = 0; $j < 3; $j++)
+            {
+                $panduan = new Panduan;
+                $panduan->judul_panduan = $faker->sentence();
+                $panduan->isi_panduan = $faker->text();
+                $panduan->save();
+                $dosen->panduan()->save($panduan);
+
+                echo "checkpoint 368\n";
+
+                $lampiran = new Lampiran;
+                if(rand(0,1) == 1)
                 {
-                    $jadwalDosen = new JadwalDosen;
-                    $jadwalDosen->hari = rand(1,5);
-                    $jadwalDosen->sesi = rand(1,SesiSidang::count());
-                    $jadwalDosen->apakah_tersedia = rand(0,1);
-                    $jadwalDosen->dosen()->associate($dosen);
-                    $jadwalDosen->save();
+                    $lampiran->nama_lampiran = $faker->word();
+                    $lampiran->tipe_lampiran = 'url';
+                    $lampiran->path_lampiran = 'http://www.google.com/';
+                }
+                else
+                {
+                    $lampiran->nama_lampiran = $faker->word();
+                    $lampiran->tipe_lampiran = 'file';
+                    $lampiran->path_lampiran = 'files/' . $dosen->nip . '/' . $lampiran->nama_lampiran;
                 }
 
-                if($counter == 0)
-                {
-                    $bidang_minat->dosenKoordinator()->associate($dosen);
-                    $bidang_minat->save();
-                    $counter = 1;
+                echo "checkpoint 384\n";
+                $lampiran->save();
+                $panduan->id_lampiran = $lampiran->id_lampiran;
+                $panduan->save();
+                // $lampiran->person()->associate($dosen);
+                $dosen->lampiran()->save($lampiran);
+                $lampiran->save();
+
+                echo "checkpoint 391\n";
+            }
+                                            echo "checkpoint 363\n";
+
+            $acak = rand(0,2);
+            if($acak == 1)
+            {
+                foreach ($syaratSitIn as $syarat) {
+                    $mahasiswa->syarat()->save($syarat);
                 }
 
-                // this one not belongs to any TugasAkhir
-                $penawaran_judul = new PenawaranJudul;
-                $penawaran_judul->judul_tugas_akhir = $faker->sentence();
-                $penawaran_judul->deskripsi = $faker->sentence();
-                $penawaran_judul->dosen()->associate($dosen);
-                $penawaran_judul->bidangKeahlian()->associate($bidang_keahlian);
-                $penawaran_judul->save();
-echo "checkpoint 310\n";
-                // see TugasAkhir bellow to see its relationship
-                $penawaran_judul = new PenawaranJudul;
-                $penawaran_judul->judul_tugas_akhir = $faker->sentence();
-                $penawaran_judul->deskripsi = $faker->sentence();
-                $penawaran_judul->dosen()->associate($dosen);
-                $penawaran_judul->bidangKeahlian()->associate($bidang_keahlian);
-                $penawaran_judul->save();
-echo "checkpoint 317\n";
-                for($j = 0; $j < 3; $j++)
-                {
-                   $pemberitahuan = new PemberitahuanPegawai;
-                   $pemberitahuan->isi = $faker->sentence();
-                   $pemberitahuan->save();
-                   $pegawai->pemberitahuan()->save($pemberitahuan);
-                }
-echo "checkpoint 325\n";
-                for($j = 0; $j < 5; $j++)
-                {
-                    $pos = new Pos;
-                    $pos->judul = $faker->sentence();
-                    $pos->isi = $faker->text();
-                    $pos->apakah_terbit = true;
-                    $pos->save();
-                    $dosen->pos()->save($pos);
+                foreach ($syaratBimbingan as $syarat) {
+                    $mahasiswa->syarat()->save($syarat);
                 }
 
-                for($j = 0; $j < 3; $j++)
-                {
-                    $panduan = new Panduan;
-                    $panduan->judul_panduan = $faker->sentence();
-                    $panduan->isi_panduan = $faker->text();
-                    $panduan->pegawai()->associate($dosen->pegawai);
-                    $panduan->save();
+                $ta = new TugasAkhir;
+                $ta->mahasiswa()->associate($mahasiswa);
+                $ta->tanggal_mulai = "2014-01-01";
+                $ta->tanggal_selesai = "2014-05-05";
+                $ta->target_selesai = "2014-08-08";
+                $ta->status = "pengerjaan";
+                $ta->save();
+                $ta->dosenPembimbing()->save($dosen);
+                $ta->save();
+                $ta->penawaranJudul()->associate($penawaran_judul);
+                $ta->save();
 
-                    $lampiran = new Lampiran;
-                    if(rand(0,1) == 1)
-                    {
-                        $lampiran->nama_lampiran = $faker->word();
-                        $lampiran->tipe_lampiran = 'url';
-                        $lampiran->path_lampiran = 'http://www.google.com/';
-                    }
-                    else
-                    {
-                        $lampiran->nama_lampiran = $faker->word();
-                        $lampiran->tipe_lampiran = 'file';
-                        $lampiran->path_lampiran = 'files/' . $panduan->pegawai->nip_pegawai . '/' . $lampiran->nama_lampiran;
-                    }
-                    $lampiran->save();
-                    $panduan->lampiran()->associate($lampiran);
-                    $panduan->save();
-                    $lampiran->pegawai()->associate($dosen->pegawai);
-                    $lampiran->save();
-                }
-echo "checkpoint 363\n";
-                $acak = rand(0,2);
-                if($acak == 1)
+                $berkas = new BerkasTugasAkhir;
+                $berkas->nama_berkas = $faker->word();
+                $berkas->path = '/'.$faker->word();
+                $berkas->save();
+                $ta->berkas()->save($berkas);
+                                            echo "checkpoint 392\n";
+                if(rand(0,1) == 1)
                 {
-                    foreach ($syaratSitIn as $syarat) {
+                    foreach ($syaratSeminar as $syarat) {
                         $mahasiswa->syarat()->save($syarat);
                     }
 
-                    foreach ($syaratBimbingan as $syarat) {
-                        $mahasiswa->syarat()->save($syarat);
-                    }
+                    $seminar = new Sidang;
+                    $seminar->jenis_sidang = "proposal";
+                    $seminar->sesi = rand(1,SesiSidang::count());
+                    $seminar->tanggal = "2014-12-12";
+                    $seminar->disetujui = 1;
+                    $seminar->ruangan()->associate($ruangan);
+                    $seminar->tugasAkhir()->associate($ta);
+                    $seminar->save();
 
-                    $ta = new TugasAkhir;
-                    $ta->mahasiswa()->associate($mahasiswa);
-                    $ta->tanggal_mulai = "2014-01-01";
-                    $ta->tanggal_selesai = "2014-05-05";
-                    $ta->target_selesai = "2014-08-08";
-                    $ta->status = "pengerjaan";
-                    $ta->save();
-                    $ta->dosenPembimbing()->save($dosen);
-                    $ta->save();
-                    $ta->penawaranJudul()->associate($penawaran_judul);
-                    $ta->save();
-
-                    $berkas = new BerkasTugasAkhir;
-                    $berkas->nama_berkas = $faker->word();
-                    $berkas->path = '/'.$faker->word();
-                    $berkas->save();
-                    $ta->berkas()->save($berkas);
-echo "checkpoint 392\n";
-                    if(rand(0,1) == 1)
+                    if ($seminar->disetujui == 1)
                     {
-                        foreach ($syaratSeminar as $syarat) {
-                            $mahasiswa->syarat()->save($syarat);
-                        }
-
-                        $seminar = new Sidang;
-                        $seminar->jenis_sidang = "proposal";
-                        $seminar->sesi = rand(1,SesiSidang::count());
-                        $seminar->tanggal = "2014-12-12";
-                        $seminar->disetujui = 1;
-                        $seminar->ruangan()->associate($ruangan);
-                        $seminar->tugasAkhir()->associate($ta);
-                        $seminar->save();
-
-                        if ($seminar->disetujui == 1)
+                        for($j = 0; $j < 4; $j++)
                         {
-                            for($j = 0; $j < 4; $j++)
-                            {
-                                $penguji = Dosen::orderBy(DB::raw('RAND()'))->take(1)->get();
-                                $penguji = $penguji[0];
+                            $penguji = Dosen::orderBy(DB::raw('RAND()'))->take(1)->get();
+                            $penguji = $penguji[0];
 
-                                $seminar->pengujiSidang()->save($penguji);
-                                $seminar->save();
+                            $seminar->pengujiSidang()->save($penguji);
+                            $seminar->save();
 
-                                $nilaiProposal = new NilaiProposal;
-                                $nilaiProposal->dosen()->associate($penguji);
-                                $nilaiProposal->tugasAkhir()->associate($ta);
-                                $nilaiProposal->nilai = rand(60,100);
-                                $nilaiProposal->save();
+                            $nilaiProposal = new NilaiProposal;
+                            $nilaiProposal->dosen()->associate($penguji);
+                            $nilaiProposal->tugasAkhir()->associate($ta);
+                            $nilaiProposal->nilai = rand(60,100);
+                            $nilaiProposal->save();
+                        }
+
+                        if(rand(2,3) == 2)
+                        {
+                            foreach ($syaratSidang as $syarat) {
+                                $mahasiswa->syarat()->save($syarat);
                             }
 
-                            if(rand(2,3) == 2)
+                            $sidang = new Sidang;
+                            $sidang->jenis_sidang = "akhir";
+                            $sidang->sesi = rand(1,SesiSidang::count());
+                            $sidang->tanggal = "2014-12-30";
+                            $sidang->disetujui = 1;
+                            $sidang->ruangan()->associate($ruangan);
+                            $sidang->tugasAkhir()->associate($ta);
+                            $sidang->save();
+                                            echo "checkpoint 439\n";
+                            if ($sidang->disetujui == 1)
                             {
-                                foreach ($syaratSidang as $syarat) {
-                                    $mahasiswa->syarat()->save($syarat);
-                                }
-
-                                $sidang = new Sidang;
-                                $sidang->jenis_sidang = "akhir";
-                                $sidang->sesi = rand(1,SesiSidang::count());
-                                $sidang->tanggal = "2014-12-30";
-                                $sidang->disetujui = 1;
-                                $sidang->ruangan()->associate($ruangan);
-                                $sidang->tugasAkhir()->associate($ta);
-                                $sidang->save();
-echo "checkpoint 439\n";
-                                if ($sidang->disetujui == 1)
+                                for($j = 0; $j < 4; $j++)
                                 {
-                                    for($j = 0; $j < 4; $j++)
-                                    {
-                                        $penguji = Dosen::orderBy(DB::raw('RAND()'))->take(1)->get();
-                                        $penguji = $penguji[0];
+                                    $penguji = Dosen::orderBy(DB::raw('RAND()'))->take(1)->get();
+                                    $penguji = $penguji[0];
 
-                                        $sidang->pengujiSidang()->save($penguji);
-                                        $sidang->save();
+                                    $sidang->pengujiSidang()->save($penguji);
+                                    $sidang->save();
 
-                                        $nilaiAkhir = new NilaiAkhir;
-                                        $nilaiAkhir->dosen()->associate($penguji);
-                                        $nilaiAkhir->tugasAkhir()->associate($ta);
-                                        $nilaiAkhir->nilai = rand(60,100);
-                                        $nilaiAkhir->save();
-                                    }
+                                    $nilaiAkhir = new NilaiAkhir;
+                                    $nilaiAkhir->dosen()->associate($penguji);
+                                    $nilaiAkhir->tugasAkhir()->associate($ta);
+                                    $nilaiAkhir->nilai = rand(60,100);
+                                    $nilaiAkhir->save();
                                 }
                             }
                         }
                     }
-                }
-                else if ($acak == 0)
-                {
-                    foreach ($syaratSitIn as $syarat) {
-                        $mahasiswa->syarat()->save($syarat);
-                    }
-
-                    $sitin = new SitIn;
-                    $sitin->status = 0;
-                    $sitin->mahasiswa()->associate($mahasiswa);
-                    $sitin->dosen()->associate($dosen);
-                    $sitin->save();
                 }
             }
+            else if ($acak == 0)
+            {
+                foreach ($syaratSitIn as $syarat) {
+                    $mahasiswa->syarat()->save($syarat);
+                }
+
+                $sitin = new SitIn;
+                $sitin->status = 0;
+                $sitin->mahasiswa()->associate($mahasiswa);
+                $sitin->dosen()->associate($dosen);
+                $sitin->save();
+            }
+
         }
 
         DB::connection()->enableQueryLog();

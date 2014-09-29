@@ -31,8 +31,8 @@ class BerkasTugasAkhirController extends BaseController {
      */
     function kelolaBerkasTugasAkhir()
     {
-        $auth = Auth::user();
-        $mahasiswa = Mahasiswa::find($auth->nomor_induk);
+        
+        $mahasiswa = Mahasiswa::find(Auth::user()->person_id);
         $pesan = '';
         
         // GET: Mengambil daftar berkas tugas akhir dari mahasiswa bersangkutan

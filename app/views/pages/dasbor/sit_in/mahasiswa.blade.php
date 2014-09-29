@@ -49,10 +49,10 @@ app.controller('sitInController', function($scope, $http, $rootScope) {
         }
     };
 
-    $scope.pilihSitIn = function(nip_dosen) {
+    $scope.pilihSitIn = function(nip) {
         var sitIn = {};
         sitIn.dosen = {};
-        sitIn.dosen.nip_dosen = String(nip_dosen);
+        sitIn.dosen.nip = String(nip);
 
         if(confirm("Apakah Anda setuju untuk melakukan Sitin Tugas Akhir dengan dosen yang dipilih?")) {
             $http.post('{{URL::to('/dasbor/mahasiswa/sit_in')}}', sitIn).success(function(data) {
@@ -94,8 +94,8 @@ app.config(function($httpProvider) {
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in items">
-                                <td>[[item.dosen.pegawai.nama_lengkap]]</td>
-                                <td class="text-center">[[item.dosen.nip_dosen]]</td>
+                                <td>[[item.dosen.nama_lengkap]]</td>
+                                <td class="text-center">[[item.dosen.nip]]</td>
                                 <td class="text-center">[[item.updated_at]]</td>
                                 <td ng-show="item.status == -1">Dibatalkan (menunggu)</td>
                                 <td ng-show="item.status == 0">Diajukan</td>
@@ -128,14 +128,14 @@ app.config(function($httpProvider) {
                             </thead>
                             <tbody>
                                 <tr ng-repeat="dosen in item.dosen">
-                                    <td>[[dosen.pegawai.nama_lengkap]]</td>
-                                    <td class="text-center">[[dosen.nip_dosen]]</td>
+                                    <td>[[dosen.nama_lengkap]]</td>
+                                    <td class="text-center">[[dosen.nip]]</td>
                                     <td>
                                         <a ng-repeat="bk in dosen.bidang_keahlian" href="{{{URL::to('/bidang_keahlian/')}}}/[[bk.id_bidang_keahlian]]">[[bk.nama_bidang_keahlian]]</a>
                                     </td>
                                     <td class="text-center">[[dosen.kuota_sit_in]]</td>
                                     <td class="text-center">
-                                        <a class="btn btn-xs btn-success" ng-click="pilihSitIn([[dosen.nip_dosen]])">Pilih</a>
+                                        <a class="btn btn-xs btn-success" ng-click="pilihSitIn([[dosen.nip]])">Pilih</a>
                                     </td>
                                 </tr>
 

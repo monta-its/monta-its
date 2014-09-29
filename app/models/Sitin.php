@@ -22,8 +22,8 @@ use Simta\Models\Mahasiswa;
 
 class SitIn extends Eloquent {
     protected $table = 'sit_in';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_sit_in";
     protected $fillable = ["status"];
 
@@ -34,7 +34,7 @@ class SitIn extends Eloquent {
      */
     public function dosen()
     {
-        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Dosen', 'nip', 'nip');
     }
 
     /**
@@ -44,7 +44,7 @@ class SitIn extends Eloquent {
      */
     public function mahasiswa()
     {
-        return $this->belongsTo('Simta\Models\Mahasiswa', 'nrp_mahasiswa', 'nrp_mahasiswa');
+        return $this->belongsTo('Simta\Models\Mahasiswa', 'nrp', 'nrp');
     }
 
     /**
@@ -57,7 +57,7 @@ class SitIn extends Eloquent {
         if($this->status == 1)
         {
             $tugasAkhir = new TugasAkhir;
-            $mahasiswa = Mahasiswa::find($this->nrp_mahasiswa);
+            $mahasiswa = Mahasiswa::find($this->nrp);
             $tugasAkhir->mahasiswa()->associate($mahasiswa);
             $tugasAkhir->tanggal_mulai = date('Y-m-d');
             $tugasAkhir->status = "pengerjaan";

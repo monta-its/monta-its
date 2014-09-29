@@ -35,7 +35,7 @@ class PenggunaController extends BaseController {
 
     /**
      * Menyimpan data model Mahasiswa yang diambil dari SIAKAD
-     * berdasarkan nrp_mahasiswa yang diperoleh dari Input method POST.
+     * berdasarkan nrp yang diperoleh dari Input method POST.
      *
      * Password default adalah sama dengan NRP mahasiswa.
      *
@@ -43,28 +43,28 @@ class PenggunaController extends BaseController {
      */
     public function tambahPenggunaMahasiswa()
     {
-        $nrp_mahasiswa = Input::get ('nrp_mahasiswa');
+        $nrp = Input::get ('nrp');
         $nama_mahasiswa = '';
-        if (!is_array($nrp_mahasiswa))
+        if (!is_array($nrp))
         {
             $nama_mahasiswa = Input::get ('nama_mahasiswa');
-            View::share('pesan', $nama_mahasiswa . ' (' . $nrp_mahasiswa . ')');
+            View::share('pesan', $nama_mahasiswa . ' (' . $nrp . ')');
         }
         else
         {
             $berhasil = 0;
-            foreach ($nrp_mahasiswa as $nrp) 
+            foreach ($nrp as $nrp) 
             {
-                $result = DB::connection('sqlsrv')->select('select MA_Nrp nrp_mahasiswa, MA_Nama nama_lengkap, MA_TglMasukITS tanggal_masuk from ' . $this->tabel_mahasiswa . ' where MA_Nrp = ?', array($nrp));
+                $result = DB::connection('sqlsrv')->select('select MA_Nrp nrp, MA_Nama nama_lengkap, MA_TglMasukITS tanggal_masuk from ' . $this->tabel_mahasiswa . ' where MA_Nrp = ?', array($nrp));
 
                 if (count($result) == 1)
                 {
                     $data = $result[0];
                     Mahasiswa::create(
                         array(
-                            'nrp_mahasiswa' => $data->nrp_mahasiswa,
+                            'nrp' => $data->nrp,
                             'nama_lengkap' => $data->nama_lengkap,
-                            'kata_sandi' => Hash::make($data->nrp_mahasiswa),
+                            'kata_sandi' => Hash::make($data->nrp),
                             'angkatan' => date('Y', strtotime($data->tanggal_masuk))
                         )
                     );
@@ -102,7 +102,7 @@ class PenggunaController extends BaseController {
          * @var array
          */
         
-        $l_item = DB::connection('sqlsrv')->select('select MA_Nrp nrp_mahasiswa, MA_Nama nama_mahasiswa, MA_SksLulus sks_lulus, MA_SKSTempuh sks_tempuh from ' . $this->tabel_mahasiswa . ' where ma_skslulus>95 and ma_ipk>=2');
+        $l_item = DB::connection('sqlsrv')->select('select MA_Nrp nrp, MA_Nama nama_mahasiswa, MA_SksLulus sks_lulus, MA_SKSTempuh sks_tempuh from ' . $this->tabel_mahasiswa . ' where ma_skslulus>95 and ma_ipk>=2');
         
         View::share('l_item', $l_item);
         return View::make('pages.dasbor.pengguna.mahasiswa.calon');
@@ -117,7 +117,7 @@ class PenggunaController extends BaseController {
     {
         $item = array(
             'nama_mahasiswa' => 'Nama Mahasiswa',
-            'nrp_mahasiswa' => '1234567890',
+            'nrp' => '1234567890',
             'id_mahasiswa' => '0987654321',
             'nama_dosen_wali' => 'Nama Dosen Wali',
             'id_dosen_wali' => 'id_dosen',

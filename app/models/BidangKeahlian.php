@@ -13,10 +13,12 @@ use Eloquent;
 
 class BidangKeahlian extends Eloquent {
     protected $table = 'bidang_keahlian';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_bidang_keahlian";
     protected $fillable = ["nama_bidang_keahlian", "deskripsi_bidang_keahlian"];
+    public $incrementing = true;
+    
 
     /**
      * Relasi many-to-many dengan tabel Dosen
@@ -25,7 +27,7 @@ class BidangKeahlian extends Eloquent {
      */
     public function dosen()
     {
-        return $this->belongsToMany('Simta\Models\Dosen', 'bidang_keahlian_dosen', 'id_bidang_keahlian', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Dosen', 'bidang_keahlian_dosen', 'id_bidang_keahlian', 'nip');
     }
 
     /**

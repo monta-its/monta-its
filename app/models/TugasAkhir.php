@@ -12,8 +12,8 @@ use Eloquent;
 
 class TugasAkhir extends Eloquent {
     protected $table = 'tugas_akhir';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_tugas_akhir";
     protected $fillable = ["tanggal_mulai", "tanggal_selesai", "target_selesai", "status"];
 
@@ -24,7 +24,7 @@ class TugasAkhir extends Eloquent {
      */
     public function dosenPembimbing()
     {
-        return $this->belongsToMany('Simta\Models\Dosen', 'dosen_pembimbing', 'id_tugas_akhir', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Dosen', 'dosen_pembimbing', 'id_tugas_akhir', 'nip');
     }
 
     /**
@@ -44,7 +44,7 @@ class TugasAkhir extends Eloquent {
      */
     public function mahasiswa()
     {
-        return $this->belongsTo('Simta\Models\Mahasiswa', 'nrp_mahasiswa', 'nrp_mahasiswa');
+        return $this->belongsTo('Simta\Models\Mahasiswa', 'nrp', 'nrp');
     }
 
     /**

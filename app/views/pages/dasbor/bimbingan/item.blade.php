@@ -23,7 +23,7 @@ Bimbingan Tugas Akhir
                         <tr>
                             <td>NRP Mahasiswa</td>
                             <td>
-                                {{{ $item->mahasiswa->nrp_mahasiswa}}}
+                                {{{ $item->mahasiswa->nrp}}}
                             </td>
                         </tr>
                         <tr>

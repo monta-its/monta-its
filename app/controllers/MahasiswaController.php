@@ -23,12 +23,12 @@ class MahasiswaController extends BaseController {
     /**
      * Tampilkan Profil Mahasiswa
      *
-     * @var string $id_mahasiswa
+     * @var string $id
      * @return View
      */
-    function lihatProfilMahasiswa($id_mahasiswa)
+    function lihatProfilMahasiswa($id)
     {
-        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai')->find($id_mahasiswa);
+        $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing')->find($id);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -65,7 +65,7 @@ class MahasiswaController extends BaseController {
     {
         if(!Request::ajax())
         {
-            $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing.pegawai', 'tugasAkhir.sidang.ruangan', 'tugasAkhir.sidang.pengujiSidang')->find(Auth::user()->nomor_induk);
+            $item = Mahasiswa::with('tugasAkhir.penawaranJudul.bidangKeahlian', 'tugasAkhir.penawaranJudul.bidangKeahlian.bidangMinat', 'tugasAkhir.dosenPembimbing', 'tugasAkhir.sidang.ruangan', 'tugasAkhir.sidang.pengujiSidang')->find(Auth::user()->person_id);
             $tugasAkhir = null;
             $sidang = null;
             $pemberitahuan = null;
@@ -78,8 +78,8 @@ class MahasiswaController extends BaseController {
 
             $pemberitahuan = Mahasiswa::with(array('pemberitahuan' => function($query)
             {
-                $query->orderBy('id_pemberitahuan_mahasiswa', 'DESC');
-            }))->find(Auth::user()->nomor_induk)->pemberitahuan;
+                $query->orderBy('id_pemberitahuan', 'DESC');
+            }))->find(Auth::user()->person_id)->pemberitahuan;
 
             View::share('pemberitahuan', $pemberitahuan);
             View::share('item', $item);
@@ -91,7 +91,7 @@ class MahasiswaController extends BaseController {
         {
             if(Request::has('mySelf'))
             {
-                return Response::json(Mahasiswa::find(Auth::user()->nomor_induk));
+                return Response::json(Mahasiswa::find(Auth::user()->person_id));
             }
             else
             {

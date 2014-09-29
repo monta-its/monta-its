@@ -17,7 +17,7 @@
             <span class="glyphicon glyphicon-user"></span>
             <span>Dosen: </span>
             @foreach ($item->dosen as $i => $dosen)
-                <a class="author" href="{{ URL::to('dosen/'. $dosen->nip_dosen ) }}">{{ $dosen->pegawai->nama_lengkap }}</a>
+                <a class="author" href="{{ URL::to('dosen/'. $dosen->nip ) }}">{{ $dosen->nama_lengkap }}</a>
                 @if ($i < $item->dosen->count() - 1)
                     <span> · </span>
                 @endif
@@ -48,14 +48,14 @@
                                     <a href="{{ URL::to('judul/' . $penawaranJudul->id_penawaran_judul) }}">{{ $penawaranJudul->judul_tugas_akhir }}</a>
                                 </td>
                                 <td>
-                                    <a href="{{ URL::to('dosen/' . $penawaranJudul->dosen->nip_dosen) }}">{{ $penawaranJudul->dosen->pegawai->nama_lengkap }}</a>
+                                    <a href="{{ URL::to('dosen/' . $penawaranJudul->dosen->nip) }}">{{ $penawaranJudul->dosen->nama_lengkap }}</a>
                                 </td>
                                 @if ($penawaranJudul->tugasAkhir == null)
                                 <td class="text-center">
                                     <span class="label label-success">Tersedia</span>
                                 @else
                                 <td>
-                                    <span class="label label-default">Diambil</span> : <a href="{{ URL::to( 'mahasiswa/' . $penawaranJudul->tugasAkhir->nrp_mahasiswa) }}">{{ $penawaranJudul->tugasAkhir->mahasiswa->nama_lengkap }}</a>
+                                    <span class="label label-default">Diambil</span> : <a href="{{ URL::to( 'mahasiswa/' . $penawaranJudul->tugasAkhir->nrp) }}">{{ $penawaranJudul->tugasAkhir->mahasiswa->nama_lengkap }}</a>
                                 @endif
                                 </td>
                             </tr>

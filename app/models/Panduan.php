@@ -13,19 +13,14 @@ use Eloquent;
 
 class Panduan extends Eloquent {
     protected $table = 'panduan';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_panduan";
     protected $fillable = ["judul", "isi"];
 
-    /**
-     * Relasi many-to-one dengan tabel Pegawai
-     *
-     * @return Simta\Models\Pegawai
-     */
-    public function pegawai()
+    public function person()
     {
-        return $this->belongsTo('Simta\Models\Pegawai', 'nip_pegawai', 'nip_pegawai');
+        return $this->morphTo();
     }
 
     /**

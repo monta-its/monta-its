@@ -29,7 +29,7 @@ class JadwalDosenController extends BaseController {
      */
     function dasborJadwalDosen()
     {
-        $auth = Auth::user();
+        
         if(Request::isMethod('get'))
         {
             if(!Request::ajax())
@@ -40,7 +40,7 @@ class JadwalDosenController extends BaseController {
             {
                 if(Input::has('mySelf'))
                 {
-                    $dosen = Dosen::find(Auth::user()->nomor_induk);
+                    $dosen = Dosen::find(Auth::user()->person_id);
                     return Response::json($dosen->jadwalDosen()->get());
                 }
                 else
@@ -52,7 +52,7 @@ class JadwalDosenController extends BaseController {
         else if(Request::isMethod('post') || Request::isMethod('put'))
         {
             // Insert or update?
-            $dosen = Dosen::find(Auth::user()->nomor_induk);
+            $dosen = Dosen::find(Auth::user()->person_id);
             $jadwalDosen = $dosen->jadwalDosen()->where('hari', Input::get('hari'))->where('sesi', Input::get('sesi'));
             if($jadwalDosen->count() == 0)
             {

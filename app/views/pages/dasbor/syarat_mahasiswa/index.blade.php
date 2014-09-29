@@ -78,7 +78,7 @@ app.config(function($httpProvider) {
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="text" ng-options="mahasiswa.nrp_mahasiswa as mahasiswa.nrp_mahasiswa + ' - ' + mahasiswa.nama_lengkap for mahasiswa in dataMahasiswa" ng-model="nrpMahasiswa" class="form-control" placeholder="NRP Mahasiswa" bs-typeahead/>
+                    <input type="text" ng-options="mahasiswa.nrp as mahasiswa.nrp + ' - ' + mahasiswa.nama_lengkap for mahasiswa in dataMahasiswa" ng-model="nrpMahasiswa" class="form-control" placeholder="NRP Mahasiswa" bs-typeahead/>
                 </div>
                 <button class="btn btn-default" ng-click="cariMahasiswa()">Cari</button>
             </div>
@@ -87,7 +87,7 @@ app.config(function($httpProvider) {
 
         <div class="row" ng-show="dataSyaratMahasiswa">
             <div class="col-md-12">
-                <h2>[[dataSyaratMahasiswa.nama_lengkap]] ([[dataSyaratMahasiswa.nrp_mahasiswa]])</h2>
+                <h2>[[dataSyaratMahasiswa.nama_lengkap]] ([[dataSyaratMahasiswa.nrp]])</h2>
                 <h3>Syarat Sit In</h3>
                 <div class="checkbox">
                     <div ng-repeat="syarat in dataSyarat | filter: {'waktu_syarat': 'pra_sit_in'}">

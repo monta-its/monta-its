@@ -13,8 +13,8 @@ use Eloquent;
 
 class Lampiran extends Eloquent {
     protected $table = 'lampiran';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_lampiran";
     protected $fillable = ["nama_lampiran", "tipe_lampiran", "path_lampiran"];
 
@@ -28,14 +28,9 @@ class Lampiran extends Eloquent {
         return $this->associate('Simta\Models\Panduan', 'id_lampiran', 'id_lampiran');
     }
 
-    /**
-     * Relasi many-to-one ke Pegawai
-     *
-     * @return Simta\Models\Pegawai
-     */
-    public function pegawai()
+    public function person()
     {
-        return $this->belongsTo('Simta\Models\Pegawai', 'nip_pegawai', 'nip_pegawai');
+        return $this->morphTo();
     }
 }
 ?>

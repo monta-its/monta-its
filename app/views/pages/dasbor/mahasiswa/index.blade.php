@@ -39,7 +39,7 @@ Dasbor Mahasiswa
                         <td>
                         @if ($value->penguji != null)
                             @foreach ($value->penguji as $j => $penguji) 
-                                <a href="{{ URL::to('dosen/' . $penguji->nip_dosen) }}">{{ $penguji->pegawai->nama_lengkap }}</a>
+                                <a href="{{ URL::to('dosen/' . $penguji->nip) }}">{{ $penguji->nama_lengkap }}</a>
                                 @if ($j < $value->penguji->count() - 1)
                                 ,
                                 @endif
@@ -65,7 +65,7 @@ Dasbor Mahasiswa
                         <td>Pembimbing</td>
                         <td>
                         @foreach ($tugasAkhir->dosenPembimbing as $i => $pembimbing) 
-                            <a href="{{ URL::to('dosen/' . $pembimbing->nip_dosen) }}">{{ $pembimbing->pegawai->nama_lengkap }}</a>
+                            <a href="{{ URL::to('dosen/' . $pembimbing->nip) }}">{{ $pembimbing->nama_lengkap }}</a>
                             @if ($i < $tugasAkhir->dosenPembimbing->count() - 1)
                             ,
                             @endif
@@ -133,7 +133,7 @@ Dasbor Mahasiswa
                     </tr>
                     <tr>
                         <td>NRP</td>
-                        <td>{{ $item->nrp_mahasiswa }}</td>
+                        <td>{{ $item->nrp }}</td>
                     </tr>
                 </tbody>
             </table>

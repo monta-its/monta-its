@@ -12,8 +12,8 @@ use Eloquent;
 
 class Sidang extends Eloquent {
     protected $table = 'sidang';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_sidang";
     protected $fillable = ["jenis_sidang", "tanggal", "sesi", "disetujui"];
 
@@ -45,7 +45,7 @@ class Sidang extends Eloquent {
      */
     public function pengujiSidang()
     {
-        return $this->belongsToMany('Simta\Models\Dosen', 'penguji_sidang', 'id_sidang', 'nip_dosen');
+        return $this->belongsToMany('Simta\Models\Dosen', 'penguji_sidang', 'id_sidang', 'nip');
     }
 
     /**

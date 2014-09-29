@@ -13,8 +13,8 @@ use Eloquent;
 class NilaiAkhir extends Eloquent {
     protected $table = 'nilai_akhir';
     protected $primaryKey = 'id_nilai_akhir';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $fillable = ["nilai"];
 
     /**
@@ -34,7 +34,7 @@ class NilaiAkhir extends Eloquent {
      */
     public function dosen()
     {
-        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Dosen', 'nip', 'nip');
     }
 }
 ?>

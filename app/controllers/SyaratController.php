@@ -25,7 +25,7 @@ class SyaratController extends BaseController {
      * Penentuan apakah syarat mahasiswa bersangkutan telah dipenuhi
      * @return View
      */
-    function dasborCentangSyarat($nrp_mahasiswa = null)
+    function dasborCentangSyarat($nrp = null)
     {
         if(Request::isMethod('get'))
         {
@@ -35,9 +35,9 @@ class SyaratController extends BaseController {
             }
             else
             {
-                if($nrp_mahasiswa)
+                if($nrp)
                 {
-                    $syarat = Mahasiswa::with('syarat')->where('mahasiswa.nrp_mahasiswa', $nrp_mahasiswa)->first();
+                    $syarat = Mahasiswa::with('syarat')->where('mahasiswa.nrp', $nrp)->first();
                     return Response::json($syarat);
                 }
                 else
@@ -49,7 +49,7 @@ class SyaratController extends BaseController {
         else if(Request::isMethod('post') || Request::isMethod('put'))
         {
             // Post/Put means check
-            $mahasiswa = Mahasiswa::with('syarat')->find($nrp_mahasiswa);
+            $mahasiswa = Mahasiswa::with('syarat')->find($nrp);
             if($mahasiswa != null)
             {
                 if(!$mahasiswa->syarat->contains(Input::get('id_syarat')))
@@ -62,7 +62,7 @@ class SyaratController extends BaseController {
         {
 
             // Delete means uncheck
-            $mahasiswa = Mahasiswa::with('syarat')->find($nrp_mahasiswa);
+            $mahasiswa = Mahasiswa::with('syarat')->find($nrp);
             if($mahasiswa != null)
             {
                 if($mahasiswa->syarat->contains(Input::get('id_syarat')))

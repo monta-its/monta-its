@@ -19,7 +19,7 @@
                 <tr>
                     <td><strong>NRP</strong></td>
                     <td>: </td>
-                    <td>{{ $item['nrp_mahasiswa'] }}</td>
+                    <td>{{ $item['nrp'] }}</td>
                 </tr>
                 <tr>
                     <td><strong>SKS Lulus</strong></td>
@@ -40,7 +40,7 @@
             </tbody>
         </table>
         <form action="{{ URL::to('dasbor/pegawai/pengguna/mahasiswa/tambah') }}" method="POST">
-            <input type="hidden" name="nrp_mahasiswa" value="{{ $item['nrp_mahasiswa'] }}" />
+            <input type="hidden" name="nrp" value="{{ $item['nrp'] }}" />
             <input type="hidden" name="nama_mahasiswa" value="{{ $item['nama_mahasiswa'] }}" />
             <button type="submit" class="btn btn-primary">Tambahkan</button>
         </form>

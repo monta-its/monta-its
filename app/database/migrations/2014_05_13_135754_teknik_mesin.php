@@ -15,12 +15,11 @@ class TeknikMesin extends Migration {
         Schema::create('sit_in', function($table)
         {
             $table->increments('id_sit_in');
-            $table->string('nrp_mahasiswa');
-            $table->string('nip_dosen');
+            $table->string('nrp')->index();
+            $table->string('nip')->index();
             $table->string('id_topik');
             $table->integer('status');
-            $table->timestamps();
-            $table->softDeletes();
+            
         });
 	}
 
@@ -31,7 +30,7 @@ class TeknikMesin extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('sit_in');
+        Schema::dropIfExists('sit_in');
 	}
 
 }

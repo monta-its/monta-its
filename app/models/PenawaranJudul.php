@@ -13,8 +13,8 @@ use EloquentValidator;
 
 class PenawaranJudul extends EloquentValidator {
     protected $table = 'penawaran_judul';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_penawaran_judul";
     protected $fillable = ["judul_tugas_akhir", "deskripsi"];
     protected $rules = array("judul_tugas_akhir" => "required",
@@ -37,7 +37,7 @@ class PenawaranJudul extends EloquentValidator {
      */
     public function dosen()
     {
-        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Dosen', 'nip', 'nip');
     }
 
     public function bidangKeahlian()

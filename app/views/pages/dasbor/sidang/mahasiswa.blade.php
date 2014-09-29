@@ -111,11 +111,11 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
         if($scope.sidang) {
             if($scope.sidang.pengujiSidang) {
                 $.each($rootScope.dosen, function(i, val) {
-                    if(val.nip_dosen == $scope.dosenPengujiDipilih) {
+                    if(val.nip == $scope.dosenPengujiDipilih) {
                         if(!(val in $scope.sidang.pengujiSidang)) {
                             var doNot = false;
                             $.each($scope.sidang.pengujiSidang, function(i, sid) {
-                                if(sid.nip_dosen == $scope.dosenPengujiDipilih)
+                                if(sid.nip == $scope.dosenPengujiDipilih)
                                 {
                                     doNot = true;
                                 }
@@ -128,11 +128,11 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
             }
         }
     }
-    $scope.hapusDosenPenguji = function(nip_dosen) {
+    $scope.hapusDosenPenguji = function(nip) {
         if($scope.sidang) {
             if($scope.sidang.pengujiSidang) {
                 $.each($scope.sidang.pengujiSidang, function(i, val) {
-                    if(val.nip_dosen == nip_dosen) {
+                    if(val.nip == nip) {
                         $scope.sidang.pengujiSidang.splice(i,1);
                         return;
                     }
@@ -204,7 +204,7 @@ app.controller('sidangSuntingController', function($rootScope, $scope, $http, $r
                         });
                         $.each($rootScope.dosen, function(i, dos) {
                             $.each(val.penguji_sidang, function(i, peng) {
-                                if(dos.nip_dosen == peng.nip_dosen) {
+                                if(dos.nip == peng.nip) {
                                     console.log(dos);
                                     $scope.sidang.pengujiSidang.push(dos);
                                 }
@@ -269,7 +269,7 @@ app.config(function($httpProvider) {
                         <form role="form" ng-submit="tambahDosenPenguji()">
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <input type="text" ng-options="item.nip_dosen as item.nip_dosen + ' - ' + item.pegawai.nama_lengkap for item in dosen" ng-model="dosenPengujiDipilih" class="form-control" placeholder="Masukkan NIP/Nama Dosen" bs-typeahead />
+                                    <input type="text" ng-options="item.nip as item.nip + ' - ' + item.nama_lengkap for item in dosen" ng-model="dosenPengujiDipilih" class="form-control" placeholder="Masukkan NIP/Nama Dosen" bs-typeahead />
                                 </div>
                                 <button type="submit" class="btn btn-primary">Tambah Penguji</button>
 
@@ -286,9 +286,9 @@ app.config(function($httpProvider) {
                                 <tbody>
                                     <tr ng-repeat="item in sidang.pengujiSidang">
                                         <td class="col-md-2 text-center">[[$index + 1]].</td>
-                                        <td>[[item.pegawai.nama_lengkap]]</td>
-                                        <td class="col-md-4 text-center">[[item.nip_dosen]]</td>
-                                        <td class="col-md-2 text-center"><button ng-click="hapusDosenPenguji([[item.nip_dosen]])" class="btn btn-xs btn-danger">Hapus</button></td>
+                                        <td>[[item.nama_lengkap]]</td>
+                                        <td class="col-md-4 text-center">[[item.nip]]</td>
+                                        <td class="col-md-2 text-center"><button ng-click="hapusDosenPenguji([[item.nip]])" class="btn btn-xs btn-danger">Hapus</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -334,13 +334,13 @@ app.config(function($httpProvider) {
                                     </tr>
                                     <tr>
                                         <td class="col-md-2"><strong>Mahasiswa</strong></td>
-                                        <td>[[item.tugas_akhir.mahasiswa.nama_lengkap]] ([[item.tugas_akhir.mahasiswa.nrp_mahasiswa]])</td>
+                                        <td>[[item.tugas_akhir.mahasiswa.nama_lengkap]] ([[item.tugas_akhir.mahasiswa.nrp]])</td>
                                     </tr>
                                     <tr>
                                         <td class="col-md-2"><strong>Dosen Penguji</strong></td>
                                         <td>
                                             <span ng-repeat="penguji in item.penguji_sidang">
-                                                <a href="{{ URL::to('/dosen/') }}/[[penguji.nip_dosen]]" title="">[[penguji.pegawai.nama_lengkap]]</a><span ng-show="!$last"> · </span>
+                                                <a href="{{ URL::to('/dosen/') }}/[[penguji.nip]]" title="">[[penguji.nama_lengkap]]</a><span ng-show="!$last"> · </span>
                                             </span>
                                         </td>
                                     </tr>

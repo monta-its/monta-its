@@ -31,7 +31,7 @@ Bimbingan Tugas Akhir
                     <tr>
                         <td>{{$i}}</td>
                         <td>{{$item->mahasiswa->nama_lengkap}}</td>
-                        <td>{{$item->mahasiswa->nrp_mahasiswa}}</td>
+                        <td>{{$item->mahasiswa->nrp}}</td>
                         <td>{{$item->status}}</td>
                         <td>{{$item->target_selesai}}</td>
                         <td>

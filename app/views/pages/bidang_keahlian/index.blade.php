@@ -19,7 +19,7 @@ Bidang Keahlian
         <span class="glyphicon glyphicon-user"></span>
         <span>Dosen: </span>
         @foreach ($item->dosen as $i => $dosen)
-            <a class="author" href="{{ URL::to('dosen/'. $dosen->nip_dosen ) }}">{{ $dosen->pegawai->nama_lengkap }}</a>
+            <a class="author" href="{{ URL::to('dosen/'. $dosen->nip ) }}">{{ $dosen->nama_lengkap }}</a>
             @if ($i < $item->dosen->count() - 1)
                 <span> · </span>
             @endif

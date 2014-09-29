@@ -12,70 +12,33 @@ use Eloquent;
 
 class Pegawai extends Eloquent {
     protected $table = 'pegawai';
-    public $timestamps = true;
-    protected $softDelete = true;
-    protected $fillable = ['nip_pegawai', 'nama_lengkap', 'kata_sandi'];
-    protected $hidden = ['kata_sandi'];
-    protected $primaryKey = "nip_pegawai";
+    public $timestamps = false;
+    protected $softDelete = false;
+    protected $fillable = array(
+        'nip',
+        'nama_lengkap',
+    );
+    protected $primaryKey = "nip";
     public $incrementing = false;
 
-    /**
-     * Relasi one-to-one ke Dosen
-     *
-     * @return Simta\Models\Dosen
-     */
-
-    public function dosen()
+    public function user()
     {
-        return $this->hasOne('Simta\Models\Dosen', 'nip_dosen', 'nip_pegawai');
+        return $this->morphOne('Simta\Models\User', 'person', 'person_type');
     }
 
-    /**
-     * Relasi one-to-many ke Pos
-     *
-     * @return Simta\Models\Pos
-     */
     public function pos()
     {
-        return $this->hasMany('Simta\Models\Pos', 'nip_pegawai', 'nip_pegawai');
+        return $this->hasMany('Simta\Models\Pos', 'person_id', 'person_type');
     }
 
-    /**
-     * Relasi one-to-many ke Panduan
-     *
-     * @return Simta\Models\Panduan
-     */
     public function panduan()
     {
-        return $this->hasMany('Simta\Models\Panduan', 'nip_pegawai', 'nip_pegawai');
+        return $this->hasMany('Simta\Models\Panduan', 'person_id', 'person_type');
     }
 
-    /**
-     * Relasi one-to-many ke PemberitahuanPegawai
-     *
-     * @return Simta\Models\PemberitahuanPegawai
-     */
     public function pemberitahuan()
     {
-        return $this->hasMany('Simta\Models\PemberitahuanPegawai', 'nip_pegawai', 'nip_pegawai');
-    }
-
-    /**
-     * Mengetahui apakah seorang Pegawai merupakan Seorang Dosen
-     * Dilakukan dengan pengecekan adanya Dosen dengan NIP dari Pegawai tersebut
-     *
-     * @return boolean
-     */
-    public function apakahDosen()
-    {
-        if($this->dosen()->count() == 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return $this->morphMany('Simta\Models\Pemberitahuan', 'person', 'person_type');
     }
 
     /**
@@ -85,7 +48,7 @@ class Pegawai extends Eloquent {
      */
     public function lampiran()
     {
-        return $this->hasMany('Simta\Models\Lampiran', 'nip_pegawai', 'nip_pegawai');
+        return $this->hasMany('Simta\Models\Lampiran', 'nip', 'nip');
     }
 }
 ?>

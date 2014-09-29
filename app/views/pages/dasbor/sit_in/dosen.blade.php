@@ -109,7 +109,7 @@ app.config(function($httpProvider) {
                         <tr ng-repeat="item in items | filter: {status: 1}: true">
                             <th class="text-center">[[$index+1]]</th>
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
-                            <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
+                            <td>[[item.mahasiswa.nrp]]</td>
                             <td>[[item.updated_at]]</td>
                         </tr>
                     </tbody>
@@ -136,7 +136,7 @@ app.config(function($httpProvider) {
                         <tr ng-repeat="item in items | filter: {status: 0}: true">
                             <th class="text-center">[[$index+1]]</th>
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
-                            <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
+                            <td>[[item.mahasiswa.nrp]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
                                 <a ng-click="setujuiSitIn([[item.id_sit_in]])" class="btn btn-warning btn-xs">Setujui</a>
@@ -167,7 +167,7 @@ app.config(function($httpProvider) {
                         <tr ng-repeat="item in items | filter: {status: -1}: true">
                             <th class="text-center">[[$index+1]]</th>
                             <td>[[item.mahasiswa.nama_lengkap]]</td>
-                            <td>[[item.mahasiswa.nrp_mahasiswa]]</td>
+                            <td>[[item.mahasiswa.nrp]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
                                 <a ng-click="batalkanSitIn([[item.id_sit_in]])" class="btn btn-warning btn-xs">Terima Pembatalan</a>

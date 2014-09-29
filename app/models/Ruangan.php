@@ -12,8 +12,8 @@ use Simta\Models\Sidang;
 
 class Ruangan extends Eloquent {
     protected $table = 'ruangan';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_ruangan";
     public $incrementing = true;
     protected $fillable = ["kode_ruangan", "nama_ruangan"];

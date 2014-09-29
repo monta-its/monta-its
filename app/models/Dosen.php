@@ -13,11 +13,42 @@ use DateTime;
 
 class Dosen extends Eloquent {
     protected $table = 'dosen';
-    public $timestamps = true;
-    protected $softDelete = true;
-    protected $fillable = ["nidn", "gelar_depan", "gelar_belakang", "hak_akses_pegawai"];
-    protected $primaryKey = "nip_dosen";
+    public $timestamps = false;
+    protected $softDelete = false;
+    protected $fillable = array(
+        "nip",
+        "nidn",
+        "nama_lengkap",
+        "gelar_depan",
+        "gelar_belakang",
+    );
+    protected $primaryKey = "nip";
     public $incrementing = false;
+
+    public function user()
+    {
+        return $this->morphOne('Simta\Models\User', 'person', 'person_type');
+    }
+
+    public function pos()
+    {
+        return $this->morphMany('Simta\Models\Pos', 'person', 'person_type');
+    }
+
+    public function panduan()
+    {
+        return $this->morphMany('Simta\Models\Panduan', 'person', 'person_type');
+    }
+
+    public function lampiran()
+    {
+        return $this->morphMany('Simta\Models\Lampiran', 'person', 'person_type');
+    }
+
+    public function pemberitahuan()
+    {
+        return $this->morphMany('Simta\Models\Pemberitahuan', 'person', 'person_type');
+    }
 
     /**
      * Relasi many-to-many ke TugasAkhir
@@ -27,7 +58,7 @@ class Dosen extends Eloquent {
      */
     public function pembimbingTugasAkhir()
     {
-        return $this->belongsToMany('Simta\Models\TugasAkhir', 'dosen_pembimbing', 'nip_dosen', 'id_tugas_akhir');
+        return $this->belongsToMany('Simta\Models\TugasAkhir', 'dosen_pembimbing', 'nip', 'id_tugas_akhir');
     }
 
     /**
@@ -47,7 +78,7 @@ class Dosen extends Eloquent {
      */
     public function nilaiProposal()
     {
-        return $this->hasMany('Simta\Models\NilaiProposal', 'nip_dosen', 'nip_dosen');
+        return $this->hasMany('Simta\Models\NilaiProposal', 'nip', 'nip');
     }
 
     /**
@@ -57,7 +88,7 @@ class Dosen extends Eloquent {
      */
     public function nilaiAkhir()
     {
-        return $this->hasMany('Simta\Models\NilaiAkhir', 'nip_dosen', 'nip_dosen');
+        return $this->hasMany('Simta\Models\NilaiAkhir', 'nip', 'nip');
     }
 
     /**
@@ -67,7 +98,7 @@ class Dosen extends Eloquent {
      */
     public function penawaranJudul()
     {
-        return $this->hasMany('Simta\Models\PenawaranJudul', 'nip_dosen', 'nip_dosen');
+        return $this->hasMany('Simta\Models\PenawaranJudul', 'nip', 'nip');
     }
 
     /**
@@ -78,7 +109,7 @@ class Dosen extends Eloquent {
      */
     public function pengujiSidang()
     {
-        return $this->belongsToMany('Simta\Models\Sidang', 'penguji_sidang', 'nip_dosen', 'id_sidang');
+        return $this->belongsToMany('Simta\Models\Sidang', 'penguji_sidang', 'nip', 'id_sidang');
     }
 
     /**
@@ -92,26 +123,6 @@ class Dosen extends Eloquent {
     }
 
     /**
-     * Relasi one-to-many ke Pos
-     *
-     * @return Simta\Models\Pos
-     */
-    public function pos()
-    {
-        return $this->hasMany('Simta\Models\Pos', 'nip_pegawai', 'nip_dosen');
-    }
-
-    /**
-     * Relasi one-to-many ke Panduan
-     *
-     * @return Simta\Models\Panduan
-     */
-    public function panduan()
-    {
-        return $this->hasMany('Simta\Models\Panduan', 'nip_pegawai', 'nip_dosen');
-    }
-
-    /**
      * Relasi one-to-one ke BidangMinat
      * Sebagai Dosen Koordinator dari BidangMinat bersangkutan
      *
@@ -119,7 +130,7 @@ class Dosen extends Eloquent {
      */
     public function koordinatorBidangMinat()
     {
-        return $this->hasOne('Simta\Models\Dosen', 'nip_dosen_koordinator', 'nip_dosen');
+        return $this->hasOne('Simta\Models\Dosen', 'nip_koordinator', 'nip');
     }
 
     /**
@@ -132,18 +143,6 @@ class Dosen extends Eloquent {
         return $this->belongsTo('Simta\Models\BidangMinat', 'id_bidang_minat', 'id_bidang_minat');
     }
 
-
-    /**
-     * Relasi one-to-one ke Pegawai
-     *
-     * @return Simta\Models\Pegawai
-     */
-
-    public function pegawai()
-    {
-        return $this->belongsTo('Simta\Models\Pegawai', 'nip_dosen', 'nip_pegawai');
-    }
-
     /**
      * Relasi many-to-many dengan tabel BidangKeahlian
      *
@@ -151,7 +150,7 @@ class Dosen extends Eloquent {
      */
     public function bidangKeahlian()
     {
-        return $this->belongsToMany('Simta\Models\BidangKeahlian', 'bidang_keahlian_dosen', 'nip_dosen', 'id_bidang_keahlian');
+        return $this->belongsToMany('Simta\Models\BidangKeahlian', 'bidang_keahlian_dosen', 'nip', 'id_bidang_keahlian');
     }
 
     /**
@@ -161,7 +160,7 @@ class Dosen extends Eloquent {
 
     public function sitIn()
     {
-        return $this->hasMany('Simta\Models\TeknikMesin\SitIn', 'nip_dosen', 'nip_dosen');
+        return $this->hasMany('Simta\Models\TeknikMesin\SitIn', 'nip', 'nip');
     }
 
     /**
@@ -171,7 +170,7 @@ class Dosen extends Eloquent {
 
     public function jadwalDosen()
     {
-        return $this->hasMany('Simta\Models\JadwalDosen', 'nip_dosen', 'nip_dosen');
+        return $this->hasMany('Simta\Models\JadwalDosen', 'nip', 'nip');
     }
 
     /**

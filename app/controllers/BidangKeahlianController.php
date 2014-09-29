@@ -32,7 +32,7 @@ class BidangKeahlianController extends BaseController {
             array('link' => '', 'text' => 'Bidang Keahlian')
         );
 
-        $items = BidangKeahlian::with('bidangMinat', 'dosen.pegawai')->get();
+        $items = BidangKeahlian::with('bidangMinat', 'dosen')->get();
 
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
@@ -48,7 +48,7 @@ class BidangKeahlianController extends BaseController {
      */
     function lihatIsiBidangKeahlian($id_bidang_keahlian)
     {
-        $item = BidangKeahlian::with('penawaranJudul.tugasAkhir', 'penawaranJudul.dosen.pegawai', 'bidangMinat', 'dosen.pegawai')->find($id_bidang_keahlian);
+        $item = BidangKeahlian::with('penawaranJudul.tugasAkhir', 'penawaranJudul.dosen', 'bidangMinat', 'dosen')->find($id_bidang_keahlian);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),

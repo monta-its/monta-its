@@ -29,7 +29,7 @@ class TugasAkhirController extends BaseController {
      */
     function bimbingan()
     {
-        $dosen = Dosen::find(Auth::user()->nomor_induk);
+        $dosen = Dosen::find(Auth::user()->person_id);
         $mahasiswaBimbingan = $dosen->pembimbingTugasAkhir()->with('mahasiswa')->get();
 
         View::share('mahasiswaBimbingan', $mahasiswaBimbingan);
@@ -44,7 +44,7 @@ class TugasAkhirController extends BaseController {
      */
     function profilBimbingan($id_tugas_akhir)
     {
-        $dosen = Dosen::find(Auth::user()->nomor_induk);
+        $dosen = Dosen::find(Auth::user()->person_id);
         $tugasAkhir = $dosen->pembimbingTugasAkhir()->with('mahasiswa', 'penawaranJudul')->where('dosen_pembimbing.id_tugas_akhir', $id_tugas_akhir)->first();
         $mahasiswa = $tugasAkhir->mahasiswa()->first()->toArray();
         $statusTugasAkhir = StatusTugasAkhir::get();
@@ -64,14 +64,14 @@ class TugasAkhirController extends BaseController {
      */
     function dasborTugasAkhir()
     {
-        $auth = Auth::user();
+        
         if(Request::isMethod('get'))
         {
             // Mahasiswa: Ambil tugasAkhir-nya sendiri
             // Lainnya: Ambil semua tugasAkhir mahasiswa bimbingan
-            if($auth->peran == 0)
+            if(Auth::user()->peran == 0)
             {
-                return Response::json(TugasAkhir::with('penawaranJudul.bidangKeahlian', 'penawaranJudul.bidangKeahlian.bidangMinat', 'mahasiswa')->where('tugas_akhir.nrp_mahasiswa', $auth->nomor_induk)->get());
+                return Response::json(TugasAkhir::with('penawaranJudul.bidangKeahlian', 'penawaranJudul.bidangKeahlian.bidangMinat', 'mahasiswa')->where('tugas_akhir.nrp', Auth::user()->person_id)->get());
             }
             else
             {
@@ -82,12 +82,12 @@ class TugasAkhirController extends BaseController {
         {
             if(Request::isMethod('put'))
             {
-                if($auth->peran == 2)
+                if(Auth::user()->peran == 2)
                 {
-                    $dosen = Dosen::find($auth->nomor_induk);
+                    $dosen = Dosen::find(Auth::user()->person_id);
                     $tugasAkhir = $dosen->pembimbingTugasAkhir()->where('dosen_pembimbing.id_tugas_akhir', Input::get('id_tugas_akhir'))->first();
                 }
-                else if($auth->peran == 3)
+                else if(Auth::user()->peran == 3)
                 {
                     $tugasAkhir = TugasAkhir::find(Input::get('id_tugas_akhir'));
                 }

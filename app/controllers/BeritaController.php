@@ -33,7 +33,7 @@ class BeritaController extends BaseController {
             array('link' => '', 'text' => 'Berita')
         );
 
-        $items = Pos::with('pegawai')->where('apakah_terbit', '=', 1)->orderBy('updated_at')->get();
+        $items = Pos::with('person')->where('apakah_terbit', '=', 1)->orderBy('updated_at')->get();
         View::share('breadcrumbs', $breadcrumbs);
         View::share('items', $items);
         return View::make('pages.berita.index');
@@ -48,7 +48,7 @@ class BeritaController extends BaseController {
      */
     function lihatIsiBerita($id_berita)
     {
-        $item = Pos::with('pegawai')->find($id_berita);
+        $item = Pos::with('person')->find($id_berita);
 
         $breadcrumbs = array(
             array('link' => URL::to('/'), 'text' => 'Beranda'),
@@ -78,20 +78,19 @@ class BeritaController extends BaseController {
             }
             else
             {
-                $auth = Auth::user();
-                return Response::json(Pos::with('pegawai')->where('nip_pegawai', $auth->nomor_induk)->get());
+                return Response::json(Pos::where('nip', Auth::user()->person_id)->get());
             }
         }
         else if(Request::isMethod('post'))
         {
             $berita = new Pos;
-            $pegawai = Pegawai::find(Auth::User()->nomor_induk);
+            $pegawai = Pegawai::find(Auth::user()->person_id);
             if($pegawai != null)
             {
                 $berita->judul = Input::get('judul');
                 $berita->isi = Input::get('isi');
                 $berita->apakah_terbit = Input::get('apakah_terbit');
-                $berita->pegawai()->associate($pegawai);
+                $berita->person()->associate($pegawai);
                 if(!$berita->save())
                 {
                     return Response::json(array('error' => $berita->validatorMessage));
@@ -101,8 +100,8 @@ class BeritaController extends BaseController {
         }
         else if(Request::isMethod('put'))
         {
-            $pegawai = Pegawai::find(Auth::User()->nomor_induk);
-            $berita = Pos::where('nip_pegawai', Auth::user()->nomor_induk)->find(Input::get('id_pos'));
+            $pegawai = Pegawai::find(Auth::user()->person_id);
+            $berita = Pos::where('nip', Auth::user()->person_id)->find(Input::get('id_pos'));
             if($pegawai != null)
             {
                 $berita->judul = Input::get('judul');

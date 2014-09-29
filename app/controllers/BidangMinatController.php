@@ -47,7 +47,7 @@ class BidangMinatController extends BaseController {
      */
     public function lihatRincianBidangMinat($id_prodi)
     {
-        $item = BidangMinat::with('dosen.bidangKeahlian', 'dosen.pegawai', 'bidangKeahlian.penawaranJudul.tugasAkhir.mahasiswa', 'bidangKeahlian.penawaranJudul.dosen.pegawai')->find($id_prodi);
+        $item = BidangMinat::with('dosen.bidangKeahlian', 'dosen', 'bidangKeahlian.penawaranJudul.tugasAkhir.mahasiswa', 'bidangKeahlian.penawaranJudul.dosen')->find($id_prodi);
         if($item != null)
         {
             $breadcrumbs = array(
@@ -86,19 +86,19 @@ class BidangMinatController extends BaseController {
                 // With Dosen
                 if(Input::get('dosen') == '')
                 {
-                    return Response::json(BidangMinat::with('dosen', 'dosen.pegawai', 'dosen.bidangKeahlian')->get());
+                    return Response::json(BidangMinat::with('dosen', 'dosen', 'dosen.bidangKeahlian')->get());
                 }
                 else
                 {
                     // With Koordinator
-                    return Response::json(BidangMinat::with('dosenKoordinator', 'dosenKoordinator.pegawai')->get());
+                    return Response::json(BidangMinat::with('dosenKoordinator', 'dosenKoordinator')->get());
                 }
             }
         }
         else if(Request::isMethod('post'))
         {
             $bidangMinat = new BidangMinat;
-            $dosenKoordinator = Dosen::find(Input::get('dosenKoordinator.nip_dosen'));
+            $dosenKoordinator = Dosen::find(Input::get('dosenKoordinator.nip'));
             if($dosenKoordinator != null)
             {
                 $bidangMinat->kode_bidang_minat = Input::get('kode_bidang_minat');
@@ -116,7 +116,7 @@ class BidangMinatController extends BaseController {
         else if(Request::isMethod('put'))
         {
             $bidangMinat = BidangMinat::find(Input::get('id_bidang_minat'));
-            $dosenKoordinator = Dosen::find(Input::get('dosenKoordinator.nip_dosen'));
+            $dosenKoordinator = Dosen::find(Input::get('dosenKoordinator.nip'));
             if($dosenKoordinator != null && $bidangMinat != null)
             {
                 $bidangMinat->nama_bidang_minat = Input::get('nama_bidang_minat');

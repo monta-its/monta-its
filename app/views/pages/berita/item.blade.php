@@ -11,9 +11,9 @@
             <span class="glyphicon glyphicon-user"></span>
             <span>Penulis: </span>
             @if ($item->pegawai->apakahDosen())
-            <a class="author" href="{{ URL::to('dosen/'. $item->nip_pegawai) }}">{{ $item->pegawai->nama_lengkap }}</a>
+            <a class="author" href="{{ URL::to('dosen/'. $item->nip) }}">{{ $item->nama_lengkap }}</a>
             @else
-            <span>{{ $item->pegawai->nama_lengkap }}</span>
+            <span>{{ $item->nama_lengkap }}</span>
             @endif
             <span> · </span>
             <span class="glyphicon glyphicon-time"></span>

@@ -17,11 +17,11 @@
         @foreach ($l_item as $item)
             <tr>
                 <td class="text-center">{{ $i++ }}</td>
-                <td>{{ $item->nrp_mahasiswa }}</td>
+                <td>{{ $item->nrp }}</td>
                 <td>{{ $item->nama_mahasiswa }}</td>
                 <td class="text-center">{{ $item->sks_lulus }}</td>
                 <td class="text-center">{{ $item->sks_tempuh }}</td>
-                <td class="text-center"><input type="checkbox" name="nrp_mahasiswa[]" value="{{ $item->nrp_mahasiswa }}" /></td>
+                <td class="text-center"><input type="checkbox" name="nrp[]" value="{{ $item->nrp }}" /></td>
             </tr>
         @endforeach
         </tbody>

@@ -13,13 +13,13 @@
 
 App::before(function($request)
 {
-	//
+    //
 });
 
 
 App::after(function($request, $response)
 {
-	//
+    //
 });
 
 /*
@@ -35,65 +35,31 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
-});
-
-/*
- * Simta own implementation of auth filter
- */
-
-
-
-Route::filter('mahasiswaAuth', function()
-{
-    if(Auth::check())
+    if (Auth::guest())
     {
-        $user = Auth::user();
-        if($user->peran != 0)
+        if (Request::ajax())
         {
-            return Redirect::to('dasbor');
+            return Response::make('Unauthorized', 401);
+        }
+        else
+        {
+            return Redirect::guest('login');
+        }
+    }
+    else
+    {
+        $route = Route::current()->getPath();
+        if (! (Auth::user()->hasAccess($route)) )
+        {
+            return Redirect::to('/');
         }
     }
 });
 
-
-Route::filter('pegawaiAuth', function()
-{
-    if(Auth::check())
-    {
-        $user = Auth::user();
-        if($user->peran != 1 && $user->peran != 3)
-        {
-            return Redirect::to('dasbor');
-        }
-    }
-});
-
-
-Route::filter('dosenAuth', function()
-{
-    if(Auth::check())
-    {
-        $user = Auth::user();
-        if($user->peran != 2 && $user->peran != 3)
-        {
-            return Redirect::to('dasbor');
-        }
-    }
-});
-
-Route::when('dasbor', 'auth');
-Route::when('dasbor/*', 'auth');
-Route::when('dasbor/mahasiswa', 'mahasiswaAuth');
-Route::when('dasbor/mahasiswa/*', 'mahasiswaAuth');
-Route::when('dasbor/pegawai', 'pegawaiAuth');
-Route::when('dasbor/pegawai/*', 'pegawaiAuth');
-Route::when('dasbor/dosen', 'dosenAuth');
-Route::when('dasbor/dosen/*', 'dosenAuth');
 
 Route::filter('auth.basic', function()
 {
-	return Auth::basic();
+    return Auth::basic();
 });
 
 /*
@@ -109,7 +75,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+    if (Auth::check()) return Redirect::to('/');
 });
 
 /*
@@ -125,8 +91,8 @@ Route::filter('guest', function()
 
 Route::filter('csrf', function()
 {
-	if (Session::token() != Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+    if (Session::token() != Input::get('_token'))
+    {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
 });

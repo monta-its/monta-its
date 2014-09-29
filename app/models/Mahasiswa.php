@@ -12,13 +12,20 @@ use Eloquent;
 
 class Mahasiswa extends Eloquent {
     protected $table = 'mahasiswa';
-    public $timestamps = true;
-    protected $softDelete = true;
-    protected $fillable = ['nrp_mahasiswa', 'nama_lengkap', 'kata_sandi', 'angkatan'];
-    protected $hidden = ['kata_sandi'];
-    protected $primaryKey = "nrp_mahasiswa";
+    public $timestamps = false;
+    protected $softDelete = false;
+    protected $fillable = [
+        'nrp',
+        'nama_lengkap',
+        'angkatan'
+    ];
+    protected $primaryKey = "nrp";
     public $incrementing = false;
 
+    public function user()
+    {
+        return $this->morphOne('Simta\Models\User', 'person', 'person_type');
+    }
 
     /**
      * Relasi one-to-many dengan tabel TugasAkhir
@@ -27,17 +34,17 @@ class Mahasiswa extends Eloquent {
      */
     public function tugasAkhir()
     {
-        return $this->hasMany('Simta\Models\TugasAkhir', 'nrp_mahasiswa', 'nrp_mahasiswa');
+        return $this->hasMany('Simta\Models\TugasAkhir', 'nrp', 'nrp');
     }
 
     /**
-     * Relasi one-to-many dengan tabel PemberitahuanMahasiswa
+     * Relasi one-to-many dengan tabel Pemberitahuan
      *
-     * @return Simta\Models\PemberitahuanMahasiswa
+     * @return Simta\Models\Pemberitahuan
      */
     public function pemberitahuan()
     {
-        return $this->hasMany('Simta\Models\PemberitahuanMahasiswa', 'nrp_mahasiswa', 'nrp_mahasiswa');
+        return $this->morphMany('Simta\Models\Pemberitahuan', 'person', 'person_type');
     }
 
     /**
@@ -57,7 +64,7 @@ class Mahasiswa extends Eloquent {
      */
     function syarat()
     {
-        return $this->belongsToMany('Simta\Models\Syarat', 'syarat_mahasiswa', 'nrp_mahasiswa', 'id_syarat');
+        return $this->belongsToMany('Simta\Models\Syarat', 'syarat_mahasiswa', 'nrp', 'id_syarat');
     }
 
     /**

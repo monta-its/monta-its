@@ -28,7 +28,7 @@ Dasbor Dosen
                     <tr>
                         <td>{{$i}}</td>
                         <td>{{$value->mahasiswa->nama_lengkap}}</td>
-                        <td>{{$value->mahasiswa->nrp_mahasiswa}}</td>
+                        <td>{{$value->mahasiswa->nrp}}</td>
                         <td>{{$value->status}}</td>
                         <td>{{$value->target_selesai}}</td>
                     </tr>
@@ -60,7 +60,7 @@ Dasbor Dosen
                     <tr>
                         <td>{{$i}}</td>
                         <td>{{$value->mahasiswa->nama_lengkap}}</td>
-                        <td>{{$value->mahasiswa->nrp_mahasiswa}}</td>
+                        <td>{{$value->mahasiswa->nrp}}</td>
                         <td>{{$value->created_at}}</td>
                         <td>
                         {{$value->status == 0? "Diajukan": ""}}
@@ -125,7 +125,7 @@ Dasbor Dosen
                     <td class="text-center">{{$sidang->ruangan->nama_ruangan}}</td>
                     <td class="text-center">
                         @foreach($sidang->pengujiSidang as $dosen)
-                        <a href="{{URL::to('dosen/' . $dosen->nip_dosen)}}">{{$dosen->pegawai->nama_lengkap}}</a><br/>
+                        <a href="{{URL::to('dosen/' . $dosen->nip)}}">{{$dosen->nama_lengkap}}</a><br/>
                         @endforeach
                     </td>
                     <?php $i++ ?>
@@ -165,7 +165,7 @@ Dasbor Dosen
                         <td class="text-center">{{$value->ruangan->nama_ruangan}}</td>
                         <td class="text-center">
                             @foreach($value->pengujiSidang as $dosen)
-                            <a href="{{URL::to('dosen/' . $dosen->nip_dosen)}}">{{$dosen->pegawai->nama_lengkap}}</a><br/>
+                            <a href="{{URL::to('dosen/' . $dosen->nip)}}">{{$dosen->nama_lengkap}}</a><br/>
                             @endforeach
                         </td>
                         <?php $i++ ?>

@@ -160,7 +160,7 @@ app.config(function($httpProvider) {
                     </div>
                     <div class="form-group">
                         <input ng-show="panduan.lampiran.tipe_lampiran=='url'" placeholder="Masukkan URL/pranala menuju lampiran (dari Dropbox/Google Drive)" ng-model="panduan.lampiran.path_lampiran" class="form-control"/>
-                        <a ng-show="panduan.lampiran.path_lampiran && panduan.lampiran.tipe_lampiran=='file'" href="{{URL::to('/')}}[[panduan.pegawai.nip_pegawai]]/[[panduan.lampiran.path_lampiran]]">Pranala berkas sebelumnya</a>
+                        <a ng-show="panduan.lampiran.path_lampiran && panduan.lampiran.tipe_lampiran=='file'" href="{{URL::to('/')}}[[panduan.pegawai.nip]]/[[panduan.lampiran.path_lampiran]]">Pranala berkas sebelumnya</a>
                         <input type="file" ng-file-select="pilihBerkas($files)" ng-show="panduan.lampiran.tipe_lampiran=='file'"  class="form-control"/>
                     </div>
                 </div>
@@ -197,7 +197,7 @@ app.config(function($httpProvider) {
                     <tbody>
                         <tr ng-repeat="item in items | filter: searchText | orderBy:'created_at':true">
                             <td><a href="{{ URL::to('/panduan') }}/[[item.id_panduan]]">[[item.judul_panduan]]</a></td>
-                            <td>[[item.pegawai.nama_lengkap]]</td>
+                            <td>[[item.nama_lengkap]]</td>
                             <td>[[item.updated_at]]</td>
                             <td>
                                 <a href="#/sunting/[[item.id_panduan]]">Sunting</a>

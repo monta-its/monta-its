@@ -13,8 +13,8 @@ use Eloquent;
 
 class JadwalDosen extends Eloquent {
     protected $table = 'jadwal_dosen';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "id_jadwal_dosen";
     protected $fillable = ["hari", "sesi", "apakah_tersedia"];
 
@@ -25,7 +25,7 @@ class JadwalDosen extends Eloquent {
      */
     public function dosen()
     {
-        return $this->belongsTo('Simta\Models\Dosen', 'nip_dosen', 'nip_dosen');
+        return $this->belongsTo('Simta\Models\Dosen', 'nip', 'nip');
     }
 
     /**

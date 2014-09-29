@@ -13,8 +13,8 @@ use Eloquent;
 
 class SesiSidang extends Eloquent {
     protected $table = 'sesi_sidang';
-    public $timestamps = true;
-    protected $softDelete = true;
+    public $timestamps = false;
+    protected $softDelete = false;
     protected $primaryKey = "sesi";
     public $incrementing = false;
     protected $fillable = ["sesi", "waktu_mulai", "waktu_selesai"];

@@ -21,20 +21,20 @@ Penawaran Judul
         @if ($item->tugasAkhir == null)
             <span class="label label-success">Tersedia</span>
         @else
-            <span class="label label-default">Diambil</span> - <a href="{{ URL::to( 'mahasiswa/' . $item->tugasAkhir->nrp_mahasiswa) }}">{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</a>
+            <span class="label label-default">Diambil</span> - <a href="{{ URL::to( 'mahasiswa/' . $item->tugasAkhir->nrp) }}">{{ $item->tugasAkhir->mahasiswa->nama_lengkap }}</a>
         @endif
         <br />
         <span class="glyphicon glyphicon-user"></span>
         <span>Dosen Pembimbing: </span>
         @if ($item->tugasAkhir != null)
             @foreach ($item->tugasAkhir->dosenPembimbing as $i => $dosenPembimbing)
-            <a class="author" href="{{ URL::to('dosen/'. $dosenPembimbing->nip_dosen ) }}">{{ $dosenPembimbing->pegawai->nama_lengkap }}</a>
+            <a class="author" href="{{ URL::to('dosen/'. $dosenPembimbing->nip ) }}">{{ $dosenPembimbing->nama_lengkap }}</a>
             @if ($i < $item->tugasAkhir->dosenPembimbing->count() - 1)    
             <span> · </span>
             @endif    
             @endforeach
         @else
-            <a class="author" href="{{ URL::to('dosen/'. $item->nip_dosen ) }}">{{ $item->dosen->pegawai->nama_lengkap }}</a>
+            <a class="author" href="{{ URL::to('dosen/'. $item->nip ) }}">{{ $item->dosen->nama_lengkap }}</a>
         @endif
         <br />
         @if ($item->tugasAkhir != null)
